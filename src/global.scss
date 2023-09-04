@@ -10,17 +10,772 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import '@ionic/angular/css/display.css';
+
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+
+/*@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import "~@ionic/angular/css/core.css";*/
+
+// http://ionicframework.com/docs/theming/
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+@import 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+
+@font-face {
+	font-family: 'Silka-Bold';
+	src: url('https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Ffonts%2FSilka-Complete-Desktop%2FSilka-Complete-Desktop%2FSilka-Bold.otf?alt=media&token=0f5439f6-e86d-4088-8e44-bd683aa6cc9e');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Silka-Regular';
+	src: url('https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Ffonts%2FSilka-Complete-Desktop%2FSilka-Complete-Desktop%2FSilka-Regular.otf?alt=media&token=c8e6887a-def3-47b9-be56-c31e09262b6a');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Silka-Bold-Italic';
+	src: url('https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Ffonts%2FSilka-Complete-Desktop%2FSilka-Complete-Desktop%2FSilka-BlackItalic.otf?alt=media&token=b20b2b63-0b21-4f45-8216-de0aca5cb215');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Silka-Medium';
+	src: url('https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Ffonts%2FSilka-Complete-Desktop%2FSilka-Complete-Desktop%2FSilka-Medium.otf?alt=media&token=34fb1935-495b-4197-9c61-f395e31c3fb5');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Silka-Semi-Bold';
+	src: url('https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Ffonts%2FSilka-Complete-Desktop%2FSilka-Complete-Desktop%2FSilka-SemiBold.otf?alt=media&token=18ff67dc-defe-473e-a5b2-fc935a982f38');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body,
+ion-title,
+ion-card-title,
+p {
+	font-size: 0.9rem !important;
+	font-family: 'Silka-Medium' !important;
+	letter-spacing: -0.04rem !important;
+	line-height: 0.2em;
+}
+
+ion-title,
+h1 {
+	font-family: 'Silka-Bold' !important;
+	line-height: normal;
+	font-size: 3rem !important;
+	letter-spacing: -0.03rem !important;
+}
+
+h2 {
+	font-family: 'Silka-Bold' !important;
+	font-size: 1.5rem !important;
+	letter-spacing: -0.03rem !important;
+}
+
+h3 {
+	font-family: 'Silka-Bold' !important;
+	font-size: 1.3rem !important;
+	letter-spacing: -0.03rem !important;
+}
+
+h4 {
+	font-family: 'Silka-Semi-Bold' !important;
+	font-size: 1.05rem !important;
+	letter-spacing: -0.03rem !important;
+}
+
+h5 {
+	font-family: 'Silka-Semi-Bold' !important;
+	font-size: 1rem !important;
+	letter-spacing: -0.03rem !important;
+}
+
+h6 {
+	font-family: 'Silka-Medium' !important;
+	line-height: normal;
+	font-size: 0.8rem !important;
+	letter-spacing: -0.03rem !important;
+}
+
+.caption {
+	font-family: 'Silka-Medium' !important;
+	font-size: 0.8rem !important;
+	letter-spacing: -0.04rem !important;
+	color: var(--ion-color-grey) !important;
+}
+
+//Buttons
+.button-text {
+	font-family: 'Silka-Semi-Bold' !important;
+	font-size: 1.4rem !important;
+	letter-spacing: -0.03rem !important;
+	color: var(--ion-color-dark) !important;
+	//letter-spacing: -2px;
+}
+
+.button-inner {
+	//margin: 0 14px;
+}
+
+ion-segment-button {
+	//text-transform: none !important;
+}
+
+ion-button {
+	min-width: 5em;
+	font-size: 0.875em !important;
+	height: 3.3em !important;
+	min-height: 3.3em !important;
+	max-height: 3.3em !important;
+}
+
+.button-md,
+.button-ios {
+	font-family: 'Silka-Semi-Bold' !important;
+	padding: 2.4rem 1.5rem !important;
+	border-radius: 9999px !important;
+	//height: 3em !important;
+	text-transform: none !important;
+	font-size: 1.4rem !important;
+}
+
+// Input Forms
+input,
+textarea,
+select {
+	//min-width: 8em;
+	height: 3em;
+	padding: 0 0 0 0;
+	padding-left: 1em;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-family: 'Silka-Semi-Bold' !important;
+	letter-spacing: -0.03em;
+	//padding-bottom: 1.25rem !important;
+	/*border-radius: 99999px !important;*/
+	border-width: 2px !important;
+	border: var(--ion-color-light-grey) 2px solid !important;
+}
+
+/* for select lists*/
+
+ion-select {
+	height: 3em;
+	/*padding: 0 0 0 0;*/
+	padding-left: 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-family: 'Silka-Semi-Bold' !important;
+	border-radius: 6px !important;
+	border-width: 2px !important;
+	border: var(--ion-color-light-grey) 2px solid !important;
+	width: 100% !important;
+	min-width: 100% !important;
+	margin-top: 0.9rem !important;
+	line-height: 2rem !important;
+}
+
+.select-icon {
+	margin-top: 1rem !important;
+	margin-right: 0.5rem !important;
+}
+
+.no-left-padding {
+	padding-left: 0 !important;
+}
+
+input::placeholder {
+	color: var(--ion-color-grey) !important;
+	//  border: var(--ion-color-light-grey) 2px solid !important;
+}
+
+input:hover {
+	border: var(--ion-color-grey) !important;
+}
+
+input:active {
+	border: var(--ion-color-dark) 2px solid !important;
+}
+
+.ng-valid.ng-touched {
+	border: var(--ion-color-dark) 2px solid !important;
+	color: var(--ion-color-dark) !important;
+}
+
+.ng-invalid.ng-touched {
+	border: var(--ion-color-danger) 2px solid !important;
+	color: var(--ion-color-danger) !important;
+}
+
+.ng-pristine {
+	border: var(--ion-color-light-grey) 2px solid !important;
+}
+
+input:focus {
+	border: var(--ion-color-dark) 2px solid !important;
+}
+
+.invalid-input {
+	border: var(--ion-color-danger) 2px solid !important;
+}
+
+.valid-input {
+	border: var(--ion-color-primary) 2px solid !important;
+}
+
+/***************************************/
+
+/* HEADER */
+
+/***************************************/
+
+ion-header {
+	z-index: 999;
+	background-color: white;
+}
+
+.property-name-active {
+	text-align: center;
+	font-weight: bold !important;
+	font-size: 0.875em !important;
+	font-family: 'Silka-Semi-Bold' !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+	margin-top: 0.1em !important;
+	margin-left: 20% !important;
+	line-height: 2em !important;
+}
+
+.property-name-div {
+	float: right !important;
+}
+
+.header-img {
+	height: 6rem;
+	text-align: center;
+}
+
+.header-img-property {
+	width: 2.2em;
+	height: 2.1em;
+	margin-left: 40% !important;
+}
+
+.header-img-logo {
+	width: 12.5em;
+	margin-left: -0.5em;
+}
+
+.header-img-menu {
+	width: 2em;
+	height: 2em;
+	margin-bottom: 0.9em !important;
+	margin-left: 0.5em;
+}
+
+//Title on Header of Pages
+.page-title,
+.room-view-title {
+	text-align: center !important;
+	font-size: 1rem !important;
+	letter-spacing: -0.04em;
+	font-family: 'Silka-Bold' !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+	//line-height: 1em;
+}
+
+@media only screen and (max-width: 320px) {
+	.page-title {
+		//		font-size: 1.6rem !important;
+	}
+}
+
+//End Page Title
+.flush-top {
+	margin-top: -1em;
+}
+
+.flush-bottom {
+	margin-bottom: -1em;
+}
+
+.back-button.show-back-button {
+	display: none !important;
+}
+
+.left-icon {
+	height: 2em;
+	z-index: 9999;
+	position: relative;
+	float: left;
+	margin: 1.5rem 0 0 0.5em;
+}
+
+.down-icon {
+	height: 1em;
+	width: 0.7em;
+	z-index: 9999;
+	position: relative;
+}
+
+.left-down-icon {
+	//float:left !important;
+}
+
+.right-down-icon {
+	//float:right !important;
+	//margin-right: 7.5em !important;
+}
+
+.cancel-button {
+	//margin-top: 1.7em;
+	//font-size: 1.5rem !important;
+	// padding-left: 0;
+	line-height: 2em;
+	margin-left: 5px;
+}
+
+.save-button {
+	text-align: right;
+	line-height: 2em;
+	margin-right: 6px;
+}
+
+/***************************************/
+
+/* HEADER (end) */
+
+/***************************************/
+
+/***************************************/
+
+/* BODY */
+
+/***************************************/
+
+//dashboard icons
+.area-left-img {
+	//padding-top: 1.2rem;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	max-width: 80%;
+	/*filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);*/
+	filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg)
+		brightness(89%) contrast(107%);
+	max-height: 60% !important;
+}
+
+//Messages on intro pages
+.welcome-text {
+	margin-top: 8vh !important;
+	text-align: center !important;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+
+/***************************************/
+
+/* BODY (end) */
+
+/***************************************/
+
+input {
+	width: 100%;
+	height: 3em !important;
+}
+textarea{
+	width: 100%;
+}
+
+.mypad-green {
+	color: var(--ion-color-primary) !important;
+}
+
+.mypad-red {
+	color: var(--ion-color-danger) !important;
+}
+
+.mypad-grey {
+	color: var(--ion-color-grey) !important;
+}
+
+.mypad-black {
+	color: var(--ion-color-dark) !important;
+}
+
+.spacer-halfRem {
+	height: 0.5em;
+}
+
+.spacer-oneRem {
+	height: 1em;
+}
+
+.spacer-oneAndHalfRem {
+	height: 1.5em;
+}
+
+.text-input-regular {
+	font-family: 'Silka-Medium' !important;
+	font-size: 1.1rem;
+	letter-spacing: -0.04em;
+	margin-bottom: 8px;
+	line-height: 1.25em;
+}
+
+.label {
+	font-family: 'Silka-Medium' !important;
+	font-size: 1rem !important;
+	padding-bottom: 0.3em;
+	margin: 0 !important;
+	letter-spacing: -0.04em;
+	color: var(--ion-color-grey) !important;
+}
+
+.text-area-regular {
+	height: 8em !important;
+}
+
+.drop-down-icon {
+	height: 1em;
+	z-index: 9999;
+	position: absolute;
+	float: right;
+	margin-left: 20em;
+	margin-top: 1em;
+}
+
+.select-text {
+	font-family: 'Silka-Bold' !important;
+	line-height: normal;
+	font-size: 1em !important;
+}
+
+.button-text .button-inner {
+	font-family: 'Silka-Semi-Bold' !important;
+	font-size: 1.4rem !important;
+	color: var(--ion-color-white-background) !important;
+}
+
+.white-background {
+	background-color: var(--ion-color-white-background) !important;
+}
+
+.fab {
+	font-family: 'Silka-Semi-Bold' !important;
+	padding-top: 1.25rem !important;
+	padding-bottom: 1.25rem !important;
+	padding-left: 1.5rem !important;
+	padding-right: 1.5rem !important;
+	border-radius: 9999px !important;
+	height: 3em !important;
+	text-transform: none !important;
+	font-size: 1.25rem !important;
+	width: 15em !important;
+}
+
+.hr {
+	border-bottom: 2px solid var(--ion-color-light-grey);
+	margin: 15px 0;
+	width: 100%;
+	//margin-left: 1rem;
+	//margin-right: 2rem !important;
+}
+
+.hr2 {
+	border-bottom: 2px solid var(--ion-color-light-grey);
+	width: 100%;
+}
+
+hr {
+	//border-width: 2px;
+	border-color: var(--ion-color-light-grey);
+}
+
+.modal-title {
+	text-align: center;
+	padding-top: 0.2em;
+}
+
+.list-modal-title {
+	padding-top: 0.4em;
+}
+
+.close-modal-title {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+	max-width: 100% !important;
+	text-align: center;
+}
+
+.close-modal-header {
+	max-width: 70%;
+	margin: auto;
+}
+
+.top-ios-space {
+	margin-top: 2em !important;
+}
+
+.use_default_green {
+	/*filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);*/
+	filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg)
+		brightness(89%) contrast(107%);
+}
+
+ion-loading.my-loading-class {
+	.loading-wrapper {
+		background: rgba(40, 42, 43, 0.35);
+		color: white;
+		box-shadow: none;
+	}
+}
+
+.alert-md .alert-head {
+	padding: 10px 24px 10px;
+	background: var(--ion-color-danger);
+	text-align: left;
+	color: white;
+}
+
+.alert-md [aria-checked='true'] .alert-radio-label {
+	color: #003f50;
+	font-size: 0.8rem !important;
+}
+
+.alert-radio-label {
+	font-size: 0.7rem !important;
+}
+
+.alert-md .alert-radio-inner {
+	background: var(--ion-color-danger);
+}
+
+.alert-md .alert-message {
+	max-height: 240px;
+	font-size: 15px;
+	padding-top: 10px;
+}
+
+.back-button-text-ios {
+	opacity: 0;
+}
+
+.utility_btn {
+	background-color: var(--ion-color-primary);
+}
+
+* {
+	font-family: Silka-Medium, Helvetica;
+}
+
+.standard-mobile-modal {
+	height: 70%;
+	top: 10%;
+	margin-left: 10%;
+	width: 80%;
+	background-color: white;
+	border: 2px grey solid;
+	display: block;
+	border-radius: 10%;
+	position: absolute;
+}
+
+.standard-mobile-modal ion-backdrop {
+	opacity: 0;
+}
+
+.toolbar {
+	border-bottom: 2px solid var(--ion-color-light-grey) !important;
+}
+
+.segment-md .segment-button {
+	//opacity: 1;
+}
+
+// Remove drop shadows on Android
+.header-md::after,
+.tabs-md[tabsPlacement='top'] > .tabbar::after,
+.footer-md::before,
+.tabs-md[tabsPlacement='bottom'] > .tabbar::before {
+	background-image: none;
+}
+
+// Remove default bottom border from toolbar
+.header-ios .toolbar-ios:last-child .toolbar-background-ios {
+	border: none;
+}
+
+// Remove background color from default hr
+.content-ios hr {
+	background: none;
+}
+
+// Remove shadow from buttons
+.button-md {
+	box-shadow: none;
+}
+
+//Remove padding from forms
+.item-md,
+.item,
+.item-ios {
+	padding-left: 0;
+}
+
+//Remove shadow from forms
+input {
+	/* Remove First */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+//Remove ios default styling for selector
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 0.5em;
+	background: #efefef;
+	border: none;
+	border-radius: 3px;
+	padding: 0em 2em 0em 1em;
+	font-size: 1em;
+	background: white;
+	line-height: 1em;
+}
+
+.select-container {
+	position: relative;
+	display: inline;
+}
+
+.select-container:after {
+	content: '';
+	width: 0;
+	height: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.select-container:after {
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	top: 0.3em;
+	right: 0.75em;
+	border-top: 8px solid black;
+	opacity: 0.5;
+}
+
+select::-ms-expand {
+	display: none;
+}
+
+.breadcrumb {
+	margin: 8px 0 0 16px;
+}
+
+.edit-profile-items-icon {
+	max-width: 0.875em !important;
+	max-height: 0.875em !important;
+	min-width: 0.875em !important;
+	min-height: 0.875em !important;
+	margin-right: -0.3em !important;
+}
+
+.edit-profile-item {
+	float: right !important;
+	font-weight: bold;
+	//margin: -0.4em 0 -0.4em 0;
+	background-color: transparent !important;
+	padding: 0 !important;
+	height: 2.4em;
+	margin-right: 1em !important;
+	margin-top: .5em !important;
+
+	.button-inner {
+		font-size: 1.4rem;
+	}
+
+	background-color: none !important;
+}
+
+.alert-message {
+	padding-top: 0.5em !important;
+}
+
+.hover-link:hover {
+	color: #003f50;
+}
+
+.alert-message {
+	line-height: 1.5em !important;
+}
+
+.apple-sign-in-btn{
+	width: 210px;
+	height: 40px;
+	color: white;
+	background-color: black;
+	border-radius: 9px;
+}
+
+.text-center{
+	text-align: center !important;
+}
+
+.google-sign-in-btn{
+	background-color: #4285F4;
+	width: 210px;
+	height: 40px;
+	color: white;
+	border-radius: 9px;
+}
+
+
+.sign-in-btn-left-col{
+	margin-right: -1em;
+}
+
+.sign-in-btn-right-col{
+	padding-top: 1.05em
+}
