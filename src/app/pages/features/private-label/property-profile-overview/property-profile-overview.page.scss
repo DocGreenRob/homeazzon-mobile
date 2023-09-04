@@ -1,0 +1,67 @@
+.header-img {
+	height: 6rem;
+	text-align: center;
+}
+
+.header-text {
+	color: white;
+	text-align: center;
+}
+
+.back-icon {
+	font-size: xx-large;
+	font-weight: bold;
+	margin-top: 1rem;
+}
+
+ion-content {
+	background-color: var(--ionic-color-white-background) !important;
+}
+
+.item-name {
+	color: var(--ionic-color-dark);
+	font-size: 1.75rem !important;
+	float: left;
+	margin-top: 1rem !important;
+	font-weight: lighter !important;
+}
+
+.item-image {
+	//text-align: center;
+	//float: center;
+	width: 4rem;
+	height: 4rem;
+	color: var(--ionic-color-primary);
+	filter: invert(72%) sepia(7%) saturate(2935%) hue-rotate(178deg) brightness(97%) contrast(94%);
+}
+
+.item-ios {
+	background-color: var(--ionic-color-primary);
+}
+
+.item-md {
+	background-color: var(--ionic-color-primary);
+}
+
+.hr {
+	border-bottom: 1px solid #ccc;
+	margin: 10px 0;
+	width: 100%;
+	margin-left: 1rem;
+	margin-right: 2rem !important;
+}
+
+.hr-full {
+	border-bottom: 1px solid #ccc;
+	margin: 10px 0;
+	width: 100%;
+}
+
+.choose-btn {
+	//background-color: map-get($colors, light);
+	color: var(--ionic-color-white-background);
+	font-weight: bolder;
+	float: right;
+	margin-left: 1rem;
+	text-transform: none;
+}

@@ -1,13 +1,96 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>sign-up</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+	<div style="height:4.75em;"></div>
+	<ion-row>
+		<ion-col size="12" class="ion-text-center">
+			<h2 class="welcome-title ion-text-center">Sign Up</h2>
+			<img src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fimgs%2Fhorizontal-logo.jpg?alt=media&token=5a7b36a8-33ea-4838-bf48-5c816e8ae785"
+				 class="logo-img" />
+		</ion-col>
+	</ion-row>
+	<ng-container>
+		<form (ngSubmit)="signUp()" [formGroup]="signUpForm">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">sign-up</ion-title>
-    </ion-toolbar>
-  </ion-header>
+			<ion-item style="margin-bottom: 0.25em">
+				<input type="text" formControlName="firstName" placeholder="First Name">
+			</ion-item>
+
+			<ion-item style="margin-bottom: 0.25em">
+				<input type="text" formControlName="lastName" placeholder="Last Name">
+			</ion-item>
+			<ion-item style="margin-bottom: 0.25em">
+				<input type="text" formControlName="email" placeholder="Email">
+			</ion-item>
+			<ion-item style="margin-bottom: 0.25em">
+				<input type="password" formControlName="password" placeholder="Password">
+			</ion-item>
+			<ion-item style="margin-bottom: 0.25em">
+				<input type="password" formControlName="cpassword" placeholder="Confirm Password">
+			</ion-item>
+			<ion-row>
+				<ion-col size="2"></ion-col>
+				<ion-col size="8">
+					<ion-button color="success" type="submit" expand="block">Sign Up</ion-button>
+				</ion-col>
+				<ion-col size="2"></ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col size="4"> </ion-col>
+				<ion-col size="1"></ion-col>
+				<ion-col size="7">
+					<ion-button color="primary" expand="block" fill="clear" (click)="signIn()">Sign In with Email</ion-button>
+				</ion-col>
+			</ion-row>
+		</form>
+		
+		<ion-grid>
+				<ion-row>
+					<ion-col size="2"></ion-col>
+					<ion-col size="8">
+						<div class="text-center">
+							<button (click)="signInGoogle()" class="google-sign-in-btn">
+								<ion-row>
+									<ion-col size="2"  class="sign-in-btn-left-col" >
+										<img src="assets/imgs/btn_google_dark_normal_ios.svg"
+											style="height: 30px;width: 30px;">
+									</ion-col>
+									<ion-col size="10"  class="sign-in-btn-right-col">
+										<span>Sign in with Google</span>
+									</ion-col>
+								</ion-row>
+	
+							</button>
+						</div>
+					</ion-col>
+					<ion-col size="2"></ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col size="2"></ion-col>
+					<ion-col size="8">
+						<div class="text-center">
+								<button (click)="signInApple()" class="apple-sign-in-btn">
+										<ion-row>
+											<ion-col size="2"  class="sign-in-btn-left-col">
+													<ion-icon name="logo-apple" style="zoom:1.75"></ion-icon>
+											</ion-col>
+											<ion-col size="10" class="sign-in-btn-right-col">
+													<span>Sign in with Apple</span>
+											</ion-col>
+										</ion-row>
+									</button>
+						</div>
+					</ion-col>
+					<ion-col size="2"></ion-col>
+				</ion-row>
+				<!--<ion-row>
+					<ion-col size="2"></ion-col>
+					<ion-col size="8">
+						<ion-button color="tertiary" shape="round" (click)="signInFb()" size="small" expand="block">
+							<ion-icon name="logo-facebook" slot="start"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;Facebook
+						</ion-button>
+					</ion-col>
+					<ion-col size="2"></ion-col>
+				</ion-row>-->
+			</ion-grid>
+	</ng-container>
+
 </ion-content>

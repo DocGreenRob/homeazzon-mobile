@@ -1,0 +1,109 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important;">
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<ion-row class="top-row">
+		<ion-col size="3">
+			<ion-buttons left>
+				<button ion-button (click)="close()"
+						style="background-color: transparent;padding-left: 0px !important;">
+					<div>
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+							 class="left-icon" style="margin: .5em !important;" />
+					</div>
+				</button>
+			</ion-buttons>
+		</ion-col>
+		<ion-col size="6">
+			<h1 class="page-title">
+				<img style="max-width: 1em !important; filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);"
+					 src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fuser-friends.svg?alt=media&token=8288f72c-046b-4ec5-b44e-7aa63b8e2e7d">&nbsp;&nbsp;&nbsp;Realtor Registration
+			</h1>
+		</ion-col>
+		<ion-col size="3"></ion-col>
+	</ion-row>
+</ion-header>
+<ion-content class="ion-padding">
+    <h2 style="text-align:center !important;">Tell us about your business!</h2>
+	<ion-row>
+        <ion-col col-12>
+            <ion-label>Company Name</ion-label>
+            <div class="divBorder">
+                <ion-input type="text" [(ngModel)]="companyName" placeholder="Enter Company Name"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+	<ion-row>
+        <ion-col col-12>
+            <ion-label>Website</ion-label>
+            <div class="divBorder">
+                <ion-input type="url" [(ngModel)]="website" placeholder="Enter Business Website"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+	<ion-row>
+        <ion-col col-12>
+            <ion-label>Email</ion-label>
+            <div class="divBorder">
+                <ion-input type="email" [(ngModel)]="email" placeholder="Enter Business Email"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+	<ion-row>
+        <ion-col col-12>
+            <ion-label>Phone</ion-label>
+            <div class="divBorder">
+                <ion-input type="phone" [(ngModel)]="businessPhone" placeholder="Enter Business Phone"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col col-12>
+            <ion-label>Street Address 1</ion-label>
+            <div class="divBorder">
+                <ion-input type="text" [(ngModel)]="streetAddress1" placeholder="Enter Street Address 1"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col col-12>
+            <ion-label>Street Address 2</ion-label>
+            <div class="divBorder">
+                <ion-input type="text" [(ngModel)]="streetAddress2" placeholder="Enter Street Address 2"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col col-12>
+            <ion-label>City</ion-label>
+            <div class="divBorder">
+                <ion-input type="text" [(ngModel)]="city" placeholder="Enter City"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col col-6>
+            <ion-label>State</ion-label>
+            <div class="divBorder">
+                <ion-select [(ngModel)]="state">
+                    <ion-select-option [value]="0">Select State</ion-select-option>
+                    <ion-select-option [value]="state.Abbv" *ngFor="let state of states; let i = index">
+                        {{state.Name}}
+                    </ion-select-option>
+                </ion-select>
+            </div>
+        </ion-col>
+        <ion-col col-6>
+            <ion-label>Zip</ion-label>
+            <div class="divBorder">
+                <ion-input inputmode="numeric" type="number" maxlength="5" (keyup.enter)="continue()" [(ngModel)]="zip" placeholder="Enter Zip"></ion-input>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row class="buttons">
+        <ion-col col-6>
+            <ion-button color="danger" (click)="close()">Cancel</ion-button>
+        </ion-col>
+        <ion-col col-6 class="continueButton">
+            <ion-button color="secondary" (click)="continue()">Continue</ion-button>
+        </ion-col>
+    </ion-row>
+</ion-content>

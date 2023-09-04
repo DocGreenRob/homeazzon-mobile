@@ -1,0 +1,29 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+<ion-content class="ion-padding" #content>
+	<ion-row lines="none">
+		<ion-col size="12">
+			<h2 class="header-text">What about common areas?</h2>
+		</ion-col>
+		<ion-col size="12" *ngFor="let interior of interiors">
+			<h3 class="input-label">{{interior.Name}}</h3>
+			<ion-item lines="none">
+				<input inputmode="numeric" type="number" clearOnEdit [(ngModel)]="interior.Quantity" required (focus)="selectInput($event)">
+			</ion-item>
+		</ion-col>
+	</ion-row>
+</ion-content>
+<ion-footer>
+	<ion-row>
+		<ion-col size="6">
+			<h2 (click)="addRoom()" class="mypad-green">
+				<ion-icon name="add-circle"></ion-icon>&nbsp;Add a Room
+			</h2>
+		</ion-col>
+		<ion-col size="6">
+			<ion-button float-end color="dark" style="float:right" (click)="continue()" shape="round" class="continue-btn">Continue</ion-button>
+		</ion-col>
+	</ion-row>
+</ion-footer>

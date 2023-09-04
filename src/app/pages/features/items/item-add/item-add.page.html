@@ -1,0 +1,125 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+	<ion-toolbar color="white-background">
+		<ion-row class="top-row">
+			<ion-col size="3">
+				<h5 *ngIf="view == 'SelectProfileItems'" class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="close()">
+					Cancel
+				</h5>
+				<img *ngIf="view == 'SelectLineItems'" src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" (click)="back()" />
+			</ion-col>
+			<ion-col size="6">
+				<h1 class="page-title">{{pageTitle}}</h1>
+			</ion-col>
+			<ion-col size="3">
+				<h5 *ngIf="view == 'SelectProfileItems'" class="mypad-green save-button" (click)="next()">
+					Next
+				</h5>
+				<h5 *ngIf="view == 'SelectLineItems'" class="mypad-green save-button" (click)="save()">
+					Save
+				</h5>
+			</ion-col>
+		</ion-row>
+	</ion-toolbar>
+</ion-header>
+<ion-content padding>
+	<ng-container>
+		<div class="spacer-halfRem"></div>
+		<div class="main-view" style="margin-bottom: .5em !important; margin-left: .5em !important; margin-right: .5em !important;">
+			<img src="{{image}}" *ngIf="hasImage" />
+			<!-- Show the URL for Google Web searches -->
+			<div *ngIf="!hasImage && !isBookmark">
+				{{SelectedSearchResultDetail.Link}}
+			</div>
+			<!-- Show the Url for Bookmarks -->
+			<div *ngIf="isBookmark">
+				{{bookmarkUrl}}
+			</div>
+		</div>
+		<div *ngIf="view == 'SelectProfileItems'" style="margin-left: .5em !important;">
+			<ion-row>
+				<ion-col>
+					<h1 class="page-title">What Room is the item for?</h1>
+					<p><i>(Select all that apply)</i></p>
+				</ion-col>
+			</ion-row>
+			<!-- Bedrooms -->
+			<h3>Bedrooms</h3>
+			<ion-row *ngFor="let profileItem of activePropertyBedrooms;">
+				<ion-col col-2>
+					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+				</ion-col>
+				<ion-col col-10>
+					<p>{{profileItem.Name}}</p>
+				</ion-col>
+			</ion-row>
+			<div class="hr"></div>
+			<!-- Bathrooms -->
+			<h3>Bathrooms</h3>
+			<ion-row *ngFor="let profileItem of activePropertyBathrooms;">
+				<ion-col col-2>
+					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+				</ion-col>
+				<ion-col col-10>
+					<p>{{profileItem.Name}}</p>
+				</ion-col>
+			</ion-row>
+			<div class="hr"></div>
+			<!-- Interior Areas -->
+			<h3>Interior Areas</h3>
+			<ion-row *ngFor="let profileItem of activePropertyInteriorAreas;">
+				<ion-col col-2>
+					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+				</ion-col>
+				<ion-col col-10>
+					<p>{{profileItem.Name}}</p>
+				</ion-col>
+			</ion-row>
+			<div class="hr"></div>
+			<!-- Exterior Areas -->
+			<h3>Exterior Areas</h3>
+			<ion-row *ngFor="let profileItem of activePropertyExteriorAreas;">
+				<ion-col col-2>
+					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+				</ion-col>
+				<ion-col col-10>
+					<p>{{profileItem.Name}}</p>
+				</ion-col>
+			</ion-row>
+		</div>
+		<div *ngIf="view == 'SelectLineItems'" style="margin-left: .5em !important;">
+			<ion-row>
+				<ion-col>
+					<h1 class="page-title" style="margin-bottom: 0.4em !important">Which Categories does the Item Belong in?</h1>
+				</ion-col>
+			</ion-row>
+			<ion-row *ngFor="let profileItem of selectedProfileItems;">
+				<h3 style="margin-bottom: 0.1em !important">{{profileItem.Name}}</h3>
+				<div class="hr"></div>
+				<div>
+					<ion-item>
+						<ion-label class="save-profile-item-label">Save in {{profileItem.Name}}?</ion-label>
+						<ion-toggle [(ngModel)]="profileItem.IsSaveToRoom"></ion-toggle>
+					</ion-item>
+				</div>
+				<div *ngIf="!profileItem.IsSaveToRoom">
+					<ion-row *ngFor="let lineitem of profileItem.Lineitems;" style="width:100% !important; max-width:100% !important; min-width:100% !important;">
+						<div *ngIf="lineitem.IsForDesign">
+							<ion-col col-2>
+								<ion-checkbox [(ngModel)]="lineitem.IsChecked" id="{{'s_' + lineitem.Id}}"></ion-checkbox>
+							</ion-col>
+							<ion-col col-10>
+								{{lineitem.Name}}
+							</ion-col>
+							<ion-col col-12>
+								<div style="margin-top: 0.5em;"></div>
+							</ion-col>
+						</div>
+
+					</ion-row>
+				</div>
+				<div class="hr" *ngIf="selectedProfileItems.length>1"></div>
+			</ion-row>
+		</div>
+	</ng-container>
+</ion-content>

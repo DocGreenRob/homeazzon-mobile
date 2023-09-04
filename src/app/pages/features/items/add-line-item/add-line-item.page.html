@@ -1,0 +1,55 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+	<ion-toolbar color="white-background">
+		<ion-row class="top-row">
+			<ion-col size="3">
+				<h5 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="close()">
+					Cancel
+				</h5>
+			</ion-col>
+			<ion-col size="6">
+				<h1 class="page-title">{{profileItem.Name}} Things</h1>
+			</ion-col>
+			<ion-col size="3">
+				<h5 class="mypad-green save-button" (click)="saveLineItems()">
+					Save
+				</h5>
+			</ion-col>
+		</ion-row>
+	</ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" #content>
+	<ion-row>
+		<ion-col size="12" *ngIf="uiType != 'customHouse'">
+			<ion-list>
+				<ion-item *ngFor="let lineitem of allLineItems; let i=index">
+					<ion-checkbox color="primary" [(ngModel)]="lineitem.IsChecked" mode="md"></ion-checkbox>
+					<ion-label [ngClass]="{'mypad-green': lineitem.IsChecked}" class="input-label">{{lineitem.Name}}
+					</ion-label>
+					<ion-buttons slot="end" *ngIf="lineitem.IsUserDefined">
+						<ion-button (click)="editLineItem(lineitem)">
+							<ion-badge color="warning">Edit</ion-badge>
+						</ion-button>
+						<ion-button (click)="deleteLineItem(lineitem)">
+							<ion-badge color="danger">
+								delete
+								<ion-icon slot="end" name="trash-outline" color="danger"></ion-icon>
+							</ion-badge>
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			</ion-list>
+		</ion-col>
+	</ion-row>
+</ion-content>
+<ion-footer>
+	<ion-row>
+		<ion-col size="6"></ion-col>
+		<ion-col size="6">
+			<h4 (click)="addLineItem()" style="float:right; margin-top: 3em; margin-right:2em" class="mypad-green"
+				*ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
+				<ion-icon name="add-circle"></ion-icon>&nbsp;Add Line Item
+			</h4>
+		</ion-col>
+	</ion-row>
+</ion-footer>

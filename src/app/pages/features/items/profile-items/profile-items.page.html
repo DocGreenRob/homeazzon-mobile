@@ -1,0 +1,148 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important;">
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<ion-row class="top-row">
+		<ion-col size="3">
+			<ion-buttons left>
+				<button ion-button (click)="close()"
+					style="background-color: transparent;padding-left: 0px !important;">
+					<div>
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+							class="left-icon" style="margin: .5em !important;" />
+					</div>
+				</button>
+			</ion-buttons>
+		</ion-col>
+		<ion-col size="6">
+			<h1 class="page-title">
+				<img *ngIf="ProfileItem.ItemCount > 0" (click)="seeProfileItemItems()"
+					style="max-width: 1em !important; filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);"
+					src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Ffolders.svg?alt=media&token=9cd3829f-8c7b-403f-bbdf-3548bf77d443">&nbsp;&nbsp;&nbsp;{{ProfileItem.Name}}
+			</h1>
+		</ion-col>
+		<ion-col size="3">
+			<div style="padding-right: .5em;">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259"
+					class="header-img-property" (click)="openMenu()">
+				<h6 class="property-name-active" (click)="openMenu()">{{ActiveProperty?.Name}}</h6>
+			</div>
+		</ion-col>
+	</ion-row>
+
+	<app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
+		(selectedSegment)="handleSegmentChanged($event)">
+	</app-segment-selector>
+
+</ion-header>
+<ion-content class="ion-padding">
+	<div style="padding-left:1em !important; padding-right:1em !important;">
+		<!-- My Stuff -->
+		<div *ngIf="manageProfileItemsView == 'digiDoc' && isViewLoaded" class="room-list">
+			<div *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
+				<ion-row class="profile-item-row">
+					<ion-col size="8">
+						<p class="profile-item-content-name listSet" style="line-height:1.1em !important;">
+							{{lineitem.Name}}
+						</p>
+					</ion-col>
+					<ion-col size="4">
+						<h4 *ngIf="lineitem.DigiDocCount == 0" style="color:red !important; float: right !important;">
+							{{lineitem.DigiDocCount}}
+						</h4>
+						<h4 *ngIf="lineitem.DigiDocCount > 0" style="float: right !important; ">
+							{{lineitem.DigiDocCount}}
+						</h4>
+					</ion-col>
+				</ion-row>
+				<div class="hr2"> </div>
+			</div>
+			<br>
+			<!-- temp removal, RAG 11.30.20 -->
+			<!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
+				&nbsp; Optional Items
+			</button>-->
+			<br>
+			<br>
+		</div>
+		<!-- Wishlist -->
+		<div *ngIf="manageProfileItemsView == 'wishlist' && isViewLoaded" class="room-list">
+			<div *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
+				<ion-row class="profile-item-row">
+					<ion-col size="8">
+						<p class="profile-item-content-name listSet">
+							{{lineitem.Name}}
+						</p>
+					</ion-col>
+					<ion-col size="4">
+						<h4 class="profile-item-content-sq-ft" *ngIf="lineitem.WishlistCount == 0"
+							style="color:red !important; float: right !important; ">
+							{{lineitem.WishlistCount}}
+						</h4>
+						<h4 class="profile-item-content-sq-ft" *ngIf="lineitem.WishlistCount > 0"
+							style="float: right !important; ">
+							{{lineitem.WishlistCount}}
+						</h4>
+					</ion-col>
+				</ion-row>
+				<div class="hr2"> </div>
+			</div>
+			<br>
+			<!-- temp removal, RAG 11.30.20 -->
+			<!--<button clear ion-button class="edit-profile-item"
+					(click)="clickOptionalItems()">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd"
+					 class="edit-profile-items-icon use_default_baby_blue">
+				&nbsp; Optional Items
+			</button>-->
+			<br>
+			<br>
+		</div>
+		<!-- Suggestions -->
+		<div *ngIf="manageProfileItemsView == 'suggested' && isViewLoaded" class="room-list">
+			<div *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
+				<ion-row class="profile-item-row">
+					<ion-col size="8">
+						<p class="profile-item-content-name listSet">
+							{{lineitem.Name}}
+							<ion-badge color="green" *ngIf="lineitem.UnopenedSuggestionCount > 0">
+								{{lineitem.UnopenedSuggestionCount}}</ion-badge>
+						</p>
+					</ion-col>
+					<ion-col size="4">
+						<h4 *ngIf="lineitem.SuggestCount == 0" style="color:red !important; float: right !important; ">
+							{{lineitem.SuggestCount}}</h4>
+						<h4 *ngIf="lineitem.SuggestCount > 0" style="float: right !important; ">
+							{{lineitem.SuggestCount}}</h4>
+					</ion-col>
+				</ion-row>
+				<div class="hr2"> </div>
+			</div>
+			<br>
+			<!-- temp removal, RAG 11.30.20 -->
+			<!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
+				&nbsp; Optional Items
+				 </button>-->
+
+
+			<br>
+			<br>
+		</div>
+		<br style="clear:both;" />
+		<br style="clear:both;" />
+	</div>
+	<br><br>
+	<ion-row>
+		<ion-col size="6">
+		</ion-col>
+		<ion-col size="6">
+			<ion-button color="primary" style="" ion-button class="edit-profile-item" (click)="addLineItems()">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fplus-circle.svg?alt=media&token=e8b32f5c-685f-4cd4-9e57-bcce3138dce7"
+					class="edit-profile-items-icon use_default_baby_blue"> &nbsp; Add Line Items
+			</ion-button>
+		</ion-col>
+	</ion-row>
+</ion-content>
+<tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
+	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+	(searchEvent)="search()"></tab-menu>

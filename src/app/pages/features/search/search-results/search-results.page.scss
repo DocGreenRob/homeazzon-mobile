@@ -1,0 +1,33 @@
+.back-button.show-back-button {
+	display: none;
+}
+
+.left-icon {
+	height: 2em;
+	z-index: 9999;
+	position: absolute;
+	float: right;
+	margin-left: 1em;
+	margin-top: 1.5em;
+}
+
+.page-title {
+	text-align: center;
+}
+
+.search-result-image {
+	/*max-height: 7.25em !important;
+	min-height: 7.25em !important;
+	height: 7.25em !important;*/
+}
+
+.search-result-title {
+	overflow: hidden !important;
+	white-space: nowrap !important;
+	text-overflow: ellipsis !important;
+	width: 17em;
+}
+
+.search-result-row {
+	border-bottom: 1px solid var(--ion-color-grey);
+}

@@ -1,0 +1,31 @@
+<ion-header class="top-header">
+	<ion-row>
+		<ion-col size="10">
+			<h3 class="header-link">Filter</h3>
+		</ion-col>
+		<ion-col size="auto">
+			<ion-icon name="close" class="close-icon" (click)="dismiss()"></ion-icon>
+		</ion-col>
+	</ion-row>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<!--<ion-item nav-clear menu-close ng-click="toggleSubmenu()">Menu 1</ion-item>
+	<ion-item nav-clear menu-close ng-show="submenu">
+		<ion-list>
+			<ion-item nav-clear menu-close>Submenu 1</ion-item>
+			<ion-item nav-clear menu-close>Submenu 2</ion-item>
+			<ion-item nav-clear menu-close>Submenu 3</ion-item>
+		</ion-list>
+	</ion-item>
+	<ion-item nav-clear menu-close>Menu 2</ion-item>
+	<ion-item nav-clear menu-close>Menu 3</ion-item>
+	<ion-item nav-clear menu-close>Menu 4</ion-item>-->
+		<!--<div class="scrollmenu">
+		<a (click)="viewLink(link)" *ngFor="let link of links">{{link.Name}}</a>
+	</div>-->
+		<ion-item *ngFor="let tag of tagsList.Items">{{tag.Name}}</ion-item>
+	</ion-list>	
+</ion-content>
+

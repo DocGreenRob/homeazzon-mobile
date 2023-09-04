@@ -1,0 +1,157 @@
+<ion-header>
+
+	<navigation-sub-menu [showBackButton]="true" type="titleMenu" [title]="propertyName+' Overview'"
+		*ngIf="propertyName"></navigation-sub-menu>
+</ion-header>
+<ion-content>
+	<div class="area-list" *ngFor="let p of privatelabelprofileset; let i=index" text-wrap>
+		<ng-container *ngIf="p.Bedrooms">
+			<ion-row (click)="toogleViews('bedroom')">
+				<ion-col size="2">
+					<img src="assets/svgs/regular/bed.svg" class="area-left-img">
+				</ion-col>
+				<ion-col size="8">
+					<h1 class="area-header"> {{p.Bedrooms}} Bedrooms</h1>
+					<p class="area-header-sqft">{{p.SqFeet}} sq ft</p>
+				</ion-col>
+				<ion-col size="2">
+					<img src="assets/svgs/solid/chevron-down.svg" class="area-right-img" *ngIf="!bedroomToggle">
+					<img src="assets/svgs/solid/chevron-up.svg" class="area-right-img" *ngIf="bedroomToggle">
+				</ion-col>
+			</ion-row>
+			<div class="hr"> </div>
+			<div *ngIf="bedroomToggle" class="room-list">
+				<div *ngFor="let profileItem of p.Areas; let i = index;" class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}}">
+					<ion-row class="profile-item-row">
+						<ion-col size="8">
+							<h2 class="profile-item-content-name DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}} DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{i}}"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.Name}}
+							</h2>
+						</ion-col>
+						<ion-col size="4">
+							<h2 class="profile-item-content-sq-ft"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.SqFt}} Sq Ft</h2>
+						</ion-col>
+					</ion-row>
+				</div>
+
+				<br>
+
+			</div>
+			<div class="hr" *ngIf="bedroomToggle"> </div>
+		</ng-container>
+
+		<ng-container *ngIf="p.Bathrooms">
+			<ion-row (click)="toogleViews('bathroom')">
+				<ion-col size="2">
+					<img src="assets/svgs/regular/bath.svg" class="area-left-img">
+				</ion-col>
+				<ion-col size="8">
+					<h1 class="area-header"> {{p.Bathrooms}} Bathrooms</h1>
+					<p class="area-header-sqft">{{p.SqFeet}} sq ft</p>
+				</ion-col>
+				<ion-col size="2">
+					<img src="assets/svgs/solid/chevron-down.svg" class="area-right-img" *ngIf="!bedroomToggle">
+					<img src="assets/svgs/solid/chevron-up.svg" class="area-right-img" *ngIf="bedroomToggle">
+				</ion-col>
+			</ion-row>
+			<div class="hr"> </div>
+			<div *ngIf="bathroomToggle" class="room-list">
+				<div *ngFor="let profileItem of p.Areas; let i = index;" class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}}">
+					<ion-row class="profile-item-row">
+						<ion-col>
+							<h2 class="profile-item-content-name DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}} DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{i}}"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.Name}}
+							</h2>
+						</ion-col>
+						<ion-col>
+							<h2 class="profile-item-content-sq-ft"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.SqFt}} Sq Ft</h2>
+						</ion-col>
+					</ion-row>
+				</div>
+
+				<br>
+
+			</div>
+			<div class="hr" *ngIf="bathroomToggle"> </div>
+		</ng-container>
+		<ng-container *ngIf="p.InteriorAreas">
+			<ion-row (click)="toogleViews('commonArea')">
+				<ion-col size="2">
+					<img src="assets/svgs/regular/couch.svg" class="area-left-img">
+				</ion-col>
+				<ion-col size="8">
+					<h1 class="area-header"> {{p.InteriorAreas}} Interior Areas</h1>
+					<p class="area-header-sqft">{{p.SqFeet}} sq ft</p>
+				</ion-col>
+				<ion-col size="2">
+					<img src="assets/svgs/solid/chevron-down.svg" class="area-right-img" *ngIf="!bedroomToggle">
+					<img src="assets/svgs/solid/chevron-up.svg" class="area-right-img" *ngIf="bedroomToggle">
+				</ion-col>
+			</ion-row>
+			<div class="hr"> </div>
+			<div *ngIf="commonAreaToggle" class="room-list">
+				<div *ngFor="let profileItem of p.Areas; let i = index;" class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}}">
+					<ion-row class="profile-item-row">
+						<ion-col>
+							<h2 class="profile-item-content-name DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}} DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{i}}"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.Name}}
+							</h2>
+						</ion-col>
+						<ion-col>
+							<h2 class="profile-item-content-sq-ft"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.SqFt}} Sq Ft</h2>
+						</ion-col>
+					</ion-row>
+				</div>
+
+				<br>
+
+			</div>
+			<div class="hr" *ngIf="commonAreaToggle"> </div>
+		</ng-container>
+		<ng-container *ngIf="p.ExteriorAreas">
+			<ion-row (click)="toogleViews('exterior')">
+				<ion-col size="2">
+					<img src="assets/svgs/regular/warehouse.svg" class="area-left-img">
+				</ion-col>
+				<ion-col size="8">
+					<h1 class="area-header"> {{p.ExteriorAreas}} Exterior Areas</h1>
+					<p class="area-header-sqft">{{p.SqFeet}} sq ft</p>
+				</ion-col>
+				<ion-col size="2">
+					<img src="assets/svgs/solid/chevron-down.svg" class="area-right-img" *ngIf="!bedroomToggle">
+					<img src="assets/svgs/solid/chevron-up.svg" class="area-right-img" *ngIf="bedroomToggle">
+				</ion-col>
+			</ion-row>
+			<div class="hr"> </div>
+			<div *ngIf="exteriorAreaToogle" class="room-list">
+				<div *ngFor="let profileItem of p.Areas; let i = index;" class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}}">
+					<ion-row class="profile-item-row">
+						<ion-col>
+							<h2 class="profile-item-content-name DASHBOARD-PROFILE-ITEM-BEDROOMS-{{i}} DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{i}}"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.Name}}
+							</h2>
+						</ion-col>
+						<ion-col>
+							<h2 class="profile-item-content-sq-ft"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.SqFt}} Sq Ft</h2>
+						</ion-col>
+					</ion-row>
+				</div>
+				<br>
+			</div>
+			<div class="hr" *ngIf="exteriorAreaToogle"> </div>
+		</ng-container>
+	</div>
+	<h1 class="header-sqft">Total: {{totalSqlFeet}} Sq Ft</h1>
+</ion-content>

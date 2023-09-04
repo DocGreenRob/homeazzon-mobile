@@ -1,0 +1,39 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important;">
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<ion-row>
+		<ion-col size="3">
+			<ion-buttons left>
+				<button ion-button (click)="close()"
+						style="background-color: transparent; padding-left: 0px !important;">
+					<div>
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+							 class="left-icon" style="margin: .5em !important;" />
+					</div>
+				</button>
+			</ion-buttons>
+		</ion-col>
+		<ion-col size="9">
+			<h1 class="page-title" style="text-align:left !important;">
+				<img style="max-width: 1em !important; filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);"
+					 src="{{Suite16Category.ImageUrl}}">&nbsp;&nbsp;&nbsp;{{ProfileItem?.Name}}
+				{{Suite16Category.Name}}
+			</h1>
+		</ion-col>
+	</ion-row>
+</ion-header>
+<ion-content class="ion-padding">
+	<div>
+		<div *ngFor="let lineitem of lineitems;" class="room-list">
+			<ion-row class="profile-item-row">
+				<ion-col size="8">
+					<p class="profile-item-content-name listSet" (click)="showItems(lineitem)">
+						{{lineitem.Name}}
+					</p>
+				</ion-col>
+				<ion-col size="4"></ion-col>
+			</ion-row>
+			<div class="hr2"> </div>
+		</div>
+	</div>
+</ion-content>
+<tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>

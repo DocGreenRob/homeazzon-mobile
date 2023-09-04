@@ -1,0 +1,38 @@
+.item-title {
+    text-align: center;
+    vertical-align: middle;
+    white-space: normal !important;
+    margin: .7em;
+    font-size: .75rem !important;
+    /*overflow: scroll !important;
+	text-overflow: ellipsis !important;
+	height: 1.5em !important;
+	max-height: 1.5em !important;*/
+}
+
+.item-icon {
+    max-height: 4em !important;
+    /*filter: invert(63%) sepia(26%) saturate(777%) hue-rotate(72deg) brightness(93%) contrast(96%);*/
+    filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg) brightness(89%) contrast(107%);
+    text-align: center !important;
+    border: none !important;
+}
+
+.item-image {
+    max-height: 6em !important;
+    height: 6em;
+    width: 6em;
+}
+
+hr {
+    border: 2px solid #e9eae9 !important;
+}
+
+img {
+    border: 3px solid #78d9fa;
+    border-radius: 15px;
+}
+
+/*.item-title::after {
+    content: '...';
+}*/

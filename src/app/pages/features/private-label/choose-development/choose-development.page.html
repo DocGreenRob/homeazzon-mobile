@@ -1,0 +1,39 @@
+<ion-header>
+	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+<ion-content class="ion-padding">
+	<!-- Developments View -->
+	<div *ngIf="showDevelopments">
+		<h1 class="header-text" class="ion-text-center">Let's start with a development</h1>
+		<br>
+		<div *ngFor="let d of developments; let i = index">
+
+			<img src="{{d.Url}}">
+
+			<h2 class="development-name">{{d.Name}}</h2>
+			<br>
+			<ion-button (click)="peekLots(d)" ion-button class="choose-dev" shape="round" color="dark">Choose This Development</ion-button>
+			<br>
+			<div class="hr"> </div>
+		</div>
+	</div>
+	<!-- Development Lots View -->
+	<ng-container *ngIf="showLots">
+		<div class="ion-text-center">
+			<h1 class="header-text">You Chose&nbsp;<span class="header-text">{{selectedDevelopment.Name}}.</span>&nbsp;Now let's choose a lot.</h1>
+		</div>
+		<br>
+		<div class="hr"> </div>
+		<div *ngFor="let l of lots; let i = index" (click)="viewLotDetails(l.Id)" class="LOT-{{i}}">
+			<ion-row>
+				<ion-col size="2">
+					<img src="assets/svgs/regular/map-pin.svg" class="item-image">
+				</ion-col>
+				<ion-col size="10">
+					<h3 class="lot-name">{{l.LotNumber}} - {{l.StreetAddress1}}</h3>
+				</ion-col>
+			</ion-row>
+			<div class="hr"> </div>
+		</div>
+	</ng-container>
+</ion-content>

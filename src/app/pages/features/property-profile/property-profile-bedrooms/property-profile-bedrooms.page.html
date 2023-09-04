@@ -1,0 +1,26 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<ion-row class="underLine">
+		<ion-col size="12">
+			<h2 class="header-text">Good work! Now let's set up your bedrooms.</h2>
+		</ion-col>
+		<ion-col size="12" *ngFor="let bedroom of bedRooms">
+			<h3 class="input-label">{{bedroom.Name}}</h3>
+			<ion-item lines="none">
+				<input inputmode="numeric" type="number" [(ngModel)]="bedroom.Quantity" (focus)="selectInput($event)" required>
+			</ion-item>
+		</ion-col>
+
+	</ion-row>
+</ion-content>
+<ion-footer>
+	<ion-row>
+		<ion-col size="12">
+			<ion-button float-end color="dark" (click)="continue()" shape="round" style="float: right;margin-top: 3em;">Continue</ion-button>
+		</ion-col>
+	</ion-row>
+</ion-footer>

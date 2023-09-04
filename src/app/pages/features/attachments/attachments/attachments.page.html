@@ -1,0 +1,35 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+	<!--<save-sub-menu title="Attachments" [isShowSave]="false"></save-sub-menu>-->
+	<ion-row class="top-row">
+		<ion-col size="3">
+			<h4 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="close()">Cancel</h4>
+		</ion-col>
+		<ion-col size="6">
+			<h1 class="page-title">Attachments</h1>
+		</ion-col>
+		<ion-col size="3">
+
+		</ion-col>
+	</ion-row>
+</ion-header>
+<ion-content class="ion-padding">
+	<ng-container>
+		<ng-container>
+			<icon-grid [_grid]="data" (_itemClickEventHandler)="attachmentClickEventHandler($event)"></icon-grid>
+		</ng-container>
+		<ion-fab style="bottom: 3em !important; width: 100% !important;" bottom>
+			<div class="mypad-grey" style="text-align:center;  margin-right: 1em !important;">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852" class="down-icon left-down-icon" /> Attach a new item
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852" class="down-icon right-down-icon" />
+			</div>
+		</ion-fab>
+	</ng-container>
+</ion-content>
+<tab-menu [_isEnabled]="true"
+		  (homeEvent)="goHome()"
+		  (fileExplorerEvent)="launchFileExplorer()"
+		  (cameraEvent)="launchCamera()" 
+		  (barcodeEvent)="launchBarcode()" 
+		  (bookmarkEvent)="bookmark()"
+		  (searchEvent)="search()"></tab-menu>

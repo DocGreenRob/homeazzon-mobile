@@ -1,0 +1,78 @@
+.main-view {
+	margin-left: 18px !important;
+	margin-right: 18px !important;
+	text-align: center !important;
+}
+
+.main-view img {
+	max-width: 100%;
+	text-align: center !important;
+	height: 100%;
+	max-height: 100%;
+	width: 100%;
+}
+
+.icon-img {
+	height: 1em !important;
+	filter: invert(59%) sepia(64%) saturate(343%) hue-rotate(72deg)
+		brightness(91%) contrast(96%);
+}
+
+.tags {
+	display: block;
+	justify-content: center;
+	text-align: center;
+}
+
+.item-tag {
+	background: #b8dcdb;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	padding: 5px 10px;
+	margin: 3px 0;
+	border-radius: 6px;
+	display: inline-block;
+}
+
+.add-tag-button {
+	background: rgb(239, 246, 252);
+	box-sizing: border-box;
+	color: rgba(0, 0, 0, 0.55);
+	cursor: default;
+	direction: ltr;
+	display: inline;
+	font-size: 12px;
+	height: auto;
+	line-height: 24px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	padding-bottom: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 2px;
+	text-align: left;
+	/* font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 5px 10px;
+    margin: 3px 0;
+    border-radius: 6px;
+    display: inline-block;*/
+}
+pdf-viewer {
+	height: 420px !important;
+	overflow: scroll;
+}
+
+.pdfViewer .page {
+	height: 25vh !important;
+}
+
+.ng2-pdf-viewer-container {
+	height: 250px !important;
+}
+iframe {
+	height: 420px !important;
+}

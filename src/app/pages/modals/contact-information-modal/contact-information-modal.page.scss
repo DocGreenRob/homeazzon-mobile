@@ -1,0 +1,40 @@
+.sc-ion-modal {
+	top: 20%;
+	left: 10%;
+	width: 80%;
+	height: 50%;
+	border-radius: 20px;
+}
+
+h3 {
+	font-size: larger !important;
+	margin-left: 2rem !important;
+	color: var(--ion-color-grey);
+}
+
+.input-label {
+	margin-left: 1em;
+}
+
+form.ng-invalid.ng-touched {
+	border: none !important;
+    color: black !important;
+}
+
+form.ng-valid.ng-touched{
+	border: none !important;
+	color: black !important;
+}
+
+p.ion-text-danger{
+	margin-left: 1.25em !important;
+}
+
+textarea{
+	padding-top: 0.45em !important;
+	line-height: 1em;
+}
+
+.ion-text-center{
+	text-align: center !important;
+}

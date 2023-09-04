@@ -1,13 +1,279 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-  </ion-toolbar>
+<ion-header style="border-bottom:2px solid whitesmoke !important;">
+	<div style="height:2em;" *ngIf="platform.is('ios')"></div>
+	<!--<primary-menu type="logoMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()" *ngIf="ActiveProperty!=null"></primary-menu>
+	<primary-menu type="logoMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()" *ngIf="ActiveProperty==null"></primary-menu>-->
+	<primary-menu type="logoMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()">
+	</primary-menu>
+	<app-segment-selector [segments]="views" [initView]="{value: manageView}"
+						  (selectedSegment)="handleSegmentClick($event)">
+	</app-segment-selector>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+	<div>
+		<!-- Rooms -->
+		<div *ngIf="manageView == 'rooms'">
+			<div *ngIf="roomView == 'default'">
+				<!--Bedrooms Overview -->
+				<div class="area-list" (click)="toogleViews('bedroom')">
+					<ion-row class="adjusted-ion-row">
+						<ion-col size="2">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fbed.svg?alt=media&token=a69b2f22-73b5-4940-bd7d-5d0b10768ac0"
+								 class="area-left-img">
+						</ion-col>
+						<ion-col size="8">
+							<h2 class="area-header">{{activePropertyBedrooms.length}} Bedrooms</h2>
+							<p class="area-header-sqft" *ngIf="totalBedroomsSqFt > 0">{{totalBedroomsSqFt}} sq ft</p>
+							<p class="area-header-sqft" *ngIf="totalBedroomsSqFt == 0" style="color:red !important;">
+								{{totalBedroomsSqFt}} sq ft
+							</p>
+						</ion-col>
+						<ion-col size="2">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+								 class="chevron" *ngIf="!bedroomToggle">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+								 class="chevron" *ngIf="bedroomToggle">
+						</ion-col>
+					</ion-row>
+				</div>
+				<div class="hr" *ngIf="!bedroomToggle"> </div>
+				<!--Bedrooms List -->
+				<div *ngIf="bedroomToggle" class="room-list">
+					<div *ngFor="let profileItem of activePropertyBedrooms; let bedroomIndex = index;"
+						 class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}">
+						<ion-row class="profile-item-row">
+							<ion-col size="8">
+								<p class="profile-item-content-name DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}"
+								   [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+								   (click)="showLineItems(profileItem)">
+									{{profileItem.Name}}
+								</p>
+							</ion-col>
+							<ion-col>
+								<h4 class="profile-item-content-sq-ft"
+									[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+									{{profileItem.SqFt}} Sq Ft
+								</h4>
+							</ion-col>
+						</ion-row>
+						<div class="hr" *ngIf="bedroomIndex < activePropertyBedrooms.length - 1"> </div>
+					</div>
+					<br>
+					<button clear ion-button (click)="editProfileItems('bedroom', 'interior')"
+							class="edit-profile-item">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+							 class="edit-profile-items-icon use_default_green">
+						&nbsp; Rename Rooms
+					</button>
+					<br>
+					<br>
+				</div>
+				<div class="hr" *ngIf="bedroomToggle"> </div>
+				<!--Bathroom Overview -->
+				<div class="area-list" (click)="toogleViews('bathroom')"
+					 style="padding-left:1em !important; padding-right:1em !important; margin-bottom: -1em !important;">
+					<ion-row class="adjusted-ion-row">
+						<ion-col size="2">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fbath.svg?alt=media&token=a848784d-552f-40c5-b6e3-fcfe1f77ff7e"
+								 class="area-left-img">
+						</ion-col>
+						<ion-col size="8">
+							<h2 class="area-header">{{activePropertyBathrooms.length}} Bathrooms</h2>
+							<p class="area-header-sqft" *ngIf="totalBathroomsSqFt > 0">{{totalBathroomsSqFt}} sq ft</p>
+							<p class="area-header-sqft" *ngIf="totalBathroomsSqFt == 0" style="color:red !important;">
+								{{totalBathroomsSqFt}} sq ft
+							</p>
+						</ion-col>
+						<ion-col size="2">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+								 class="chevron" *ngIf="!bathroomToggle">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+								 class="chevron" *ngIf="bathroomToggle">
+						</ion-col>
+					</ion-row>
+				</div>
+				<div class="hr" *ngIf="!bathroomToggle"> </div>
+				<!--Bathroom List -->
+				<div *ngIf="bathroomToggle" class="room-list">
+					<div *ngFor="let profileItem of activePropertyBathrooms; let bathroomIndex = index;">
+						<ion-row class="profile-item-row">
+							<ion-col size="8">
+								<p class="profile-item-content-name DASHBOARD-PROFILE-ITEM-BATHROOMS-{{bathroomIndex}}"
+								   [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+								   (click)="showLineItems(profileItem)">
+									{{profileItem.Name}}
+								</p>
+							</ion-col>
+							<ion-col>
+								<h4 class="profile-item-content-sq-ft"
+									[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+									{{profileItem.SqFt}} Sq Ft
+								</h4>
+							</ion-col>
+						</ion-row>
+						<div class="hr" *ngIf="bathroomIndex < activePropertyBathrooms.length - 1"> </div>
+					</div>
+					<br>
+					<button clear ion-button (click)="editProfileItems('bathroom', 'interior')"
+							class="edit-profile-item">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+							 class="edit-profile-items-icon use_default_baby_blue">
+						&nbsp; Rename Rooms
+					</button>
+					<br>
+					<br>
+				</div>
+				<div class="hr" *ngIf="bathroomToggle"> </div>
+				<!--Common Overview -->
+				<div class="area-list" (click)="toogleViews('commonArea')"
+					 style="padding-left:1em !important; padding-right:1em !important; margin-bottom: -1em !important;">
+					<ion-row class="adjusted-ion-row">
+						<ion-col size="2">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fcouch.svg?alt=media&token=5c35b891-09dd-47cf-98ca-1c81166d6ea1"
+								 class="area-left-img">
+						</ion-col>
+						<ion-col size="8">
+							<h2 class="area-header">{{activePropertyInteriorAreas.length}} Common</h2>
+							<p class="area-header-sqft" *ngIf="totalCommonAreasSqFt > 0">
+								{{totalCommonAreasSqFt}} sq ft
+							</p>
+							<p class="area-header-sqft" *ngIf="totalCommonAreasSqFt == 0" style="color:red !important;">
+								{{totalCommonAreasSqFt}} sq ft
+							</p>
+						</ion-col>
+						<ion-col size="2">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+								 class="chevron" *ngIf="!commonAreaToggle">
+							<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+								 class="chevron" *ngIf="commonAreaToggle">
+						</ion-col>
+					</ion-row>
+				</div>
+				<div class="hr" *ngIf="!commonAreaToggle"> </div>
+				<!--Common List -->
+				<div *ngIf="commonAreaToggle" class="room-list">
+					<div *ngFor="let profileItem of activePropertyInteriorAreas; let commonIndex = index;">
+						<ion-row class="profile-item-row">
+							<ion-col size="8">
+								<p class="profile-item-content-name DASHBOARD-PROFILE-ITEM-INTERIOR-AREAS-{{commonIndex}}"
+								   [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+								   (click)="showLineItems(profileItem)">
+									{{profileItem.Name}}
+								</p>
+							</ion-col>
+							<ion-col>
+								<h4 class="profile-item-content-sq-ft"
+									[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+									{{profileItem.SqFt}} Sq Ft
+								</h4>
+							</ion-col>
+						</ion-row>
+						<div class="hr" *ngIf="commonIndex < activePropertyInteriorAreas.length - 1"> </div>
+					</div>
+					<br>
+					<button clear ion-button (click)="editProfileItems('commonarea', 'interior')"
+							class="edit-profile-item">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+							 class="edit-profile-items-icon use_default_baby_blue">
+						&nbsp; Rename Areas
+					</button>
+					<br>
+					<br>
+				</div>
+				<div class="hr" *ngIf="commonAreaToggle"> </div>
+				<div style="margin-top:.5em !important; padding-left:1em !important; padding-right:1em !important; margin-bottom: -1em !important;">
+					<h2 class="area-header total">
+						Total: {{
+totalBedroomsSqFt + totalBathroomsSqFt + totalCommonAreasSqFt
+						}} sq ft
+					</h2>
+				</div>
+			</div>
+			<ng-container *ngIf="roomView == 'suite16Categories'">
+				<div class="caption" (click)="roomView = 'default'"
+					 style="text-align: center !important;padding: .5em !important;color: red !important;">
+					{{ProfileItem.Name}}&nbsp;&nbsp;&nbsp;(go back)
+				</div>
+				<icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)">
+				</icon-grid>
+			</ng-container>
+		</div>
+		<!-- Exteriors -->
+		<div *ngIf="manageView == 'exteriors'">
+			<!--Exterior Overview -->
+			<div class="area-list" (click)="toogleViews('exterior')"
+				 style="padding-left:1em !important; padding-right:1em !important; margin-bottom: -1em !important;">
+				<ion-row class="adjusted-ion-row">
+					<ion-col size="2">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fwarehouse.svg?alt=media&token=e4d48931-bf50-4141-bd53-3eb9ef69fd94"
+							 class="area-left-img">
+					</ion-col>
+					<ion-col size="8">
+						<h2 class="area-header">{{activePropertyExteriorAreas.length}} Exterior</h2>
+						<p class="area-header-sqft" *ngIf="totalExteriorAreasSqFt > 0">
+							{{totalExteriorAreasSqFt}} sq ft
+						</p>
+						<p class="area-header-sqft" *ngIf="totalExteriorAreasSqFt == 0" style="color:red !important;">
+							{{totalExteriorAreasSqFt}} sq ft
+						</p>
+					</ion-col>
+					<ion-col size="2">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+							 class="chevron" *ngIf="!exteriorAreaToogle">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+							 class="chevron" *ngIf="exteriorAreaToogle">
+					</ion-col>
+				</ion-row>
+			</div>
+			<div class="hr" *ngIf="!exteriorAreaToogle"> </div>
+			<!--Exterior List -->
+			<div *ngIf="exteriorAreaToogle" class="room-list" style="margin-bottom: 3rem;">
+				<div *ngFor="let profileItem of activePropertyExteriorAreas; let exteriorIndex = index;">
+					<ion-row class="profile-item-row">
+						<ion-col size="8">
+							<p class="profile-item-content-name DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{exteriorIndex}}"
+							   [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+							   (click)="showLineItems(profileItem)">
+								{{profileItem.Name}}
+							</p>
+						</ion-col>
+						<ion-col>
+							<h4 class="profile-item-content-sq-ft"
+								[ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+								{{profileItem.SqFt}} Sq Ft
+							</h4>
+						</ion-col>
+					</ion-row>
+					<div class="hr" *ngIf="exteriorIndex < activePropertyExteriorAreas.length - 1"> </div>
+				</div>
+				<br style="clear: both !important;">
+				<br style="clear: both !important;">
+				<button clear ion-button (click)="editProfileItems('exterior', 'exterior')" class="edit-profile-item">
+					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+						 class="edit-profile-items-icon use_default_baby_blue">
+					&nbsp; Rename Areas
+				</button>
+				<br>
+				<br>
+			</div>
+			<br>
+			<button clear ion-button (click)="addExterior()" class="edit-profile-item">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fplus.svg?alt=media&token=50c9b443-b121-47a1-8191-44c3f8e71662"
+					 class="edit-profile-items-icon use_default_baby_blue">
+				&nbsp; Add an Exterior
+			</button>
+			<br>
+			<br>
+			<div style="margin-top:.5em !important; padding-left:1em !important; padding-right:1em !important; margin-bottom: -1em !important;">
+				<h2 class="area-header total">Total: {{totalExteriorAreasSqFt}} sq ft</h2>
+			</div>
+		</div>
+		<div *ngIf="manageView == 'items'">
+			<icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)"></icon-grid>
+		</div>
+	</div>
 </ion-content>
+<tab-menu [_isHomeActive]="false" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
+		  (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>

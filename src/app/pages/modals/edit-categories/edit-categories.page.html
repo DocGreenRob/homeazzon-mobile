@@ -1,0 +1,31 @@
+<ion-content padding>
+	<div>
+		<h3 class="modal-title">Edit Categories</h3>
+		<hr class="hr">
+	</div>
+	<p>These are optional categories for your area.</p>
+	<div *ngFor="let s of suite16CategoriesAndLineitems">
+		<h3>{{s.Name}}</h3>
+		<div *ngFor="let l of s.Lineitems">
+			<ion-row>
+				<ion-col col-2>
+					<ion-checkbox [(ngModel)]="l.IsChecked"
+								  (click)="toggleCheck($event, s.Id, l)"
+								  id="{{'s_' + s.Id + '_l_' + l.Id}}"></ion-checkbox>
+				</ion-col>
+				<ion-col col-10>
+					<p>{{l.Name}}</p>
+				</ion-col>
+			</ion-row>
+		</div>
+	</div>
+	<ion-row>
+		<ion-col col-4>
+			<button class="button-text" ion-button block (click)="cancel()">Cancel</button>
+		</ion-col>
+		<ion-col col-4></ion-col>
+		<ion-col col-4>
+			<button class="button-text" ion-button block (click)="save()">Save</button>
+		</ion-col>
+	</ion-row>
+</ion-content>

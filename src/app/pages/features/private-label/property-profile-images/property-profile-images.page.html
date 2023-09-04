@@ -1,0 +1,14 @@
+<ion-header>
+	<navigation-sub-menu [showBackButton]="true" type="titleMenu" [title]="propertyName+' Images'" *ngIf="propertyName"></navigation-sub-menu>
+</ion-header>
+<ion-content class="ion-padding">
+	<ng-container>
+		<div *ngFor="let image of images">
+			<div class="main-view">
+				<img src="{{image.Url}}" />
+			</div>
+			<h1 style="padding-left: .75em !important;">{{image.Title}}</h1>
+			<h2 style="padding-left: 1.5em !important; font-family: 'Silka-Semi-Bold' !important;">{{image.Description}}</h2>
+		</div>
+	</ng-container>
+</ion-content>

@@ -1,0 +1,45 @@
+page-edit-categories {
+	background-color: rgba(0, 0, 0, 0.5);
+
+	ion-content.content {
+		top: 5%;
+		left: 10%;
+		width: 80%;
+		height: 84%;
+		border-radius: 20px;
+
+		.scroll-content {
+			border-radius: 20px;
+		}
+	}
+
+	.item {
+		padding-left: 0;
+		padding-right: 0;
+		margin-top: .8em;
+	}
+
+	select {
+		width: 100%;
+	}
+
+	.button-group {
+		margin-top: .8em;
+
+		.button-left {
+			padding-left: 0;
+		}
+
+		.button-right {
+			padding-right: 0;
+		}
+	}
+}
+
+.item-ios.item-block .item-inner {
+	padding: 0;
+}
+
+.item-md.item-block .item-inner {
+	padding: 0;
+}

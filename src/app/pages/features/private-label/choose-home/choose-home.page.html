@@ -1,0 +1,24 @@
+<ion-header>
+	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+<ion-content>
+	<h1 class="welcome-text" style="font-family:'Silka-Semi-Bold' !important;">Great Choice! Now let's get your home on a lot</h1>
+	<ion-row>
+		<ion-col size="2"></ion-col>
+		<ion-col size="8">
+			<div class="btnstyle1 CHOOSE-DEVELOPER-LOT" (click)="goToDevelopmentsPage()">
+				<ion-button class="btn default" color="dark" shape="round" expand="block">Choose a Lot</ion-button>
+			</div>
+		</ion-col>
+		<ion-col size="2"> </ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col size="2"></ion-col>
+		<ion-col size="8">
+			<div class="btnstyle2 HAVE-OWN-LOT" (click)="gotomyownlot()">
+				<ion-button class="btn default" color="dark" shape="round" expand="block">I Have My Own Lot</ion-button>
+			</div>
+		</ion-col>
+		<ion-col size="2"></ion-col>
+	</ion-row>
+</ion-content>

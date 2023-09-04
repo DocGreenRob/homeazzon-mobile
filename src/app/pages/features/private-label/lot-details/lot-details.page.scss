@@ -1,0 +1,62 @@
+.lot-plan {
+    text-decoration: underline;
+    color: var(--ion-color-primary);
+}
+
+.CHOOSE-LOT .button-inner {
+    color: var(--ion-color-white-background) !important;
+}
+
+.close {
+    font-size: 3rem;
+    font-weight: bolder;
+    margin-top: 0.3em;
+}
+
+.text-input-regular {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 0.875em !important;
+}
+
+.button-text {
+    float: right;
+    margin-bottom: 0.5em !important;
+}
+
+.body-div {
+    height: 700px;
+    overflow: hidden;
+}
+
+.header-div {
+    height: 50vh;
+}
+
+.content-div {
+    height: 30% !important;
+    overflow: scroll;
+}
+
+.ion-page {
+    overflow: hidden !important;
+}
+
+pdf-viewer {
+    max-width: 100%;
+    //@error max-height: 500px;
+}
+
+ion-modal {
+    ion-backdrop {
+        visibility: visible;
+    }
+    .modal-wrapper {
+        width: 86%;
+        height: 86%;
+        margin: 7%;
+        position: absolute;
+        border-radius: 13px;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,21 @@
+<ion-header>
+	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<h1 class="header-text">Congratulations!</h1>
+	<ion-grid>
+		<ion-row class="ion-text-center">
+			<ion-col size="12">
+				<p class="info-text">You're all setup. Now let's get to work on your dream home.</p>
+			</ion-col>
+		</ion-row>
+		<ion-row class="ion-text-center">
+			<ion-col size="1"></ion-col>
+			<ion-col size="10">
+				<ion-button color="dark" class="btn-home" expand="block" shape="round" (click)="gotoMainPage()">Show me my home!</ion-button>
+			</ion-col>
+			<ion-col size="1"></ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

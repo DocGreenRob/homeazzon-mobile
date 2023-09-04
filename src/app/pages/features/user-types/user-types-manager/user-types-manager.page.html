@@ -1,0 +1,42 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important;">
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<ion-row class="top-row">
+		<ion-col size="3">
+			<ion-buttons left>
+				<button ion-button (click)="close()"
+						style="background-color: transparent;padding-left: 0px !important;">
+					<div>
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+							 class="left-icon" style="margin: .5em !important;" />
+					</div>
+				</button>
+			</ion-buttons>
+		</ion-col>
+		<ion-col size="6">
+			<h1 class="page-title">
+				User Types Manager
+			</h1>
+		</ion-col>
+		<ion-col size="3"></ion-col>
+	</ion-row>
+</ion-header>
+<ion-content class="ion-padding">
+	<div style="padding-left:1em !important; padding-right:1em !important;">
+		<div *ngFor="let userType of userTypesAnynomousType">
+			<ion-row class="profile-item-row">
+				<ion-col size="8">
+					<p class="profile-item-content-name listSet" style="line-height:1.1em !important;">
+						{{userType.Name}}
+					</p>
+				</ion-col>
+				<ion-col size="4">
+					<p class="profile-item-content-name listSet" style="line-height:1.1em !important;">
+						<a *ngIf="userType.IsSubscribed == false" (click)="setup(userType.Id)">Setup</a>
+						<a *ngIf="userType.IsSubscribed == true" (click)="manage(userType.Id)">Manage</a>
+					</p>
+				</ion-col>
+			</ion-row>
+			<div class="hr2"> </div>
+		</div>
+	</div>
+</ion-content>

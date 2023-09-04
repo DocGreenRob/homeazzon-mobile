@@ -1,0 +1,26 @@
+<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+<ng-container *ngIf="type == types[0]">
+    <ion-toolbar color="white-background">
+        <div *ngIf="showBackButton == true">
+            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+                class="left-icon" (click)="goBack()"
+                style="margin-left: 1.5em !important; position: absolute !important; margin-top: .5em !important;" />
+        </div>
+        <div class="ion-text-center">
+            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Flogo%2Fhorizontal-logo.jpg?alt=media&token=dca5a1d4-c115-48c6-8f1e-e8de5a12b60e"
+                class="header-img-logo" style="margin-left: 7em;">
+        </div>
+    </ion-toolbar>
+</ng-container>
+<ng-container *ngIf="type == types[1]">
+    <ion-toolbar color="white-background">
+        <div *ngIf="showBackButton == true">
+            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+                class="left-icon" (click)="goBack()"
+                style="margin-left: 1.5em !important; position: absolute !important; margin-top: 0.5em !important;" />
+        </div>
+        <div class="ion-text-center">
+            <h3 class="page-title ion-text-center" style="margin-top: 10px;">{{title}}</h3>
+        </div>
+    </ion-toolbar>
+</ng-container>

@@ -1,0 +1,78 @@
+<ion-header>
+    <!--<navigation-sub-menu [showBackButton]="true" type="titleMenu" title="Search the Web"></navigation-sub-menu>-->
+    <div class="top-ios-space" *ngIf="usersPlatform == 'ios'"></div>
+    <ion-row class="top-row">
+        <ion-col size="3">
+            <ion-buttons left>
+                <button ion-button (click)="close()" style="background-color: transparent;padding-left: 0px !important;">
+					<div>
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" style="margin: .5em !important;" />
+					</div>
+				</button>
+            </ion-buttons>
+        </ion-col>
+        <ion-col size="6">
+            <h1 class="page-title">
+                Search the Web
+            </h1>
+        </ion-col>
+        <ion-col size="3"></ion-col>
+    </ion-row>
+</ion-header>
+<ion-content>
+    <div style="padding-left: 1em !important;">
+        <div class="spacer-halfRem"></div>
+        <div class="mypad-grey label">Keywords</div>
+        <div class="spacer-halfRem"></div>
+        <ion-item lines="none" class="no-left-padding">
+            <input type="text" [(ngModel)]="keywords" placeholder="Enter Keywords..." />
+        </ion-item>
+        <div class="spacer-oneRem" *ngIf="CurrentView == 'Room'"></div>
+        <div class="mypad-grey label" *ngIf="CurrentView == 'Room'">Room / Area</div>
+        <div class="spacer-halfRem"></div>
+        <ion-item class="no-left-padding" *ngIf="CurrentView == 'Room'" lines="none">
+            <!--<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852" class="drop-down-icon" />-->
+            <ion-select [(ngModel)]="selectedProfileItem"
+                        [compareWith]="compareFn" 
+                        (ionChange)="getLineitems()"
+                        disabled="{{disableProfileItems}}">
+                <ion-select-option *ngFor="let profileItem of profileItems" [value]="profileItem">
+                    {{profileItem.Name}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+        <div class="spacer-oneRem"></div>
+        <!--<h3 class="mypad-grey"></h3>-->
+        <div class="mypad-grey label">Category</div>
+        <div class="spacer-halfRem"></div>
+        <ion-item class="no-left-padding" lines="none">
+            <!--<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852" class="drop-down-icon" />-->
+            <ion-select [(ngModel)]="selectedLineitem" [compareWith]="compareFn" disabled="{{disableLineItems}}">
+                <ion-select-option *ngFor="let lineitem of lineitems" [value]="lineitem">
+                    {{lineitem.Name}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+        <div class="spacer-oneRem"></div>
+        <h2>Where to Search</h2>
+        <div class="spacer-oneRem"></div>
+        <ion-item class="no-left-padding" lines="none">
+            <ion-select [(ngModel)]="searchSource">
+                <ion-select-option *ngFor="let source of searchSources" [value]="source">
+                    {{source}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+        <div class="spacer-oneAndHalfRem"></div>
+        <ion-row>
+            <ion-col size="7"></ion-col>
+            <ion-col size="4">
+                <ion-button class="button-text SEARCH" 
+                            style="border-radius: 6px !important; border: var(--ion-color-light-grey) 2px solid !important; font-size: .9em !important;" 
+                            ion-button 
+                            (click)="search()">Search</ion-button>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+        </ion-row>
+    </div>
+</ion-content>

@@ -1,0 +1,60 @@
+<ion-header>
+	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+<ion-content class="ion-padding">
+	<div class="item DESIGN-PLANS" (click)="viewDesignPlans()">
+		<ion-row>
+			<ion-col size="2">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fruler-triangle.svg?alt=media&token=be44bb1c-5df7-4321-8714-e1b58029cada" class="item-image">
+			</ion-col>
+			<ion-col size="10">
+				<h2 class="item-name">Plans</h2>
+			</ion-col>
+		</ion-row>
+		<div class="hr"> </div>
+	</div>
+	<div class="item DESIGN-IMAGES" (click)="viewPropertyImages()">
+		<ion-row>
+			<ion-col size="2">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fimage.svg?alt=media&token=bee92977-f32b-4c44-bb7f-4b877c83cd53" class="item-image">
+			</ion-col>
+			<ion-col size="10">
+				<h2 class="item-name">Image/Renderings</h2>
+			</ion-col>
+		</ion-row>
+		<div class="hr"> </div>
+	</div>
+	<div class="item DESIGN-INTERACTIVE-MODEL" (click)="viewInteractiveModels()">
+		<ion-row>
+			<ion-col size="2">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fbox.svg?alt=media&token=76fab8dd-eafa-47ff-ad3b-5861971eef94" class="item-image">
+			</ion-col>
+			<ion-col size="10">
+				<h2 class="item-name">Interactive Models</h2>
+			</ion-col>
+		</ion-row>
+		<div class="hr"> </div>
+	</div>
+	<div class="item DESIGN-PROFILE" (click)="viewPropertyOverview()">
+		<ion-row>
+			<ion-col size="2">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259" class="item-image">
+			</ion-col>
+			<ion-col size="10">
+				<h2 class="item-name">Home Profile</h2>
+			</ion-col>
+		</ion-row>
+		<div class="hr"> </div>
+	</div>
+</ion-content>
+<ion-footer>
+	<ion-row>
+		<ion-col size="6">
+		</ion-col>
+		<ion-col size="6">
+			<div class="CHOOSE-HOME" (click)="chooseHome()">
+				<ion-button class="choose-btn" shape="round" color="primary">Choose Home</ion-button>
+			</div>
+		</ion-col>
+	</ion-row>
+</ion-footer>

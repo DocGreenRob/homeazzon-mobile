@@ -1,0 +1,39 @@
+pdf-viewer {
+    max-width: 100%;
+    //@error max-height: 500px;
+}
+
+.zoom {
+    height: 100% !important;
+    -ms-touch-action: none !important;
+    touch-action: none !important;
+    position: absolute;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow-x: scroll !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.zoom-text {
+    color: var(--ion-color-primary);
+    font-size: 1.25em;
+    font-weight: bold !important;
+    padding-top: 3em !important;
+    margin-left: 0.5em !important;
+}
+
+ion-icon {
+    font-size: 2.5em;
+    color: var(--ion-color-primary);
+    font-weight: bold !important;
+}
+
+ion-footer {
+    height: 3.5em !important;
+    background-color: var(--ion-color-white-background) !important;
+}

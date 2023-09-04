@@ -1,0 +1,32 @@
+<ion-header class="top-header">
+	<ion-row>
+		<ion-col col-2>
+			<ion-icon name="close" class="close-icon" (click)="dismiss()"></ion-icon>
+		</ion-col>
+		<ion-col col-10>
+			<h2 class="header-text ion-text-center">Links</h2>
+			<h3 class="header-link">{{selectedLink.Url}}</h3>
+		</ion-col>
+	</ion-row>
+</ion-header>
+<ion-content>
+	<div class="scrollmenu">
+		<a (click)="viewLink(link)" *ngFor="let link of links">{{link.Name}}</a>
+	</div>
+	<iframe [src]="sanitizeUrl(selectedLink?.Url)" *ngIf="selectedLink.Url" frameborder="0" height="100%" width="100%" is="x-frame-bypass" scrolling="auto"></iframe>
+</ion-content>
+<ion-footer>
+	<ion-row>
+		<ion-col size="1">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="tab-icon" (click)="previous()">
+		</ion-col>
+		<ion-col size="1">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fchevron-right.svg?alt=media&token=a71c20e4-9cf0-4bb6-876a-c505d193a821" class="tab-icon" (click)="next()">
+		</ion-col>
+		<ion-col size="8">
+		</ion-col>
+		<ion-col size="2">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fshare.svg?alt=media&token=0d16b9dc-18d3-4802-b047-035e97d08a0a" class="tab-icon" (click)="share()">
+		</ion-col>
+	</ion-row>
+</ion-footer>

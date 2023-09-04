@@ -1,0 +1,24 @@
+<div *ngFor="let c of _grid?.Lists">
+	<h3 style="color: burlywood; margin-left: 1em !important;">{{c.Name}}</h3>
+	<ion-row *ngIf="c.Name != 'Google Web Links'">
+		<ng-container *ngFor="let i of c.Items;">
+			<ion-col size="4" (click)="emit(i, c.Name)" style="text-align:center !important;">
+				<img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" src="{{i.IconPath}}" class="item-icon">
+				<img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')" src="{{i.ImagePath}}" class="item-image">
+				<img *ngIf="i.IsTag" src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ftag.svg?alt=media&token=ab9fee51-2ffc-47f9-97d8-2be5ed9ccd9a" class="item-image">
+				<h6 class="item-title" style="line-height: 1.5em; height: 3em; overflow: hidden;">{{i.Name}}</h6>
+			</ion-col>
+		</ng-container>
+	</ion-row>
+	<ion-row *ngIf="c.Name == 'Google Web Links'">
+		<ng-container *ngFor="let i of c.Items;">
+			<ion-col size="12" (click)="emit(i, c.Name)" style="text-align:center !important;">
+				<img *ngIf="i.IconPath != null && i.IconPath != ''" src="{{i.IconPath}}" class="item-icon">
+				<img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''" src="{{i.ImagePath}}" class="item-image">
+				<h6 class="item-title" style="line-height: 1.5em; height: 3em; overflow: hidden;">{{i.Name}}</h6>
+				<hr/>
+			</ion-col>
+		</ng-container>
+	</ion-row>
+	<br style="clear:both;" />
+</div>

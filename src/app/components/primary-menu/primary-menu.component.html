@@ -1,0 +1,37 @@
+<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+<ion-row class="top-row" *ngIf="type=='logoMenu'" style="margin-bottom: -1.2rem !important;">
+	<ion-col size="3">
+		<img (click)="openMainMenu()" src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fbars.svg?alt=media&token=3417d975-71ab-4c73-aac3-083fe8ba8820" class="header-img-menu" menuToggle menu="regular-menu"
+			 style="margin-top: .3em !important;" />
+	</ion-col>
+	<ion-col size="6">
+		<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Flogo%2Fhorizontal-logo.jpg?alt=media&token=dca5a1d4-c115-48c6-8f1e-e8de5a12b60e" class="header-img-logo" />
+	</ion-col>
+	<ion-col size="3">
+		<div style="padding-right: .5em;">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259" class="header-img-property" (click)="openMenu()">
+			<h6 class="property-name-active" (click)="openMenu()">{{propertyName}}</h6>
+		</div>
+	</ion-col>
+</ion-row>
+
+<div *ngIf="type=='doubleTitleMenu'">
+	<div color="white-background">
+		<ion-row class="top-row">
+			<ion-col size="12">
+				<div class="flush-top">
+					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" (click)="close()" />
+					<img style="max-width: 1.5em !important; position: absolute !important; top: 0 !important; left: 6.5em !important; filter: invert(63%) sepia(26%) saturate(777%) hue-rotate(72deg) brightness(93%) contrast(96%);" src="{{iconUrl}}" class="item-image">
+					<div class="caption" style="text-align: center !important; position: absolute !important; top: .3em !important; left: 7.4em !important;">
+						{{title}}
+					</div>
+					<h1 class="page-title">{{subTitle}}</h1>
+					<div style="padding-right: .5em; margin-top: -.5em;" (click)="openMenu()">
+						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259" class="header-img-property" (click)="openMenu()">
+						<div class="property-name-active" (click)="openMenu()">{{propertyName}}</div>
+					</div>
+				</div>
+			</ion-col>
+		</ion-row>
+	</div>
+</div>

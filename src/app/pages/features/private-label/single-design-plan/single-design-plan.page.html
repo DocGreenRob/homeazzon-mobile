@@ -1,0 +1,24 @@
+<ion-header>
+	<navigation-sub-menu [showBackButton]="true" type="titleMenu" [title]="title" *ngIf="title"></navigation-sub-menu>
+</ion-header>
+<ion-content>
+	<div #zoom class="zoom">
+		<pdf-viewer [src]="pdfUrl" [render-text]="true" style="display: block;" [show-all]="true" [original-size]="false" [autoresize]="true" [fit-to-page]="false" [zoom]="zoomCount"></pdf-viewer>
+	</div>
+</ion-content>
+<ion-footer>
+	<ion-row style="margin-right: 1em !important;">
+		<ion-col size="3">
+			<h3 class="zoom-text">Zoom {{zoomCount}}</h3>
+		</ion-col>
+		<ion-col size="3">
+			<ion-icon name="remove" (click)="zoomReduce()"></ion-icon>
+		</ion-col>
+		<ion-col size="3">
+			<ion-icon name="add" (click)="zoomIncrease()"></ion-icon>
+		</ion-col>
+		<ion-col size="3">
+			<ion-icon name="refresh" (click)="zoomReset()"></ion-icon>
+		</ion-col>
+	</ion-row>
+</ion-footer>

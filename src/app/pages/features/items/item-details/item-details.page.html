@@ -1,0 +1,385 @@
+<ion-header>
+	<!--<primary-menu type="titleMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()" [title]="LineItem?.Name"></primary-menu>-->
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+
+	<ion-row class="top-row">
+		<ion-col size="3">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+				class="left-icon" (click)="close()" />
+		</ion-col>
+		<ion-col size="6">
+			<h1 class="page-title" *ngIf="!isHideSegments">{{LineItem.Name}}</h1>
+			<h1 class="page-title" *ngIf="isHideSegments">{{ProfileItem.Name}}</h1>
+		</ion-col>
+		<ion-col size="3">
+			<div style="padding-right: .5em;padding-top: 1.2em">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259"
+					class="header-img-property" (click)="openMenu()">
+				<h6 class="property-name-active" (click)="openMenu()">{{ActiveProperty?.Name}}</h6>
+			</div>
+		</ion-col>
+	</ion-row>
+</ion-header>
+<ion-content>
+	<ng-container>
+		<div class="spacer-halfRem"></div>
+		<div class="caption" style="margin-left:1em !important;"><span (click)="viewProfileLineItems()"
+				class="hover-link">{{ProfileItem?.Name}}</span>&nbsp;>&nbsp;<span (click)="viewLineItemItems()"
+				class="hover-link">{{LineItem?.Name}}</span>&nbsp;&nbsp;{{IsMetattachment == true ?
+			(ActiveItem.Name.length >= 40) ? '> ' + ActiveItem.Name.substring(0,40) + '...' : '> ' + ActiveItem.Name :
+			''}}</div>
+		<div class="spacer-halfRem"></div>
+		<!-- Amazon, Google Shopping, Upc, DigiDoc, Bookmark -->
+		<div style="padding-left:1em !important; padding-right:1em !important;" *ngIf="ActiveAttachmentItem?.Type != 'YouTube Videos'
+				  && ActiveAttachmentItem?.Type != 'Google Web Links'
+				  && ActiveAttachmentItem?.Type != 'Qr Codes'
+					  && (ActiveItem?.Type == 'Google Shopping Products'
+					  || ActiveItem?.Type == 'Amazon Products'
+					  || ActiveItem?.Type == 'Pics & Files'
+					  || ActiveItem?.Type == 'UPCs'
+					  || ActiveItem?.Type == 'Bookmarks'
+					  || ActiveAttachmentItem?.Type == 'Google Shopping Products'
+					  || ActiveAttachmentItem?.Type == 'Amazon Products'
+					  || ActiveAttachmentItem?.Type == 'Pics & Files'
+					  || ActiveAttachmentItem?.Type == 'UPCs'
+					  || ActiveAttachmentItem?.Type == 'Bookmarks')">
+			<!-- Image/Video -->
+			<div class="main-view">
+				<div *ngIf="ActiveItem.Type != 'Bookmarks'"> <!--TODO: needs to be dynamic-->
+					<ng-container *ngIf="IsMetattachment">
+						<pinch-zoom>
+							<img src="{{ ActiveAttachmentItem?.Image}}" />
+						</pinch-zoom>
+					</ng-container>
+					<ng-container *ngIf="!IsMetattachment">
+						<ng-container *ngIf="ActiveItem.IsProfileItemImage || ((ActiveItem.Type == 'DigiDoc' || ActiveItem.Type == 'Pics & Files') && imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType))">
+							<pinch-zoom>
+								<img [src]="ActiveItem?.Image" />
+							</pinch-zoom>
+						</ng-container>
+						<ng-container *ngIf="(!ActiveItem.IsProfileItemImage && (ActiveItem.Type == 'DigiDoc' || ActiveItem.Type == 'Pics & Files') && !imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType))">
+							<document-viewer [docUrl]="ActiveItem?.Image" [fileType]="ActiveItem.DigiDoc.ContentType"
+								*ngIf="ActiveItem?.Image" style="height: 420px" [title]="ActiveItem?.Name">
+							</document-viewer>
+						</ng-container>
+					</ng-container>
+				</div>
+				<div>
+					<h4 *ngIf="ActiveItem?.Type == 'Bookmarks'" (click)="browse()">{{ActiveItem?.Bookmark?.Url}}</h4>
+					<h4 *ngIf="ActiveAttachmentItem?.Type == 'Bookmarks'" (click)="browse()">
+						{{ActiveAttachmentItem?.Bookmark?.Url}}</h4>
+				</div>
+			</div>
+			<br style="clear:both !important;" />
+			<br style="clear:both !important;" />
+			<!-- Item# / Model# -->
+			<ion-row>
+				<ion-col size="6">
+					<div class="caption" *ngIf="(ActiveItem?.AssetInfo?.ItemNumber != undefined
+											 && ActiveItem?.AssetInfo?.ItemNumber != '')
+											 || (ActiveAttachmentItem?.AssetInfo?.ItemNumber != undefined
+											 && ActiveAttachmentItem?.AssetInfo?.ItemNumber != '')">Item #{{IsMetattachment ?
+						ActiveAttachmentItem?.AssetInfo?.ItemNumber : ActiveItem?.AssetInfo?.ItemNumber}}</div>
+				</ion-col>
+				<ion-col size="6">
+					<div class="caption" *ngIf="(ActiveItem?.AssetInfo?.Model != undefined
+										&& ActiveItem?.AssetInfo?.Model != '')
+										|| (ActiveAttachmentItem?.AssetInfo?.Model != undefined
+										&& ActiveAttachmentItem?.AssetInfo?.Model != '')">Model #{{IsMetattachment ?
+						ActiveAttachmentItem?.AssetInfo?.Model : ActiveItem?.AssetInfo?.Model}}</div>
+				</ion-col>
+			</ion-row>
+			<!-- Maintenance / Attachments -->
+			<ion-row *ngIf="!IsMetattachment">
+				<ion-col size="6" style="float:right;" (click)="maintenance()">
+					<h6 class="mypad-green">
+						<ion-icon name="hammer"></ion-icon>
+						Maintenance
+					</h6>
+				</ion-col>
+				<ion-col size="6">
+					<div style="float:right;" (click)="attachments()">
+						<h6 class="mypad-green">
+							<ion-icon name="attach"></ion-icon>
+							Attachments
+						</h6>
+					</div>
+				</ion-col>
+			</ion-row>
+			
+			<div style="float:right; margin-right:1.25em;" (click)="viewOrEditAttachment()"
+				*ngIf="IsMetattachment && !ActiveItem.IsSuggest">
+				<h5 class="mypad-green">
+					<ion-icon name="attach"></ion-icon>
+					View/Edit Attachment Info
+				</h5>
+			</div>
+			<div class="spacer-oneRem"></div>
+			<div style="margin-left:1em !important;">
+			<!-- Item title goes here -->
+				<h3>{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Title : ActiveItem?.AssetInfo?.Title}}</h3>
+			<!-- Item price goes here -->
+				<h4 class="mypad-green item-price" *ngIf="IsMetattachment == false && ActiveItem?.AssetInfo?.Price > 0">
+					{{ActiveItem?.AssetInfo?.Price | currency}}</h4>
+				<h4 class="mypad-green item-price"
+					*ngIf="IsMetattachment && ActiveAttachmentItem?.AssetInfo?.Price > 0">
+					{{ActiveAttachmentItem?.AssetInfo?.Price | currency}}</h4>
+			</div>
+			<div class="spacer-oneRem"></div>
+			<!-- Tags goes here -->
+			<div style="margin-left:1em !important;" class="tags">
+				<form [formGroup]="form" style="border: none !important;">
+					<div class="spacer-oneRem"></div>
+					<h5 class="mypad-grey">Tags</h5>
+					<ion-item lines="none" style="background-color: #fff !important;">
+						<tag-input formControlName="tags" [ngModel]="selectedTagItems" maxItems="10"
+							(onAdd)="onTagItemAdded($event)" (onRemove)="onTagItemRemoved($event)"
+							style="border: none !important;">
+
+							<tag-input-dropdown [autocompleteItems]="tagContextList">
+							</tag-input-dropdown>
+
+						</tag-input>
+					</ion-item>
+					<hr />
+				</form>
+			</div>
+			<div class="spacer-oneRem"></div>
+			<!-- Description goes here -->
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Description != undefined
+					&& ActiveItem?.AssetInfo?.Description != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Description != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Description != '')" class="text-input-regular">
+				<b class="mypad-black">Description:</b>&nbsp;{{IsMetattachment ?
+				ActiveAttachmentItem?.AssetInfo?.Description : ActiveItem?.AssetInfo?.Description}}
+			</div>
+			<div class="spacer-oneRem"></div>
+			<!-- Item details go here -->
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Manufacturer != undefined
+					&& ActiveItem?.AssetInfo?.Manufacturer != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Manufacturer != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Manufacturer != '')" class="text-input-regular">
+				<b class="mypad-grey">Manufacturer:</b>&nbsp;{{IsMetattachment ?
+				ActiveAttachmentItem?.AssetInfo?.Manufacturer : ActiveItem?.AssetInfo?.Manufacturer}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Make != undefined
+					&& ActiveItem?.AssetInfo?.Make != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Make != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Make != '')" class="text-input-regular">
+				<b class="mypad-grey">Make:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Make :
+				ActiveItem?.AssetInfo?.Make}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Model != undefined
+					&& ActiveItem?.AssetInfo?.Model != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Model != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Model != '')" class="text-input-regular">
+				<b class="mypad-grey">Model:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Model :
+				ActiveItem?.AssetInfo?.Model}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.SerialNumber != undefined
+					 && ActiveItem?.AssetInfo?.SerialNumber != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.SerialNumber != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.SerialNumber != '')" class="text-input-regular">
+				<b class="mypad-grey">Serial Number:</b>&nbsp;{{IsMetattachment ?
+				ActiveAttachmentItem?.AssetInfo?.SerialNumber : ActiveItem?.AssetInfo?.SerialNumber}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Size != undefined
+					&& ActiveItem?.AssetInfo?.Size != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Size != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Size != '')" class="text-input-regular">
+				<b class="mypad-grey">Size:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Size :
+				ActiveItem?.AssetInfo?.Size}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Length != undefined
+					&& ActiveItem?.AssetInfo?.Length != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Length != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Length != '')" class="text-input-regular">
+				<b class="mypad-grey">Length:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Length :
+				ActiveItem?.AssetInfo?.Length}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Height != undefined
+					&& ActiveItem?.AssetInfo?.Height != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Height != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Height != '')" class="text-input-regular">
+				<b class="mypad-grey">Height:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Height :
+				ActiveItem?.AssetInfo?.Height}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Depth != undefined
+					&& ActiveItem?.AssetInfo?.Depth != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Depth != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Depth != '')" class="text-input-regular">
+				<b class="mypad-grey">Depth:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Depth :
+				ActiveItem?.AssetInfo?.Depth}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Width != undefined
+					&& ActiveItem?.AssetInfo?.Width != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Width != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Width != '')" class="text-input-regular">
+				<b class="mypad-grey">Width:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Width :
+				ActiveItem?.AssetInfo?.Width}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.TotalQuantity != undefined
+					&& ActiveItem?.AssetInfo?.TotalQuantity != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.TotalQuantity != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.TotalQuantity != '')" class="text-input-regular">
+				<b class="mypad-grey">Total Quantity:</b>&nbsp;{{IsMetattachment ?
+				ActiveAttachmentItem?.AssetInfo?.TotalQuantity : ActiveItem?.AssetInfo?.TotalQuantity}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.TotalQuantityUnit != undefined
+					&& ActiveItem?.AssetInfo?.TotalQuantityUnit != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.TotalQuantityUnit != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.TotalQuantityUnit != '')" class="text-input-regular">
+				<b class="mypad-grey">Total Quantity Unit:</b>&nbsp;{{IsMetattachment ?
+				ActiveAttachmentItem?.AssetInfo?.TotalQuantityUnit : ActiveItem?.AssetInfo?.TotalQuantityUnit}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Color != undefined
+					&& ActiveItem?.AssetInfo?.Color != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Color != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Color != '')" class="text-input-regular">
+				<b class="mypad-grey">Color:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Color :
+				ActiveItem?.AssetInfo?.Color}}
+			</div>
+			<div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Notes != undefined
+					&& ActiveItem?.AssetInfo?.Notes != ''))
+					|| (ActiveAttachmentItem?.AssetInfo?.Notes != undefined
+					&& ActiveAttachmentItem?.AssetInfo?.Notes != '')" class="text-input-regular">
+				<b class="mypad-grey">Notes:</b>&nbsp;{{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Notes :
+				ActiveItem?.AssetInfo?.Notes}}
+			</div>
+			<div class="spacer-oneAndHalfRem"></div>
+		</div>
+		<!-- YouTube -->
+		<div style="padding-left:1em !important; padding-right:1em !important;"
+			*ngIf="ActiveItem?.Type == 'YouTube Videos' || ActiveAttachmentItem?.Type == 'YouTube Videos'">
+			<div class="main-view">
+				<ion-grid>
+					<ion-row>
+						<iframe frameborder="0" *ngIf="videoUrl != null && videoUrl != ''" [src]="videoUrl"
+							allowfullscreen style="width: 100%;"></iframe>
+					</ion-row>
+				</ion-grid>
+			</div>
+			<!-- Item title goes here -->
+			<h2 style="margin-left:1em;">{{IsMetattachment ? ActiveAttachmentItem?.YouTubeVideo?.Title :
+				ActiveItem?.YouTubeVideo?.Title}}</h2>
+			<div class="spacer-oneRem"></div>
+			<!-- Description goes here -->
+			<div *ngIf="ActiveItem?.YouTubeVideo?.VideoDescription != undefined
+					&& ActiveItem?.YouTubeVideo?.VideoDescription != ''" class="text-input-regular ion-text-center"
+				style="margin-right: 1em;margin-left: 1em;">
+				<b class="mypad-black">Description:</b>&nbsp;
+				<h6>{{IsMetattachment ? ActiveAttachmentItem?.YouTubeVideo?.VideoDescription :
+					ActiveItem?.YouTubeVideo?.VideoDescription}}</h6>
+			</div>
+			<div style="float:right; margin-right:1.25em;" (click)="viewOrEditAttachment()"
+				*ngIf="IsMetattachment && !ActiveItem.IsSuggest">
+				<h5 class="mypad-green">
+					<ion-icon name="attach"></ion-icon>
+					View/Edit Attachment Info
+				</h5>
+			</div>
+			<div class="spacer-oneAndHalfRem"></div>
+		</div>
+		<!-- Google Web -->
+		<div style="padding-left:1em !important; padding-right:1em !important;"
+			*ngIf="ActiveItem?.Type == 'Google Web Links' || ActiveAttachmentItem?.Type == 'Google Web Links'">
+			<!-- Link goes here -->
+			<div *ngIf="(ActiveItem?.GoogleLink?.Link != undefined
+					&& ActiveItem?.GoogleLink?.Link != '')
+				    || (ActiveAttachmentItem?.GoogleLink?.Link != undefined
+					&& ActiveAttachmentItem?.GoogleLink?.Link != '')" class="text-input-regular" (click)="browse()">
+				<h3>Link:</h3>
+				<p style="color:blue !important; line-height: 1em !important;">{{IsMetattachment ?
+					ActiveAttachmentItem?.GoogleLink?.Link : ActiveItem?.GoogleLink?.Link}}</p>
+			</div>
+			<div class="spacer-oneRem"></div>
+			<!-- Description goes here -->
+			<div *ngIf="(ActiveItem?.GoogleLink?.Description != undefined
+					&& ActiveItem?.GoogleLink?.Description != '')
+				    || (ActiveAttachmentItem?.GoogleLink?.Description != undefined
+					&& ActiveAttachmentItem?.GoogleLink?.Description != '')" class="text-input-regular">
+				<h3 class="mypad-black">Description:</h3>
+				<p style="line-height:normal !important;">{{IsMetattachment ?
+					ActiveAttachmentItem?.GoogleLink?.Description : ActiveItem?.GoogleLink?.Description}}</p>
+			</div>
+			<div class="spacer-oneAndHalfRem"></div>
+			<div style="float:right; margin-right:1.25em;" (click)="viewOrEditAttachment()"
+				*ngIf="IsMetattachment && !ActiveItem.IsSuggest">
+				<h5 class="mypad-green">
+					<ion-icon name="attach"></ion-icon>
+					View/Edit Attachment Info
+				</h5>
+			</div>
+			<div class="spacer-oneAndHalfRem"></div>
+		</div>
+		<!-- Qr Code or Bookmark -->
+		<div style="padding-left:1em !important; padding-right:1em !important;" *ngIf="ActiveItem?.Type == 'Qr Codes' || ActiveAttachmentItem?.Type == 'Qr Codes'
+					   || ActiveItem?.Type == 'Bookmark' || ActiveAttachmentItem?.Type == 'Bookmark'">
+			<div class="main-view" (click)="browse()">
+				<pinch-zoom>
+					<img *ngIf="ActiveItem?.Type == 'Qr Code' || ActiveAttachmentItem?.Type == 'Qr Code'"
+						src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6" />
+				</pinch-zoom>
+			</div>
+			<div class="spacer-oneRem"></div>
+			<h3 *ngIf="ActiveItem?.Type != 'Bookmark'" style="color:blue !important;">Link:</h3>
+			<p *ngIf="ActiveItem?.Type != 'Bookmark'" style="color:blue !important;">{{IsMetattachment ?
+				ActiveAttachmentItem?.QrCode?.Url: ActiveItem?.QrCode?.Url}}</p>
+			<div style="float:right; margin-right:1.25em;" (click)="viewOrEditAttachment()"
+				*ngIf="IsMetattachment && !ActiveItem.IsSuggest">
+				<h5 class="mypad-green">
+					<ion-icon name="attach"></ion-icon>
+					View/Edit Attachment Info
+				</h5>
+			</div>
+			<div class="spacer-oneAndHalfRem"></div>
+		</div>
+		<!-- Lower action bar goes here -->
+		<ion-row style="padding-left:1em !important;">
+			<ion-col size="3" >
+				<!-- Delete button -->
+				<h6 class="mypad-red" (click)="delete()"
+					*ngIf="(User.IsPrivateLabelUser == false || (User.IsPrivateLabelUser == true && ActiveItem.IsSuggest == false))">
+					<ion-icon name="trash"></ion-icon>
+					Delete
+				</h6>
+			</ion-col>
+			<ion-col size="3">
+				<!-- Edit item button -->
+				<h6 class="mypad-green" (click)="edit()"
+					*ngIf="(ActiveItem?.Type != 'Google Web Links' && ActiveItem?.Type != 'YouTube Videos' && ActiveItem?.Type != 'Qr Codes') && (User.IsPrivateLabelUser == false || (User.IsPrivateLabelUser == true && ActiveItem.IsSuggest == false) && (ActiveAttachment?.Type != 'Qr Codes' && ActiveAttachment?.Type != 'Google Search Result (link)' && ActiveAttachment?.Type != 'Video'))">
+					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+						class="icon-img mypad-green" /> Edit Item
+				</h6>
+			</ion-col>
+			
+			<ion-col size="3" >
+				<h6 class="mypad-green" (click)="clone()"
+					*ngIf="(User.IsPrivateLabelUser == false || (User.IsPrivateLabelUser == true && ActiveItem.IsSuggest == false))">
+					<ion-icon name="copy"></ion-icon>
+					Clone
+				</h6>
+			</ion-col>
+			
+			<ion-col size="3" >
+				<h6 class="mypad-green" (click)="move()"
+					*ngIf="(User.IsPrivateLabelUser == false || (User.IsPrivateLabelUser == true && ActiveItem.IsSuggest == false))">
+					<ion-icon name="copy"></ion-icon>
+					Move
+				</h6>
+			</ion-col>
+
+			<ion-col size="4">
+				<!-- Add to My List button -->
+				<h6 class="mypad-green" *ngIf="IsMetattachment == false && ActiveItem.IsProfileItemImage == false">
+					<img src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fplus-circle.svg?alt=media&token=94dc7bf0-177f-4097-aa28-c61e6883f8ce"
+						class="icon-img mypad-green" /> Add to My List
+				</h6>
+			</ion-col>
+		</ion-row>
+		<div class="spacer-oneAndHalfRem"></div>
+	</ng-container>
+</ion-content>
+<tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
+	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+	(searchEvent)="search()"></tab-menu>

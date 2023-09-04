@@ -1,0 +1,63 @@
+<!--<ion-header>
+	<save-sub-menu [title]="profileName" (_saveClickEventHandler)="save()"></save-sub-menu>
+</ion-header>-->
+<ion-header>
+    <div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+    <ion-toolbar color="white-background">
+        <ion-row class="top-row">
+            <ion-col size="3">
+                <h5 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="close()">
+                    Cancel
+                </h5>
+            </ion-col>
+            <ion-col size="6">
+                <h1 class="page-title">{{profileName}}</h1>
+            </ion-col>
+            <ion-col size="3">
+                <h5 class="mypad-green save-button" (click)="save()">
+                    Save
+                </h5>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="1">
+
+            </ion-col>
+            <ion-col size="7">
+                <h2 class="ion-text-center">Name</h2>
+            </ion-col>
+            <ion-col size="4">
+                <h2 class="ion-text-center">Sq. Ft</h2>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let profileItem of activeRooms">
+            <ion-col size="1" *ngIf="(User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == false) || User.IsPrivateLabelUser == false" (click)="deleteProfileItem(profileItem.Id)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fminus-circle.svg?alt=media&token=4920f8f8-add3-4d71-8f6d-4deba12d58bb" style="color: red !important; max-height: 4.5em !important; margin-top: 1em !important;"
+                />
+                <!--<h2>
+					<ion-icon name="minus-circle"></ion-icon>&nbsp;1
+				</h2>-->
+            </ion-col>
+            <ion-col size="7">
+                <input [(ngModel)]="profileItem.Name" type="text" (focus)="selectInput($event)">
+            </ion-col>
+            <ion-col size="4">
+                <input [(ngModel)]="profileItem.SqFt" inputmode="numeric" type="number" (focus)="selectInput($event)">
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <ion-row>
+        <ion-col size="6"></ion-col>
+        <ion-col size="6">
+            <h4 (click)="addRoom()" style="float:right; margin-top: 3em; margin-right:2em" class="mypad-green" *ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
+                <ion-icon name="add-circle"></ion-icon>&nbsp;Add a Room
+            </h4>
+        </ion-col>
+    </ion-row>
+</ion-footer>

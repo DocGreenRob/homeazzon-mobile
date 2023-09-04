@@ -9,12 +9,12 @@ import { BasePageRoutingModule } from './base-routing.module';
 import { BasePage } from './base.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    BasePageRoutingModule
-  ],
-  declarations: [BasePage]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		BasePageRoutingModule
+	],
+	declarations: [BasePage]
 })
-export class BasePageModule {}
+export class BasePageModule { }

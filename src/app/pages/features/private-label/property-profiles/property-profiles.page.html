@@ -1,0 +1,56 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<navigation-sub-menu [showBackButton]="showBackButton" type="logoMenu"></navigation-sub-menu>
+</ion-header>
+<ion-content class="ion-padding">
+	<ion-row>
+		<ion-col size="12">
+			<div *ngIf="User?.IsPrivateLabelUser">
+				<h1 style="text-align:center; font-size: 1.5em !important;">Choose a Home to see Details</h1>
+			</div>
+			<div *ngIf="!User?.IsPrivateLabelUser">
+				<h1 style="text-align:center; font-size: 1.5em !important;">Let's add another home/project!</h1>
+			</div>
+		</ion-col>
+	</ion-row>
+	<div *ngFor="let s of privateLabelProperties; let i = index" (click)="showPropertyDetails(s.Id, s.SqFeet, s.Name)" class="property-item item2 HOME-{{i}}">
+		<ion-row>
+			<ion-col size="2">
+				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259" class="property-image">
+			</ion-col>
+			<ion-col size="10">
+				<h2 class="property-name">{{s.Name}}</h2>
+			</ion-col>
+		</ion-row>
+		<div class="hr"> </div>
+	</div>
+	<!--If No Results-->
+	<ion-grid style="height: 80vh;text-align: center;padding-top: 10em;" *ngIf="privateLabelProperties==null || privateLabelProperties.length==0">
+		<ion-row class="justify-content-center align-items-center" style="height: 100%; flex-direction: column">
+			<div class="text-center">
+				<ion-icon name="home-outline" style="zoom:5.0;" color="medium"></ion-icon>
+				<div *ngIf="User?.IsPrivateLabelUser">
+					<h4>No Homes Found </h4>
+					<p>Looks like there are no homes present <b></b> </p>
+					<p>Start Building your Own Home below</p>
+				</div>
+				<div *ngIf="!User?.IsPrivateLabelUser">
+					<p>Start Building your Own Home below</p>
+				</div>
+			</div>
+		</ion-row>
+	</ion-grid>
+
+
+</ion-content>
+<ion-footer>
+	<ion-row>
+		<ion-col size="6">
+		</ion-col>
+		<ion-col size="6">
+			<div class="BUILD-MY-OWN" (click)="goToBuildYourGeneral()" style="float:right;">
+				<ion-button class="btn default" shape="round" color="primary">Build My Own</ion-button>
+			</div>
+		</ion-col>
+	</ion-row>
+</ion-footer>

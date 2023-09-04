@@ -1,0 +1,102 @@
+<!--<ion-header>
+	<navigation-sub-menu type="titleMenu" title="Search {{_source}}" [showBackButton]="showBackButton"></navigation-sub-menu>
+</ion-header>-->
+<ion-header>
+	<!--<save-sub-menu [title]="pageTitle" (_saveClickEventHandler)="save()"></save-sub-menu>-->
+	<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+	<ion-row class="top-row">
+		<ion-col size="3">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" (click)="goBack()" />
+			<!--style="margin-left: .5em !important; position: absolute !important; margin-top: .5em !important;" />-->
+		</ion-col>
+		<ion-col size="9">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Flogo%2Fhorizontal-logo.jpg?alt=media&token=dca5a1d4-c115-48c6-8f1e-e8de5a12b60e" class="header-img" style="max-height: 3em !important;">
+		</ion-col>
+	</ion-row>
+</ion-header>
+<ion-content class="ion-padding">
+	<ng-container>
+		<ng-container *ngIf="view == 'SearchProductResult'">
+			<ion-row *ngFor="let result of searchProductResults" class="search-result-row" (click)="getSearchResultDetails(result)">
+				<ion-col size="4">
+					<img src="{{result.Image}}" class="search-result-image" />
+				</ion-col>
+				<ion-col size="8">
+					<h5 class="search-result-title">{{result.Name}}</h5>
+					<h5 class="mypad-green" *ngIf="result.Price > 0">{{result.Price | currency}}</h5>
+					<p style="line-height:normal !important;">{{result.Description}}</p>
+				</ion-col>
+				<hr />
+			</ion-row>
+
+			<!--If No Results-->
+			<ion-grid style="height: 80vh;text-align: center;padding-top: 10em;" *ngIf="searchProductResults==undefined || searchProductResults.length==0">
+				<ion-row class="justify-content-center align-items-center" style="height: 100%; flex-direction: column">
+					<div class="text-center">
+
+						<ion-icon name="search-circle" style="zoom:5.0;" color="medium"></ion-icon>
+						<h4>No Results Found </h4>
+						<p>Looks like there are no results for your search <b></b> </p>
+
+					</div>
+				</ion-row>
+			</ion-grid>
+
+			<ion-infinite-scroll (ionInfinite)="handleInfinite($event)">
+				<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+				</ion-infinite-scroll-content>
+			</ion-infinite-scroll>
+
+		</ng-container>
+		<ng-container *ngIf="view=='SearchYouTubeResult'">
+			<div style="margin-top: 1em;"></div>
+			<ion-row *ngFor="let result of searchYouTubeResults" class="search-result-row" (click)="getSearchResultDetails(result)">
+				<ion-col size="4">
+					<img src="{{result.ThumbnailImg}}" class="search-result-image" />
+				</ion-col>
+				<ion-col size="8">
+					<h5 class="search-result-title">{{result.Title}}</h5>
+					<p style="line-height:normal !important;">{{result.VideoDescription.substring(0,50)}}<span *ngIf="result.VideoDescription.length>50">&nbsp;...</span></p>
+				</ion-col>
+				<hr />
+			</ion-row>
+
+			<!--If No Results-->
+			<ion-grid style="height: 80vh;text-align: center;padding-top: 10em;" *ngIf="searchYouTubeResults==null || searchYouTubeResults.length==0">
+				<ion-row class="justify-content-center align-items-center" style="height: 100%; flex-direction: column">
+					<div class="text-center">
+
+						<ion-icon name="search-circle" style="zoom:5.0;" color="medium"></ion-icon>
+						<h4>No Results Found </h4>
+						<p>Looks like there are no results for your search <b></b> </p>
+
+					</div>
+				</ion-row>
+			</ion-grid>
+
+		</ng-container>
+		<ng-container *ngIf="view=='SearchEngineResult'">
+			<ion-row *ngFor="let result of searchEngineResults" class="search-result-row" (click)="getSearchResultDetails(result)">
+				<ion-col size="12">
+					<h5 class="search-result-title">{{result.Title}}</h5>
+					<p style="line-height:normal !important;">{{result.Description}}</p>
+				</ion-col>
+				<hr />
+			</ion-row>
+
+			<!--If No Results-->
+			<ion-grid style="height: 80vh;text-align: center;padding-top: 10em;" *ngIf="searchEngineResults==null || searchEngineResults.length==0">
+				<ion-row class="justify-content-center align-items-center" style="height: 100%; flex-direction: column">
+					<div class="text-center">
+
+						<ion-icon name="search-circle" style="zoom:5.0;" color="medium"></ion-icon>
+						<h4>No Results Found </h4>
+						<p>Looks like there are no results for your search <b></b> </p>
+
+					</div>
+				</ion-row>
+			</ion-grid>
+
+		</ng-container>
+	</ng-container>
+</ion-content>

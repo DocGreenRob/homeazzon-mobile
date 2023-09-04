@@ -1,0 +1,40 @@
+<ion-header>
+	<ion-toolbar>
+		<div>
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" (click)="close()" style="margin-left: .5em !important; position: absolute !important; margin-top: .5em !important;" />
+		</div>
+		<div class="ion-text-center">
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Flogo%2Fhorizontal-logo.jpg?alt=media&token=dca5a1d4-c115-48c6-8f1e-e8de5a12b60e" class="header-img">
+		</div>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<ion-row>
+		<ion-col col-12>
+			<ion-label>Full Name</ion-label>
+			<div class="divBorder">
+				<input type="text" [(ngModel)]="user.FullName" placeholder="Name">
+			</div>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col col-12>
+			<ion-label>Email</ion-label>
+			<div class="divBorder">
+				<input type="email" [(ngModel)]="user.Email" placeholder="Email">
+			</div>
+		</ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col col-12>
+			<ion-label>Confirm Email</ion-label>
+			<div class="divBorder">
+				<input type="email" [(ngModel)]="user.confirmEmail" placeholder="Email">
+			</div>
+		</ion-col>
+	</ion-row>
+	<div class="saveButton">
+		<ion-button color="secondary" (click)="checkValidation()">Submit</ion-button>
+	</div>
+</ion-content>

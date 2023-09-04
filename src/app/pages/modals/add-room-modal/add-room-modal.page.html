@@ -1,0 +1,62 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<ion-toolbar color="white-background">
+		<ion-row class="top-row">
+			<ion-col size="3">
+				<h5 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="cancel()">
+					Cancel
+				</h5>
+			</ion-col>
+			<ion-col size="6">
+				<h1 class="page-title">Add {{areaType}}</h1>
+			</ion-col>
+			<ion-col size="3">
+				<h5 class="mypad-green save-button" (click)="saveRoom()">
+					Save
+				</h5>
+			</ion-col>
+		</ion-row>
+	</ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+	<ion-row>
+		<ion-col size="12" *ngIf="uiType!='customHouse'">
+			<h4 class="input-label">Room Type</h4>
+			<ion-item lines="none">
+				<ion-select [(ngModel)]="areaId" required (ngModelChange)="areaSelectionChanged()" style="width: 100%;">
+					<ion-select-option *ngFor="let area of areas" [value]="area.Id">
+						{{area.Name}}
+					</ion-select-option>
+				</ion-select>
+			</ion-item>
+		</ion-col>
+		<ion-col size="12">
+			<h4 class="input-label">Room Name</h4>
+			<ion-item lines="none">
+				<input [(ngModel)]="roomName" placeholder="Room Name" required>
+			</ion-item>
+		</ion-col>
+
+		<ion-col size="12">
+			<h4 class="input-label">Square Footage</h4>
+			<ion-item lines="none">
+				<input [(ngModel)]="sqFt" required type="number">
+			</ion-item>
+		</ion-col>
+	</ion-row>
+
+	<br><br>
+	<ion-row>
+		<ion-col size="3">
+
+		</ion-col>
+		<ion-col size="6">
+			<ion-button expand="block" style="border:2px solid #fff !important; background-color:none !important; color:#fff !important; max-height: 2em !important;max-width: 15em !important;font-size: .8em !important;" class="button-text" (click)="saveRoom()">
+				Save
+			</ion-button>
+		</ion-col>
+		<ion-col size="3">
+
+		</ion-col>
+	</ion-row>
+</ion-content>

@@ -1,0 +1,66 @@
+<ion-header>
+    <!--<save-sub-menu [title]="pageTitle" (_saveClickEventHandler)="save()"></save-sub-menu>-->
+    <div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+    <ion-row class="top-row">
+        <ion-col size="3">
+            <h4 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="close()">Cancel</h4>
+        </ion-col>
+        <ion-col size="9">
+            <h1 class="page-title" *ngIf="result?.Name">{{result?.Name}} </h1>
+            <h1 class="page-title" *ngIf="result?.Title">{{result?.Title}} </h1>
+        </ion-col>
+    </ion-row>
+    <!--<ion-row>
+		<ion-col size="2">
+			<ion-icon name="close" class="close" (click)="close()"></ion-icon>
+		</ion-col>
+		<ion-col size="10">
+			<h1 class="modal-title">{{result?.Name}}</h1>
+		</ion-col>
+	</ion-row>-->
+</ion-header>
+<ion-content class="ion-padding">
+    <ng-container>
+        <ng-container *ngIf="source == 'Amazon' || source == 'Google Shopping'">
+            <div class="spacer-halfRem"></div>
+            <div class="main-view">
+                <img src="{{result?.Image}}" />
+            </div>
+            <div class="spacer-halfRem"></div>
+            <div class="search-description">
+                <h2>{{result?.Name}}</h2>
+            </div>
+            <div class="spacer-oneRem"></div>
+            <div class="search-description">
+                <h2 class="mypad-green">
+                    {{result?.Price | currency}}
+                </h2>
+            </div>
+            <div class="spacer-oneRem"></div>
+            <p class="search-description">{{result?.Description}}</p>
+            <div class="spacer-oneRem"></div>
+            <div class="spacer-oneAndHalfRem"></div>
+        </ng-container>
+        <ng-container *ngIf="source == 'YouTube'">
+            <div class="spacer-halfRem"></div>
+            <div class="main-view">
+                <ion-grid>
+                    <ion-row>
+                        <iframe frameborder="0" [src]="videoUrl" allowfullscreen style="width: 100%;"></iframe>
+                    </ion-row>
+                </ion-grid>
+            </div>
+            <div class="spacer-oneRem"></div>
+            <h6 class="search-description">{{result?.VideoDescription}}</h6>
+            <div class="spacer-oneAndHalfRem"></div>
+        </ng-container>
+        <ng-container *ngIf="source == 'Google Web'">
+            <div class="spacer-halfRem"></div>
+            <h2 class="search-result-title">{{result?.Title}}</h2>
+            <div class="spacer-oneAndHalfRem"></div>
+            <h3 class="search-description">{{result?.Description}}</h3>
+            <div class="spacer-oneAndHalfRem"></div>
+        </ng-container>
+    </ng-container>
+    <ion-button class="default SEARCH" ion-button (click)="saveItem()" style="float: right !important; border-radius: 6px !important; border: var(--ion-color-light-grey) 2px solid !important; margin-right: 1em;">Save Item</ion-button>
+</ion-content>

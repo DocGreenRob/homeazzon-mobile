@@ -1,0 +1,183 @@
+<ion-header>
+	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+	<ion-toolbar color="white-background">
+		<ion-row class="top-row">
+			<ion-col size="3">
+				<h5 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="cancel()">
+					Cancel
+				</h5>
+			</ion-col>
+			<ion-col size="6">
+				<h1 class="page-title">{{this.ActiveItem.Name}}</h1>
+			</ion-col>
+			<ion-col size="3" *ngIf="view == 'read-only'">
+				<h5 class="mypad-green save-button" (click)="showEditView()">
+					Edit
+				</h5>
+			</ion-col>
+			<ion-col size="3" *ngIf="view == 'add-edit'">
+				<h5 class="mypad-green save-button" (click)="saveContactInformation()">
+					Save
+				</h5>
+			</ion-col>
+			<ion-col size="3" *ngIf="view == 'send-email'">
+				<h5 class="mypad-green save-button" (click)="sendEmail()">
+					Send
+				</h5>
+			</ion-col>
+		</ion-row>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<ng-container *ngIf="view!='send-email'">
+		<div *ngIf="!doesContactExist" class="ion-text-center">
+			<h3>There's nothing here yet.</h3>
+			<p>Add a new contact now!</p>
+			<br /><br />
+			<button class="mypad-green" (click)="showContactForm()">
+				Add +
+			</button>
+
+		</div>
+		<ion-row *ngIf="view == 'add-edit'">
+			<ion-col size="12">
+				<h4 class="input-label">Current Contacts</h4>
+				<ion-item lines="none">
+					<ion-select [(ngModel)]="contactInformationId" required (ngModelChange)="onContactInformationChanged()" style="width: 100%;">
+						<ion-select-option *ngFor="let contact of contacts" [value]="contact.Id">
+							{{contact.Name}}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+
+			<ion-col size="12">
+				<h4 class="input-label">Person/Business Name:</h4>
+				<ion-item lines="none">
+					<input [(ngModel)]="contactInformation.Name" required type="text">
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<h4 class="input-label">Phone:</h4>
+				<ion-item lines="none">
+					<input [(ngModel)]="contactInformation.Phone" required type="tel">
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<h4 class="input-label">Email:</h4>
+				<ion-item lines="none">
+					<input [(ngModel)]="contactInformation.Email" type="email">
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<h4 class="input-label">Website:</h4>
+				<ion-item lines="none">
+					<input [(ngModel)]="contactInformation.Website" type="url">
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<h4 class="input-label">Notes:</h4>
+				<ion-item lines="none">
+					<input [(ngModel)]="contactInformation.Notes" type="text">
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<div *ngIf="view == 'read-only' && doesContactExist">
+			<ion-row>
+				<ion-col size="12">
+					<h1 class="mypad-green">
+						{{contactInformation?.Name}}
+					</h1>
+				</ion-col>
+			</ion-row>
+			<ion-row *ngIf="contactInformation?.Phone !== undefined">
+				<ion-col size="12">
+					<h4>
+						{{contactInformation?.Phone}}
+					</h4>
+				</ion-col>
+			</ion-row>
+			<ion-row *ngIf="contactInformation?.Email !== undefined">
+				<ion-col size="12">
+					<h4>
+						{{contactInformation?.Email}}
+					</h4>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col size="12">
+					<h4>
+						{{contactInformation?.Website}}
+					</h4>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col size="12">
+					<h5>
+						{{contactInformation?.Notes}}
+					</h5>
+				</ion-col>
+			</ion-row>
+		</div>
+		<br><br>
+		<ion-row *ngIf="doesContactExist">
+			<ion-col size="4">
+				<h1 class="mypad-green">
+					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fsms.svg?alt=media&token=0e0b78d9-5645-4b81-b60e-e0110848b0c3"
+						 class="left-icon" (click)="text()"
+						 style="margin-top: .5em !important; height: 1em !important;" />
+				</h1>
+			</ion-col>
+			<ion-col size="4">
+				<h1 class="mypad-green">
+					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fmobile-alt.svg?alt=media&token=508fc96e-55dd-4f9f-bb56-2b7ce156f745"
+						 class="left-icon" (click)="call()"
+						 style="margin-top: .5em !important; height: 1em !important;" />
+				</h1>
+			</ion-col>
+			<ion-col size="4">
+				<h1 class="mypad-green">
+					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fmail-bulk.svg?alt=media&token=5c5e573d-78b2-42fe-9b30-6691b149d894"
+						 class="left-icon" (click)="email()"
+						 style="margin-top: .5em !important; height: 1em !important;" />
+				</h1>
+			</ion-col>
+		</ion-row>
+
+	</ng-container>
+	<ng-container *ngIf="view=='send-email'">
+		<form [formGroup]="sendEmailForm">
+			<ion-row>
+				<ion-col size="12">
+					<h4 class="input-label">From</h4>
+					<ion-item lines="none">
+						<input formControlName="From" type="email">
+					</ion-item>
+					<p class="ion-text-danger" *ngIf="From.touched && From.invalid">Required field</p>
+				</ion-col>
+				<ion-col size="12">
+					<h4 class="input-label">To</h4>
+					<ion-item lines="none">
+						<input formControlName="To" type="email">
+					</ion-item>
+					<p class="ion-text-danger" *ngIf="To.touched && To.invalid">Required field</p>
+				</ion-col>
+				<ion-col size="12">
+					<h4 class="input-label">Subject</h4>
+					<ion-item lines="none">
+						<input type="text" formControlName="Subject" />
+					</ion-item>
+					<p class="ion-text-danger" *ngIf="Subject.touched && Subject.invalid">Required field</p>
+				</ion-col>
+				<ion-col size="12">
+					<h4 class="input-label">Message</h4>
+					<ion-item lines="none">
+						<textarea type="text" formControlName="Message"></textarea>
+					</ion-item>
+					<p class="ion-text-danger" *ngIf="Message.touched && Message.invalid">Required field</p>
+				</ion-col>
+			</ion-row>
+		</form>
+	</ng-container>
+</ion-content>

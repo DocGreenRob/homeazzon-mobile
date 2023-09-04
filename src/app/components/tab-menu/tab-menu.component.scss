@@ -1,0 +1,35 @@
+.footer-content {
+	background-color: var(--ion-color-white-background) !important;
+}
+
+.sub_footer_content {
+	background: var(--ion-color-white-background) !important;
+	border: solid var(--ion-color-white-background) 0px !important;
+	margin: 0;
+	padding: 0;
+}
+
+.tab-icon {
+	//filter: invert(100%) sepia(5%) saturate(0%) hue-rotate(267deg) brightness(110%) contrast(100%);
+	filter: invert(99%) sepia(0%) saturate(112%) hue-rotate(135deg) brightness(85%) contrast(78%);
+}
+
+.active_footer_icon{
+	filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg) brightness(89%) contrast(107%);
+}
+
+.footer_content {
+	display: flex;
+	text-align: center;
+
+	.sub_footer_content {
+		flex: 1;
+		background: #ddd;
+		padding: 0.7rem;
+
+		img {
+			height: 1.5rem;
+			margin: auto;
+		}
+	}
+}

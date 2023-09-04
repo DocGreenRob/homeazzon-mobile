@@ -1,0 +1,44 @@
+<ion-content class="ion-padding">
+	<div style="height:4.75em;"></div>
+	<!--<h2 class="welcome-title" style="width: 10.25em;">Welcome to</h2>-->
+	<ion-row>
+		<ion-col size="12">
+			<h2 class="welcome-title">Welcome to</h2>
+			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Flogo%2Fhorizontal-logo.jpg?alt=media&token=dca5a1d4-c115-48c6-8f1e-e8de5a12b60e" class="logo-img" />
+		</ion-col>
+	</ion-row>
+	<div style="height:.5em;"></div>
+	<div style="height:1.5em;"></div>
+	<p>MyPad helps you and <b>{{privateLabelName}}</b> work together to build your dream home.</p>
+	<div style="height:1.5em;"></div>
+	<ion-row>
+		<ion-col size="1"></ion-col>
+		<ion-col size="4">
+			<img src="assets/svgs/regular/user-hard-hat.svg" class="welcome-privatelabel-logo" menuToggle menu="regular-menu" /> {{privateLabelName}}
+		</ion-col>
+		<ion-col size="2">
+			<h1 style="font-size:4rem !important; margin-top: 1em !important; margin-left: .4em !important;">+</h1>
+		</ion-col>
+		<ion-col size="4">
+			<img src="assets/svgs/regular/smile-beam.svg" class="welcome-happy-face" menuToggle menu="regular-menu" />
+		</ion-col>
+		<ion-col size="1"></ion-col>
+	</ion-row>
+	<div style="height:1.5em;"></div>
+	<ion-row>
+		<ion-col size="1">
+		</ion-col>
+		<ion-col size="10">
+			<ion-button color="dark" class="button-text" expand="block" shape="round" (click)="gotologin()">Let's get started!</ion-button>
+		</ion-col>
+		<ion-col size="1">
+		</ion-col>
+	</ion-row>
+</ion-content>
+<ion-footer class="ion-text-center">
+	<ion-row>
+		<ion-col size="12">
+			<div class="caption">Version 1.7.7 </div>
+		</ion-col>
+	</ion-row>
+</ion-footer>

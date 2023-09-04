@@ -1,0 +1,8 @@
+<ion-row id="segmentSelectorRw">
+  <ion-col size="4" *ngFor="let selector of segments">
+    <div [ngClass]="{'selectedSegment': initView.value.toLowerCase()==selector.value.toLowerCase()}"
+      (click)="handleSegmentClick(selector)">
+      <h5 class="dashboard-header">{{selector.name}}</h5>
+    </div>
+  </ion-col>
+</ion-row>
