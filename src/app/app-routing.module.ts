@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'intro',
     loadChildren: () => import('./pages/features/app-start/intro/intro.module').then( m => m.IntroPageModule)
   },
+  {
+    path: 'base',
+    loadChildren: () => import('./pages/base/base.module').then( m => m.BasePageModule)
+  },
 ];
 
 @NgModule({
