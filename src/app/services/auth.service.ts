@@ -1,14 +1,14 @@
 // src/app/services/auth.service.ts
-import { Injectable, NgZone } from "@angular/core";
-import { Storage } from "@ionic/storage";
+import { Injectable, NgZone } from '@angular/core';
+import { Storage } from '@ionic/storage';
 // import { NavigationAuthenticationClient } from "./navigationAuthenticationClient";
-import { MsalService } from "@azure/msal-angular";
-import { Platform } from "@ionic/angular";
+import { MsalService } from '@azure/msal-angular';
+import { Platform } from '@ionic/angular';
 
 declare let cordova: any;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
   accessToken: string;
@@ -16,18 +16,21 @@ export class AuthService {
   loggedIn: boolean;
   loading = true;
 
-  constructor(public zone: NgZone,
+  constructor(
+    public zone: NgZone,
     private storage: Storage,
     private msalService: MsalService,
     private platform: Platform
-    ) {
+  ) {
     this.getStorageInformation();
   }
 
   private getStorageInformation() {
-    this.storage.get("profile").then((user) => (this.user = user));
-    this.storage.get("access_token").then((token) => (this.accessToken = token));
-    this.storage.get("expires_at").then((exp) => {
+    this.storage.get('profile').then((user) => (this.user = user));
+    this.storage
+      .get('access_token')
+      .then((token) => (this.accessToken = token));
+    this.storage.get('expires_at').then((exp) => {
       if (exp != null) {
         this.loggedIn = Date.now() < JSON.parse(exp);
         this.loading = false;
@@ -38,20 +41,20 @@ export class AuthService {
   }
 
   removeIntractionInProgressMsal() {
-    // if (this.platform.is("android")) {
+    if (this.platform.is('android')) {
       this.msalService.instance.handleRedirectPromise();
-    // }
-    sessionStorage.removeItem("msal.interaction.status");
+    }
+    sessionStorage.removeItem('msal.interaction.status');
   }
 
   login() {
     this.loading = true;
     this.removeIntractionInProgressMsal();
     this.msalService.loginRedirect({
-      scopes: ["openid", "profile"],
+      scopes: ['openid', 'profile'],
 
       redirectStartPage: 'http://localhost:8100',
-      prompt: "select_account",
+      prompt: 'select_account',
     });
 
     // Authorize login request with Auth0: open login page and get auth results
@@ -84,7 +87,7 @@ export class AuthService {
     this.user = null;
     this.loggedIn = false;
     // this.safariViewController.isAvailable().then((available: boolean) => {
-      
+
     // });
   }
 }

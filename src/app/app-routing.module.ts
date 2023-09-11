@@ -268,7 +268,11 @@ const routes: Routes = [
 	{
 		path: 'user-types-selector',
 		loadChildren: () => import('./pages/features/user-types/user-types-selector/user-types-selector.module').then(m => m.UserTypesSelectorPageModule)
-	}
+	},
+  {
+    path: 'redirect',
+    loadChildren: () => import('./pages/redirect/redirect.module').then( m => m.RedirectPageModule)
+  }
 ];
 
 @NgModule({

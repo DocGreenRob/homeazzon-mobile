@@ -9,16 +9,15 @@ import { SignInPageRoutingModule } from './sign-in-routing.module';
 import { SignInPage } from './sign-in.page';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
-
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		ReactiveFormsModule,
-		SignInPageRoutingModule,
-	],
-	declarations: [SignInPage],
-	providers: [SafariViewController]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ReactiveFormsModule,
+    SignInPageRoutingModule,
+  ],
+  declarations: [SignInPage],
+  providers: [SafariViewController],
 })
-export class SignInPageModule { }
+export class SignInPageModule {}
