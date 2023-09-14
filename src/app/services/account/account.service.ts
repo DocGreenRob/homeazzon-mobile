@@ -71,21 +71,18 @@ export class AccountService extends baseService {
             //perform extra validation
 
             //validate email
-            if (IdToken.email != decodedToken.email) {
+            if (IdToken.email != decodedToken.emails[0]) {
               return false;
             }
 
             return true;
           }
-        } else {
-          return false;
         }
       }
+      return false;
     } catch (e) {
       return false;
-    } finally {
-      return false;
-    }
+    } 
   }
 
   decodeToken(token: string): any {

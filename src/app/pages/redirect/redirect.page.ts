@@ -28,7 +28,7 @@ export class RedirectPage implements OnInit {
 
       const userInfo = {
         displayName: 'Rizwan',
-        email: 'rizwan@gmail.com',
+        email: 'asad@kodxsystem.com',
         emailVerified: true,
         photoUrl: '',
         uid: '12312',
