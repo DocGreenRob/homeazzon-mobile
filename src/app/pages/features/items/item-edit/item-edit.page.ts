@@ -88,6 +88,9 @@ export class ItemEditPage extends BasePage {
     }
 
     if (this._isFromItemAddPage) {
+      console.log(this._isFromItemAddPage,"abid")
+      console.log("abid you hit it with atahir")
+      
       this.pageTitle = "Add Item";
 
       switch (this._type) {

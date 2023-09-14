@@ -29,34 +29,34 @@
 					 *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded"
 					 (ionChange)="segmentChanged($event)">
 			<ion-segment-button value="my" >
-				<h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner == false">My Stuff</h5>
+				<h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">My Stuff</h5>
 			</ion-segment-button>
 			<ion-segment-button value="wishlist">
-				<h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner == false">Wishlist</h5>
+				<h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">Wishlist</h5>
 			</ion-segment-button>
 			<ion-segment-button value="suggested">
 				<h5 class="asset-list">Suggestions</h5>
 			</ion-segment-button>
 		</ion-segment> -->
-		<app-segment-selector [segments]="views" [initView]="{value: manageView}" *ngIf="ProfileItemImages == undefined || ProfileItemImages == null || ProfileItemImages.length == 0"
+		<app-segment-selector [segments]="views" [initView]="{value: manageView}" *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
 			(selectedSegment)="segmentChanged($event)">
 		</app-segment-selector>
 
 		<div *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
 			<ion-segment [(ngModel)]="dynamicManageView" mode="md" style="border: none !important;" class="asset-lists">
 				<ion-segment-button *ngFor="let a of LineItem.View.ViewSegments" (click)="dynamicTabClickHandler(a.Id)"
-					[ngClass]="{'active': dynamicManageView == a.Id}" value="{{a.Id}}">
+					[ngClass]="{'active': dynamicManageView === a.Id}" value="{{a.Id}}">
 					<h3 class="asset-list">{{a.Title}}</h3>
 				</ion-segment-button>
 			</ion-segment>
 		</div>
 	</div>
 	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
-		<div class="caption breadcrumb" *ngIf="ProfileItem.Id != undefined">
+		<div class="caption breadcrumb" *ngIf="ProfileItem.Id !== undefined">
 			<span (click)="viewProfileLineItems()"
 				class="hover-link">{{ProfileItem?.Name}}</span>&nbsp;>&nbsp;{{LineItem?.Name}}
 		</div>
-		<div class="caption breadcrumb" *ngIf="ProfileItem.Id == undefined">{{LineItem?.Name}}</div>
+		<div class="caption breadcrumb" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
 		<br style="clear:both !important;" />
 		<br style="clear:both !important;" />
 	</ng-container>
@@ -67,10 +67,10 @@
 	</ng-container>
 	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
 		<br style="clear:both;" />
-		<div *ngIf="data?.Lists.length != 0 && data?.Lists[0].Items.length != 0">
+		<div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0">
 			<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
 		</div>
-		<div *ngIf="data?.Lists.length == 0 || data?.Lists[0].Items.length == 0">
+		<div *ngIf="data?.Lists.length === 0 || data?.Lists[0].Items.length === 0">
 			<div class="nothing-notice">
 				<h3>There's nothing here yet.</h3>
 				<p>You need to add items into this list!</p>

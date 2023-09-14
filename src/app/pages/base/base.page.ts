@@ -658,8 +658,8 @@ export class BasePage implements OnInit {
       type: "file",
     };
     try {
-      //let view = this.navController.getActive();
-      //let componentName = view.component.name;
+      // let view = this.navController.getActive();
+      // let componentName = view.component.name;
       let componentName = "";
 
       if (this.platform.is("mobileweb")) {

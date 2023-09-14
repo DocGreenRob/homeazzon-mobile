@@ -9,11 +9,12 @@ export class baseService {
   constructor(public http: HttpClient) {}
 
   private formatErrors(error: any) {
-    console.log(JSON.stringify(error));
+    console.log("error here", error);
     return throwError(error.error);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    // console.log(path);
     return this.http.get(`${environment.httpBaseUrl}${path}`, { params }).pipe(catchError(this.formatErrors));
   }
 

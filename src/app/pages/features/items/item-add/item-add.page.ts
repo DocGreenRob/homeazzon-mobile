@@ -133,7 +133,7 @@ export class ItemAddPage extends BasePage {
           }
         },
         (err) => {
-          this._loading.dimiss();
+          this._loading.dismiss();
         }
       );
     }
@@ -141,6 +141,7 @@ export class ItemAddPage extends BasePage {
     //	await this.getProfileItemLineItems(x, this.User.Types[0].Name);
     //});
     this.view = "SelectLineItems";
+    this._loading.dismiss();
   }
 
   public toggleCheck(event, obj, id) {
@@ -202,12 +203,12 @@ export class ItemAddPage extends BasePage {
     //		sourceParams: sourceParams
     //	});
     this.QueryParams = {
-      IsFromItemAddPage: true,
+      IsFromItemAddPage: false,
       type: this._type,
       source: source,
       sourceParams: sourceParams,
     };
-    this.router.navigate(["item-edit"]);
+    this.router.navigate(["item-edit"],{queryParams:this.QueryParams});
     //if (!isSaveToRoom) {
 
     //	if (this._type != 'Amazon' &&
