@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.homeazzon.homeazzon",
+            "sha256_cert_fingerprints": [
+                "82:1E:85:56:27:44:CB:A5:9F:9E:DF:20:72:14:B8:9A:F0:D3:95:5A:8E:26:DA:4D:48:D5:F8:40:4A:9E:BF:FE"
+            ]
+        }
+    }
+]
