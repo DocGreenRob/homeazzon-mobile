@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.homeazzon.homeazzon',
   appName: 'ionic-app-base',
   webDir: 'www',
   server: {
