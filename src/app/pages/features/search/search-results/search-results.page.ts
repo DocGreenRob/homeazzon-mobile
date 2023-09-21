@@ -114,7 +114,7 @@ export class SearchResultsPage extends BasePage {
             Price: a.price?.value,
           });
         });
-        debugger;
+        // debugger;
         break;
       case "Google Shopping":
         this.searchProductResults = response;

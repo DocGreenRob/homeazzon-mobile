@@ -55,26 +55,19 @@ export class AccountService extends baseService {
     try {
       // debugger;
       let token: IAuthTokenDto = JSON.parse(localStorage.getItem("AuthToken"));
-      let IdToken: IdTokenDto = JSON.parse(localStorage.getItem("IdToken"));
+      // let IdToken: IdTokenDto = JSON.parse(localStorage.getItem("IdToken"));
 
-      if (token == null || IdToken == null) {
+      if (token == null) {
         return false;
       } else {
         let decodedToken = this.decodeToken(token.Access_token);
         let currentUnixTimeStamp = Math.round(new Date().getTime() / 1000);
-        debugger;
+        // debugger;
         //check token expiry date
         if (decodedToken.exp && decodedToken.iat) {
           if (currentUnixTimeStamp >= decodedToken.exp) {
             return false;
           } else {
-            //perform extra validation
-
-            //validate email
-            if (IdToken.email != decodedToken.emails[0]) {
-              return false;
-            }
-
             return true;
           }
         }

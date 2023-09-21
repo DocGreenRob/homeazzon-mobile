@@ -72,7 +72,7 @@ export class ChooseDevelopmentPage extends BasePage {
     //await this.privatelabelService.getPrivateLabelerDevelopments(user.PrivateLabeler.Id)
     await this.privatelabelService.getPrivateLabelerDevelopments(0).then(
       (x: Array<IDevelopmentDto>) => {
-        debugger;
+        // debugger;
         this.developments = x;
         loader.dismiss();
       },

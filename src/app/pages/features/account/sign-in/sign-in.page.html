@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
 	<div style="height:4.75em;"></div>
-	<ion-row>
+	<ion-row style="margin-bottom: 20vh;">
 		<ion-col size="12" class="ion-text-center">
 			<h2 class="welcome-title">Welcome to</h2>
 			<img src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fimgs%2Fhorizontal-logo.jpg?alt=media&token=5a7b36a8-33ea-4838-bf48-5c816e8ae785"
@@ -8,7 +8,7 @@
 		</ion-col>
 	</ion-row>
 	<ng-container>
-		<form (ngSubmit)="signIn()" [formGroup]="signInForm" style="margin-top: 1em;">
+		<!-- <form (ngSubmit)="signIn()" [formGroup]="signInForm" style="margin-top: 1em;">
 			<ion-item lines="none">
 				<input type="text" formControlName="email" placeholder="Email">
 			</ion-item>
@@ -32,9 +32,9 @@
 					</ion-button>
 				</ion-col>
 			</ion-row>
-		</form>
+		</form> -->
 
-		<ion-grid>
+		<ion-grid class="ion-margin-top">
 			<!-- TODO: -->
 			<!-- <ion-row>
 				<ion-col size="2"></ion-col>
@@ -76,16 +76,16 @@
 				</ion-col>
 				<ion-col size="2"></ion-col>
 			</ion-row> -->
-      <ion-row>
+      <ion-row class="ion-margin-top">
 				<ion-col size="2"></ion-col>
-				<ion-col size="8">
+				<ion-col size="8" class="ion-margin-top">
 					<div class="text-center">
 						<button (click)="signInAzure()" class="apple-sign-in-btn">
 							<ion-row>
-								<ion-col size="2" class="sign-in-btn-left-col">
+								<!-- <ion-col size="2" class="sign-in-btn-left-col">
 										<ion-icon name="logo-apple" style="zoom:1.75"></ion-icon>
-								</ion-col>
-								<ion-col size="10" class="sign-in-btn-right-col">
+								</ion-col> -->
+								<ion-col size="12" class="sign-in-btn-right-col">
 										<span>Login</span>
 								</ion-col>
 							</ion-row>

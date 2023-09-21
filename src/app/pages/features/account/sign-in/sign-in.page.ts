@@ -148,7 +148,7 @@ export class SignInPage extends BasePage {
 
   async signInAzure() {
     const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A8100%2Fredirect&scope=openid&response_type=id_token&prompt=login`;
-    const browser = this.iab.create(url, '_blank', {
+    const browser = this.iab.create(url, '_self', {
       location: 'no',
       clearcache: 'yes',
       clearsessioncache: 'yes',

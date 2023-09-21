@@ -189,7 +189,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
 
     let customProperty: IPropertyDto = this.CustomProperty;
     customProperty.User = {} as IUserDto;
-    debugger;
+    // debugger;
     customProperty.User.Email = this.User.Email;
     customProperty.User.Id = this.User.Id;
     customProperty.User.Types = new Array<IUserTypeDto>();

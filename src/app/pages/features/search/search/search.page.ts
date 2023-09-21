@@ -162,7 +162,7 @@ export class SearchPage extends BasePage {
             this._loading.dismiss();
           },
           (err) => {
-            debugger;
+            // debugger;
             if (err.status === 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);

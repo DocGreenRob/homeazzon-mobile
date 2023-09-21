@@ -140,7 +140,7 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     if (this.sendEmailForm.invalid) {
       this.alertService.showToast("Please fill all the required fields to continue", this.constants.ToastColorBad);
     } else {
-      debugger;
+      // debugger;
       const email = this.sendEmailForm.value as EmailDto;
       this.utilityService.sendEmail(email).then(
         (x) => {

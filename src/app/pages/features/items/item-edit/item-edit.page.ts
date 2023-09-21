@@ -638,11 +638,11 @@ export class ItemEditPage extends BasePage {
           this._loading.present();
           await this.saveToFirebase(this._selectedFile).then(
             (x: UploadTaskSnapshot) => {
-              debugger;
+              // debugger;
               x.ref
                 .getDownloadURL()
                 .then(async (url) => {
-                  debugger;
+                  // debugger;
                   if (this._loading != undefined) {
                     this._loading.dismiss();
                   }
