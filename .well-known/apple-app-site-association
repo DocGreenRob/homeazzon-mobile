@@ -3,8 +3,10 @@
     "apps": [],
     "details": [
       {
-        "appID": "TEAMID.BUNDLEID",
-        "paths": ["*"]
+        "appID": "TEAMID.com.homeazzon.homeazzon",
+        "paths": [
+          "*"
+        ]
       }
     ]
   }

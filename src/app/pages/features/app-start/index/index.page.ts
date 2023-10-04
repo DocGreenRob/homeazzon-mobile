@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MsalService } from '@azure/msal-angular';
+// import { MsalService } from '@azure/msal-angular';
 import { Storage } from '@ionic/storage';
 import { BasePage } from 'src/app/pages/base/base.page';
 import { AccountService } from 'src/app/services/account/account.service';
@@ -18,15 +18,14 @@ export class IndexPage extends BasePage {
     public override router: Router,
     public storage: Storage,
     private accountService: AccountService,
-    private http: HttpClient,
-    private msalService: MsalService
+    private http: HttpClient // private msalService: MsalService
   ) {
     super(null, null, null, null, null, router, null, null, null);
   }
 
   override async ngOnInit() {
     // debugger;
-    await this.msalService.instance.handleRedirectPromise();
+    // await this.msalService.instance.handleRedirectPromise();
     console.log('ngOnInit IndexPage');
 
     this.isLoggedIn();

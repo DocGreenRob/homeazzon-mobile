@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { environment } from '@env';
 import {
   AlertController,
   LoadingController,
@@ -26,6 +28,7 @@ import { FirebaseAuthService } from 'src/app/services/FirebaseAuth/firebase-auth
 import { PrivateLabelService } from 'src/app/services/private-label/private-label.service';
 import { UserDetailsService } from 'src/app/services/user-details/user-details.service';
 import { UxNotifierService } from 'src/app/services/uxNotifier/ux-notifier.service';
+
 import { IUserDto } from '../../../../models/dto/interfaces/IUserDto';
 import { IUserTypeDto } from '../../../../models/dto/interfaces/IUserTypeDto';
 import { FirebaseUser } from '../../../../models/FirebaseUser';
@@ -49,6 +52,7 @@ export class SignInPage extends BasePage {
     private safariViewController: SafariViewController,
     private deeplinks: Deeplinks,
     private authService: AuthService,
+    private firebaseAuthService: FirebaseAuthService,
     // ionic
     public override platform: Platform,
     private storage: Storage,
@@ -83,7 +87,7 @@ export class SignInPage extends BasePage {
       null
     );
     this.constants = new Constants();
-
+    this.initializeApp();
     this.AppInsights.trackEvent({
       name: 'SignInPage.Constructor()',
       properties: [{}],
@@ -147,7 +151,9 @@ export class SignInPage extends BasePage {
   }
 
   async signInAzure() {
-    const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A8100%2Fredirect&scope=openid&response_type=id_token&prompt=login`;
+    const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=
+    ${environment.redirectUrl}
+    &scope=openid&response_type=id_token&prompt=login`;
     const browser = this.iab.create(url, '_self', {
       location: 'no',
       clearcache: 'yes',
@@ -169,7 +175,13 @@ export class SignInPage extends BasePage {
     // this.authService.login();
     // window.location.href = "https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=67b22975-4c48-4fe3-9b03-913511cfcae5&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fauth&scope=https%3A%2F%2Fcognitivegenerationenterpr.onmicrosoft.com%2Fhomeazzon-api%2Fpl&response_type=token&prompt=login";
   }
-
+  initializeApp() {
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      console.log('that is the reps');
+      console.log(event.url);
+      this.firebaseAuthService.browserLoginHandler(event.url);
+    });
+  }
   async signInGoogle() {
     this.firebaseAuth
       .signInGoogle()

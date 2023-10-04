@@ -20,24 +20,9 @@ export class RedirectPage implements OnInit {
     console.log('this.route.snapshot.queryParams');
     console.log(this.route.snapshot);
     if (this.route.snapshot.fragment) {
-      const tokenId = this.route.snapshot.fragment
-        .toString()
-        .split('id_token=')
-        .pop();
-      console.log(tokenId);
-
-      const userInfo = {
-        displayName: 'Rizwan',
-        email: 'asad@kodxsystem.com',
-        emailVerified: true,
-        photoUrl: '',
-        uid: '12312',
-      };
-      console.log('Msal lgoin toekn ');
-
-      console.log(tokenId);
-
-      this.firebaseAuthService.setUser(userInfo, 'microsoft', tokenId, '');
+      this.firebaseAuthService.browserLoginHandler(
+        this.route.snapshot.fragment
+      );
     }
   }
 }
