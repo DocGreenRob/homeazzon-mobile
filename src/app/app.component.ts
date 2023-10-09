@@ -4,6 +4,7 @@ import {
   AlertController,
   LoadingController,
   MenuController,
+  NavController,
 } from '@ionic/angular';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
@@ -79,6 +80,7 @@ export class AppComponent extends BasePage {
     private storageCtrl: AppStorageService,
     public loadingCtrl: LoadingController,
     public override router: Router,
+    public override navController: NavController,
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
     // private msalService: MsalService,
@@ -181,8 +183,17 @@ export class AppComponent extends BasePage {
 
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
-      this.displayName = this.firebaseService.FirebaseUser.displayName;
-      this.router.navigate(['dashboard']);
+      this.displayName = this.firebaseService?.FirebaseUser?.displayName ?? '';
+      // this.navController.navigateRoot(['index']);
+      this.router.navigate(['index']);
+      // setTimeout(() => {
+      //   console.log('called the listener');
+
+      // window.location.reload();
+      // }, 2000);
+
+      // this.router.navigate(['item-details']);
+      // }, 2000);
     });
   }
 
@@ -197,7 +208,8 @@ export class AppComponent extends BasePage {
     window.addEventListener('properties:loaded', (x: any) => {
       this.ngzone.run(() => {
         this.userProperties = x.detail;
-        this.displayName = this.firebaseService.FirebaseUser.displayName;
+        this.displayName =
+          this.firebaseService?.FirebaseUser?.displayName ?? '';
       });
     });
   }

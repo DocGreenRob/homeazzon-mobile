@@ -154,26 +154,7 @@ export class SignInPage extends BasePage {
     const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=
     ${environment.redirectUrl}
     &scope=openid&response_type=id_token&prompt=login`;
-    const browser = this.iab.create(url, '_self', {
-      location: 'no',
-      clearcache: 'yes',
-      clearsessioncache: 'yes',
-      hidenavigationbuttons: 'yes',
-      hideurlbar: 'yes',
-      fullscreen: 'yes',
-    });
-
-    browser.on('loadstart').subscribe((event: any) => {
-      // debugger;
-      if (event.url.includes('#code')) {
-        browser.close();
-        const domain = event.url.split('#')[0];
-        const url = event.url.replace(domain, 'http://localhost');
-        window.location.href = 'http://localhost';
-      }
-    });
-    // this.authService.login();
-    // window.location.href = "https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=67b22975-4c48-4fe3-9b03-913511cfcae5&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fauth&scope=https%3A%2F%2Fcognitivegenerationenterpr.onmicrosoft.com%2Fhomeazzon-api%2Fpl&response_type=token&prompt=login";
+    this.iab.create(url, '_self', {});
   }
   initializeApp() {
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {

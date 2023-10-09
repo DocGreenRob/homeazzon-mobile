@@ -23,6 +23,7 @@ export const environment = {
   //   'https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/redirect',
 
   redirectUrl: 'https://homeazzon.com/redirect',
+  // redirectUrl: 'http://localhost:8100/redirect',
   // LOCAL - Docker
   //httpBaseUrl: "http://localhost:60662/api",
   //httpBase: "http://localhost:60662",

@@ -28,6 +28,9 @@ export class IndexPage extends BasePage {
     // await this.msalService.instance.handleRedirectPromise();
     console.log('ngOnInit IndexPage');
 
+    // this.isLoggedIn();
+  }
+  ionViewWillEnter(): void {
     this.isLoggedIn();
   }
 
