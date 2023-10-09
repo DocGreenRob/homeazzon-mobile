@@ -35,10 +35,8 @@ import * as qs from 'querystring';
 import { AccountService } from './services/account/account.service';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.service';
-// import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { EventMessage, EventType } from '@azure/msal-browser';
+// import { EventMessage, EventType } from '@azure/msal-browser';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',

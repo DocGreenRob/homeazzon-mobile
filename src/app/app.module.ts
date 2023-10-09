@@ -47,11 +47,6 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 //   MsalService,
 //   MsalRedirectComponent,
 // } from '@azure/msal-angular';
-import {
-  BrowserCacheLocation,
-  InteractionType,
-  PublicClientApplication,
-} from '@azure/msal-browser';
 
 @NgModule({
   declarations: [AppComponent],
