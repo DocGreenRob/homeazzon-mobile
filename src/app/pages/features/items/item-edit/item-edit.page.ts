@@ -2,9 +2,15 @@ import { Location } from "@angular/common";
 import { Component } from "@angular/core";
 import { UploadTaskSnapshot } from "@angular/fire/compat/storage/interfaces";
 import { Router } from "@angular/router";
-import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
+// import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
+import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
 import { Camera, CameraOptions } from "@awesome-cordova-plugins/camera/ngx";
-import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
+// import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
+import {
+  FilePicker,
+  PickFilesResult,
+  PickImagesResult,
+} from "@capawesome/capacitor-file-picker";
 import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { ActiveItem } from "src/app/models/ActiveItem";
@@ -53,14 +59,14 @@ export class ItemEditPage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     private camera: Camera,
     private firebaseService: FirebaseUploadService,
-    private barcodeScanner: BarcodeScanner,
+    // private barcodeScanner: BarcodeScanner,
     private barcodeService: BarcodeService,
     private alertController: AlertController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
     private productService: ProductsService,
     public override platform: Platform,
-    private chooser: Chooser,
+    // private chooser: Chooser,
     public alertCtrl: AlertController,
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
@@ -207,12 +213,14 @@ export class ItemEditPage extends BasePage {
         this.TempActiveItem.QrCode = qrCode;
       }
     } else {
-      this.barcodeScanner
-        .scan()
+      this.checkPermission().then(result => {
+        if (result) {
+          BarcodeScanner.hideBackground();
+        BarcodeScanner.startScan()
         .then((barcode) => {
           this._scanType = barcode.format;
           if (barcode.format != "QR_CODE") {
-            this.barcodeService.getBarCodeData(barcode.text).subscribe(
+            this.barcodeService.getBarCodeData(barcode.content).subscribe(
               (response: any) => {
                 // setup view
                 this.TempActiveItem.Image = response.ImageUrl;
@@ -224,7 +232,7 @@ export class ItemEditPage extends BasePage {
                 product.Id = 0;
                 product.Name = response.ProductName;
                 product.Image = response.ImageUrl;
-                product.BarCode = barcode.text;
+                product.BarCode = barcode.content;
                 product.BarCodeType = barcode.format;
                 product.Price = response.Price;
                 this.TempActiveItem.Product = product;
@@ -262,47 +270,54 @@ export class ItemEditPage extends BasePage {
 
             // setup Dto for Api
             let qrCode: IQrCodeDto = {} as IQrCodeDto;
-            qrCode.Url = barcode.text;
+            qrCode.Url = barcode.content;
             this.TempActiveItem.QrCode = qrCode;
           }
         })
         .catch((err) => {
           this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this._constants.ToastColorBad);
         });
+        }
+      })
+        
     }
   }
 
-  public override async launchFileExplorer() {
-    let accept: ChooserOptions = {
-      mimeTypes:
-        "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    };
-    await this.chooser
-      .getFile(accept)
-      .then((file) => {
-        if (file) {
-          if (file.mimeType == "application/pdf") {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-pdf.svg?alt=media&token=ec5d1f8a-8393-4b64-9a5b-5cc75ee01660";
-          } else if (file.mimeType == "application/msword" || file.mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-word.svg?alt=media&token=f2f34448-fefe-4cbe-bcc7-0e2fe9ae0ef2";
-          } else if (file.mimeType == "application/vnd.ms-excel" || file.mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-excel.svg?alt=media&token=853b9d8f-3040-4540-8e7a-a33da225e793";
-          } else if (
-            file.mimeType == "application/vnd.ms-powerpoint" ||
-            file.mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          ) {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-powerpoint.svg?alt=media&token=a603f641-db7d-408c-8622-ed0c628cbe7e";
-          } else if (file.mimeType == "image/png" || file.mimeType == "image/jpeg") {
-            this.TempActiveItem.Image = file.path;
-          }
-
-          this._selectedFile = file;
-        } else {
-          this.fileUploadExceptionHandler();
+  public override launchFileExplorer() {
+    // let accept: ChooserOptions = {
+    //   mimeTypes:
+    //     "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    // };
+    FilePicker.pickFiles({
+      multiple: false,
+      readData: true
+    }).then((result: PickFilesResult) => {
+        if (result && result.files) { 
+          const file = result.files[0];
+          if (file) {
+            if (file.mimeType == "application/pdf") {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-pdf.svg?alt=media&token=ec5d1f8a-8393-4b64-9a5b-5cc75ee01660";
+            } else if (file.mimeType == "application/msword" || file.mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-word.svg?alt=media&token=f2f34448-fefe-4cbe-bcc7-0e2fe9ae0ef2";
+            } else if (file.mimeType == "application/vnd.ms-excel" || file.mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-excel.svg?alt=media&token=853b9d8f-3040-4540-8e7a-a33da225e793";
+            } else if (
+              file.mimeType == "application/vnd.ms-powerpoint" ||
+              file.mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            ) {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-powerpoint.svg?alt=media&token=a603f641-db7d-408c-8622-ed0c628cbe7e";
+            } else if (file.mimeType == "image/png" || file.mimeType == "image/jpeg") {
+              this.TempActiveItem.Image = file.path;
+            }
+  
+            this._selectedFile = file;
+          } else {
+            this.fileUploadExceptionHandler();
+          } 
         }
       })
       .catch(() => {
@@ -963,6 +978,31 @@ export class ItemEditPage extends BasePage {
         }
       );
     }
+  }
+
+  private checkPermission(): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const status = await BarcodeScanner.checkPermission({ force: true });
+      if (status.granted) {
+        resolve(true);
+      } else if (status.denied) {
+        // const confirm = await this.alertService.askPopup(
+        //   this.translateService.instant("PERMISSIONS_REQUIRED"),
+        //   this.translateService.instant(
+        //     "PLEASE_ALLOW_CAMERA_ACCESS_IN_YOUR_SETTINGS"
+        //   ),
+
+        //   this.translateService.instant("SETTINGS"),
+        //   this.translateService.instant("DENY")
+        // );
+        // if (confirm) {
+        //   BarcodeScanner.openAppSettings();
+        // }
+        this.navController.pop();
+        this.uxNotifierService.showToast("Permissions required", this._constants.ToastColorBad);
+        resolve(false);
+      }
+    });
   }
 
   public close() {
