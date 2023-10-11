@@ -13,7 +13,7 @@
         </ion-col>
     </ion-row>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="!isScannerActive">
     <ng-container *ngIf="isDisplayReady">
         <div style="padding-left:.5em !important; padding-right:.5em !important;">
             <div class="spacer-halfRem"></div>
@@ -35,7 +35,8 @@
                     </div>
                     <!--<div class="spacer-oneRem"></div>-->
                     <ion-item style="background-color: #fff !important;" lines="none">
-                        <input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Title..." (focus)="selectInput($event)" (keyup.enter)="save()" />
+                        <input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Title..."
+                            (focus)="selectInput($event)" (keyup.enter)="save()" />
                     </ion-item>
                     <hr />
                     <!-- Where does this belong? -->
@@ -44,7 +45,8 @@
                     {{ProfileItem.Name}}
                     <div style="float:right; margin-right:1.25em;">
                         <h6 class="mypad-green" (click)="updateItemLocation()" *ngIf="IsMetattachment == false">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
+                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+                                class="icon-img mypad-green" /> Edit Item
                         </h6>
                     </div>
                     <hr />
@@ -54,7 +56,8 @@
                     {{LineItem.Name}}
                     <div style="float:right; margin-right:1.25em;">
                         <h6 class="mypad-green" (click)="updateItemLineitems()" *ngIf="IsMetattachment == false">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
+                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+                                class="icon-img mypad-green" /> Edit Item
                         </h6>
                     </div>
                     <hr />
@@ -66,7 +69,8 @@
                     <div *ngIf="TempActiveItem?.IsSuggest == true">Suggested</div>
                     <div style="float:right; margin-right:1.25em;" *ngIf="IsMetattachment == false">
                         <h6 class="mypad-green" (click)="updateItemLineitems()">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
+                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191"
+                                class="icon-img mypad-green" /> Edit Item
                         </h6>
                     </div>
                     <br />
@@ -77,7 +81,8 @@
                     <div class="spacer-oneRem"></div>
                     <h5 class="mypad-grey">Title</h5>
                     <ion-item lines="none" style="background-color: #fff !important;">
-                        <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Title..." (focus)="selectInput($event)" (keyup.enter)="save()" />
+                        <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Title"
+                            placeholder="Title..." (focus)="selectInput($event)" (keyup.enter)="save()" />
                     </ion-item>
                     <hr />
                 </div>
@@ -86,84 +91,101 @@
                 <h6 class="mypad-grey">Description</h6>
                 <ion-item lines="none">
                     <textarea class="input-text
-							  text-area-regular" [(ngModel)]="TempActiveItem?.AssetInfo.Description" style="max-height: 8em !important; padding: .25em; border-radius: 1em !important; padding-top: 1em !important; line-height:normal !important;" (focus)="selectInput($event)"
-                        (keyup.enter)="save()"></textarea>
+							  text-area-regular" [(ngModel)]="TempActiveItem?.AssetInfo.Description"
+                        style="max-height: 8em !important; padding: .25em; border-radius: 1em !important; padding-top: 1em !important; line-height:normal !important;"
+                        (focus)="selectInput($event)" (keyup.enter)="save()"></textarea>
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Price</h6>
                 <ion-item lines="none">
-                    <input type="number" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Price" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="number" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Price"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Item Number</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.ItemNumber" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.ItemNumber"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Manufacturer</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Manufacturer" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Manufacturer"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Make</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Make" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Make"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Model</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Model" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Model"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Serial Number</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.SerialNumber" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.SerialNumber"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Size</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Size" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Size"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Length</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Length" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Length"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Height</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Height" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Height"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Depth</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Depth" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Depth"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Width</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Width" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Width"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Total Quantity</h6>
                 <ion-item lines="none">
-                    <input type="number" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantity" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="number" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantity"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Total Quantity Unit</h6>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantityUnit" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantityUnit"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <h6 class="mypad-grey">Notes</h6>
                 <ion-item lines="none">
-                    <textarea class="input-text text-area-regular" [(ngModel)]="TempActiveItem?.AssetInfo.Notes" style="max-height: 8em !important; padding: .25em; border-radius: 1em !important; padding-top: 1em !important; line-height:normal !important;" (keyup.enter)="save()"></textarea>
+                    <textarea class="input-text text-area-regular" [(ngModel)]="TempActiveItem?.AssetInfo.Notes"
+                        style="max-height: 8em !important; padding: .25em; border-radius: 1em !important; padding-top: 1em !important; line-height:normal !important;"
+                        (keyup.enter)="save()"></textarea>
                 </ion-item>
                 <div class="spacer-oneRem"></div>
                 <div class="mypad-grey">Color</div>
                 <div class="spacer-oneRem"></div>
                 <ion-item lines="none">
-                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Color" (focus)="selectInput($event)" (keyup.enter)="save()">
+                    <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Color"
+                        (focus)="selectInput($event)" (keyup.enter)="save()">
                 </ion-item>
                 <div class="spacer-oneAndHalfRem"></div>
             </ng-container>

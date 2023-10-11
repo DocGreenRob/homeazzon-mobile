@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { UploadTaskSnapshot } from '@angular/fire/compat/storage/interfaces';
 import { Router } from '@angular/router';
 // import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
@@ -44,7 +44,7 @@ import { IProfileItemDto } from '../../../../models/dto/interfaces/IProfileItemD
   templateUrl: './item-edit.page.html',
   styleUrls: ['./item-edit.page.scss'],
 })
-export class ItemEditPage extends BasePage {
+export class ItemEditPage extends BasePage implements OnDestroy {
   private _loading: any;
   private _constants: Constants;
   public _type: string;
@@ -56,6 +56,7 @@ export class ItemEditPage extends BasePage {
   public pageTitle: string = 'Edit Item';
   public isQrCode: boolean = false;
   public isDisplayReady: boolean = false;
+  public isScannerActive: boolean = false;
   public _bookmark: string = '';
 
   constructor(
@@ -235,9 +236,11 @@ export class ItemEditPage extends BasePage {
     } else {
       this.checkPermission().then((result) => {
         if (result) {
+          this.isScannerActive = true;
           BarcodeScanner.hideBackground();
           BarcodeScanner.startScan()
             .then((barcode) => {
+              this.stopScanning();
               this._scanType = barcode.format;
               if (barcode.format != 'QR_CODE') {
                 this.barcodeService.getBarCodeData(barcode.content).subscribe(
@@ -307,6 +310,10 @@ export class ItemEditPage extends BasePage {
         }
       });
     }
+  }
+  stopScanning() {
+    this.isScannerActive = false;
+    BarcodeScanner.stopScan();
   }
 
   public override launchFileExplorer() {
@@ -1248,5 +1255,8 @@ export class ItemEditPage extends BasePage {
 
   override selectInput(event) {
     event.target.select();
+  }
+  ngOnDestroy() {
+    this.stopScanning();
   }
 }
