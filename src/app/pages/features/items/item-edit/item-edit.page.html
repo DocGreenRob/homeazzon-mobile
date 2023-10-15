@@ -80,7 +80,7 @@
                 <div *ngIf="pageTitle == 'Add Item'">
                     <div class="spacer-oneRem"></div>
                     <h5 class="mypad-grey">Title</h5>
-                    <ion-item lines="none" style="background-color: #fff !important;">
+                    <ion-item lines="none">
                         <input type="text" class="input-text" [(ngModel)]="TempActiveItem?.AssetInfo.Title"
                             placeholder="Title..." (focus)="selectInput($event)" (keyup.enter)="save()" />
                     </ion-item>
