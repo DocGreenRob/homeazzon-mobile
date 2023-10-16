@@ -914,7 +914,6 @@ export class DashboardPage extends BasePage {
     private activeRoute: ActivatedRoute,
     private ngzone: NgZone
   ) {
-    debugger;
     super(
       navController,
       null,
@@ -933,12 +932,10 @@ export class DashboardPage extends BasePage {
   }
 
   override async ngOnInit() {
-    debugger;
     console.log('ngOnInit DashboardPage');
   }
 
   async ionViewDidEnter() {
-    debugger;
     this.resetState();
 
     if (

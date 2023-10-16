@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { IAuthTokenDto } from '../../models/dto/interfaces/IAuthTokenDto';
 import { IUserDto } from '../../models/dto/interfaces/IUserDto';
 import { AccountService } from '../../services/account/account.service';
 import { BasePage } from '../base/base.page';
@@ -11,6 +12,7 @@ import { BasePage } from '../base/base.page';
   styleUrls: ['./redirect.page.scss'],
 })
 export class RedirectPage extends BasePage {
+  private _token: string = '';
   constructor(
     private route: ActivatedRoute,
     public override router: Router,
@@ -32,22 +34,36 @@ export class RedirectPage extends BasePage {
   }
 
   override ngOnInit() {
+    this.loginHandler();
+  }
+
+  loginHandler() {
+    if (this.route.snapshot.fragment) {
+      this.xyz(
+        this.route.snapshot.fragment
+      );
+    }
     this.next();
   }
 
-  decodeToken(token: string): any {
-    // somewhere in your code...
-    try {
-      const decodedToken = jwt_decode(token);
-      if (decodedToken) {
-        // Handle decoded token here...
-        console.log('JWT claims:', decodedToken);
-      } else {
-        console.log('Failed to decode JWT token');
-      }
-    } catch (error) {
-      console.log('Error decoding JWT token:', error);
-    }
+  xyz(response: string) {
+    const tokenId = response.toString().split('id_token=').pop();
+    const decodedToken = jwt_decode(tokenId);
+    console.log('claims', decodedToken);
+
+    const userInfo = {
+      displayName: decodedToken['name'],
+      email: decodedToken['emails'][0],
+      emailVerified: true,
+      photoUrl: '',
+      uid: decodedToken['oid'],
+    };
+
+    const myAuthToken: IAuthTokenDto = {};
+    myAuthToken.Access_token = tokenId;
+    myAuthToken.Expires = Date.now() + 9548798453100;
+    myAuthToken.Expires_in = 9086400;
+    this.AuthToken = myAuthToken;
   }
 
   next() {
@@ -75,13 +91,11 @@ export class RedirectPage extends BasePage {
   }
 
   finish() {
-    debugger;
     window.dispatchEvent(new CustomEvent('user:loggedIn'));
   }
 
   async refreshUser() {
-    await this.accountService
-      .getUser()
+    await this.accountService.getUser()
       .then(async (x: IUserDto) => {
         this.User = x;
         console.log(`User set: ${this.User}`);
