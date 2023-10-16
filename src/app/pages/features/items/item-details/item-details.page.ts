@@ -169,7 +169,6 @@ export class ItemDetailsPage extends BasePage {
               activeItem.ArtifactIndexId = x.ArtifactIndexId;
 
               this.ActiveItem = activeItem;
-              debugger;
             } else {
               let activeAttachmentItem: ActiveItem = new ActiveItem();
               activeAttachmentItem.GoogleProduct = x;
