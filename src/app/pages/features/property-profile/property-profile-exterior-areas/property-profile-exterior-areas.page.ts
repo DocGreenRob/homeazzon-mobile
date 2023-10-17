@@ -200,12 +200,25 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
 
     if (_.some(x => x.Id === this.NewSelectedUserTypeId)) {
       // figure out which type to do custom stuff???
+
+      var c = this.UserTypes.filter(x => x.Id == this.NewSelectedUserTypeId)[0].Name;
+
+      let _t = {
+        Id: this.NewSelectedUserTypeId,
+        Name: c
+      };
+
+      this.CompanyInformation.Type = _t;
+      let x = this.CompanyInformation;
+      x.Type = _t;
+      this.CompanyInformation = x;
+
       this.companyInformationService
         .upsertCompanyInformationAsync(this.CompanyInformation)
         .then((x) => {
           this.CompanyInformation = x;
         })
-        .catch((e) => {});
+        .catch((e) => { });
     }
 
     if (this.IsNewUserTypeSelected === true) {
@@ -221,12 +234,12 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
 
               this.IsNewUserTypeSelected = false;
               this.NewSelectedUserTypeId = 0;
-              
+
               await this.save(loader, customProperty);
             })
-            .catch((e) => {});
+            .catch((e) => { });
         })
-        .catch((e) => {});
+        .catch((e) => { });
     } else {
       // TODO: Need to prompt user for UserType for new property
       customProperty.UserTypeId = this.User.Types[0].Id;
@@ -235,7 +248,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   }
 
   private async save(loader: any, customProperty: IPropertyDto) {
-    
+
     this.privatelabelService.saveCustomPropertyAsync(customProperty).then(
       async (savedProperty: any) => {
         loader.dismiss();
