@@ -241,7 +241,7 @@ export class FirebaseAuthService {
     this.setTokens(user);
 
     window.dispatchEvent(new CustomEvent('user:loggedIn'));
-    console.log('i did set user');
+    
     return user;
   }
 

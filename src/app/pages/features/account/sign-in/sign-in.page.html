@@ -8,103 +8,22 @@
 		</ion-col>
 	</ion-row>
 	<ng-container>
-		<!-- <form (ngSubmit)="signIn()" [formGroup]="signInForm" style="margin-top: 1em;">
-			<ion-item lines="none">
-				<input type="text" formControlName="email" placeholder="Email">
-			</ion-item>
-			<br>
-			<ion-item lines="none">
-				<input type="password" formControlName="password" placeholder="Password">
-			</ion-item>
-			<br>
-			<ion-row>
-				<ion-col size="2"></ion-col>
-				<ion-col size="8">
-					<ion-button color="success" type="submit" expand="block">Sign In</ion-button>
-				</ion-col>
-				<ion-col size="2"></ion-col>
-			</ion-row>
-			<ion-row>
-				<ion-col size="4"> </ion-col>
-				<ion-col size="1"></ion-col>
-				<ion-col size="7">
-					<ion-button color="primary" expand="block" fill="clear" (click)="signUp()">Sign Up With Email
-					</ion-button>
-				</ion-col>
-			</ion-row>
-		</form> -->
-
 		<ion-grid class="ion-margin-top">
-			<!-- TODO: -->
-			<!-- <ion-row>
-				<ion-col size="2"></ion-col>
-				<ion-col size="8">
-					<div class="text-center">
-						<button (click)="signInGoogle()" class="google-sign-in-btn">
-							<ion-row>
-								<ion-col size="2" class="sign-in-btn-left-col">
-									<img src="assets/imgs/btn_google_dark_normal_ios.svg"
-										style="height: 30px;width: 30px;">
-								</ion-col>
-								<ion-col size="10" class="sign-in-btn-right-col">
-									<span>Sign in with Google</span>
-								</ion-col>
-							</ion-row>
-
-						</button>
-					</div>
-				</ion-col>
-				<ion-col size="2"></ion-col>
-			</ion-row>
-			<ion-row>
-				<ion-col size="2"></ion-col>
-				<ion-col size="8">
-					<div class="text-center">
-						<button (click)="signInApple()" class="apple-sign-in-btn">
-							<ion-row>
-								<ion-col size="2" class="sign-in-btn-left-col">
-										<ion-icon name="logo-apple" style="zoom:1.75"></ion-icon>
-								</ion-col>
-								<ion-col size="10" class="sign-in-btn-right-col">
-										<span>Sign in with Apple</span>
-								</ion-col>
-							</ion-row>
-							
-							
-						</button>
-					</div>
-				</ion-col>
-				<ion-col size="2"></ion-col>
-			</ion-row> -->
       <ion-row class="ion-margin-top">
 				<ion-col size="2"></ion-col>
 				<ion-col size="8" class="ion-margin-top">
 					<div class="text-center">
 						<button (click)="signInAzure()" class="apple-sign-in-btn">
 							<ion-row>
-								<!-- <ion-col size="2" class="sign-in-btn-left-col">
-										<ion-icon name="logo-apple" style="zoom:1.75"></ion-icon>
-								</ion-col> -->
 								<ion-col size="12" class="sign-in-btn-right-col">
 										<span>Login</span>
 								</ion-col>
 							</ion-row>
-							
-							
 						</button>
 					</div>
 				</ion-col>
 				<ion-col size="2"></ion-col>
 			</ion-row>
-			<!--<ion-row>
-				<ion-col size="2"></ion-col>
-				<ion-col size="8">
-					<ion-button color="tertiary" shape="round" (click)="signInFb()" size="small" expand="block">
-						<ion-icon name="logo-facebook" slot="start"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;Facebook
-					</ion-button>
-				</ion-col>
-				<ion-col size="2"></ion-col>
-			</ion-row>-->
 		</ion-grid>
 	</ng-container>
 

@@ -26,10 +26,7 @@ export class AuthInterceptor extends BasePage implements HttpInterceptor {
 				authReq = req.clone({
 					headers: new HttpHeaders({
 						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${authToken.Access_token}`,
-						'Name': this.IdToken.name != null ? this.IdToken.name : "",
-						'Email': this.IdToken.email,
-						'Provider': this.IdToken.sub != null ? this.IdToken.sub : "google.com"
+						'Authorization': `Bearer ${authToken.Access_token}`
 					})
 				});
 			}

@@ -179,9 +179,10 @@ export class AppComponent extends BasePage {
     ];
   }
 
+  // TODO: Remove
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
-      this.displayName = this.firebaseService.FirebaseUser.displayName;
+      this.displayName = this.User.UserName;
       this.router.navigate(['dashboard']);
     });
   }
@@ -197,7 +198,7 @@ export class AppComponent extends BasePage {
     window.addEventListener('properties:loaded', (x: any) => {
       this.ngzone.run(() => {
         this.userProperties = x.detail;
-        this.displayName = this.firebaseService.FirebaseUser.displayName;
+        this.displayName = this.User.UserName;
       });
     });
   }

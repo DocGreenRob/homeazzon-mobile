@@ -167,6 +167,7 @@ export class ItemDetailsPage extends BasePage {
               activeItem.IsWishlist = x.IsWishlist;
               activeItem.IsSuggest = x.IsSuggest;
               activeItem.ArtifactIndexId = x.ArtifactIndexId;
+
               this.ActiveItem = activeItem;
             } else {
               let activeAttachmentItem: ActiveItem = new ActiveItem();

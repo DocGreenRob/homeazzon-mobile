@@ -52,7 +52,7 @@
 						</pinch-zoom>
 					</ng-container>
 					<ng-container *ngIf="!IsMetattachment">
-						<ng-container *ngIf="ActiveItem.IsProfileItemImage || ((ActiveItem.Type == 'DigiDoc' || ActiveItem.Type == 'Pics & Files') && imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType))">
+						<ng-container *ngIf="ActiveItem.IsProfileItemImage || (ActiveItem.Type === 'DigiDoc' || ActiveItem.Type === 'Pics & Files' && imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType)) || ActiveItem.Type == 'Google Shopping Products'">
 							<pinch-zoom>
 								<img [src]="ActiveItem?.Image" />
 							</pinch-zoom>
