@@ -20,7 +20,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
     this.constants = new Constants();
 
     this.property = {} as IPropertyDto;
-    this.property.SqFt = 0;
+    this.property.SqFt = null;
   }
   override async ngOnInit() {
     console.log("ngOnInit PropertyProfileGeneralInformationPage");
@@ -82,4 +82,8 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   public close() {
     this.navCtrl.pop();
   }
+
+  goBack() {
+		this.navController.back();
+	}
 }

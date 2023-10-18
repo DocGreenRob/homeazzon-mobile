@@ -1,17 +1,50 @@
-.header-text {
-	text-align: center;
-	margin-top: 1em !important;
-	margin-bottom: 2em;
+.header{
+	.headerTitle{
+		font-size: 12px !important;
+		font-weight: 600 !important;
+		letter-spacing: 0.1px !important; 
+	}
+}
+.formWrapper{
+	ion-col{
+		padding: 0;
+	}
+}
+.formTitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 23px;
+    margin-top: -7px;
+	margin-bottom: 30px;
+	ion-text{
+		color: var(--additional-colors-black, #111);
+		text-align: center;
+		font-family: Plus Jakarta Sans;
+		font-size: 24px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 32px; 
+		letter-spacing: -0.72px;
+		width: 273px;
+	}
+	span{
+		color: var(--grayscale-grayscale-70, #78828A);
+		text-align: center;
+		font-family: Plus Jakarta Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 22px; 
+		letter-spacing: 0.07px;
+	}
+}
+.btnWrapper{
+	margin-top: 116px !important;
+}
+.ng-invalid.ng-touched {
+	border: none!important;
+	color: #9CA4AB !important;
 }
 
-.input-label {
-	margin-left: 1em;
-	font-weight: lighter !important;
-	font-family: Silka-Semi-Bold !important;
-	color: var(--ion-color-grey) !important;
-}
-
-.continue-btn {
-	float: right;
-	margin-top: 3em;
-}
