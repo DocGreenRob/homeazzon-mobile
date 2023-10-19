@@ -130,4 +130,8 @@ export class PropertyProfileBathroomsPage extends BasePage {
   public close() {
     this.navCtrl.pop();
   }
+
+  goBack() {
+		this.navController.back();
+	}
 }

@@ -278,4 +278,8 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     };
     this.router.navigate(["dashboard"], navExtras);
   }
+  
+  goBack() {
+		this.navController.back();
+	}
 }

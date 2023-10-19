@@ -1,12 +1,6 @@
-.header-text {
-	text-align: center;
-	margin-top: 1em !important;
-	margin-bottom: 2em;
-}
-
-.input-label {
-	margin-left: 1em;
-	font-weight: lighter !important;
-	font-family: Silka-Semi-Bold !important;
-	color: var(--ion-color-grey) !important;
+.formWrapper{
+	height: 100% !important;
+	.btnWrapper{
+		margin-top: 160px !important;
+	}
 }

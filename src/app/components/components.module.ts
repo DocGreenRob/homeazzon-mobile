@@ -9,6 +9,8 @@ import { SaveSubMenuComponent } from './save-sub-menu/save-sub-menu.component';
 import { TagsFilterComponent } from './tags-filter/tags-filter.component';
 import { SegmentSelectorComponent } from './segment-selector/segment-selector.component';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
+import { NumberInputComponent } from './number-input/number-input.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,14 +22,16 @@ import { DocumentViewerComponent } from './document-viewer/document-viewer.compo
 		SaveSubMenuComponent,
 		SegmentSelectorComponent,
 		DocumentViewerComponent,
+		NumberInputComponent,
 		TagsFilterComponent],
-	imports: [CommonModule, IonicModule],
+	imports: [CommonModule, IonicModule, FormsModule],
 	exports: [
 		NavigationSubMenuComponent,
 		PrimaryMenuComponent,
 		TabMenuComponent,
 		IconGridComponent,
 		SaveSubMenuComponent,
+		NumberInputComponent,
 		TagsFilterComponent,
 		DocumentViewerComponent,
 		SegmentSelectorComponent

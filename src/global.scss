@@ -90,6 +90,18 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'Poppins';
+    src: url('../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.eot');
+    src: url('../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.woff2') format('woff2'),
+        url('../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.woff') format('woff'),
+        url('../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 body,
 ion-title,
@@ -399,9 +411,9 @@ textarea{
 	width: 100%;
 }
 
-.mypad-green {
-	color: var(--ion-color-primary) !important;
-}
+// .mypad-green {
+// 	color: var(--ion-color-primary) !important;
+// }
 
 .mypad-red {
 	color: var(--ion-color-danger) !important;
@@ -773,6 +785,11 @@ select::-ms-expand {
 		line-height: 17.522px;
 		letter-spacing: 0.1px;
 	}
+	.backtitle{
+		font-size: 12px !important;
+		font-weight: 600 !important;
+		letter-spacing: 0.1px !important; 
+	}
 }
 
 .formWrapper {
@@ -834,6 +851,36 @@ select::-ms-expand {
 			}
 		}
 	}
+	.formTitle{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 23px;
+		margin-top: -7px;
+		margin-bottom: 30px;
+		ion-text{
+			color: var(--additional-colors-black, #111);
+			text-align: center;
+			font-family: Plus Jakarta Sans;
+			font-size: 24px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 32px; 
+			letter-spacing: -0.72px;
+			width: 273px;
+		}
+		span{
+			color: var(--grayscale-grayscale-70, #78828A);
+			text-align: center;
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 22px; 
+			letter-spacing: 0.07px;
+		}
+	}
 
 	.btnWrapper {
 		width: 100%;
@@ -866,6 +913,14 @@ select::-ms-expand {
 			border: 2px solid #C1121F;
 			--background: rgba(193, 18, 31, 0.00);
 			color: #C1121F;
+		}
+		.addRoombtn{
+			border: 1px solid #E3E7EC;
+			--background: #FFF;
+			color: #5681AA;
+			img{
+				margin-right: 7px;
+			}			
 		}
 	}
 }

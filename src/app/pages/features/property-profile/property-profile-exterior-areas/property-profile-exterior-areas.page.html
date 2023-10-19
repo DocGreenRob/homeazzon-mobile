@@ -1,32 +1,34 @@
 <ion-header>
-	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
-</ion-header>
+	<div class="header">
+	  <span (click)="goBack()">
+		<img src="/assets/icon/Arrow - Left Square.svg" alt="" />
+	  </span>
+	  <span class="headerTitle backtitle" (click)="goBack()"> Back </span>
+	</div>
+  </ion-header>
 <ion-content class="ion-padding">
-	<ion-row>
-		<ion-col size="12">
-			<div class="ion-text-center">
-				<h2 class="header-text">Almost done! Let's select some exterior areas</h2>
+	<div class="formWrapper">
+		<div class="formTitle">
+			<ion-text>Almost done! lets select some exterior areas</ion-text>
+		</div>
+		<div class="roleWrapper">
+			<div class="toggleWrapper">
+				<ion-label>Skip</ion-label>
+				<ion-toggle [(ngModel)]="isSkipExteriorAreas"></ion-toggle>
 			</div>
-		</ion-col>
-	</ion-row>
-	<ion-row>
-		<ion-col size="12">
-			<div class="ion-text-center">
-				<ion-item style="line-height:2em !important;">
-					<ion-label>Skip</ion-label>
-					<ion-toggle [(ngModel)]="isSkipExteriorAreas"></ion-toggle>
-				</ion-item>
+
+			<div *ngIf="!isSkipExteriorAreas" >
+				<div class="roles" *ngFor="let exterior of exteriors; let i=index">
+					<ion-checkbox (ionChange)="addCheckbox($event,exterior.Id)" [(ngModel)]="exterior.enabled"  mode="ios"></ion-checkbox>
+        			<ion-text [ngClass]="{'mypad-green': exterior.enabled}" >{{exterior.Name}}</ion-text>
+				</div>
 			</div>
-		</ion-col>
-	</ion-row>
-	<ion-list *ngIf="!isSkipExteriorAreas">
-		<ion-item *ngFor="let exterior of exteriors; let i=index" lines="none">
-			<ion-checkbox color="primary" (ionChange)="addCheckbox($event,exterior.Id)" [(ngModel)]="exterior.enabled" mode="ios"></ion-checkbox>
-			<ion-label [ngClass]="{'mypad-green': exterior.enabled}" class="input-label">{{exterior.Name}}</ion-label>
-		</ion-item>
-	</ion-list>
+		</div>
+
+	<div class="btnWrapper">
+		<ion-button class="continuebtn" (click)="saveProperty()">
+			Save Property</ion-button
+		>
+	  </div>
+	</div>
 </ion-content>
-<ion-footer>
-	<ion-button float-end class="continue-btn" color="dark" shape="round" (click)="saveProperty()">Save Property</ion-button>
-</ion-footer>
