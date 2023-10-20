@@ -143,4 +143,8 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
   public close() {
     this.navCtrl.pop();
   }
+
+  goBack() {
+		this.navController.back();
+	}
 }

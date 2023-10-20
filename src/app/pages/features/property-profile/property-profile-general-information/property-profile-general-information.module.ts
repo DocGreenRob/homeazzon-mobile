@@ -8,7 +8,6 @@ import { PropertyProfileGeneralInformationPageRoutingModule } from './property-p
 
 import { PropertyProfileGeneralInformationPage } from './property-profile-general-information.page';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { NumberInputComponent } from 'src/app/components/number-input/number-input.component';
 
 @NgModule({
   imports: [
@@ -18,6 +17,6 @@ import { NumberInputComponent } from 'src/app/components/number-input/number-inp
     PropertyProfileGeneralInformationPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [PropertyProfileGeneralInformationPage, NumberInputComponent]
+  declarations: [PropertyProfileGeneralInformationPage]
 })
 export class PropertyProfileGeneralInformationPageModule {}

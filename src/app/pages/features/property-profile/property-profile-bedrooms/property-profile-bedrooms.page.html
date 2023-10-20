@@ -1,26 +1,30 @@
 <ion-header>
-	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+  <div class="header">
+    <span (click)="goBack()">
+      <img src="/assets/icon/Arrow - Left Square.svg" alt="" />
+    </span>
+    <span class="headerTitle backtitle" (click)="goBack()"> Back </span>
+  </div>
 </ion-header>
 
 <ion-content class="ion-padding">
-	<ion-row class="underLine">
-		<ion-col size="12">
-			<h2 class="header-text">Good work! Now let's set up your bedrooms.</h2>
-		</ion-col>
-		<ion-col size="12" *ngFor="let bedroom of bedRooms">
-			<h3 class="input-label">{{bedroom.Name}}</h3>
-			<ion-item lines="none">
-				<input inputmode="numeric" type="number" [(ngModel)]="bedroom.Quantity" (focus)="selectInput($event)" required>
-			</ion-item>
-		</ion-col>
+  <div class="formWrapper">
+    <div class="formTitle">
+      <ion-text>Good work! now lets set up your bedrooms.</ion-text>
+    </div>
 
-	</ion-row>
+    <ion-row class="underLine">
+      <ion-col size="12" *ngFor="let bedroom of bedRooms">
+        <div class="fieldWrapper">
+          <ion-label>{{bedroom.Name}}</ion-label>
+          <app-number-input [(value)]="bedroom.Quantity"></app-number-input>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div class="btnWrapper">
+      <ion-button class="continuebtn" (click)="continue()">
+        Continue</ion-button
+      >
+    </div>
+  </div>
 </ion-content>
-<ion-footer>
-	<ion-row>
-		<ion-col size="12">
-			<ion-button float-end color="dark" (click)="continue()" shape="round" style="float: right;margin-top: 3em;">Continue</ion-button>
-		</ion-col>
-	</ion-row>
-</ion-footer>
