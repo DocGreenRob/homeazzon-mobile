@@ -133,6 +133,14 @@ const routes: Routes = [
 		loadChildren: () => import('./pages/features/account/sign-in/sign-in.module').then(m => m.SignInPageModule)
 	},
 	{
+		path: 'login-success',
+		loadChildren: () => import('./pages/features/account/login-success/login-success.module').then(m => m.LoginSuccessPageModule)
+	},
+	{
+		path: 'splash',
+		loadChildren: () => import('./pages/features/account/splash/splash.module').then(m => m.SplashPageModule)
+	},
+	{
 		path: 'add-room-modal',
 		loadChildren: () => import('./pages/modals/add-room-modal/add-room-modal.module').then(m => m.AddRoomModalPageModule),
 		canActivate: [AuthGuardService]
