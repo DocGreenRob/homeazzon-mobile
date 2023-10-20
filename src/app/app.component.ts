@@ -183,7 +183,10 @@ export class AppComponent extends BasePage {
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
       this.displayName = this.User.UserName;
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['login-success']);
+      setTimeout(()=>{
+        this.router.navigate(['dashboard']);
+      }, 3000)
     });
   }
 

@@ -48,7 +48,7 @@ export class IndexPage extends BasePage {
         this.next();
       }
     } else {
-      this.router.navigate(['sign-in']);
+      this.router.navigate(['splash']);
     }
   }
 
