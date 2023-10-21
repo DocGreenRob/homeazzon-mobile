@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // TODO: remove the '../../..' and use the "~" or whatever
 // TODO: remove the " and use '
 import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
@@ -34,6 +34,7 @@ import { IUserTypeDto } from '../../../../models/dto/interfaces/IUserTypeDto';
 import { FirebaseUser } from '../../../../models/FirebaseUser';
 import { AuthService } from '../../../../services/auth.service';
 import { UserTypesService } from '../../../../services/user-types/user-types.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-sign-in',
@@ -58,6 +59,7 @@ export class SignInPage extends BasePage {
     private storage: Storage,
     // angular
     public override router: Router,
+    private route: ActivatedRoute,
     // framework controllers
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
@@ -124,32 +126,6 @@ export class SignInPage extends BasePage {
     await this.getUserTypes();
   }
 
-  // TODO: rename "SignInWithEmail" or something like that
-  async signIn() {
-    if (this.signInForm.valid) {
-      const credential = new Credential();
-      credential.email = this.signInForm.value.email;
-      credential.password = this.signInForm.value.password;
-
-      await this.firebaseAuth
-        .signInWithEmail(credential)
-        .then(async (x: any) => {
-          if (x) {
-            await this.next();
-          } else {
-            this.uxNotifierService.showToast('Invalid Credentials', 'danger');
-          }
-
-          return;
-        });
-    } else {
-      this.uxNotifierService.showToast(
-        'Fill all the fields to continue',
-        'danger'
-      );
-    }
-  }
-
   async signInAzure() {
     const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=
     ${environment.redirectUrl}
@@ -163,50 +139,40 @@ export class SignInPage extends BasePage {
       this.firebaseAuthService.browserLoginHandler(event.url);
     });
   }
-  async signInGoogle() {
-    this.firebaseAuth
-      .signInGoogle()
-      .then((a: FirebaseUser) => {
-        this.AppInsights.trackEvent({
-          name: 'SignInPage.signInGoogle().then()',
-          properties: [{}],
-        });
-        this.next();
-      })
-      .catch((err) => {});
+
+  loginHandler() {
+    console.log('this.route.snapshot.queryParams');
+    console.log(this.route.snapshot);
+    if (this.route.snapshot.fragment) {
+      const tokenId = this.route.snapshot.fragment
+        .toString()
+        .split('id_token=')
+        .pop();
+      console.log(tokenId);
+
+      var decodedToken = this.decodeToken(tokenId);
+      //debugger;
+
+      console.log('decodedToken', decodedToken);
+
+      this.next();
+      //this.firebaseAuthService.setUser(userInfo, 'microsoft', tokenId, '');
+    }
   }
 
-  async signInApple() {
-    this.firebaseAuth
-      .signInApple()
-      .then((a: any) => {
-        this.AppInsights.trackEvent({
-          name: 'SignInPage.signInApple().then()',
-          properties: [{}],
-        });
-        if (a) {
-          this.next();
-        } else {
-          this.uxNotifierService.showToast(
-            'Error occured while signing with apple.',
-            'danger'
-          );
-        }
-      })
-      .catch((err) => {});
-  }
-
-  async signInFb() {
-    this.firebaseAuth
-      .signInFacebook()
-      .then((a: FirebaseUser) => {
-        this.next();
-      })
-      .catch((err) => {});
-  }
-
-  async signUp() {
-    this.navController.navigateForward(['sign-up']);
+  decodeToken(token: string): any {
+    // somewhere in your code...
+    try {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken) {
+        // Handle decoded token here...
+        console.log('JWT claims:', decodedToken);
+      } else {
+        console.log('Failed to decode JWT token');
+      }
+    } catch (error) {
+      console.log('Error decoding JWT token:', error);
+    }
   }
 
   private async getCompanyTypeInformation() {

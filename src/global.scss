@@ -79,6 +79,36 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("../src/assets/fonts/transfonter.org-20231017-164432/PlusJakartaSans-Regular.eot");
+  src: url("../src/assets/fonts/transfonter.org-20231017-164432/PlusJakartaSans-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../src/assets/fonts/transfonter.org-20231017-164432/PlusJakartaSans-Regular.woff2")
+      format("woff2"),
+    url("../src/assets/fonts/transfonter.org-20231017-164432/PlusJakartaSans-Regular.woff")
+      format("woff"),
+    url("../src/assets/fonts/transfonter.org-20231017-164432/PlusJakartaSans-Regular.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.eot");
+  src: url("../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.woff2")
+      format("woff2"),
+    url("../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.woff")
+      format("woff"),
+    url("../src/assets/fonts/transfonter.org-20231017-164432/Poppins-Regular.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 body,
 ion-title,
@@ -153,13 +183,13 @@ ion-segment-button {
   //text-transform: none !important;
 }
 
-ion-button {
-  min-width: 5em;
-  font-size: 0.875em !important;
-  height: 3.3em !important;
-  min-height: 3.3em !important;
-  max-height: 3.3em !important;
-}
+// ion-button {
+// 	min-width: 5em;
+// 	font-size: 0.875em !important;
+// 	height: 3.3em !important;
+// 	min-height: 3.3em !important;
+// 	max-height: 3.3em !important;
+// }
 
 .button-md,
 .button-ios {
@@ -169,43 +199,6 @@ ion-button {
   //height: 3em !important;
   text-transform: none !important;
   font-size: 1.4rem !important;
-}
-
-// Input Forms
-input,
-textarea,
-select {
-  //min-width: 8em;
-  height: 3em;
-  padding: 0 0 0 0;
-  padding-left: 1em;
-
-  font-family: "Silka-Semi-Bold" !important;
-  letter-spacing: -0.03em;
-  //padding-bottom: 1.25rem !important;
-  /*border-radius: 99999px !important;*/
-  border-width: 1px !important;
-  border-radius: 6px;
-  background-color: #d1d1d1;
-  outline: none;
-}
-
-/* for select lists*/
-
-ion-select {
-  height: 3em;
-  /*padding: 0 0 0 0;*/
-  padding-left: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: "Silka-Semi-Bold" !important;
-  border-radius: 6px !important;
-  border-width: 2px !important;
-  border: var(--ion-color-light-grey) 2px solid !important;
-  width: 100% !important;
-  min-width: 100% !important;
-  margin-top: 0.9rem !important;
-  line-height: 2rem !important;
 }
 
 .select-icon {
@@ -223,17 +216,17 @@ input::placeholder {
 }
 
 // input:hover {
-//   border: var(--ion-color-grey) !important;
+// 	border: var(--ion-color-grey) !important;
 // }
 
 // input:active {
-//   border: var(--ion-color-dark) 2px solid !important;
+// 	border: var(--ion-color-dark) 2px solid !important;
 // }
 
-.ng-valid.ng-touched {
-  border: var(--ion-color-dark) 2px solid !important;
-  color: var(--ion-color-dark) !important;
-}
+// .ng-valid.ng-touched {
+// 	border: var(--ion-color-dark) 2px solid !important;
+// 	color: var(--ion-color-dark) !important;
+// }
 
 .ng-invalid.ng-touched {
   border: var(--ion-color-danger) 2px solid !important;
@@ -245,7 +238,7 @@ input::placeholder {
 }
 
 // input:focus {
-//   border: var(--ion-color-dark) 2px solid !important;
+// 	border: var(--ion-color-dark) 2px solid !important;
 // }
 
 .invalid-input {
@@ -425,9 +418,9 @@ textarea {
   width: 100%;
 }
 
-.mypad-green {
-  color: var(--ion-color-primary) !important;
-}
+// .mypad-green {
+// 	color: var(--ion-color-primary) !important;
+// }
 
 .mypad-red {
   color: var(--ion-color-danger) !important;
@@ -604,9 +597,9 @@ ion-loading.my-loading-class {
   background-color: var(--ion-color-primary);
 }
 
-* {
-  font-family: Silka-Medium, Helvetica;
-}
+// * {
+// 	font-family: Silka-Medium, Helvetica;
+// }
 
 .standard-mobile-modal {
   height: 70%;
@@ -778,4 +771,161 @@ select::-ms-expand {
 
 .sign-in-btn-right-col {
   padding-top: 1.05em;
+}
+
+// Form and Header Styling
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #232b42;
+  padding: 22px 0 20px 24px;
+
+  .headerTitle {
+    color: var(--additional-colors-white, #fefefe);
+    font-family: Plus Jakarta Sans;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 17.522px;
+    letter-spacing: 0.1px;
+  }
+  .backtitle {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1px !important;
+  }
+}
+
+.formWrapper {
+  padding: 37px 24px 54px;
+  background: #f6f8fe;
+
+  .fieldWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-direction: column;
+    padding: 0;
+    margin-bottom: 12px;
+
+    ion-label {
+      color: var(--grayscale-grayscale-70, #78828a);
+      font-family: Plus Jakarta Sans;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 22px;
+      letter-spacing: 0.07px;
+    }
+
+    .inputField {
+      position: relative;
+      height: 52px;
+      padding-left: 16px;
+      background: #fff;
+
+      ion-input,
+      ion-select {
+        color: var(--grayscale-grayscale-60, #9ca4ab);
+        font-family: Plus Jakarta Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.08px;
+        --placeholder-opacity: 1;
+        --highlight-color-valid: #000 !important;
+        --highlight-color-invalid: #000 !important;
+        --highlight-color: #000 !important;
+        --highlight-color-focused: #000 !important;
+      }
+
+      ion-select::part(icon) {
+        display: none !important;
+      }
+
+      .iconSelect {
+        position: absolute;
+        right: 16px;
+        top: 14px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  .formTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 23px;
+    margin-top: -7px;
+    margin-bottom: 30px;
+    ion-text {
+      color: var(--additional-colors-black, #111);
+      text-align: center;
+      font-family: Plus Jakarta Sans;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32px;
+      letter-spacing: -0.72px;
+      width: 273px;
+    }
+    span {
+      color: var(--grayscale-grayscale-70, #78828a);
+      text-align: center;
+      font-family: Plus Jakarta Sans;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 22px;
+      letter-spacing: 0.07px;
+    }
+  }
+
+  .btnWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 111px;
+
+    ion-button {
+      font-family: Plus Jakarta Sans;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0.08px;
+      width: 100%;
+      height: 56px;
+      margin: 0;
+      --border-radius: 0 !important;
+    }
+
+    .continuebtn {
+      --background: #232b42;
+      color: var(--additional-colors-white, #fff);
+    }
+
+    .cancelbtn {
+      border: 2px solid #c1121f;
+      --background: rgba(193, 18, 31, 0);
+      color: #c1121f;
+    }
+    .addRoombtn {
+      border: 1px solid #e3e7ec;
+      --background: #fff;
+      color: #5681aa;
+      img {
+        margin-right: 7px;
+      }
+    }
+  }
 }

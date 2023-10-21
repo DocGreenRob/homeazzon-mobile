@@ -1,22 +1,12 @@
-.header-text {
-	text-align: center;
-	margin-top: 1em !important;
-	margin-bottom: 2em;
+.formTitle{
+	align-items: flex-start !important;
+    padding-left: 11px;
+	ion-text{
+		white-space: nowrap;
+	}
 }
 
-.input-label {
-	margin-left: 1em;
-	font-weight: lighter !important;
-	font-family: Silka-Semi-Bold !important;
-	color: var(--ion-color-grey) !important;
+.btnWrapper{
+	gap: 13px !important;
 }
 
-.continue-btn {
-	float: right;
-	margin-top: 2.1em !important;
-}
-
-.mypad-green {
-	margin-top: 2em;
-	font-size: 1.25em !important;
-}

@@ -1,98 +1,67 @@
-input {
-	width: 100%;
-}
-
-.forgot-password {
-	float: right;
-}
-
-.footer-text {
-	float: right;
-}
-
-.LOGIN {
-	float: left;
-}
-
-.welcome-title {
-	font-size: 3rem !important;
-	color: black;
-	text-align: center;
-}
-
-form.ng-valid.ng-touched {
-	border: none !important;
-	color: white !important;
-}
-
-form.ng-invalid.ng-touched {
-	border: none !important;
-	color: white !important;
-}
-
-ion-content {
-	ion-grid,
-	ion-row {
-		ion-card {
-			--background: var(--dv-background-accent-dark);
-		}
-
-		ion-img {
-			width: 80px;
+.main-wrapper{
+	padding: 21px 39px 101px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 15px;
+	background:#F6F8FE;
+	.logo{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.content{
+	    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    width: 278px;
+		h2{
+			color: var(--additional-colors-line-dark, #282837);
 			text-align: center;
-			margin: 0 auto;
+			font-family: Plus Jakarta Sans !important;
+			font-size: 24px !important;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 32px;
+			letter-spacing: 0.12px !important;
+			margin: 0;
 		}
-
-		.input-section {
-			background: var(--dv-background-primary-basic);
-			width: calc(100% - 32px) !important;
-			margin: 16px;
-			padding: 8px 16px 24px 16px;
-			border-radius: 4px;
-			border: 1px solid var(--dv-background-border);
-		}
-
-		ion-item {
-			border-bottom: 1px solid #cfe1f2;
-
-			ion-input {
-				--padding-end: 8px;
-			}
-
-			ion-icon {
-				position: absolute;
-				right: 0;
-				bottom: 8px;
-			}
-		}
-
-		ion-label {
-			margin: 8px 0;
-		}
-
-		.item-has-focus {
-			ion-label {
-				color: #556783 !important;
-			}
-		}
-
-		.google-button {
-			--background: #c82333;
-			--background-hover: #c82333 !important;
-		}
-
-		.facebook-button {
-			--background: #3b5999;
-			--background-hover: #3b5999 !important;
-		}
-
-		.twitter-button {
-			--background: #1ea1f3;
-			--background-hover: #1ea1f3 !important;
+		ion-text{
+			color: var(--main-colors-secondary-dark, #1D1D2F);
+			text-align: center;
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 22px;
+			letter-spacing: 0.07px;
+			padding: 0 5px;
 		}
 	}
-
-	.ion-margin-top {
-		margin-top: 5px !important;
+	.btnWrapper{
+		width: 100%;
+		margin-top: 45px !important;
+		ion-button{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 58px;
+			width: 100%;
+			--background: #111;
+			color: var(--additional-colors-white, #FEFEFE);
+			font-family: Plus Jakarta Sans;
+			font-size: 18px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 26px;
+			letter-spacing: 0.09px;
+			--border-radius: 0;
+			margin: 0;
+			--background-activated:#111;
+			--background-focused:#111;
+		}
 	}
 }

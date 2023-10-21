@@ -1,38 +1,61 @@
 <ion-header>
-	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+  <div class="header">
+    <span (click)="goBack()">
+      <img src="/assets/icon/Arrow - Left Square.svg" alt="" />
+    </span>
+    <span class="headerTitle backtitle" (click)="goBack()"> Back </span>
+  </div>
 </ion-header>
 <ion-content class="ion-padding">
-	<ion-row>
-		<ion-col size="12">
-			<h2 class="header-text">Let's start with some general information</h2>
-		</ion-col>
-		<ion-col size="12">
-			<h3 class="input-label">Name Your Home Design</h3>
-			<ion-item lines="none">
-				<input type="text" [(ngModel)]="property.Name" required>
-			</ion-item>
-		</ion-col>
-		<ion-col size="12">
-			<h3 class="input-label">Number of Levels</h3>
-			<ion-item lines="none">
-				<input inputmode="numeric" type="number" [(ngModel)]="property.TotalStories" required (focus)="selectInput($event)">
-			</ion-item>
-		</ion-col>
-		<ion-col size="12">
-			<h3 class="input-label">Square Footage</h3>
-			<ion-item lines="none">
-				<input inputmode="numeric" type="number" [(ngModel)]="property.SqFt" required (focus)="selectInput($event)">
-			</ion-item>
-		</ion-col>
+  <div class="formWrapper">
+    <div class="formTitle">
+      <ion-text>Let’s start with some general information</ion-text>
+      <span>Build your Home</span>
+    </div>
 
-	</ion-row>
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <div class="fieldWrapper">
+          <ion-label>Name your home design</ion-label>
+          <div class="inputField">
+            <ion-input
+              type="text"
+              [(ngModel)]="property.Name"
+              placeholder="Enter name"
+              required
+            ></ion-input>
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" class="ion-no-padding">
+        <div class="fieldWrapper">
+          <ion-label>Number of levels</ion-label>
+          <app-number-input
+            [(value)]="property.TotalStories"
+          ></app-number-input>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" class="ion-no-padding">
+        <div class="fieldWrapper">
+          <ion-label>Square Footage</ion-label>
+          <div class="inputField">
+            <ion-input
+              type="text"
+              placeholder="0 Sq Ft"
+              [(ngModel)]="property.SqFt"
+              required
+              (focus)="selectInput($event)"
+            ></ion-input>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div class="btnWrapper">
+      <ion-button class="continuebtn" (click)="goToBedroomsPage()">
+        Continue</ion-button
+      >
+    </div>
+  </div>
 </ion-content>
-
-<ion-footer>
-	<ion-row>
-		<ion-col size="12">
-			<ion-button color="dark" shape="round" (click)="goToBedroomsPage()" class="continue-btn">Continue</ion-button>
-		</ion-col>
-	</ion-row>
-</ion-footer>

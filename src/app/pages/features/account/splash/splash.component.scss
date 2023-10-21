@@ -1,0 +1,30 @@
+.mainWrapper{
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: #F6F8FE;
+	.content{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		ion-text{
+			color: #000;
+			font-family: Plus Jakarta Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 24px; 
+			letter-spacing: 0.08px;
+		}
+	}
+	ion-spinner {
+		--color: #232C41;
+		width: 70px;
+		height: 70px;
+		margin-top: 239px;
+	  }
+
+}

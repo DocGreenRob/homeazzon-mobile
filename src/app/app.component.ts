@@ -179,19 +179,14 @@ export class AppComponent extends BasePage {
     ];
   }
 
+  // TODO: Remove
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
-      this.displayName = this.firebaseService?.FirebaseUser?.displayName ?? '';
-      // this.navController.navigateRoot(['index']);
-      this.router.navigate(['index']);
-      // setTimeout(() => {
-      //   console.log('called the listener');
-
-      // window.location.reload();
-      // }, 2000);
-
-      // this.router.navigate(['item-details']);
-      // }, 2000);
+      this.displayName = this.User.UserName;
+      this.router.navigate(['login-success']);
+      setTimeout(() => {
+        this.router.navigate(['dashboard']);
+      }, 3000);
     });
   }
 
@@ -206,8 +201,7 @@ export class AppComponent extends BasePage {
     window.addEventListener('properties:loaded', (x: any) => {
       this.ngzone.run(() => {
         this.userProperties = x.detail;
-        this.displayName =
-          this.firebaseService?.FirebaseUser?.displayName ?? '';
+        this.displayName = this.User.UserName;
       });
     });
   }
