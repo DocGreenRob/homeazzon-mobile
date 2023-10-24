@@ -1,8 +1,10 @@
 <ion-row id="segmentSelectorRw">
+  <div class="wrap-segment">
   <ion-col size="4" *ngFor="let selector of segments">
-    <div [ngClass]="{'selectedSegment': initView.value.toLowerCase()==selector.value.toLowerCase()}"
+    <div class="segment-btn" [ngClass]="{'selectedSegment': initView.value.toLowerCase()==selector.value.toLowerCase()}"
       (click)="handleSegmentClick(selector)">
       <h5 class="dashboard-header">{{selector.name}}</h5>
     </div>
   </ion-col>
+</div>
 </ion-row>

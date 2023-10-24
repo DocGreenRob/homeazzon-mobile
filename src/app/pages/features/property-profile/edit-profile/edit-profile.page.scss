@@ -1,0 +1,44 @@
+.header-items{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 23px 13px;
+    background: #232B42;
+    span{
+        color: var(--additional-colors-white, #FEFEFE);
+        font-family: Plus Jakarta Sans;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 17.522px; 
+        letter-spacing: 0.1px;
+        text-transform: capitalize;
+    }
+    ion-button{
+        display: flex;
+        width: 99px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        color: #FFBCBC;
+        font-family: Plus Jakarta Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0.06px;
+        border: 1px solid #FFBCBC;
+        --border-radius: 0;
+        --background: transparent;
+    }
+}
+.formWrapper{
+    padding: 32px 24px 48px !important;
+    .fieldWrapper{
+        margin-bottom: 32px !important;
+    }
+    .btnWrapper{
+        margin-top: 180px !important;
+        gap: 13px !important;
+    }
+}
