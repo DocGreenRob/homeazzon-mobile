@@ -2,39 +2,66 @@
   <ion-split-pane contentId="main-content">
       <!-- Side Menu (top-left) -->
       <ion-menu contentId="main-content" type="overlay" side="start" menuId="mainMenu">
-          <ion-content class="custom-menu">
-              <div style="height:2em;" *ngIf="platform.is('ios')"></div>
-              <h5 class="menu-header" style="text-align:center !important; color: blue !important;">{{displayName}}</h5>
-              <hr />
-              <div *ngFor="let p of pages" (click)="openPage(p)" class="sidemenuItems">
-                  <div style="margin-left:18px !important;">
-                      <img src="{{p.image}}" class="menu-list-image">
-                      <span class="navTxt"> {{p.title}}</span>
-                  </div>
-                  <div class="hr"></div>
+          <div class="main-wrapper">
+              <div class="sidebar-wrapper">
+                <div class="profile-info">
+                    <span class="avatar">
+                        <img src="../assets/icon/Profile.svg" alt="">
+                    </span>
+                    <div class="info">
+                        <span class="name">
+                            Robert Warren
+                        </span>
+                        <span class="mail">
+                            hello@robert.com
+                        </span>
+                    </div>
+                </div>
+                <div class="menu-list" >
+                    <div class="list"  *ngFor="let p of pages" (click)="openPage(p)">
+                        <img src="{{p.image}}" width="24" height="24" > 
+                        <span>{{p.title}}</span>
+                    </div>
+                </div>
+                <div class="logout" (click)="openPage({ url: 'logout' })">
+                    <ion-button>Log Out</ion-button>
+                </div>
               </div>
-          </ion-content>
+            </div>
       </ion-menu>
       <!-- Property Menu (top-right) -->
       <ion-menu contentId="main-content" type="overlay" side="end" menuId="propertyMenu">
-          <ion-content class="custom-menu" style="background-color: green !important;">
-              <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-              <h4 class="menu-header" style="text-align: center !important;">Homes</h4>
-              <hr />
-              <div *ngFor="let p of userProperties" (click)="viewProperty(p)" class="sidemenuItems">
-                  <div style="margin-left:18px !important;">
-                      <img src="{{p.image}}" class="menu-list-image">
-                      <span class="navTxt"> {{p.Name}}</span>
-                  </div>
-                  <div class="hr"></div>
-              </div>
-          </ion-content>
-          <ion-footer class="footer-menu" style=" text-align: center !important; margin-bottom: .5em !important;">
-              <ion-button (click)="designHome()" 
-                          menuClose 
-                          style="border:2px solid #fff !important; background-color:none !important; color:#fff !important; max-height: 2em !important;max-width: 15em !important;font-size: .8em !important;" 
-                          class="button-text">Design/Choose a new home</ion-button>
-          </ion-footer>
+        <div class="main-wrapper">
+            <div class="sidebar-wrapper">
+                <div class="profile-info">
+                    <span class="avatar">
+                        <img src="../assets/icon/home-building.svg" alt="">
+                    </span>
+                    <div class="info">
+                        <span class="name">
+                            Homes
+                        </span>
+                        <span class="homes-number">
+                            <span>( {{ userProperties?.length }} )</span> Number of homes available
+                        </span>
+                    </div>
+                </div>
+                <div class="not-available" *ngIf="!userProperties?.length">
+                    <img src="../assets/icon/empty-home.svg" alt="">
+                    <ion-text>No home available at the moment</ion-text>
+                </div>
+
+                <div class="home-list-wrapper" *ngIf="userProperties?.length > 0">
+                    <div class="home-list" *ngFor="let p of userProperties" (click)="viewProperty(p)">
+                        <img src="../assets/icon/building-fill.svg" width="24" height="24" >
+                        <span> {{p.Name}}</span>
+                    </div>
+                </div>
+                <div class="design-btn">
+                    <ion-button (click)="designHome()">Design/ Choose a new home</ion-button>
+                </div>
+            </div>
+        </div>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
