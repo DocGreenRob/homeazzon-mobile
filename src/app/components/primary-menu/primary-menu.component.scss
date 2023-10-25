@@ -1,0 +1,62 @@
+.header {
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 22px;
+    padding: 17px 22px;
+
+    .menu {
+        flex-grow: 0;
+        padding: 0;
+
+        img {
+            max-width: 24px;
+
+            &.header-img-menu {
+                margin-left: 0;
+                padding: 0;
+                margin-bottom: 0 !important;
+            }
+        }
+    }
+
+    .welcome {
+        flex-grow: 1;
+
+        .welcome-title {
+            font-family: 'Plus Jakarta Sans' !important;
+            color: var(--additional-colors-white, #FEFEFE);
+            font-size: 12px !important;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 17.522px;
+            letter-spacing: 0.06px !important;
+            margin: 0;
+        }
+
+        .welcome-detail {
+            font-family: 'Plus Jakarta Sans' !important;
+            color: var(--additional-colors-white, #FEFEFE);
+            font-size: 8px !important;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 13.478px;
+            letter-spacing: 0.04px !important;
+            margin: 0;
+        }
+    }
+
+    .building {
+        flex-grow: 0;
+
+        img {
+            max-width: 24px;
+        }
+    }
+
+}
+
+.top-icon-bar {
+    background-color: #232B42 !important;
+}
