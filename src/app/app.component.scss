@@ -1,4 +1,197 @@
-.menu-list-image{
-	height: 2em !important;
-	color:#a8cbe9 !important;
+//sidebars
+ion-menu{
+	--width:283px !important;
+}
+.main-wrapper{
+	overflow-y: auto;
+}
+.sidebar-wrapper{
+	padding: 25px 29px 47px 26px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	gap: 62px;
+	.profile-info{
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		gap: 12px;
+		.avatar{
+			width: 56px;
+			height: 56px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 100px;
+			background: #A8CBE9;
+		}
+		.info{
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			.name{
+				color: #111;
+				font-family: Plus Jakarta Sans;
+				font-size: 18px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 26px; 
+				letter-spacing: 0.09px;
+			}
+			.mail{
+				color:  #66707A;
+				font-family: Plus Jakarta Sans;
+				font-size: 12px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 22px; 
+				letter-spacing: 0.06px;
+			
+			}
+			.homes-number{
+				color: rgba(102, 112, 122, 0.50);
+				font-family: Plus Jakarta Sans;
+				font-size: 10px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 22px;
+				letter-spacing: 0.05px;
+				span{
+					color: #526EA0;
+					font-family: Plus Jakarta Sans;
+					font-size: 10px;
+					font-style: normal;
+					font-weight: 800;
+					line-height: 22px; 
+					letter-spacing: 0.05px;
+					margin-right: 2px;
+				}
+			}
+		}
+	}
+	.not-available{
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+		gap: 29px;
+		margin-top: 100px;
+		ion-text{
+			color: rgba(29, 29, 47, 0.60);
+		text-align: center;
+		font-family: Plus Jakarta Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 22px; 
+		letter-spacing: 0.07px;
+		width: 180px;
+		height: 56px;
+		}
+	}
+	.home-list-wrapper{
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: flex-start;
+		gap: 16px;
+		width: 100%;
+		min-height: calc(100vh - 389px);
+		height: auto;
+		margin-top: -5px;
+
+		.home-list{
+			display: inline-flex;
+			padding: 12px 0px 12px 16px;
+			align-items: center;
+			gap: 16px;
+			border: 1px solid #E3E7EC;
+			background: #F6F8FE;
+			width: 100%;
+			span{
+				color: var(--additional-colors-black, #111);
+				text-align: right;
+				font-family: Plus Jakarta Sans;
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 24px;
+				letter-spacing: 0.08px;
+				white-space: nowrap;
+			}
+		}
+	}
+	.menu-list{
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 32px;
+		width: 100%;
+		.list{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			span{
+				color:  #111;
+				font-family: Plus Jakarta Sans;
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 24px; 
+				letter-spacing: 0.08px;
+			}
+		}
+	}
+	.logout{
+		width: 100%;
+		margin-top: 155px;
+		ion-button{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 1px solid #526EA0;
+			--background:  #FEFEFE;
+			--border-radius: 0;
+			height: 60px;
+			color:  #526EA0;
+			font-family: Plus Jakarta Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 24px; 
+			letter-spacing: 0.08px;
+			--background-hover:  #FEFEFE;
+			--background-activated:  #FEFEFE;
+			--background-focused:  #FEFEFE;
+			--background-hover:  #FEFEFE;
+		}
+	}
+	.design-btn{
+		width: 100%;
+		margin-top: 82px;
+		ion-button{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			--background: #526EA0;
+			--border-radius: 0;
+			color: #FFF;
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 24px;
+			letter-spacing: 0.07px;
+			margin: 0;
+			height: 60px;
+			--background-activated:#526EA0;
+			--background-focused:#526EA0;
+			--background-hover: #526EA0;
+		}
+	}
 }
