@@ -1643,15 +1643,17 @@ export class DashboardPage extends BasePage {
           });
         }
 
-        that.totalBedroomsSqFt = temp_totalBedroomsSqFt;
-        that.totalBathroomsSqFt = temp_totalBathroomsSqFt;
-        that.totalCommonAreasSqFt = temp_totalCommonAreasSqFt;
-        that.totalExteriorAreasSqFt = temp_totalExteriorAreasSqFt;
+        this.ngzone.run(() => {
+          this.totalBedroomsSqFt = temp_totalBedroomsSqFt;
+          this.totalBathroomsSqFt = temp_totalBathroomsSqFt;
+          this.totalCommonAreasSqFt = temp_totalCommonAreasSqFt;
+          this.totalExteriorAreasSqFt = temp_totalExteriorAreasSqFt;
 
-        that.activePropertyBedrooms = temp_activePropertyBedrooms;
-        that.activePropertyBathrooms = temp_activePropertyBathrooms;
-        that.activePropertyInteriorAreas = temp_activePropertyInteriorAreas;
-        that.activePropertyExteriorAreas = temp_activePropertyExteriorAreas;
+          this.activePropertyBedrooms = temp_activePropertyBedrooms;
+          this.activePropertyBathrooms = temp_activePropertyBathrooms;
+          this.activePropertyInteriorAreas = temp_activePropertyInteriorAreas;
+          this.activePropertyExteriorAreas = temp_activePropertyExteriorAreas;
+        });
       });
     }
   }

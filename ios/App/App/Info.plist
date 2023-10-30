@@ -45,5 +45,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) need camera access to scan barcode.</string>
 </dict>
 </plist>

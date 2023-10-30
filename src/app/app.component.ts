@@ -185,7 +185,7 @@ export class AppComponent extends BasePage {
       this.displayName = this.User?.UserName ?? '';
       this.router.navigate(['login-success']);
       setTimeout(() => {
-        this.router.navigate(['dashboard']);
+        this.navController.navigateRoot(['dashboard']);
       }, 3000);
     });
   }
