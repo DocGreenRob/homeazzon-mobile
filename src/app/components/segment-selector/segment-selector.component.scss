@@ -1,10 +1,39 @@
-.selectedSegment {
-  border-bottom: 2px var(--ion-color-primary) solid;
-}
+
 
 .dashboard-header {
   opacity: 1;
   text-align: center;
   color: black;
   text-transform: capitalize !important;
+}
+
+.wrap-segment {
+  display: flex;
+  .segment-btn {
+    display: flex;
+    width: 99px;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #E3E7EC;
+
+    h5 {
+      color: #111;
+      font-family: Plus Jakarta Sans !important;
+      font-size: 12px !important;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 0.06px !important;
+      margin: 0;
+    }
+  }
+}
+.selectedSegment {
+  background: rgba(82, 110, 160, 0.12);
+  border: unset !important;
+h5{
+  color: var(--main-colors-primary, #526EA0) !important;
+}
 }
