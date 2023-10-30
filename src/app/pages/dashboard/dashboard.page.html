@@ -5,7 +5,7 @@
 <app-segment-selector [segments]="views" [initView]="{value: manageView}"
 	(selectedSegment)="handleSegmentClick($event)">
 </app-segment-selector>
-<ion-content>
+<div>
 	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
 		<ion-refresher-content></ion-refresher-content>
 	</ion-refresher>
@@ -278,7 +278,7 @@
 			</div>
 		</div>
 	</div>
-</ion-content>
+</div>
 </div>
 
 <tab-menu [_isHomeActive]="false" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
