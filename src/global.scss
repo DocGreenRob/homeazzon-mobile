@@ -792,6 +792,69 @@ select::-ms-expand {
 	}
 }
 
+//header with button
+
+.header-items{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 23px 13px;
+    background: #232B42;
+    span{
+        color: var(--additional-colors-white, #FEFEFE);
+        font-family: Plus Jakarta Sans;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 17.522px; 
+        letter-spacing: 0.1px;
+        text-transform: capitalize;
+    }
+    ion-button{
+        display: flex;
+        width: 99px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        color: #FFBCBC;
+        font-family: Plus Jakarta Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0.06px;
+        border: 1px solid #FFBCBC;
+        --border-radius: 0;
+        --background: transparent;
+    }
+}
+
+//Registration-header
+
+.registration-header{
+    padding: 24px 30px 23px 27px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    background: #232B42;
+    .registration-title-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; 
+        gap: 8px;
+        .registration-title{
+            color:  #FEFEFE;
+            font-family: Plus Jakarta Sans;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 17.522px; 
+            letter-spacing: 0.1px;
+        }
+    }
+}
+
 .formWrapper {
 	padding: 37px 24px 54px;
 	background: #F6F8FE;
@@ -907,11 +970,17 @@ select::-ms-expand {
 		.continuebtn {
 			--background: #232B42;
 			color: var(--additional-colors-white, #FFF);
+			--background-activated: #232B42;
+			--background-focused: #232B42;
+			--background-hover: #232B42;
 		}
 
 		.cancelbtn {
 			border: 2px solid #C1121F;
 			--background: rgba(193, 18, 31, 0.00);
+			--background-activated: rgba(193, 18, 31, 0.00);
+			--background-focused: rgba(193, 18, 31, 0.00);
+			--background-hover: rgba(193, 18, 31, 0.00);
 			color: #C1121F;
 		}
 		.addRoombtn{
