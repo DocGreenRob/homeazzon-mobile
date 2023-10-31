@@ -148,33 +148,27 @@ export class AppComponent extends BasePage {
     this.pages = [
       {
         image:
-          'https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fsign-out.svg?alt=media&token=af90963a-a5fa-418b-8411-f985318dce62',
-        title: 'Logout',
-        url: 'logout',
-      },
-      {
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fatom.svg?alt=media&token=9061a8cf-0245-4efe-83ab-f6caa51695fd',
-        title: 'Settings',
-        url: 'settings',
-      },
-      {
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fcorn.svg?alt=media&token=9bde19a2-7ea0-4b22-85df-47fac1703b2f',
-        title: 'Notifications',
-        url: 'notifications',
-      },
-      {
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fuser-friends.svg?alt=media&token=8288f72c-046b-4ec5-b44e-7aa63b8e2e7d',
+          '../assets/icon/User.svg',
         title: 'User Types',
         url: 'user-types-manager',
       },
       {
         image:
-          'https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fquestion.svg?alt=media&token=caebe366-1fa4-49b7-a654-ef2143635700',
+          '../assets/icon/Notification.svg',
+        title: 'Notifications',
+        url: 'notifications',
+      },
+      {
+        image:
+        '../assets/icon/question.svg',
         title: 'Help',
         url: 'help',
+      },
+      {
+        image:
+        '../assets/icon/Setting.svg',
+        title: 'Settings',
+        url: 'settings',
       },
     ];
   }
