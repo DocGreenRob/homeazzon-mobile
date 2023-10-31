@@ -11,7 +11,7 @@
 		</ion-refresher>
 		<div>
 			<!-- Rooms -->
-			<div *ngIf="manageView == 'rooms'" class="wrap-rooms">
+			<div *ngIf="manageView === 'rooms'" class="wrap-rooms">
 				<div *ngIf="roomView == 'default'" class="inner-wrap">
 					<!--Bedrooms Overview -->
 					<div class="area-list" (click)="toogleViews('bedroom')">
@@ -316,11 +316,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<tab-menu [_isHomeActive]="false" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
-	(barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>
-
-</ion-content>
-
+	<tab-menu [_isHomeActive]="false" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
+		(barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>
 </div>
