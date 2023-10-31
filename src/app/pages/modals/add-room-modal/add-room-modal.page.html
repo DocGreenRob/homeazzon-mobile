@@ -1,62 +1,55 @@
 <ion-header>
-	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-	<ion-toolbar color="white-background">
-		<ion-row class="top-row">
-			<ion-col size="3">
-				<h5 class="mypad-red cancel-button CANCEL-ITEM-EDIT" (click)="cancel()">
-					Cancel
-				</h5>
-			</ion-col>
-			<ion-col size="6">
-				<h1 class="page-title">Add {{areaType}}</h1>
-			</ion-col>
-			<ion-col size="3">
-				<h5 class="mypad-green save-button" (click)="saveRoom()">
-					Save
-				</h5>
-			</ion-col>
-		</ion-row>
-	</ion-toolbar>
+  <div class="header-items">
+    <span>Add {{areaType}}</span>
+    <ion-button class="cancel-btn" (click)="cancel()">Cancel</ion-button>
+  </div>
 </ion-header>
-<ion-content class="ion-padding">
-	<ion-row>
-		<ion-col size="12" *ngIf="uiType!='customHouse'">
-			<h4 class="input-label">Room Type</h4>
-			<ion-item lines="none">
-				<ion-select [(ngModel)]="areaId" required (ngModelChange)="areaSelectionChanged()" style="width: 100%;">
-					<ion-select-option *ngFor="let area of areas" [value]="area.Id">
-						{{area.Name}}
-					</ion-select-option>
-				</ion-select>
-			</ion-item>
-		</ion-col>
-		<ion-col size="12">
-			<h4 class="input-label">Room Name</h4>
-			<ion-item lines="none">
-				<input [(ngModel)]="roomName" placeholder="Room Name" required>
-			</ion-item>
-		</ion-col>
 
-		<ion-col size="12">
-			<h4 class="input-label">Square Footage</h4>
-			<ion-item lines="none">
-				<input [(ngModel)]="sqFt" required type="number">
-			</ion-item>
-		</ion-col>
-	</ion-row>
+<div class="container-wrapper">
+  <div class="formWrapper">
+    <div class="fieldWrapper" *ngIf="uiType!='customHouse'">
+      <ion-label>Room Type</ion-label>
+      <div class="inputField">
+        <ion-select
+          [(ngModel)]="areaId"
+          required
+          placeholder="Please select"
+          (ngModelChange)="areaSelectionChanged()"
+        >
+          <ion-select-option *ngFor="let area of areas" [value]="area.Id">
+            {{area.Name}}
+          </ion-select-option>
+        </ion-select>
+        <img
+          class="iconSelect"
+          src="assets/icon/Icon - Next.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    <div class="fieldWrapper">
+      <ion-label>Room Name</ion-label>
+      <div class="inputField">
+        <ion-input
+          [(ngModel)]="roomName"
+          type="text"
+          placeholder="Enter Name"
+        ></ion-input>
+      </div>
+    </div>
 
-	<br><br>
-	<ion-row>
-		<ion-col size="3">
-
-		</ion-col>
-		<ion-col size="6">
-			<ion-button expand="block" style="border:2px solid #fff !important; background-color:none !important; color:#fff !important; max-height: 2em !important;max-width: 15em !important;font-size: .8em !important;" class="button-text" (click)="saveRoom()">
-				Save
-			</ion-button>
-		</ion-col>
-		<ion-col size="3">
-
-		</ion-col>
-	</ion-row>
-</ion-content>
+    <div class="fieldWrapper">
+      <ion-label>Square Footage</ion-label>
+      <div class="inputField">
+        <ion-input
+          [(ngModel)]="sqFt"
+          type="text"
+          placeholder="0 Sq Ft"
+        ></ion-input>
+      </div>
+    </div>
+    <div class="btnWrapper">
+      <ion-button class="continuebtn" (click)="saveRoom()">Save</ion-button>
+    </div>
+  </div>
+</div>
