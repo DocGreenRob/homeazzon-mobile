@@ -1,17 +1,17 @@
-.sc-ion-modal {
-	top: 20%;
-	left: 10%;
-	width: 80%;
-	height: 50%;
-	border-radius: 20px;
+.container-wrapper{
+    background: #F6F8FE;
 }
 
-h3 {
-	font-size: larger !important;
-	margin-left: 2rem !important;
-	color: var(--ion-color-grey);
-}
-
-.input-label {
-	margin-left: 1em;
+.formWrapper{
+    padding: 32px 24px 25px !important;
+    .fieldWrapper{
+        margin-bottom: 16px !important;
+    }
+    .btnWrapper{
+        margin-top: 330px !important;
+        gap: 13px !important;
+		ion-button{
+			--background-activated:#232B42;
+		}
+    }
 }

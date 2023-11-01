@@ -1,52 +1,63 @@
-ion-content {
-	background-color: var(--ion-color-white-background) !important;
-}
+.New-home-wrapper{
+    height: 100vh;
+    overflow-y: auto;
+    padding: 30px 29px 80px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 57px;
+    flex-direction: column;
+	background: #F6F8FE;
+	.cross-icon{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		width: 100%;
+	}
+	.home-inner-main{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		ion-text{
+			width: 214px;
+			color: var(--additional-colors-black, #111);
+			text-align: center;
+			font-family: Plus Jakarta Sans;
+			font-size: 22px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 28px; 
+			letter-spacing: -0.66px;
+		}
+	}
+	.home-btn-wrapper{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 19px;
+		flex-direction: column;
+		width: 100%;
+		margin-top: 120px;
+		ion-button{
+			width: 100%;
+			--background: #669BBC;
+			--border-radius: 0px !important;
+			color: var(--additional-colors-white, #FFF);
+			text-align: center;
+			font-family: Plus Jakarta Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 24px;
+			letter-spacing: 0.08px;
+			margin: 0;
+			--background-focused:#669BBC;
+			--background-activated:#669BBC;
 
-.property-name {
-	color: var(--ion-color-dark);
-	float: left;
-	margin-top: 1rem !important;
-	font-weight: lighter !important;
-}
-
-.property-image {
-	//text-align: center;
-	//float: center;
-	width: 3rem;
-	height: 3rem;
-	color: var(--ion-color-primary);
-	filter: invert(72%) sepia(7%) saturate(2935%) hue-rotate(178deg) brightness(97%) contrast(94%);
-}
-
-.item-ios {
-	background-color: var(--ion-color-primary);
-}
-
-.item-md {
-	background-color: var(--ion-color-primary);
-}
-
-.hr {
-	border-bottom: 1px solid #ccc;
-	margin: 10px 0;
-	width: 100%;
-	margin-left: 1rem;
-	margin-right: 2rem !important;
-}
-
-.hr-full {
-	border-bottom: 1px solid #ccc;
-	margin: 10px 0;
-	width: 100%;
-}
-
-.build-own-btn {
-	//background-color: map-get($colors, light);
-	color: var(--ion-color-primary);
-	font-weight: bolder;
-	float: right;
-	margin-right: 2rem;
-	margin-left: 1rem;
-	margin-bottom: 2rem;
-	text-transform: none;
+			img{
+				margin-right: 5px;
+			}
+		}
+	}
 }
