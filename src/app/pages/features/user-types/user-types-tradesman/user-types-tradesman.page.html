@@ -1,9 +1,81 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>user-types-tradesman</ion-title>
-  </ion-toolbar>
+  <div class="registration-header">
+    <img src="assets/icon/Arrow - Left Square.svg" (click)="goBack()">
+    <div class="registration-title-wrapper">
+      <img src="assets/icon/register-header-icon.svg">
+      <span class="registration-title">
+        Tradesman Registration
+      </span>
+    </div>
+  </div>
 </ion-header>
+<div class="container-wrapper">
+  <div class="formWrapper">
+    <div class="fieldWrapper">
+      <ion-label>Company Name</ion-label>
+      <div class="inputField">
+        <ion-input
+          type="text"
+          placeholder="Enter company name"
+        ></ion-input>
+      </div>
+    </div>
 
+    <div class="fieldWrapper">
+      <ion-label>Street Address 1</ion-label>
+      <div class="inputField">
+        <ion-input
+          type="text"
+          placeholder="Enter Street Address 1"
+        ></ion-input>
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>Street Address 2</ion-label>
+      <div class="inputField">
+        <ion-input
+          type="text"
+          placeholder="Enter Street Address 2"
+        ></ion-input>
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>City</ion-label>
+      <div class="inputField">
+        <ion-input
+          type="text"
+          placeholder="Enter City"
+        ></ion-input>
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>State</ion-label>
+      <div class="inputField">
+        <ion-input
+          type="text"
+          placeholder="Select State"
+        ></ion-input>
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>ZIP</ion-label>
+      <div class="inputField">
+        <ion-input
+          type="text"
+          placeholder="Enter ZIP"
+        ></ion-input>
+      </div>
+    </div>
+
+    <div class="btnWrapper">
+      <ion-button class="continuebtn" (click)="clickEvent()">Continue</ion-button>
+      <ion-button class="cancelbtn" (click)="goBack()">Cancel</ion-button>
+    </div>
+  </div>
+</div>
 <ion-content>
-
 </ion-content>

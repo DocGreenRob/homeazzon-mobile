@@ -1,0 +1,45 @@
+.container-wrapper{
+    background: #F6F8FE;
+}
+.formWrapper{
+    padding: 22px 24px 54px !important;
+    .fieldWrapper{
+        margin-bottom: 34px !important;
+    }
+    .btnWrapper{
+        margin-top: 311px;
+    }
+}
+.checkbox-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:40px;
+    margin-top: 17px;
+    .checkbox-main{
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #9CA4AB;
+        font-family: Plus Jakarta Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; 
+        letter-spacing: 0.06px;
+        ion-checkbox{
+            --border-radius:6px !important;
+            --checkbox-background-checked:#526EA0;
+            --border-color-checked:#526EA0;
+            --size:19px;
+            --checkmark-width:3px;
+            --border-color:rgba(156, 164, 171, 0.5);
+        }
+    }
+
+}
+.role-check{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 15px !important;
+}
