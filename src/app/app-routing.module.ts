@@ -266,6 +266,10 @@ const routes: Routes = [
 		loadChildren: () => import('./pages/features/user-types/user-types-tradesman/user-types-tradesman.module').then(m => m.UserTypesTradesmanPageModule)
 	},
 	{
+		path: 'user-types-tradesman-registration',
+		loadChildren: () => import('./pages/features/user-types/user-types-tradesman-registration/user-types-tradesman-registration.module').then(m => m.TradesmanRegistraionPageModule)
+	},
+	{
 		path: 'user-types-developer',
 		loadChildren: () => import('./pages/features/user-types/user-types-developer/user-types-developer.module').then(m => m.UserTypesDeveloperPageModule)
 	},

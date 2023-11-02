@@ -1,0 +1,53 @@
+<ion-header>
+  <div class="registration-header">
+    <img src="assets/icon/Arrow - Left Square.svg" (click)="goBack()">
+    <div class="registration-title-wrapper">
+      <img src="assets/icon/register-header-icon.svg">
+      <span class="registration-title">
+        Tradesman Registration
+      </span>
+    </div>
+  </div>
+</ion-header>
+<div class="container-wrapper">
+  <div class="formWrapper">
+    <div class="fieldWrapper">
+      <ion-label>Are you a General Contractor?</ion-label>
+      <div class="checkbox-wrapper">
+        <label class="checkbox-main">
+          <ion-checkbox></ion-checkbox>
+          Yes
+        </label>
+        <label class="checkbox-main">
+          <ion-checkbox></ion-checkbox>
+          No
+        </label>
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>Select your roles</ion-label>
+      <div class="checkbox-wrapper role-check">
+        <label class="checkbox-main">
+          <ion-checkbox></ion-checkbox>
+          Excavation
+        </label>
+        <label class="checkbox-main">
+          <ion-checkbox></ion-checkbox>
+          Concrete
+        </label>
+        <label class="checkbox-main">
+          <ion-checkbox></ion-checkbox>
+          Masonary
+        </label>
+      </div>
+    </div>
+
+    <div class="btnWrapper">
+      <ion-button class="continuebtn">Continue</ion-button>
+      <ion-button class="cancelbtn" (click)="goBack()">Cancel</ion-button>
+    </div>
+
+    </div>
+    </div>
+    
