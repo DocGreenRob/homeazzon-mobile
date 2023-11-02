@@ -278,6 +278,10 @@ const routes: Routes = [
 		loadChildren: () => import('./pages/features/user-types/user-types-vendor/user-types-vendor.module').then(m => m.UserTypesVendorPageModule)
 	},
 	{
+		path: 'user-types-vendor-registration',
+		loadChildren: () => import('./pages/features/user-types/user-types-vendor-registration/user-types-vendor-registration.module').then(m => m.UserTypesVendorRegistrationPageModule)
+	},
+	{
 		path: 'user-types-selector',
 		loadChildren: () => import('./pages/features/user-types/user-types-selector/user-types-selector.module').then(m => m.UserTypesSelectorPageModule)
 	},
