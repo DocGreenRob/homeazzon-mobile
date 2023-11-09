@@ -290,7 +290,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/redirect/redirect.module').then( m => m.RedirectPageModule)
   },
   {
-	path: 'categories',
+	path: 'master-bedroom-categories',
 	loadChildren: () => import('./pages/features/category/master-bedroom-category/master-bedroom-category.module').then(m => m.MasterBedroomCategoryPageModule)
 },
 ];
