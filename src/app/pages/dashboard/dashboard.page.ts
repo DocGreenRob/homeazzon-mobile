@@ -1716,6 +1716,10 @@ export class DashboardPage extends BasePage {
     this.router.navigate(['edit-profile']);
   }
 
+  addItem(){
+    this.router.navigate(['item-edit']);
+  }
+
   // TODO: add access modifier
   handleSegmentClick(text: string) {
     switch (text) {
