@@ -288,7 +288,11 @@ const routes: Routes = [
   {
     path: 'redirect',
     loadChildren: () => import('./pages/redirect/redirect.module').then( m => m.RedirectPageModule)
-  }
+  },
+  {
+	path: 'categories',
+	loadChildren: () => import('./pages/features/category/master-bedroom-category/master-bedroom-category.module').then(m => m.MasterBedroomCategoryPageModule)
+},
 ];
 
 @NgModule({
