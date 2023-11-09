@@ -13,10 +13,11 @@
                 <ion-input type="text" [(ngModel)]="keywords" placeholder="Enter keywords"></ion-input>
             </div>
         </div>
+        <div class="spacer-oneRem" *ngIf="CurrentView == 'Room'"></div>
 
         <div class="fieldWrapper">
-            <ion-label>Room type</ion-label>
-            <div class="inputField">
+            <ion-label *ngIf="CurrentView == 'Room'">Room type</ion-label>
+            <div class="inputField" *ngIf="CurrentView == 'Room'">
                 <ion-select [(ngModel)]="selectedProfileItem"
                 [compareWith]="compareFn" 
                 (ionChange)="getLineitems()"
