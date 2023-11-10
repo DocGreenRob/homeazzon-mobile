@@ -49,9 +49,24 @@
 
     .building {
         flex-grow: 0;
-
+        .building-main{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 1px;
+        }
         img {
             max-width: 24px;
+        }
+
+        span {
+            color: var(--additional-colors-white, #FEFEFE);
+            font-family: Plus Jakarta Sans;
+            font-size: 8px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 13.478px;
+            letter-spacing: 0.04px;
         }
     }
 

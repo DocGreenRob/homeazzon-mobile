@@ -54,7 +54,7 @@
 
                 <div class="home-list-wrapper" *ngIf="userProperties?.length > 0">
                     <div class="home-list" *ngFor="let p of userProperties" (click)="viewProperty(p)">
-                        <img src="../assets/icon/building-fill.svg" width="24" height="24" >
+                        <img [src]="p.image" width="24" height="24" >
                         <span> {{p.Name}}</span>
                     </div>
                 </div>
