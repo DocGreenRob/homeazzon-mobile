@@ -1,33 +1,78 @@
-.back-button.show-back-button {
-	display: none;
+.header{
+	gap: 70px !important;
 }
-
-.left-icon {
-	height: 2em;
-	z-index: 9999;
-	position: absolute;
-	float: right;
-	margin-left: 1em;
-	margin-top: 1.5em;
-}
-
-.page-title {
-	text-align: center;
-}
-
-.search-result-image {
-	/*max-height: 7.25em !important;
-	min-height: 7.25em !important;
-	height: 7.25em !important;*/
-}
-
-.search-result-title {
-	overflow: hidden !important;
-	white-space: nowrap !important;
-	text-overflow: ellipsis !important;
-	width: 17em;
-}
-
-.search-result-row {
-	border-bottom: 1px solid var(--ion-color-grey);
+.results-wrapper{
+	padding: 26px 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 12px;
+	background: #F6F8FE;
+	.result-content-wrapper{
+		padding: 15px 14px 26.481px 20px;
+		justify-content: flex-end;
+		background: #FFF;
+		gap: 17px;
+		display: flex;
+		align-items: flex-start;
+	
+		.result-thumbnail{
+			width: 90px;
+			height: 90px;
+			overflow: hidden;
+			img{
+			
+				object-fit: contain;
+			}
+		}
+		.amamzon-thumbnail{
+			img{
+				height: 100%;
+				width: 100%;				
+			}
+		}
+		.youtube-thumbnail{
+			height: unset !important;
+		}
+		.result-content{
+			display: flex;
+			align-items: flex-start;
+			justify-content: flex-start;
+			gap: 5px;
+			flex-direction: column;
+			width: 192px;
+			.result-content-title{
+				color: var(--grayscale-grayscale-70, #78828A);
+				font-family: Plus Jakarta Sans;
+				font-size: 12px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 22px;
+				letter-spacing: 0.06px;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;				
+			}
+			.result-content-price{
+				color: #039E40;
+				font-family: Plus Jakarta Sans;
+				font-size: 14.933px;
+				font-style: normal;
+				font-weight: 800;
+				line-height: 27.378px; 
+				letter-spacing: 0.075px;
+			}
+			.result-content-description{
+				color: var(--grayscale-grayscale-70, #78828A);
+				font-family: Plus Jakarta Sans;
+				font-size: 8px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: 13px; 
+				letter-spacing: 0.24px;
+			}
+		}
+	}
 }

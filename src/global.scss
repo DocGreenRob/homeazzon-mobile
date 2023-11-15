@@ -107,10 +107,10 @@ body,
 ion-title,
 ion-card-title,
 p {
-	font-size: 0.9rem !important;
+	// font-size: 0.9rem !important;
 	font-family: 'Silka-Medium' !important;
-	letter-spacing: -0.04rem !important;
-	line-height: 0.2em;
+	// letter-spacing: -0.04rem !important;
+	// line-height: 0.2em;
 }
 
 ion-title,
@@ -968,6 +968,8 @@ select::-ms-expand {
 
 		.continuebtn {
 			--background: #232B42;
+			--background-activated: #232B42;
+			--background-focused: #232B42;
 			color: var(--additional-colors-white, #FFF);
 			--background-activated: #232B42;
 			--background-focused: #232B42;
@@ -981,6 +983,13 @@ select::-ms-expand {
 			--background-focused: rgba(193, 18, 31, 0.00);
 			--background-hover: rgba(193, 18, 31, 0.00);
 			color: #C1121F;
+		}
+		.previous-btn{
+			border: 2px solid #232B42;
+			--background: rgba(193, 18, 31, 0.00);
+			--background-activated: rgba(193, 18, 31, 0.00);
+			--background-focused: rgba(193, 18, 31, 0.00);
+			color: #232B42;
 		}
 		.addRoombtn{
 			border: 1px solid #E3E7EC;
@@ -997,3 +1006,17 @@ select::-ms-expand {
 	height: 100vh;
 	overflow-y: auto;
 }
+
+
+
+.large-modal {
+	--max-width: 327px;
+	--width: 100%;
+	--max-height: 512px !important;
+	--height: auto;
+	--border-radius: 10px;
+	--background: #FFF;
+	&::part(content) {
+	  margin: 16px;
+	}
+  }

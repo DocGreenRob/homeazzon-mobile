@@ -1,0 +1,79 @@
+.container-wrapper{
+    background: #F6F8FE;
+}
+.formWrapper{
+    padding: 30px 24px 34px !important;
+    background: #F6F8FE;
+    .fieldWrapper{
+        gap:22px !important;
+        margin-bottom:0px !important;
+        .inputField{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 24px;
+        }
+    }
+    .btnWrapper{
+        margin-top: 24px !important;
+    }
+    .accordian-wrapper{
+        ion-accordion{
+            margin-top: 24px;
+        }
+        
+        ion-item{
+            --background: #f6f8fe;
+            --border-width: 0px 0px 1px 0px;
+            --border-color: #E3E7EC;
+            --padding-bottom: 24px;
+            --padding-start: 0px;
+            --inner-padding-end: 0px;
+            ion-label{
+                color:  #111;
+                font-family: Plus Jakarta Sans;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 24px;
+                letter-spacing: 0.08px;
+                margin: 0px;
+            }
+        }
+        .accordian-content{
+            background: #f6f8fe;
+            padding: 16px 0px 0px 13px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            .checkbox-wrapper{
+                display: flex;           
+                flex-direction: column ;
+                align-items: flex-start ;
+                gap: 15px ;
+                .checkbox-main{
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+                    color: #9CA4AB;
+                    font-family: Plus Jakarta Sans;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 24px; 
+                    letter-spacing: 0.06px;
+                    ion-checkbox{
+                        --border-radius:6px !important;
+                        --checkbox-background-checked:#526EA0;
+                        --border-color-checked:#526EA0;
+                        --size:19px;
+                        --checkmark-width:3px;
+                        --border-color:rgba(156, 164, 171, 0.5);
+                    }
+                }
+            
+            }
+        }
+    }
+}
