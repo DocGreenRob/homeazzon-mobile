@@ -1,0 +1,91 @@
+.container-wrapper{
+	background: #F6F8FE;
+}
+.formWrapper{
+	padding: 26px 24px;
+}
+.master-header{
+	padding: 22px 25px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #232B42;
+	.title{
+		color: var(--additional-colors-white, #FEFEFE);
+		font-family: Plus Jakarta Sans;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 17.522px;
+		letter-spacing: 0.1px;
+	}
+	.icon-head{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			font-family: Plus Jakarta Sans;
+			font-size: 8px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 13.478px; 
+			letter-spacing: 0.04px;
+		}
+	}
+}
+.options-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 17px;
+    flex-wrap: wrap;
+	.options{
+		width: 98px;
+		height: 98px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 11px;
+		padding: 9px 7px 10px 8px;
+		border-radius: 5px;
+		border: 1px solid #E3E7EC;
+		background: #FFF;
+		flex-direction: column;
+		.content{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			ion-text{
+				color: var(--additional-colors-black, #111);
+				text-align: left;
+				font-family: Plus Jakarta Sans;
+				font-size: 10.085px;
+				font-style: normal;
+				font-weight: 500;
+				line-height: 12.606px;
+				letter-spacing: 0.05px;
+				width: 82px;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+				overflow: hidden;
+				white-space: nowrap;
+				display: inline-block;
+			}
+			span{
+				color: rgba(17, 17, 17, 0.70);
+				font-family: Plus Jakarta Sans;
+				font-size: 7.564px;
+				font-style: normal;
+				font-weight: 500;
+				line-height: 12.606px;
+				letter-spacing: 0.038px;
+			}
+		}
+
+	}
+}

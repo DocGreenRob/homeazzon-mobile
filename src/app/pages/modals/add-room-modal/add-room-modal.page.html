@@ -1,4 +1,5 @@
 <ion-header>
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
   <div class="header-items">
     <span>Add {{areaType}}</span>
     <ion-button class="cancel-btn" (click)="cancel()">Cancel</ion-button>
