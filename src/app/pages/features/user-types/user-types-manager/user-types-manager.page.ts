@@ -101,4 +101,8 @@ export class UserTypesManagerPage extends BasePage {
         break;
     }
   }
+
+  getImagePath(name: string) {
+    return `assets/icon/${name.toLowerCase()}.svg`;
+  }
 }
