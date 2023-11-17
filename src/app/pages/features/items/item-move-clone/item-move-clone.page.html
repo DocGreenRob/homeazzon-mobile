@@ -25,7 +25,7 @@
 		<!-- <div class="spacer-halfRem"></div> -->
 		<div *ngIf="action==_constants.Actions.move">
 
-			<div class="formWrapper">
+			<div class="formWrapper select-main-wrapper">
 				<div class="fieldWrapper">
 					<ion-label>Select Property</ion-label>
 					<div class="inputField">
@@ -63,7 +63,7 @@
 					</div>
 				</div>	
 			<!-- <ion-row> -->
-				<div class="btnWrapper" *ngIf="isShowSave">
+				<div class="btnWrapper " *ngIf="isShowSave">
 					<!-- <ion-item lines="none"> -->
 						<ion-button class="continuebtn" block (click)="save()"> {{buttonText}}</ion-button>
 					<!-- </ion-item> -->
@@ -105,7 +105,7 @@
 				<div class="roleWrapper" *ngFor="let property of selectedProperties;let propertyIndex = index">
 					<div class="toggleWrapper">
 						<ion-label>{{property.Name}}</ion-label>
-						<ion-toggle  name="SelectAll" color="tertiary" [(ngModel)]="property.selected" (ionChange)="onPropertySelectAllToggle(propertyIndex)"></ion-toggle>	
+						<ion-toggle  name="SelectAll" [(ngModel)]="property.selected" (ionChange)="onPropertySelectAllToggle(propertyIndex)"></ion-toggle>	
 					</div>
 						<div class="roles" *ngFor="let profileItem of property.ProfileItems">
 							<!-- <ion-col size="2"> -->
