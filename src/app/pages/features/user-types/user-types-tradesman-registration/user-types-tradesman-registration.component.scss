@@ -3,12 +3,14 @@
 }
 .formWrapper{
     padding: 22px 24px 54px !important;
+    height: calc(100% - 191px);
     .fieldWrapper{
         margin-bottom: 34px !important;
     }
-    .btnWrapper{
-        margin-top: 311px;
-    }
+}
+.btnWrapper{
+    padding: 0 24px !important;
+    margin-top: 0 !important;
 }
 .checkbox-wrapper{
     display: flex;

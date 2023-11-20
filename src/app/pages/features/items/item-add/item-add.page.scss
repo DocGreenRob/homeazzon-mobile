@@ -6,6 +6,8 @@
 	gap: 100px !important;
 }
 .formWrapper{
+	min-height: calc(100% - 127px);
+	height: auto;
 	.formTitle{
 		align-items: flex-start !important;
 		gap: 5px !important;
@@ -15,6 +17,11 @@
 			text-align: left;
 		}
 	}
+}
+.btnWrapper{
+	padding: 0 24px;
+	padding-bottom: 71px;
+	margin-top: 0px !important;
 }
 
 .roleWrapper {
