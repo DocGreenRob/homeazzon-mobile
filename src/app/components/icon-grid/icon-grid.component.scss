@@ -1,38 +1,58 @@
-.item-title {
-    text-align: center;
-    vertical-align: middle;
-    white-space: normal !important;
-    margin: .7em;
-    font-size: .75rem !important;
-    /*overflow: scroll !important;
-	text-overflow: ellipsis !important;
-	height: 1.5em !important;
-	max-height: 1.5em !important;*/
-}
-
-.item-icon {
-    max-height: 4em !important;
-    /*filter: invert(63%) sepia(26%) saturate(777%) hue-rotate(72deg) brightness(93%) contrast(96%);*/
-    filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg) brightness(89%) contrast(107%);
-    text-align: center !important;
-    border: none !important;
-}
-
-.item-image {
-    max-height: 6em !important;
-    height: 6em;
-    width: 6em;
-}
-
-hr {
-    border: 2px solid #e9eae9 !important;
-}
-
-img {
-    border: 3px solid #78d9fa;
-    border-radius: 15px;
-}
-
 /*.item-title::after {
     content: '...';
 }*/
+.item-main-wrapper{
+    padding: 15px 0;
+}
+.item-wrapper-heading{
+             color: burlywood;
+            font-family: Plus Jakarta Sans;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 12.606px;
+            letter-spacing: 0.05px;
+            text-align: left;
+}
+.items-main{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: 24px;
+    column-gap: 16px;
+    margin: 10px 0;
+    .item{
+        width: 98px;
+        height: 121px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        .item-image{
+            width: 100%;
+            height: 98px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #E3E7EC;
+        }
+        .item-title{
+            color: #232C41;
+            font-family: Plus Jakarta Sans;
+            font-size: 10.085px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 12.606px;
+            letter-spacing: 0.05px;
+            text-align: left;
+            width: 98px;
+            height: 13px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+    }
+}
