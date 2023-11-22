@@ -3,15 +3,18 @@
 }
 
 .formWrapper{
+    min-height: calc(100% - 127px);
+    height: auto;
     padding: 32px 24px 25px !important;
     .fieldWrapper{
         margin-bottom: 16px !important;
     }
-    .btnWrapper{
-        margin-top: 330px !important;
-        gap: 13px !important;
-		ion-button{
-			--background-activated:#232B42;
-		}
+}
+.btnWrapper{
+    padding: 0 24px;    
+    margin-top: 0px !important;
+    gap: 13px !important;
+    ion-button{
+        --background-activated:#232B42;
     }
 }
