@@ -285,3 +285,34 @@ page-profile-items {
 	}
 }
 
+.no-items-container{
+    padding: 0 25px 33px;
+    height: calc(100% - 110px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	.no-item-content{
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 24px;
+		.desc{
+			color: rgba(29, 29, 47, 0.60);
+			text-align: center;
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 22px; 
+			letter-spacing: 0.07px;
+			width: 85%;
+		}
+	}
+}
+.formWrapper{
+	padding: 0 25px 33px !important;
+	background-color: unset !important;
+	.btnWrapper{
+		margin-top: 0 !important;
+	}
+}

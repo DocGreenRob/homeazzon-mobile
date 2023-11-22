@@ -137,7 +137,7 @@
 		<!-- <ion-col size="6"> -->
 		<!-- </ion-col> -->
 		<!-- <ion-col size="6"> -->
-			<div class="optional-item-btn">
+			<div class="optional-item-btn" *ngIf="lineitems?.length > 0">
 			<ion-button   (click)="addLineItems()">
 				<!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fplus-circle.svg?alt=media&token=e8b32f5c-685f-4cd4-9e57-bcce3138dce7"
 					class="edit-profile-items-icon use_default_baby_blue"> -->
@@ -147,6 +147,21 @@
 		</div>
 		<!-- </ion-col> -->
 	<!-- </ion-row> -->
+
+	<div class="no-items-container" *ngIf="!lineitems?.length">
+		<div class="no-item-content">
+			<img src="assets/imgs/no-content backup.png" alt="">
+			<span class="desc">
+				No items are currently present. Establish a folder and incorporate either an item already in your possession or conduct an online search to add one.
+			</span>
+		</div>
+		
+	</div>
+	<div class="formWrapper">
+		<div class="btnWrapper">
+			<ion-button class="continuebtn" (click)="addNewFolderEvent()">Create a  New Folder</ion-button>
+		</div>
+	</div>
 </div>
 <tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
 	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
