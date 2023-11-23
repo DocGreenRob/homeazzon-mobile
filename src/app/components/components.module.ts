@@ -11,7 +11,6 @@ import { SegmentSelectorComponent } from './segment-selector/segment-selector.co
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { NumberInputComponent } from './number-input/number-input.component';
 import { FormsModule } from '@angular/forms';
-import { AddNewFolderComponent } from '../pages/features/items/add-new-folder/add-new-folder.component';
 
 
 @NgModule({
@@ -25,7 +24,6 @@ import { AddNewFolderComponent } from '../pages/features/items/add-new-folder/ad
 		DocumentViewerComponent,
 		NumberInputComponent,
 		TagsFilterComponent,
-		AddNewFolderComponent
 	],
 	imports: [CommonModule, IonicModule, FormsModule],
 	exports: [
@@ -38,7 +36,6 @@ import { AddNewFolderComponent } from '../pages/features/items/add-new-folder/ad
 		TagsFilterComponent,
 		DocumentViewerComponent,
 		SegmentSelectorComponent,
-		AddNewFolderComponent
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

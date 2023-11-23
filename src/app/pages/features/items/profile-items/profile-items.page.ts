@@ -28,7 +28,6 @@ import { PropertyProfilesService } from 'src/app/services/property-profile/prope
 import { UserTypesService } from 'src/app/services/user-types/user-types.service';
 import { UxNotifierService } from 'src/app/services/uxNotifier/ux-notifier.service';
 import { ProfileItemImageDto } from '../../../../models/dto/ProfileItemImageDto';
-import { AddNewFolderComponent } from '../add-new-folder/add-new-folder.component';
 
 @Component({
   selector: 'app-profile-items',
@@ -550,20 +549,5 @@ export class ProfileItemsPage extends BasePage {
 
   addLineItems() {
     this.router.navigate(['add-line-item']);
-  }
-
-  async addNewFolderEvent() {
-    const model = await this.modalCtrl.create({
-      component: AddNewFolderComponent,
-      cssClass: 'add-new-folder-modal',
-    });
-    model.onDidDismiss().then((data) => {
-      if(data['data']){
-        this.lineitems.push({ Name: data['data'], DigiDocCount: 0} as any);
-        this.lineitems = [...this.lineitems];
-      };
-    });
-
-    return await model.present();
   }
 }

@@ -76,11 +76,17 @@
 		</div>
 		<div *ngIf="data?.Lists.length === 0 || data?.Lists[0].Items.length === 0">
 			<div class="nothing-notice">
-				<h3>There's nothing here yet.</h3>
+				<!-- <h3>There's nothing here yet.</h3>
 				<span>You need to add items into this list!</span>
 				<br /><br />
 				<p class="nothing-notice-description" >You can also use the input buttons below to start adding
-					items.</p>
+					items.</p> -->
+				<span>
+					<img src="assets/imgs/no-content backup.png" alt="">
+				</span>	
+				<ion-text>
+					Incorporate either an item already in your possession or conduct an online search to add one.
+				</ion-text>
 			</div>
 		</div>
 	</ng-container>
@@ -91,8 +97,14 @@
 	<ng-container *ngIf="isHideSegments">
 		<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
 	</ng-container>
-</div>
-</div>
+
+		</div>
+		<div class="formWrapper">
+			<div class="btnWrapper">
+				<ion-button class="continuebtn">Add an Item</ion-button>
+			</div>
+		</div>
+		</div>
 <!-- </ion-content> -->
 <tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
 	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
