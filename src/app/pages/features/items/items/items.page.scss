@@ -1,5 +1,49 @@
-.nothing-notice {
-	text-align: center;
-	max-width: 90%;
-	margin: 5em auto;
+//header with icon
+.container-wrapper,ion-header{
+	background: #F6F8FE;
+}
+.tab-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 9px 24px;
+}
+.carpet-breadcrumb{
+	color: #232C41;
+	font-family: Plus Jakarta Sans;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 12.606px; 
+	letter-spacing: 0.05px;
+	padding: 0 24px;
+}
+.item-wrapper{
+    padding: 9px 24px;
+    min-height: calc(100% - 89px);
+}
+.nothing-notice{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin: 89px auto;
+	ion-text{
+	    color: rgba(29, 29, 47, 0.6);
+    text-align: center;
+    font-family: Plus Jakarta Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.07px;
+    width: 80%;
+	}
+}
+.formWrapper{
+	padding: 0 24px 33px !important;
+	.btnWrapper{
+		margin-top: 0 !important;
+	}
 }

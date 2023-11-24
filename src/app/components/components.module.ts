@@ -23,7 +23,8 @@ import { FormsModule } from '@angular/forms';
 		SegmentSelectorComponent,
 		DocumentViewerComponent,
 		NumberInputComponent,
-		TagsFilterComponent],
+		TagsFilterComponent,
+	],
 	imports: [CommonModule, IonicModule, FormsModule],
 	exports: [
 		NavigationSubMenuComponent,
@@ -34,7 +35,7 @@ import { FormsModule } from '@angular/forms';
 		NumberInputComponent,
 		TagsFilterComponent,
 		DocumentViewerComponent,
-		SegmentSelectorComponent
+		SegmentSelectorComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -800,6 +800,7 @@ select::-ms-expand {
     justify-content: space-between;
     padding: 17px 23px 13px;
     background: #232B42;
+	height: 66px;
     span{
         color: var(--additional-colors-white, #FEFEFE);
         font-family: Plus Jakarta Sans;
@@ -827,6 +828,47 @@ select::-ms-expand {
         --border-radius: 0;
         --background: transparent;
     }
+}
+
+//header with building icon
+.header-title-with-icon{
+	padding: 24px 24px 24px 27px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 66px;
+	background-color: #232B42;
+	.title-with-img{
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			font-family: Plus Jakarta Sans;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 17.522px;
+			letter-spacing: 0.1px;
+			white-space: nowrap;
+		}
+	}
+	.header-icon{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			text-align: right;
+			font-family: Plus Jakarta Sans;
+			font-size: 8px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 13.478px; 
+			letter-spacing: 0.04px;
+		}
+	}
 }
 
 //Registration-header
@@ -1009,9 +1051,7 @@ select::-ms-expand {
 	background: #F6F8FE;
 }
 
-
-
-.large-modal {
+.large-modal, .add-new-folder-modal {
 	--max-width: 327px;
 	--width: 100%;
 	--max-height: 512px !important;

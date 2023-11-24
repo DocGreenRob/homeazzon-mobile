@@ -1,5 +1,5 @@
 <ion-header>
-	<div style="border-bottom:2px solid whitesmoke !important;">
+	<!-- <div style="border-bottom:2px solid whitesmoke !important;"> -->
 		<!--<primary-menu [type]="itemMenu"
 					  [subTitle]="LineItem.Name"
 					  [title]="ProfileItem?.Name"
@@ -7,23 +7,24 @@
 					  [isViewLoaded]="isViewLoaded"
 					  (_openMenuClickHandler)="openMenu()"></primary-menu>-->
 		<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-		<ion-row class="top-row">
-			<ion-col size="3">
-				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
-					class="left-icon" (click)="close()" />
-			</ion-col>
-			<ion-col size="6">
-				<h1 class="page-title" *ngIf="!isHideSegments">{{LineItem.Name}}</h1>
-				<h1 class="page-title" *ngIf="isHideSegments">{{ProfileItem.Name}}</h1>
-			</ion-col>
-			<ion-col size="3">
-				<div style="padding-right: .5em;margin-top: 1.2em;">
-					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259"
-						class="header-img-property" (click)="openMenu()">
-					<h6 class="property-name-active" (click)="openMenu()">{{ActiveProperty?.Name}}</h6>
+		<div class="header-title-with-icon">
+			<span>
+				<!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+					class="left-icon" (click)="close()" /> -->
+					<img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" (click)="close()">
+			</span>
+			<span class="title-with-img">
+				<span *ngIf="!isHideSegments">{{LineItem.Name}}</span>
+				<span *ngIf="isHideSegments">{{ProfileItem.Name}}</span>
+			</span>
+			<!-- <ion-col size="3"> -->
+				<div class="header-icon">
+					<img src="assets/icon/building-fill.svg"
+					width="24" height="24" (click)="openMenu()">
+					<span (click)="openMenu()">{{ActiveProperty?.Name}}</span>
 				</div>
-			</ion-col>
-		</ion-row>
+			<!-- </ion-col> -->
+		</div>
 		<!-- <ion-segment [(ngModel)]="manageView" mode="md"
 					 style="border: none !important;"
 					 *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded"
@@ -38,10 +39,11 @@
 				<h5 class="asset-list">Suggestions</h5>
 			</ion-segment-button>
 		</ion-segment> -->
+		<div class="tab-container">
 		<app-segment-selector [segments]="views" [initView]="{value: manageView}" *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
 			(selectedSegment)="segmentChanged($event)">
 		</app-segment-selector>
-
+		</div>
 		<div *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
 			<ion-segment [(ngModel)]="dynamicManageView" mode="md" style="border: none !important;" class="asset-lists">
 				<ion-segment-button *ngFor="let a of LineItem.View.ViewSegments" (click)="dynamicTabClickHandler(a.Id)"
@@ -50,33 +52,41 @@
 				</ion-segment-button>
 			</ion-segment>
 		</div>
-	</div>
+	<!-- </div> -->
 	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
-		<div class="caption breadcrumb" *ngIf="ProfileItem.Id !== undefined">
+		<div class="carpet-breadcrumb" *ngIf="ProfileItem.Id !== undefined">
 			<span (click)="viewProfileLineItems()"
 				class="hover-link">{{ProfileItem?.Name}}</span>&nbsp;>&nbsp;{{LineItem?.Name}}
 		</div>
-		<div class="caption breadcrumb" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
-		<br style="clear:both !important;" />
-		<br style="clear:both !important;" />
+		<div class="carpet-breadcrumb" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
+		<!-- <br style="clear:both !important;" />
+		<br style="clear:both !important;" /> -->
 	</ng-container>
 </ion-header>
-<ion-content>
+<!-- <ion-content> -->
+	<div class="container-wrapper">
+		<div class="item-wrapper">
 	<ng-container>
-		<h5 style="margin-left: 1em; color: blue; text-decoration: underline;" (click)="showTagsFilter()">Filter</h5>
+		<h5 style="margin: 0; color: blue; text-decoration: underline;" (click)="showTagsFilter()">Filter</h5>
 	</ng-container>
 	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
-		<br style="clear:both;" />
+		<!-- <br style="clear:both;" /> -->
 		<div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0">
 			<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
 		</div>
 		<div *ngIf="data?.Lists.length === 0 || data?.Lists[0].Items.length === 0">
 			<div class="nothing-notice">
-				<h3>There's nothing here yet.</h3>
-				<p>You need to add items into this list!</p>
+				<!-- <h3>There's nothing here yet.</h3>
+				<span>You need to add items into this list!</span>
 				<br /><br />
-				<p style="line-height:normal !important;">You can also use the input buttons below to start adding
-					items.</p>
+				<p class="nothing-notice-description" >You can also use the input buttons below to start adding
+					items.</p> -->
+				<span>
+					<img src="assets/imgs/no-content backup.png" alt="">
+				</span>	
+				<ion-text>
+					Incorporate either an item already in your possession or conduct an online search to add one.
+				</ion-text>
 			</div>
 		</div>
 	</ng-container>
@@ -87,7 +97,15 @@
 	<ng-container *ngIf="isHideSegments">
 		<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
 	</ng-container>
-</ion-content>
+
+		</div>
+		<!-- <div class="formWrapper">
+			<div class="btnWrapper">
+				<ion-button class="continuebtn">Add an Item</ion-button>
+			</div>
+		</div> -->
+		</div>
+<!-- </ion-content> -->
 <tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
 	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
 	(searchEvent)="search()"></tab-menu>

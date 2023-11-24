@@ -1,31 +1,38 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
-import { AlertController, LoadingController, MenuController, ModalController, NavController, Platform } from "@ionic/angular";
-import { IProfileItemDto } from "src/app//models/dto/interfaces/IProfileItemDto";
-import { Constants } from "src/app/common/Constants";
-import { IGrid } from "src/app/models/dto/interfaces/IGrid";
-import { IGridList } from "src/app/models/dto/interfaces/IGridList";
-import { ILineitemDto } from "src/app/models/dto/interfaces/ILineItemDto";
-import { ISuite16CategoryDto } from "src/app/models/dto/interfaces/ISuite16Category";
-import { ISuite16CategoryLineitemDto } from "src/app/models/dto/interfaces/ISuite16CategoryLineitemDto";
-import { IUserLineitemDto } from "src/app/models/dto/interfaces/IUserLineitemDto";
-import { SegmentItem } from "src/app/models/SegmentItem";
-import { BasePage } from "src/app/pages/base/base.page";
-import { EditCategoriesPage } from "src/app/pages/modals/edit-categories/edit-categories.page";
-import { CommunicatorService } from "src/app/services/communicator/communicator.service";
-import { FeaturesService } from "src/app/services/features/features.service";
-import { LineitemService } from "src/app/services/lineitem/lineitem.service";
-import { ProfileItemImageService } from "src/app/services/profile-item-image/profile-item-image.service";
-import { PropertyProfilesService } from "src/app/services/property-profile/property-profiles.service";
-import { UserTypesService } from "src/app/services/user-types/user-types.service";
-import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
-import { ProfileItemImageDto } from "../../../../models/dto/ProfileItemImageDto";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {
+  AlertController,
+  LoadingController,
+  MenuController,
+  ModalController,
+  NavController,
+  Platform,
+} from '@ionic/angular';
+import { IProfileItemDto } from 'src/app//models/dto/interfaces/IProfileItemDto';
+import { Constants } from 'src/app/common/Constants';
+import { IGrid } from 'src/app/models/dto/interfaces/IGrid';
+import { IGridList } from 'src/app/models/dto/interfaces/IGridList';
+import { ILineitemDto } from 'src/app/models/dto/interfaces/ILineItemDto';
+import { ISuite16CategoryDto } from 'src/app/models/dto/interfaces/ISuite16Category';
+import { ISuite16CategoryLineitemDto } from 'src/app/models/dto/interfaces/ISuite16CategoryLineitemDto';
+import { IUserLineitemDto } from 'src/app/models/dto/interfaces/IUserLineitemDto';
+import { SegmentItem } from 'src/app/models/SegmentItem';
+import { BasePage } from 'src/app/pages/base/base.page';
+import { EditCategoriesPage } from 'src/app/pages/modals/edit-categories/edit-categories.page';
+import { CommunicatorService } from 'src/app/services/communicator/communicator.service';
+import { FeaturesService } from 'src/app/services/features/features.service';
+import { LineitemService } from 'src/app/services/lineitem/lineitem.service';
+import { ProfileItemImageService } from 'src/app/services/profile-item-image/profile-item-image.service';
+import { PropertyProfilesService } from 'src/app/services/property-profile/property-profiles.service';
+import { UserTypesService } from 'src/app/services/user-types/user-types.service';
+import { UxNotifierService } from 'src/app/services/uxNotifier/ux-notifier.service';
+import { ProfileItemImageDto } from '../../../../models/dto/ProfileItemImageDto';
 
 @Component({
-  selector: "app-profile-items",
-  templateUrl: "./profile-items.page.html",
-  styleUrls: ["./profile-items.page.scss"],
+  selector: 'app-profile-items',
+  templateUrl: './profile-items.page.html',
+  styleUrls: ['./profile-items.page.scss'],
 })
 export class ProfileItemsPage extends BasePage {
   userId: any;
@@ -36,7 +43,7 @@ export class ProfileItemsPage extends BasePage {
   detEditing: boolean = false;
   constants: Constants;
 
-  public manageProfileItemsView: any = "digiDoc";
+  public manageProfileItemsView: any = 'digiDoc';
   public data: IGrid;
   public _profileItemName: string;
   public isDigiDocSubscriber: boolean = true;
@@ -45,16 +52,16 @@ export class ProfileItemsPage extends BasePage {
 
   public views: Array<SegmentItem> = [
     {
-      name: "My Stuff",
-      value: "digiDoc",
+      name: 'My Stuff',
+      value: 'digiDoc',
     },
     {
-      name: "Wishlist",
-      value: "wishlist",
+      name: 'Wishlist',
+      value: 'wishlist',
     },
     {
-      name: "Suggestions",
-      value: "suggested",
+      name: 'Suggestions',
+      value: 'suggested',
     },
   ];
 
@@ -76,14 +83,25 @@ export class ProfileItemsPage extends BasePage {
     public editCategoriesPage: EditCategoriesPage,
     public override inAppBrowser: InAppBrowser
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
+    super(
+      navController,
+      null,
+      communicator,
+      menuController,
+      platform,
+      router,
+      uxNotifierService,
+      userTypesService,
+      featuresService,
+      inAppBrowser
+    );
     this.constants = new Constants();
   }
 
   override async ngOnInit() {}
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter ProfileItemsPage");
+    console.log('ionViewDidEnter ProfileItemsPage');
     //this.AppInsights.trackPageView({ name: 'ProfileItemsPage' });
 
     // temporarily: give all user the 'DigiDoc' subscription
@@ -100,19 +118,19 @@ export class ProfileItemsPage extends BasePage {
 
   async start() {
     if (this.User.IsPrivateLabelPartner) {
-      this.manageProfileItemsView = "suggested";
+      this.manageProfileItemsView = 'suggested';
       this.views = [
         {
-          name: "",
-          value: "dummy_a",
+          name: '',
+          value: 'dummy_a',
         },
         {
-          name: "",
-          value: "dummy_b",
+          name: '',
+          value: 'dummy_b',
         },
         {
-          name: "Suggestions",
-          value: "suggested",
+          name: 'Suggestions',
+          value: 'suggested',
         },
       ];
     }
@@ -121,7 +139,9 @@ export class ProfileItemsPage extends BasePage {
   }
 
   uniqueSuite16Categories(value, index, self) {
-    let answer = self.indexOf((x) => x.Suite16Categories[0].Id == value.Suite16Categories[0].Id);
+    let answer = self.indexOf(
+      (x) => x.Suite16Categories[0].Id == value.Suite16Categories[0].Id
+    );
     return answer;
   }
 
@@ -134,8 +154,8 @@ export class ProfileItemsPage extends BasePage {
     this.lineitems = new Array<ILineitemDto>();
 
     this.loading = await this.loadingCtrl.create({
-      message: "Getting lineitems...",
-      cssClass: "my-loading-class",
+      message: 'Getting lineitems...',
+      cssClass: 'my-loading-class',
     });
     this.loading.present();
 
@@ -174,40 +194,56 @@ export class ProfileItemsPage extends BasePage {
 
             let originalLineitems: Array<ILineitemDto> = this.lineitems;
             this.Lineitems = this.lineitems;
-            this.DigiDocLineitems = this.Lineitems.filter((x) => x.IsForDigiDoc);
+            this.DigiDocLineitems = this.Lineitems.filter(
+              (x) => x.IsForDigiDoc
+            );
 
             await this.propertyService
               .getUserProfileItemLineitems(this.ProfileItem.Id)
               .then(
                 (userProfileItemLineitems: Array<IUserLineitemDto>) => {
-                  let userProfileItemLineitemDtos: Array<IUserLineitemDto> = userProfileItemLineitems;
+                  let userProfileItemLineitemDtos: Array<IUserLineitemDto> =
+                    userProfileItemLineitems;
                   // IsForDesign
                   // 1.
-                  let step1a: Array<ILineitemDto> = this.lineitems.filter((x) => x.IsForDesign && x.IsRequired);
+                  let step1a: Array<ILineitemDto> = this.lineitems.filter(
+                    (x) => x.IsForDesign && x.IsRequired
+                  );
                   // 2.
-                  let step2a: Array<ILineitemDto> = this.lineitems.filter((x) => x.IsForDesign && x.IsOptional);
+                  let step2a: Array<ILineitemDto> = this.lineitems.filter(
+                    (x) => x.IsForDesign && x.IsOptional
+                  );
                   userProfileItemLineitemDtos.forEach((x) => {
                     if (!x.IsDisplay) {
-                      let idx: number = step2a.findIndex((a) => a.Id === x.LineitemId);
+                      let idx: number = step2a.findIndex(
+                        (a) => a.Id === x.LineitemId
+                      );
                       if (idx !== -1) {
                         step2a.splice(idx, 1);
                       }
                     }
                   });
 
-                  let tempLineitems: Array<ILineitemDto> = new Array<ILineitemDto>();
+                  let tempLineitems: Array<ILineitemDto> =
+                    new Array<ILineitemDto>();
                   tempLineitems = step1a;
                   step2a.forEach((x) => {
                     tempLineitems.push(x);
                   });
 
                   // 3.
-                  let step3a: Array<ILineitemDto> = this.lineitems.filter((x) => x.IsForDesign && x.IsOptional);
+                  let step3a: Array<ILineitemDto> = this.lineitems.filter(
+                    (x) => x.IsForDesign && x.IsOptional
+                  );
                   step3a.forEach((x) => {
-                    let idx: number = userProfileItemLineitemDtos.findIndex((a) => a.LineitemId === x.Id);
+                    let idx: number = userProfileItemLineitemDtos.findIndex(
+                      (a) => a.LineitemId === x.Id
+                    );
                     if (idx === -1) {
                       // is in tempDigiDocLineitems
-                      let lineitemIdx: number = tempLineitems.findIndex((a) => a.Id === x.Id);
+                      let lineitemIdx: number = tempLineitems.findIndex(
+                        (a) => a.Id === x.Id
+                      );
                       if (lineitemIdx !== -1) {
                         tempLineitems[lineitemIdx].IsDoRequireUserAction = true;
                       } else {
@@ -228,35 +264,49 @@ export class ProfileItemsPage extends BasePage {
                   if (this.isDigiDocSubscriber) {
                     // IsForDigiDoc
                     // 1.
-                    let step1b: Array<ILineitemDto> = originalLineitems.filter((x) => x.IsForDigiDoc && x.IsRequired);
+                    let step1b: Array<ILineitemDto> = originalLineitems.filter(
+                      (x) => x.IsForDigiDoc && x.IsRequired
+                    );
                     // 2.
                     let step2b: Array<ILineitemDto> = originalLineitems.filter(
-                      (x) => (x.IsForDigiDoc && x.IsOptional) || (x.IsForDigiDoc && !x.IsOptional && !x.IsRequired)
+                      (x) =>
+                        (x.IsForDigiDoc && x.IsOptional) ||
+                        (x.IsForDigiDoc && !x.IsOptional && !x.IsRequired)
                     );
                     userProfileItemLineitemDtos.forEach((x) => {
                       if (!x.IsDisplay) {
-                        let idx: number = step2b.findIndex((a) => a.Id === x.LineitemId);
+                        let idx: number = step2b.findIndex(
+                          (a) => a.Id === x.LineitemId
+                        );
                         if (idx !== -1) {
                           step2b.splice(idx, 1);
                         }
                       }
                     });
 
-                    let tempDigiDocLineitems: Array<ILineitemDto> = new Array<ILineitemDto>();
+                    let tempDigiDocLineitems: Array<ILineitemDto> =
+                      new Array<ILineitemDto>();
                     tempDigiDocLineitems = step1b;
                     step2b.forEach((x) => {
                       tempDigiDocLineitems.push(x);
                     });
 
                     // 3.
-                    let step3b: Array<ILineitemDto> = originalLineitems.filter((x) => x.IsForDigiDoc && x.IsOptional);
+                    let step3b: Array<ILineitemDto> = originalLineitems.filter(
+                      (x) => x.IsForDigiDoc && x.IsOptional
+                    );
                     step3b.forEach((x) => {
-                      let idx: number = userProfileItemLineitemDtos.findIndex((a) => a.LineitemId === x.Id);
+                      let idx: number = userProfileItemLineitemDtos.findIndex(
+                        (a) => a.LineitemId === x.Id
+                      );
                       if (idx === -1) {
                         // is in tempDigiDocLineitems
-                        let digiDocLineitemIdx: number = tempDigiDocLineitems.findIndex((a) => a.Id === x.Id);
+                        let digiDocLineitemIdx: number =
+                          tempDigiDocLineitems.findIndex((a) => a.Id === x.Id);
                         if (digiDocLineitemIdx !== -1) {
-                          tempDigiDocLineitems[digiDocLineitemIdx].IsDoRequireUserAction = true;
+                          tempDigiDocLineitems[
+                            digiDocLineitemIdx
+                          ].IsDoRequireUserAction = true;
                         } else {
                           x.IsDoRequireUserAction = true;
                           tempDigiDocLineitems.push(x);
@@ -280,7 +330,8 @@ export class ProfileItemsPage extends BasePage {
 
                     this.Lineitems = _tempLineitems;
                     // ensure there are no duplicates
-                    let tempLineitems: Array<ILineitemDto> = new Array<ILineitemDto>();
+                    let tempLineitems: Array<ILineitemDto> =
+                      new Array<ILineitemDto>();
                     this.Lineitems.forEach((x) => {
                       let a: any = tempLineitems.filter((b) => b.Id == x.Id);
 
@@ -291,25 +342,38 @@ export class ProfileItemsPage extends BasePage {
                     //this.lineitems = tempLineitems;
                     //this.Lineitems = tempLineitems;
 
-                    console.log("lineitems", this.Lineitems);
+                    console.log('lineitems', this.Lineitems);
                   }
 
                   if (this.Lineitems.length == 0) {
-                    this.manageProfileItemsView = "digiDoc";
+                    this.manageProfileItemsView = 'digiDoc';
                   }
 
                   // Optional Lineitems Setup
-                  let groups: Array<ISuite16CategoryLineitemDto> = new Array<ISuite16CategoryLineitemDto>();
-                  let optionalLineitems: Array<ILineitemDto> = response.Area.LineItems.filter((x) => x.IsOptional);
-                  let lineitemsWithoutSuite16Category: Array<ILineitemDto> = new Array<ILineitemDto>();
+                  let groups: Array<ISuite16CategoryLineitemDto> =
+                    new Array<ISuite16CategoryLineitemDto>();
+                  let optionalLineitems: Array<ILineitemDto> =
+                    response.Area.LineItems.filter((x) => x.IsOptional);
+                  let lineitemsWithoutSuite16Category: Array<ILineitemDto> =
+                    new Array<ILineitemDto>();
 
                   optionalLineitems.forEach((x: ILineitemDto) => {
-                    if (x.Suite16Categories == undefined || x.Suite16Categories == null || x.Suite16Categories.length == 0) {
+                    if (
+                      x.Suite16Categories == undefined ||
+                      x.Suite16Categories == null ||
+                      x.Suite16Categories.length == 0
+                    ) {
                       lineitemsWithoutSuite16Category.push(x);
                     } else {
                       x.IsChecked = false;
-                      let temp1 = userProfileItemLineitems.filter((i) => i.LineitemId == x.Id);
-                      if (temp1 != undefined && temp1 != null && temp1.length > 0) {
+                      let temp1 = userProfileItemLineitems.filter(
+                        (i) => i.LineitemId == x.Id
+                      );
+                      if (
+                        temp1 != undefined &&
+                        temp1 != null &&
+                        temp1.length > 0
+                      ) {
                         x.IsChecked = temp1[0].IsDisplay;
                       }
 
@@ -318,7 +382,8 @@ export class ProfileItemsPage extends BasePage {
 
                         if (g != undefined && g != null && g.length > 0) {
                           if (groups.length == 0) {
-                            let suite16CategoryLineitemDto: ISuite16CategoryLineitemDto = {} as ISuite16CategoryLineitemDto;
+                            let suite16CategoryLineitemDto: ISuite16CategoryLineitemDto =
+                              {} as ISuite16CategoryLineitemDto;
                             suite16CategoryLineitemDto.Id = y.Id;
                             suite16CategoryLineitemDto.Name = y.Name;
                             suite16CategoryLineitemDto.Lineitems = [];
@@ -327,12 +392,19 @@ export class ProfileItemsPage extends BasePage {
                           } else {
                             // find & update
                             let temp = groups.filter((a) => a.Id == y.Id);
-                            if (temp != undefined && temp != null && temp.length > 0) {
-                              groups.filter((a) => a.Id == y.Id)[0].Lineitems.push(x);
+                            if (
+                              temp != undefined &&
+                              temp != null &&
+                              temp.length > 0
+                            ) {
+                              groups
+                                .filter((a) => a.Id == y.Id)[0]
+                                .Lineitems.push(x);
                             }
                           }
                         } else {
-                          let suite16CategoryLineitemDto: ISuite16CategoryLineitemDto = {} as ISuite16CategoryLineitemDto;
+                          let suite16CategoryLineitemDto: ISuite16CategoryLineitemDto =
+                            {} as ISuite16CategoryLineitemDto;
                           suite16CategoryLineitemDto.Id = y.Id;
                           suite16CategoryLineitemDto.Name = y.Name;
                           suite16CategoryLineitemDto.Lineitems = [];
@@ -343,15 +415,21 @@ export class ProfileItemsPage extends BasePage {
                     }
                   });
 
-                  console.log("lineitemsWithoutSuite16Category", lineitemsWithoutSuite16Category);
+                  console.log(
+                    'lineitemsWithoutSuite16Category',
+                    lineitemsWithoutSuite16Category
+                  );
                   this.Suite16CategoryLineitems = groups;
 
                   this.isViewLoaded = true;
                 },
                 (err) => {
                   if (err.status == 401) {
-                    this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
-                    this.router.navigate(["sign-in"]);
+                    this.uxNotifierService.presentSimpleAlert(
+                      'Your credentials expired, please login again.',
+                      'Error'
+                    );
+                    this.router.navigate(['sign-in']);
                   }
                 }
               )
@@ -364,8 +442,11 @@ export class ProfileItemsPage extends BasePage {
         },
         (err) => {
           if (err.status == 401) {
-            this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
-            this.router.navigate(["sign-in"]);
+            this.uxNotifierService.presentSimpleAlert(
+              'Your credentials expired, please login again.',
+              'Error'
+            );
+            this.router.navigate(['sign-in']);
           }
         }
       )
@@ -380,7 +461,7 @@ export class ProfileItemsPage extends BasePage {
     lineItem.Name = gridList.Items[0].Name;
 
     this.LineItem = lineItem;
-    this.router.navigate(["items"]);
+    this.router.navigate(['items']);
   }
 
   public getItems(lineitem: ILineitemDto) {
@@ -392,38 +473,40 @@ export class ProfileItemsPage extends BasePage {
     //}
 
     this.LineItem = lineitem;
-    this.router.navigate(["items"]);
+    this.router.navigate(['items']);
   }
 
   public toggle(lineitemDto: ILineitemDto, event: any) {
-    console.log("event", event);
+    console.log('event', event);
   }
 
   public close() {
-    this.router.navigate(["dashboard"]);
+    this.router.navigate(['dashboard']);
   }
 
   public async subscribeToDigiDocFeature() {
     (
       await this.alertCtrl.create({
-        header: "Confirm Upgrade",
+        header: 'Confirm Upgrade',
         message: `Click "OK" to upgrade to use the DigiDoc feature? For now it is free, but will soon be $9.99 per month.`,
         buttons: [
           {
-            text: "Cancel",
-            role: "cancel",
+            text: 'Cancel',
+            role: 'cancel',
             handler: () => {
               return;
             },
           },
           {
-            text: "Ok",
-            cssClass: "signout",
+            text: 'Ok',
+            cssClass: 'signout',
             handler: () => {
-              this.upgradeSubscription(this.Features.filter((x) => x.Name === "DigiDoc")[0].Id).then((x) => {
+              this.upgradeSubscription(
+                this.Features.filter((x) => x.Name === 'DigiDoc')[0].Id
+              ).then((x) => {
                 if (x) {
                   this.isDigiDocSubscriber = true;
-                  this.manageProfileItemsView = "wishlist";
+                  this.manageProfileItemsView = 'wishlist';
                   this.start();
                 }
               });
@@ -438,10 +521,12 @@ export class ProfileItemsPage extends BasePage {
   public async clickOptionalItems() {
     let addRoomModal = null;
 
-    await this.modalCtrl.create({ component: EditCategoriesPage }).then((modal) => {
-      modal.present();
-      addRoomModal = modal;
-    });
+    await this.modalCtrl
+      .create({ component: EditCategoriesPage })
+      .then((modal) => {
+        modal.present();
+        addRoomModal = modal;
+      });
 
     addRoomModal.dismiss().then((x) => {
       if (x) {
@@ -451,16 +536,18 @@ export class ProfileItemsPage extends BasePage {
   }
 
   public seeProfileItemItems() {
-    this.profileItemImageService.getProfileItemImagesAsync(this.ProfileItem.Id).then(
-      (x: Array<ProfileItemImageDto>) => {
-        this.ProfileItemImages = x;
-        this.router.navigate(["items"]);
-      },
-      (err) => {}
-    );
+    this.profileItemImageService
+      .getProfileItemImagesAsync(this.ProfileItem.Id)
+      .then(
+        (x: Array<ProfileItemImageDto>) => {
+          this.ProfileItemImages = x;
+          this.router.navigate(['items']);
+        },
+        (err) => {}
+      );
   }
 
   addLineItems() {
-    this.router.navigate(["add-line-item"]);
+    this.router.navigate(['add-line-item']);
   }
 }
