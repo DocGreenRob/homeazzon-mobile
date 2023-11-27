@@ -223,10 +223,13 @@ page-profile-items {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 9px 24px;
+	padding: 14px 24px;
+	app-segment-selector{
+		width: 100%;
+	}
 }
 .bedroom-content-container{
-	padding: 10px 24px;
+	padding: 10px 25px;
 	.stuff-items{
 		display: flex;
 		align-items: flex-start;
@@ -310,9 +313,26 @@ page-profile-items {
 	}
 }
 .formWrapper{
-	padding: 0 25px 33px !important;
-	background-color: unset !important;
+    padding: 0 24px 32px !important;
+    background-color: unset !important;
 	.btnWrapper{
 		margin-top: 0 !important;
+		align-items: flex-end !important;
+		.add-line-item-btn{
+			--border-radius: 10.019px !important;
+			--background: #FFF !important;
+			color: #526EA0 !important;
+			text-align: center !important;
+			font-family: Plus Jakarta Sans;
+			font-size: 12.523px !important;
+			line-height: 100% !important;
+			letter-spacing: 0.063px !important;
+			width: 177px !important;
+			height: 50.093px !important;
+			box-shadow: none !important;
+			img{
+				margin-right: 6.65px;
+			}
+		}
 	}
 }

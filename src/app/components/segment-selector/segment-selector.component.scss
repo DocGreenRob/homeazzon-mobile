@@ -9,6 +9,8 @@
 
 .wrap-segment {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   .segment-btn {
     display: flex;
     width: 99px;
