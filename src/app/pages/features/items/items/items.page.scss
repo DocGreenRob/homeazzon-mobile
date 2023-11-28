@@ -6,7 +6,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 9px 24px;
+	padding: 14px 24px;
+	app-segment-selector{
+		width: 100%;
+	}
 }
 .carpet-breadcrumb{
 	color: #232C41;
