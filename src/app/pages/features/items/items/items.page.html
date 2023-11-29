@@ -39,6 +39,19 @@
 				<h5 class="asset-list">Suggestions</h5>
 			</ion-segment-button>
 		</ion-segment> -->
+		<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
+			<div class="breadcrumb-main" *ngIf="ProfileItem.Id !== undefined">
+				<img src="assets/icon/Home.svg" alt="">
+				<span class="bread-arrow-right">></span>
+				<span (click)="viewProfileLineItems()">
+					{{ProfileItem?.Name}}</span>
+				<span class="bread-arrow-right">></span>	
+				<span class="current-page">{{LineItem?.Name}}</span>	
+			</div>
+			<div class="breadcrumb-main" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
+			<!-- <br style="clear:both !important;" />
+			<br style="clear:both !important;" /> -->
+		</ng-container>
 		<div class="tab-container">
 		<app-segment-selector [segments]="views" [initView]="{value: manageView}" *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
 			(selectedSegment)="segmentChanged($event)">
@@ -53,27 +66,32 @@
 			</ion-segment>
 		</div>
 	<!-- </div> -->
-	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
-		<div class="carpet-breadcrumb" *ngIf="ProfileItem.Id !== undefined">
-			<span (click)="viewProfileLineItems()"
-				class="hover-link">{{ProfileItem?.Name}}</span>&nbsp;>&nbsp;{{LineItem?.Name}}
-		</div>
-		<div class="carpet-breadcrumb" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
-		<!-- <br style="clear:both !important;" />
-		<br style="clear:both !important;" /> -->
-	</ng-container>
+
 </ion-header>
 <!-- <ion-content> -->
 	<div class="container-wrapper">
 		<div class="item-wrapper">
-	<ng-container>
-		<h5 style="margin: 0; color: blue; text-decoration: underline;" (click)="showTagsFilter()">Filter</h5>
-	</ng-container>
+
 	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
 		<!-- <br style="clear:both;" /> -->
-		<div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0">
-			<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
+		<div class="accordian-wrapper">
+		<div class="filter-wrapper" *ngIf="data?.Lists?.length > 0">
+			<span class="filter" (click)="showTagsFilter()">
+				<img src="assets/icon/Filter 2.svg" alt="">
+				Filter</span>
 		</div>
+		<ion-accordion-group class="main-accordion" [value]="['first']">
+			<ion-accordion [toggleIcon]="data?.Lists?.length > 0 ? 'assets/icon/chevron-down-circle.svg' : ''" toggleIconSlot="start" class="main-accordion-content" value="first">
+				<ion-item slot="header" class="main-accordion-item">
+					<ion-label class="main-accordian-label" *ngIf="data?.Lists?.length > 0">Collapse all</ion-label>
+					
+				  </ion-item>
+				  <div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0" slot="content">
+					<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
+				</div>
+			</ion-accordion>
+		</ion-accordion-group>
+	</div>
 		<div *ngIf="data?.Lists.length === 0 || data?.Lists[0].Items.length === 0">
 			<div class="nothing-notice">
 				<!-- <h3>There's nothing here yet.</h3>

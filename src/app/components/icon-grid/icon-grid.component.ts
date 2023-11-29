@@ -10,8 +10,8 @@ import { IGridList } from 'src/app/models/dto/interfaces/IGridList';
 	styleUrls: ['./icon-grid.component.scss'],
 })
 export class IconGridComponent implements OnInit {
-
-	@Input() _grid: IGrid = {} as IGrid;
+	showAllItems: boolean = false;
+	@Input() _grid: IGrid | any = {} as IGrid;
 	@Output() _itemClickEventHandler: any = new EventEmitter();
 
 	constructor() {
@@ -25,6 +25,14 @@ export class IconGridComponent implements OnInit {
 	public emit(item: IGridListItem, listName: string) {
 		let gridList: IGridList = { Items: [item], Name: listName };
 		this._itemClickEventHandler.emit(gridList);
+	}
+
+	seeAllItems(Items, index){
+		if(Items?.length > 3){
+			let list = this._grid.Lists[index]
+			this._grid.Lists[index] = {...list, showAllItems: !list?.showAllItems}
+		}
+
 	}
 
 }

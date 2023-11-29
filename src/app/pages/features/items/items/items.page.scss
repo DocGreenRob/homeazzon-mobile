@@ -11,19 +11,65 @@
 		width: 100%;
 	}
 }
-.carpet-breadcrumb{
-	color: #232C41;
-	font-family: Plus Jakarta Sans;
-	font-size: 12px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 12.606px; 
-	letter-spacing: 0.05px;
-	padding: 0 24px;
+.breadcrumb-main{
+    height: 38px;
+    padding: 12px 12px 12px 24px;
+    background: #2E3750;
+    margin-top: -1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #7F879D;
+    font-family: Plus Jakarta Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0.05px;
+	.bread-arrow-right{
+		color: #669BBC;
+		font-size: 8px;
+	}
+	.current-page{
+		color: #F6F8FE;
+		font-weight: 700;
+	}
 }
 .item-wrapper{
-    padding: 9px 24px;
+    padding: 9px 24px 51px;
     min-height: calc(100% - 89px);
+	.accordian-wrapper{
+		position: relative;
+	}
+	.filter-wrapper{
+		display: flex;
+		align-items: center;
+		justify-content: end;
+		position: absolute;
+		z-index: 9;
+		right: 0;
+		.filter{
+			display: block;
+			width: 64px;
+			height: 22px;
+			border-radius: 12px;
+			border: 1px solid #E3E7EC;
+			background: #FFF;
+			color: #445FA8;
+			font-family: Plus Jakarta Sans;
+			font-size: 10px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 100%;
+			letter-spacing: 0.05px;
+			padding: 5px 8px;
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			gap: 4px;
+		}
+	}
+
 }
 .nothing-notice{
     display: flex;
@@ -50,3 +96,35 @@
 		margin-top: 0 !important;
 	}
 }
+:host ::ng-deep{
+    .main-accordion{
+		ion-accordion.main-accordion-content{
+			background: #f6f8fe !important;
+		}
+        ion-item.main-accordion-item{
+            --background: transparent;
+            // --border-width: 0px;
+            --inner-padding-end:0;
+            --min-height: 22px;
+			--background-activated-opacity:0 !important;
+            .ion-accordion-toggle-icon{
+                margin: 0 4px 0 0;
+                font-size: 14px;
+            }
+			.main-accordian-label{
+				color: #445FA8;
+				font-family: Plus Jakarta Sans;
+				font-size: 10px;
+				font-style: normal;
+				font-weight: 700;
+				line-height: 100%;
+				letter-spacing: 0.05px;
+				margin: 0 !important;
+			}
+        }
+        ion-item::part(native){
+            padding: 0 !important;
+        }
+    }
+}
+
