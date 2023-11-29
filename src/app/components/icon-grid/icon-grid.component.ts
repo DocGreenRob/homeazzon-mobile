@@ -28,10 +28,8 @@ export class IconGridComponent implements OnInit {
 	}
 
 	seeAllItems(Items, index){
-		if(Items?.length > 3){
 			let list = this._grid.Lists[index]
-			this._grid.Lists[index] = {...list, showAllItems: !list?.showAllItems}
-		}
+			this._grid.Lists[index] = {...list, showAllItems: !list?.showAllItems};
 
 	}
 
