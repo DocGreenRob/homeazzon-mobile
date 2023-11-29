@@ -1,9 +1,21 @@
-<div class="item-main-wrapper" *ngFor="let c of _grid?.Lists">
-	<span class="item-wrapper-heading">{{c.Name}}</span>
-	<div *ngIf="c.Name != 'Google Web Links'" class="items-main">
-		<div class="item" *ngFor="let i of c.Items;">
+<ion-accordion-group [multiple]="true">
+	<div *ngFor="let c of _grid?.Lists; let ListIndex = index">
+		<span class="see-section" (click)="seeAllItems(c?.Items, ListIndex)" *ngIf="!c.showAllItems">See all
+			<img src="assets/icon/caret-right-circle.svg">
+		</span>
+	
+		<span class="see-section" (click)="seeAllItems(c?.Items, ListIndex)" *ngIf="c.showAllItems">See less
+			<img src="assets/icon/caret-right-circle.svg">
+		</span>
+	<ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start">
+	  <ion-item slot="header" >
+		<ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
+
+	  </ion-item>
+	  <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main">
+		<div *ngFor="let i of c.Items; let index = index">
 			<!-- <div > -->
-			<div (click)="emit(i, c.Name)">
+			<div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
 				<img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" src="{{i.IconPath}}"
 					class="item-icon">
 				<img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')"
@@ -15,8 +27,8 @@
 			</div>
 			<!-- </div> -->
 		</div>
-	</div>
-	<div *ngIf="c.Name == 'Google Web Links'" class="items-main">
+	  </div>
+	  <div *ngIf="c.Name == 'Google Web Links'" class="items-main">
 		<div *ngFor="let i of c.Items;" class="item">
 
 			<div (click)="emit(i, c.Name)">
@@ -26,8 +38,13 @@
 				<span class="item-title">{{i.Name}}</span>
 				<hr />
 			</div>
-
 		</div>
 	</div>
-	<br style="clear:both;" />
+	</ion-accordion>
 </div>
+
+</ion-accordion-group>
+
+
+
+
