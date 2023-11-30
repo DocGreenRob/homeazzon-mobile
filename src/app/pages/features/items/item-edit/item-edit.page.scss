@@ -5,22 +5,6 @@ ion-item,
 	background-color: var(--ion-color-white-background) !important;
 }
 
-.main-view {
-	height: 14em;
-	min-height: 14em;
-	max-height: 14em;
-	margin-left: 18px !important;
-	margin-right: 18px !important;
-	//border: 2px solid map-get($colors, primary);
-	text-align: center !important;
-}
-
-.main-view img {
-	max-width: 100%;
-	max-height: 14em !important;
-	text-align: center !important;
-}
-
 .icon-img {
 	height: 1em !important;
 	/*filter: invert(59%) sepia(64%) saturate(343%) hue-rotate(72deg) brightness(91%) contrast(96%);*/
@@ -67,28 +51,13 @@ ion-item,
 	background-color: var(--ion-color-white-background) !important;
 }
 
-.main-view {
-	height: 14em;
-	min-height: 14em;
-	max-height: 14em;
-	margin-left: 18px !important;
-	margin-right: 18px !important;
-	//border: 2px solid map-get($colors, primary);
-	text-align: center !important;
-}
-
-.main-view img {
-	max-width: 100%;
-	max-height: 14em !important;
-	text-align: center !important;
-}
-
 .icon-img {
 	height: 1em !important;
 	/*filter: invert(59%) sepia(64%) saturate(343%) hue-rotate(72deg) brightness(91%) contrast(96%);*/
 	filter: invert(13%) sepia(45%) saturate(680%) hue-rotate(187deg) brightness(89%) contrast(89%);
 }
 
+//new styling
 .header-items{
 	height: 66px;
 }
@@ -99,6 +68,9 @@ ion-item,
 	height: unset !important;
 	ion-textarea{
 		height: 152px;
+		color: #53677A !important;
+		font-size: 12px !important;
+		letter-spacing: 0.06px !important;
 	}
 }
 .italics{
@@ -114,4 +86,67 @@ ion-item,
     flex-shrink: 0;
     border: 1px solid #E3E7EC;
     margin-left: auto;
+}
+.upload-main{
+	height: 184px;
+	border-radius: 8px;
+	border: 1px solid  #E3E7EC;
+	background: #FFF;
+	margin-bottom: 13px;
+	label{
+		width: 100%;
+		height: 100%;
+		display: block;
+		input{
+			display: none;
+		}
+		.upload-content{
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			gap: 38px;
+			.upload-icons{
+				display: inline-flex;
+				gap: 7px;
+				.upload-text{
+					color: var(--hzn-primary, #232C41);
+					font-family: Plus Jakarta Sans;
+					font-size: 10.085px;
+					font-style: normal;
+					font-weight: 500;
+					line-height: 12.606px;
+					letter-spacing: 0.05px;
+				}
+			}
+		}
+	}
+}
+.registration-header{
+	gap: 96px !important;
+	height: 66px;
+}
+.formWrapper{
+	padding-bottom: 38px !important;
+	.fieldWrapper{
+		margin-bottom: 16px !important;
+		.inputField{
+			border-radius: 8px
+		}
+	}
+	.details-wrapper{
+		margin-bottom: 32px !important;
+		margin-top: 20px;
+	}
+
+}
+.btnWrapper{
+	margin-top: 64px !important;
+	.save-btn{
+		--border-radius: 8px !important;
+		--background: #00C566;
+		--background-activated: #00C566;
+	}
 }

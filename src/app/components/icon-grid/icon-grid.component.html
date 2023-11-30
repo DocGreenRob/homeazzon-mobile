@@ -1,10 +1,6 @@
 <ion-accordion-group [multiple]="true">
 	<div *ngFor="let c of _grid?.Lists; let ListIndex = index">
-		<span class="see-section" (click)="seeAllItems(c?.Items, ListIndex)" *ngIf="!c.showAllItems">See all
-			<img src="assets/icon/caret-right-circle.svg">
-		</span>
-	
-		<span class="see-section" (click)="seeAllItems(c?.Items, ListIndex)" *ngIf="c.showAllItems">See less
+		<span class="see-section" *ngIf="!c.showAllItems">See all
 			<img src="assets/icon/caret-right-circle.svg">
 		</span>
 	<ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start">

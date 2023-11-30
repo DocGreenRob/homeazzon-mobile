@@ -141,8 +141,8 @@ export class ItemEditPage extends BasePage {
 
   public override launchCamera() {
     if (this.platform.is("mobileweb")) {
-      this.TempActiveItem.Image =
-        "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fcamera.svg?alt=media&token=e0af850d-247e-41a0-84ff-e6faa5e815b6";
+      this.TempActiveItem.Image = "assets/icon/Insert picture icon.svg";
+      //this.TempActiveItem.Image = "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fcamera.svg?alt=media&token=e0af850d-247e-41a0-84ff-e6faa5e815b6";
     } else {
       const options: CameraOptions = {
         quality: 50,
