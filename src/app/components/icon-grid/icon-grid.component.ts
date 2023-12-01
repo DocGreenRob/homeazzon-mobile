@@ -27,10 +27,4 @@ export class IconGridComponent implements OnInit {
 		this._itemClickEventHandler.emit(gridList);
 	}
 
-	seeAllItems(Items, index){
-			let list = this._grid.Lists[index]
-			this._grid.Lists[index] = {...list, showAllItems: !list?.showAllItems};
-
-	}
-
 }
