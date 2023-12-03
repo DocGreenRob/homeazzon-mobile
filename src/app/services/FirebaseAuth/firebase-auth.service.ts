@@ -7,6 +7,7 @@ import { IAuthTokenDto } from 'src/app/models/dto/interfaces/IAuthTokenDto';
 import { IdTokenDto } from 'src/app/models/dto/interfaces/IdTokenDto';
 import { FirebaseUser } from 'src/app/models/FirebaseUser';
 import { Platform } from '@ionic/angular';
+import jwt_decode from 'jwt-decode';
 
 import {
   SignInWithApple,
@@ -241,7 +242,7 @@ export class FirebaseAuthService {
     this.setTokens(user);
 
     window.dispatchEvent(new CustomEvent('user:loggedIn'));
-    
+
     return user;
   }
 
@@ -286,5 +287,25 @@ export class FirebaseAuthService {
   }
   set AuthToken(value: IAuthTokenDto) {
     localStorage.setItem('AuthToken', JSON.stringify(value));
+  }
+
+  browserLoginHandler(response: string) {
+    const tokenId = response.toString().split('id_token=').pop();
+    console.log(tokenId);
+    const decodedToken = jwt_decode(tokenId);
+    console.log(decodedToken);
+
+    const userInfo = {
+      displayName: decodedToken['name'],
+      email: decodedToken['emails'][0],
+      emailVerified: true,
+      photoUrl: '',
+      uid: decodedToken['oid'],
+    };
+    console.log('Msal lgoin toekn ');
+
+    console.log(tokenId);
+
+    this.setUser(userInfo, 'microsoft', tokenId, '');
   }
 }

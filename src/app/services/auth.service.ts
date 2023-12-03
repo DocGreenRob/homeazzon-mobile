@@ -2,7 +2,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 // import { NavigationAuthenticationClient } from "./navigationAuthenticationClient";
-import { MsalService } from '@azure/msal-angular';
+// import { MsalService } from '@azure/msal-angular';
 import { Platform } from '@ionic/angular';
 
 declare let cordova: any;
@@ -19,7 +19,7 @@ export class AuthService {
   constructor(
     public zone: NgZone,
     private storage: Storage,
-    private msalService: MsalService,
+    //private msalService: MsalService,
     private platform: Platform
   ) {
     this.getStorageInformation();
@@ -42,7 +42,7 @@ export class AuthService {
 
   removeIntractionInProgressMsal() {
     if (this.platform.is('android')) {
-      this.msalService.instance.handleRedirectPromise();
+      // this.msalService.instance.handleRedirectPromise();
     }
     sessionStorage.removeItem('msal.interaction.status');
   }
@@ -50,12 +50,12 @@ export class AuthService {
   login() {
     this.loading = true;
     this.removeIntractionInProgressMsal();
-    this.msalService.loginRedirect({
-      scopes: ['openid', 'profile'],
+    //this.msalService.loginRedirect({
+    //  scopes: ['openid', 'profile'],
 
-      redirectStartPage: 'http://localhost:8100',
-      prompt: 'select_account',
-    });
+    //  redirectStartPage: 'http://localhost:8100',
+    //  prompt: 'select_account',
+    //});
 
     // Authorize login request with Auth0: open login page and get auth results
     // this.Client.authorize(options, (err, authResult) => {

@@ -4,6 +4,7 @@ import {
   AlertController,
   LoadingController,
   MenuController,
+  NavController,
 } from '@ionic/angular';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
@@ -34,10 +35,10 @@ import * as qs from 'querystring';
 import { AccountService } from './services/account/account.service';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.service';
-import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
+//import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
+//import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { EventMessage, EventType } from '@azure/msal-browser';
+//import { EventMessage, EventType } from '@azure/msal-browser';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -81,15 +82,15 @@ export class AppComponent extends BasePage {
     public override router: Router,
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
-    private msalService: MsalService,
-    private broadcastService: MsalBroadcastService,
+    //private msalService: MsalService,
+    //private broadcastService: MsalBroadcastService,
     private iab: InAppBrowser
   ) {
     super(null, null, communicator, menu, platform, router, null, null, null);
 
-    this.msalService.instance.setNavigationClient(
-      new NavigationAuthenticationClient(this.platform, this.iab)
-    );
+    //this.msalService.instance.setNavigationClient(
+    //  new NavigationAuthenticationClient(this.platform, this.iab)
+    //);
     platform.ready().then(async () => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -105,45 +106,45 @@ export class AppComponent extends BasePage {
   override async ngOnInit() {
     console.log('ngOnInit AppComponent');
     await this.storage.create();
-    await this.msalService.instance.initialize();
+    //await this.msalService.instance.initialize();
     this.listenPropertiesLoadedEvent();
     this.listenLoginEvent();
     this.listenLogOutEvent();
 
-    this.broadcastService.msalSubject$
-      .pipe(
-        filter(
-          (msg: EventMessage) =>
-            msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS ||
-            msg.eventType === EventType.LOGIN_SUCCESS
-        ), //
-        takeUntil(this._destroying$)
-      )
-      .subscribe(async (result: EventMessage) => {
-        console.log('Msal result', result);
-        // userInfo,
-        // provider: string,
-        // token: string = null,
-        // refreshToken: string = null
+    //this.broadcastService.msalSubject$
+    //  .pipe(
+    //    filter(
+    //      (msg: EventMessage) =>
+    //        msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS ||
+    //        msg.eventType === EventType.LOGIN_SUCCESS
+    //    ), //
+    //    takeUntil(this._destroying$)
+    //  )
+    //  .subscribe(async (result: EventMessage) => {
+    //    console.log('Msal result', result);
+    //    // userInfo,
+    //    // provider: string,
+    //    // token: string = null,
+    //    // refreshToken: string = null
 
-        // user.displayName = userInfo.displayName;
-        // user.email = userInfo.email;
-        // user.emailVerified = userInfo.emailVerified;
-        // user.photoUrl = userInfo.photoURL;
-        // user.uid = userInfo.uid;
-        const userInfo = {
-          displayName: result.payload?.['account']?.name ?? '',
-          email: result.payload?.['account']?.username ?? '',
-          emailVerified: true,
-          photoUrl: '',
-          uid: result.payload?.['account']?.tenantId ?? '',
-        };
-        console.log('Msal lgoin toekn ');
-        const token = `eyJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsiLCJ0eXAiOiJKV1QifQ.eyJ2ZXIiOiIxLjAiLCJpc3MiOiJodHRwczovL2NvZ25pdGl2ZWdlbmVyYXRpb25lbnRlcnByLmIyY2xvZ2luLmNvbS8wMDMxOTYzMS03MWZhLTQzMWMtYTJkOC0wNjJjMjQ3ZmVlNmQvdjIuMC8iLCJzdWIiOiI4ZjM2MGFkOC1mMGI2LTRjNjctOWIxMy0wZGQxYzI3MDMzYWYiLCJhdWQiOiIyMzZjOTQ1Ni1kYTMyLTRjMmMtODFiNC04NDJkZmQwNDQyZjEiLCJleHAiOjE2OTQ0NjY1MzgsIm5vbmNlIjoiZGVmYXVsdE5vbmNlIiwiaWF0IjoxNjk0NDYyOTM4LCJhdXRoX3RpbWUiOjE2OTQ0NjI5MzgsIm5hbWUiOiJBc2FkIEphbGlsIiwiaWRwIjoiZ29vZ2xlLmNvbSIsIm9pZCI6IjhmMzYwYWQ4LWYwYjYtNGM2Ny05YjEzLTBkZDFjMjcwMzNhZiIsIm5ld1VzZXIiOnRydWUsImVtYWlscyI6WyJhc2FkQGtvZHhzeXN0ZW0uY29tIl0sInRmcCI6IkIyQ18xX1NpZ25VcFNpZ25Jbl9QdWJsaWNfSG9tZWFaWm9uIiwibmJmIjoxNjk0NDYyOTM4fQ.JTnic-rcnqNIjhCuoXzUuLVGU-QtuGO67Rm1PWbHF1fyDp0ySI49f1fF-90DoMplUo-t8GtOGgherYidrVDj8mKd36hUkVlJqagMMjvFvEj9TbTeebYSpPb7De2joCt7hEp4IzA0K22KPyjgl93N8IZ-UvoIHmpj6Sd3PHBYOQGgRclwq2dMHrbpTbylIgC7-bMu-xo9n5b5vKKuvAWPNNutfaj5QjOLj-Y7FrJDCHRczSgN17baa4no7bJ52Ahsy9YkTUfA-nshUZTjB8T8D_7ojDR9tOLKxPZbO0NSv8qWYT6Z21eQbeYe4eg9qZ54w3KVIHzqUHhGO5edu3MeWA`;
-        console.log(token);
+    //    // user.displayName = userInfo.displayName;
+    //    // user.email = userInfo.email;
+    //    // user.emailVerified = userInfo.emailVerified;
+    //    // user.photoUrl = userInfo.photoURL;
+    //    // user.uid = userInfo.uid;
+    //    const userInfo = {
+    //      displayName: result.payload?.['account']?.name ?? '',
+    //      email: result.payload?.['account']?.username ?? '',
+    //      emailVerified: true,
+    //      photoUrl: '',
+    //      uid: result.payload?.['account']?.tenantId ?? '',
+    //    };
+    //    console.log('Msal lgoin toekn ');
+    //    const token = `eyJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsiLCJ0eXAiOiJKV1QifQ.eyJ2ZXIiOiIxLjAiLCJpc3MiOiJodHRwczovL2NvZ25pdGl2ZWdlbmVyYXRpb25lbnRlcnByLmIyY2xvZ2luLmNvbS8wMDMxOTYzMS03MWZhLTQzMWMtYTJkOC0wNjJjMjQ3ZmVlNmQvdjIuMC8iLCJzdWIiOiI4ZjM2MGFkOC1mMGI2LTRjNjctOWIxMy0wZGQxYzI3MDMzYWYiLCJhdWQiOiIyMzZjOTQ1Ni1kYTMyLTRjMmMtODFiNC04NDJkZmQwNDQyZjEiLCJleHAiOjE2OTQ0NjY1MzgsIm5vbmNlIjoiZGVmYXVsdE5vbmNlIiwiaWF0IjoxNjk0NDYyOTM4LCJhdXRoX3RpbWUiOjE2OTQ0NjI5MzgsIm5hbWUiOiJBc2FkIEphbGlsIiwiaWRwIjoiZ29vZ2xlLmNvbSIsIm9pZCI6IjhmMzYwYWQ4LWYwYjYtNGM2Ny05YjEzLTBkZDFjMjcwMzNhZiIsIm5ld1VzZXIiOnRydWUsImVtYWlscyI6WyJhc2FkQGtvZHhzeXN0ZW0uY29tIl0sInRmcCI6IkIyQ18xX1NpZ25VcFNpZ25Jbl9QdWJsaWNfSG9tZWFaWm9uIiwibmJmIjoxNjk0NDYyOTM4fQ.JTnic-rcnqNIjhCuoXzUuLVGU-QtuGO67Rm1PWbHF1fyDp0ySI49f1fF-90DoMplUo-t8GtOGgherYidrVDj8mKd36hUkVlJqagMMjvFvEj9TbTeebYSpPb7De2joCt7hEp4IzA0K22KPyjgl93N8IZ-UvoIHmpj6Sd3PHBYOQGgRclwq2dMHrbpTbylIgC7-bMu-xo9n5b5vKKuvAWPNNutfaj5QjOLj-Y7FrJDCHRczSgN17baa4no7bJ52Ahsy9YkTUfA-nshUZTjB8T8D_7ojDR9tOLKxPZbO0NSv8qWYT6Z21eQbeYe4eg9qZ54w3KVIHzqUHhGO5edu3MeWA`;
+    //    console.log(token);
 
-        this.firebaseService.setUser(userInfo, 'microsoft', token, '');
-      });
+    //    this.firebaseService.setUser(userInfo, 'microsoft', token, '');
+    //  });
 
     this.pages = [
       {
@@ -160,13 +161,13 @@ export class AppComponent extends BasePage {
       },
       {
         image:
-        '../assets/icon/question.svg',
+          '../assets/icon/question.svg',
         title: 'Help',
         url: 'help',
       },
       {
         image:
-        '../assets/icon/Setting.svg',
+          '../assets/icon/Setting.svg',
         title: 'Settings',
         url: 'settings',
       },
@@ -176,9 +177,9 @@ export class AppComponent extends BasePage {
   // TODO: Remove
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
-      this.displayName = this.User.UserName;
+      this.displayName = this.User.UserName ?? '';
       this.router.navigate(['login-success']);
-      setTimeout(()=>{
+      setTimeout(() => {
         this.router.navigate(['dashboard']);
       }, 3000)
     });
