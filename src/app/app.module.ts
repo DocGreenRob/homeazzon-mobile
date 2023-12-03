@@ -76,7 +76,6 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
     Deeplinks,
     // ThemeableBrowser,
     SafariViewController,
-
     SignInWithApple
   ],
   bootstrap: [AppComponent],
