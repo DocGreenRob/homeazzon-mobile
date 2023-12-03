@@ -578,6 +578,10 @@ export class ItemEditPage extends BasePage {
   }
 
   private async showMyOrWishlistModalAsync() {
+    this.IsMy = false;
+    this.IsSuggest = false;
+    this.IsWishlist = false;
+
     (
       await this.alertCtrl.create({
         message: "Which list does this go into?",

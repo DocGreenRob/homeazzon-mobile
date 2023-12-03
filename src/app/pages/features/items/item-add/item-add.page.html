@@ -1,136 +1,136 @@
 <ion-header>
-	<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
-	<!-- <ion-toolbar color="white-background"> -->
-		<!-- <ion-row class="top-row"> -->
-			<div [class]="view == 'SelectLineItems' ? 'header-items title-gap' : 'header-items'">				
-				<img src="assets/icon/Arrow - Left Square.svg" *ngIf="view == 'SelectLineItems'" (click)="back()">
-				<span>
-					{{pageTitle}}
-				</span>
-				<ion-button *ngIf="view == 'SelectProfileItems'" (click)="close()">
-					Cancel
-				</ion-button>
-			</div>
-		<!-- </ion-row> -->
-	<!-- </ion-toolbar> -->
+  <div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
+  <!-- <ion-toolbar color="white-background"> -->
+  <!-- <ion-row class="top-row"> -->
+  <div [class]="view == 'SelectLineItems' ? 'header-items title-gap' : 'header-items'">
+    <img src="assets/icon/Arrow - Left Square.svg" *ngIf="view == 'SelectLineItems'" (click)="back()">
+    <span>
+      {{pageTitle}}
+    </span>
+    <ion-button *ngIf="view == 'SelectProfileItems'" (click)="close()">
+      Cancel
+    </ion-button>
+  </div>
+  <!-- </ion-row> -->
+  <!-- </ion-toolbar> -->
 </ion-header>
 <div class="container-wrapper">
-	<ng-container >
-		<div class="formWrapper">
-		<div class="spacer-halfRem"></div>
-		<div class="main-view" style="margin-bottom: .5em !important; margin-left: .5em !important; margin-right: .5em !important;">
-			<img src="{{image}}" *ngIf="hasImage" />
-			<!-- Show the URL for Google Web searches -->
-			<div *ngIf="!hasImage && !isBookmark">
-				{{SelectedSearchResultDetail.Link}}
-			</div>
-			<!-- Show the Url for Bookmarks -->
-			<div *ngIf="isBookmark">
-				{{bookmarkUrl}}
-			</div>
-		</div>
-		<div *ngIf="view == 'SelectProfileItems'">
-			<!-- <ion-row> -->
-				<!-- <ion-col> -->
-					<div class="formTitle">
-						<ion-text>
-							What Room is the item for?
-						</ion-text>
-						<span><i>(Select all that apply)</i></span>
-					</div>
-					
-				<!-- </ion-col> -->
-			<!-- </ion-row> -->
-			<!-- Bedrooms -->
-			<div class="roleWrapper">
-				<ion-label>
-					Bedrooms
-				</ion-label>		
-			<div class="roles" *ngFor="let profileItem of activePropertyBedrooms;">
-				<!-- <ion-col col-2> -->
-					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
-				<!-- </ion-col> -->
-				<!-- <ion-col col-10> -->
-					<ion-text>{{profileItem.Name}}</ion-text>
-				<!-- </ion-col> -->
-			</div>
-		
-			<!-- <div class="hr"></div> -->
-			<!-- Bathrooms -->
-			
-			<ion-label>Bathrooms</ion-label>
-			<div class="roles" *ngFor="let profileItem of activePropertyBathrooms;">
-				<!-- <ion-col col-2> -->
-					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
-				<!-- </ion-col> -->
-				<!-- <ion-col col-10> -->
-					<ion-text>{{profileItem.Name}}</ion-text>
-				<!-- </ion-col> -->
-				</div>
-			
-			<!-- <div class="hr"></div> -->
-			<!-- Interior Areas -->
-			<ion-label>Interior Areas</ion-label>
-			<div class="roles" *ngFor="let profileItem of activePropertyInteriorAreas;">
-				<!-- <ion-col col-2> -->
-					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
-				<!-- </ion-col> -->
-				<!-- <ion-col col-10> -->
-					<ion-text>{{profileItem.Name}}</ion-text>
-				<!-- </ion-col> -->
-				</div>
-			
-			<!-- <div class="hr"></div> -->
-			<!-- Exterior Areas -->
-			<ion-label>Exterior Areas</ion-label>
-			<div class="roles" *ngFor="let profileItem of activePropertyExteriorAreas;">
-				<!-- <ion-col col-2> -->
-					<ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
-				<!-- </ion-col> -->
-				<!-- <ion-col col-10> -->
-					<ion-text>{{profileItem.Name}}</ion-text>
-				<!-- </ion-col> -->
-				</div>
-			</div>
-		</div>
-		<div *ngIf="view == 'SelectLineItems'" >
-			<!-- <ion-row> -->
-				<div class="formTitle">
-					<ion-text >Which Categories does the Item Belong in?</ion-text>
-				</div>
-			<!-- </ion-row> -->
-			<div class="roleWrapper" *ngFor="let profileItem of selectedProfileItems;">
-				<ion-label >{{profileItem.Name}}</ion-label>
-				<!-- <div class="hr"></div> -->
-				<div class="toggleWrapper">
-					<!-- <ion-item> -->
-						<ion-label>Save in {{profileItem.Name}}?</ion-label>
-						<ion-toggle [(ngModel)]="profileItem.IsSaveToRoom"></ion-toggle>
-					<!-- </ion-item> -->
-				</div>
-				<div *ngIf="!profileItem.IsSaveToRoom">
-					<div class="roles" *ngFor="let lineitem of profileItem.Lineitems;" >
-						<div *ngIf="lineitem.IsForDesign">
-							<!-- <ion-col col-2> -->
-								<ion-checkbox [(ngModel)]="lineitem.IsChecked" id="{{'s_' + lineitem.Id}}"></ion-checkbox>
-							<!-- </ion-col> -->
-							<!-- <ion-col col-10> -->
-								<ion-text>{{lineitem.Name}}</ion-text>
-							<!-- </ion-col> -->
-							<!-- <ion-col col-12>
-								<div style="margin-top: 0.5em;"></div>
-							</ion-col> -->
-						</div>
+  <ng-container>
+    <div class="formWrapper">
+      <div class="spacer-halfRem"></div>
+      <div class="main-view" style="margin-bottom: .5em !important; margin-left: .5em !important; margin-right: .5em !important;">
+        <img src="{{image}}" *ngIf="hasImage" />
+        <!-- Show the URL for Google Web searches -->
+        <div *ngIf="!hasImage && !isBookmark">
+          {{SelectedSearchResultDetail.Link}}
+        </div>
+        <!-- Show the Url for Bookmarks -->
+        <div *ngIf="isBookmark">
+          {{bookmarkUrl}}
+        </div>
+      </div>
+      <div *ngIf="view == 'SelectProfileItems'">
+        <!-- <ion-row> -->
+        <!-- <ion-col> -->
+        <div class="formTitle">
+          <ion-text>
+            What Room is the item for?
+          </ion-text>
+          <span><i>(Select all that apply)</i></span>
+        </div>
 
-					</div>
-				</div>
-				<div class="hr" *ngIf="selectedProfileItems.length>1"></div>
-			</div>
-		</div>
-	</div>
-	<div class="btnWrapper">
-		<ion-button *ngIf="view == 'SelectProfileItems'" (click)="next()" class="continuebtn">Next</ion-button>
-		<ion-button *ngIf="view == 'SelectLineItems'" (click)="save()"  class="continuebtn">Save</ion-button>
-	</div>
-	</ng-container>
+        <!-- </ion-col> -->
+        <!-- </ion-row> -->
+        <!-- Bedrooms -->
+        <div class="roleWrapper">
+          <ion-label>
+            Bedrooms
+          </ion-label>
+          <div class="roles" *ngFor="let profileItem of activePropertyBedrooms;">
+            <!-- <ion-col col-2> -->
+            <ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+            <!-- </ion-col> -->
+            <!-- <ion-col col-10> -->
+            <ion-text>{{profileItem.Name}}</ion-text>
+            <!-- </ion-col> -->
+          </div>
+
+          <!-- <div class="hr"></div> -->
+          <!-- Bathrooms -->
+
+          <ion-label>Bathrooms</ion-label>
+          <div class="roles" *ngFor="let profileItem of activePropertyBathrooms;">
+            <!-- <ion-col col-2> -->
+            <ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+            <!-- </ion-col> -->
+            <!-- <ion-col col-10> -->
+            <ion-text>{{profileItem.Name}}</ion-text>
+            <!-- </ion-col> -->
+          </div>
+
+          <!-- <div class="hr"></div> -->
+          <!-- Interior Areas -->
+          <ion-label>Interior Areas</ion-label>
+          <div class="roles" *ngFor="let profileItem of activePropertyInteriorAreas;">
+            <!-- <ion-col col-2> -->
+            <ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+            <!-- </ion-col> -->
+            <!-- <ion-col col-10> -->
+            <ion-text>{{profileItem.Name}}</ion-text>
+            <!-- </ion-col> -->
+          </div>
+
+          <!-- <div class="hr"></div> -->
+          <!-- Exterior Areas -->
+          <ion-label>Exterior Areas</ion-label>
+          <div class="roles" *ngFor="let profileItem of activePropertyExteriorAreas;">
+            <!-- <ion-col col-2> -->
+            <ion-checkbox [(ngModel)]="profileItem.IsChecked" id="{{'s_' + profileItem.Id}}"></ion-checkbox>
+            <!-- </ion-col> -->
+            <!-- <ion-col col-10> -->
+            <ion-text>{{profileItem.Name}}</ion-text>
+            <!-- </ion-col> -->
+          </div>
+        </div>
+      </div>
+      <div *ngIf="view == 'SelectLineItems'">
+        <!-- <ion-row> -->
+        <div class="formTitle">
+          <ion-text>Which Categories does the Item Belong in?</ion-text>
+        </div>
+        <!-- </ion-row> -->
+        <div class="roleWrapper" *ngFor="let profileItem of selectedProfileItems;">
+          <ion-label>{{profileItem.Name}}</ion-label>
+          <!-- <div class="hr"></div> -->
+          <div class="toggleWrapper">
+            <!-- <ion-item> -->
+            <ion-label>Save in {{profileItem.Name}}?</ion-label>
+            <ion-toggle [(ngModel)]="profileItem.IsSaveToRoom"></ion-toggle>
+            <!-- </ion-item> -->
+          </div>
+          <div *ngIf="!profileItem.IsSaveToRoom">
+            <div class="roles" *ngFor="let lineitem of profileItem.Lineitems;">
+              <div *ngIf="lineitem.IsForDesign">
+                <!-- <ion-col col-2> -->
+                <ion-checkbox [(ngModel)]="lineitem.IsChecked" id="{{'s_' + lineitem.Id}}"></ion-checkbox>
+                <!-- </ion-col> -->
+                <!-- <ion-col col-10> -->
+                <ion-text>{{lineitem.Name}}</ion-text>
+                <!-- </ion-col> -->
+                <!-- <ion-col col-12>
+                  <div style="margin-top: 0.5em;"></div>
+                </ion-col> -->
+              </div>
+
+            </div>
+          </div>
+          <div class="hr" *ngIf="selectedProfileItems.length > 1"></div>
+        </div>
+      </div>
+    </div>
+    <div class="btnWrapper">
+      <ion-button *ngIf="view == 'SelectProfileItems'" (click)="selectProfileItemLineItems()" class="continuebtn">Next</ion-button>
+      <ion-button *ngIf="view == 'SelectLineItems'" (click)="save()" class="continuebtn">Save</ion-button>
+    </div>
+  </ng-container>
 </div>

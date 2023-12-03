@@ -33,6 +33,7 @@ import { ContactInformationModalPage } from "../../../modals/contact-information
 import { IGoogleLinkDto } from "./../../../../models/dto/interfaces/IGoogleLinkDto";
 import { CommunicatorService } from "./../../../../services/communicator/communicator.service";
 import { MetattachService } from "./../../../../services/metattach/metattach.service";
+import { ITagDto } from "../../../../models/dto/interfaces/ITagDto";
 
 @Component({
   selector: "app-item-details",
@@ -822,7 +823,21 @@ export class ItemDetailsPage extends BasePage {
     await this._loading.present();
     let artifactIndexTagDto: ArtifactIndexTagDto = new ArtifactIndexTagDto();
     artifactIndexTagDto.ArtifactIndexId = this.ActiveItem.Id;
-    artifactIndexTagDto.TagContextId = data.value;
+
+    // if data.value is a string
+		if(typeof(data.value) === "string"){
+			// this is a new tag so add it to the DB first, 
+			// then we will have the TagContextId to save it properly
+			let _:ITagDto = {} as ITagDto;
+			_.Name = data.value;
+			await this.tagService.createTag(_).then((x) => {
+				artifactIndexTagDto.TagContextId = x;
+			}).catch((err) => {
+
+			});
+		}else{
+			artifactIndexTagDto.TagContextId = data.value;
+		}
 
     this.artifactIndexService.insertArtifactIndexTag(artifactIndexTagDto).then(
       (x: any) => {

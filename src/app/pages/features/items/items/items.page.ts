@@ -259,6 +259,11 @@ export class ItemsPage extends BasePage {
   }
 
   public async start() {
+    // Default to "My List" segment
+		this.IsMy = true;
+		this.IsWishlist = false;
+    this.IsSuggest = false;
+
     // show profile item images
     if (this.LineItem.Id == undefined) {
       let profileItemImages = JSON.parse(localStorage.getItem("ProfileItemImages"));
@@ -803,17 +808,24 @@ export class ItemsPage extends BasePage {
   }
 
   public segmentChanged(event: any) {
+    this.IsMy = false;
+		this.IsWishlist = false;
+    this.IsSuggest = false;
+
     this.ngzone.run(() => {
       switch (event.toLowerCase()) {
-        case "my":
-          this.my();
-          break;
-        case "wishlist":
-          this.wishlist();
-          break;
-        case "suggested":
-          this.suggested();
-          break;
+        case 'my':
+					this.my();
+					this.IsMy = true;
+					break;
+				case 'wishlist':
+					this.wishlist();
+					this.IsWishlist = true;
+					break;
+				case 'suggested':
+					this.suggested();
+					this.IsSuggest = true;
+					break;
       }
     });
   }

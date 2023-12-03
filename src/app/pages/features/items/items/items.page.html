@@ -1,129 +1,136 @@
 <ion-header>
-	<!-- <div style="border-bottom:2px solid whitesmoke !important;"> -->
-		<!--<primary-menu [type]="itemMenu"
-					  [subTitle]="LineItem.Name"
-					  [title]="ProfileItem?.Name"
-					  [propertyName]="ActiveProperty?.Name"
-					  [isViewLoaded]="isViewLoaded"
-					  (_openMenuClickHandler)="openMenu()"></primary-menu>-->
-		<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-		<div class="header-title-with-icon">
-			<span>
-				<!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
-					class="left-icon" (click)="close()" /> -->
-					<img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" (click)="close()">
-			</span>
-			<span class="title-with-img">
-				<span *ngIf="!isHideSegments">{{LineItem.Name}}</span>
-				<span *ngIf="isHideSegments">{{ProfileItem.Name}}</span>
-			</span>
-			<!-- <ion-col size="3"> -->
-				<div class="header-icon">
-					<img src="assets/icon/building-fill.svg"
-					width="24" height="24" (click)="openMenu()">
-					<span (click)="openMenu()">{{ActiveProperty?.Name}}</span>
-				</div>
-			<!-- </ion-col> -->
-		</div>
-		<!-- <ion-segment [(ngModel)]="manageView" mode="md"
-					 style="border: none !important;"
-					 *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded"
-					 (ionChange)="segmentChanged($event)">
-			<ion-segment-button value="my" >
-				<h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">My Stuff</h5>
-			</ion-segment-button>
-			<ion-segment-button value="wishlist">
-				<h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">Wishlist</h5>
-			</ion-segment-button>
-			<ion-segment-button value="suggested">
-				<h5 class="asset-list">Suggestions</h5>
-			</ion-segment-button>
-		</ion-segment> -->
-		<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
-			<div class="breadcrumb-main" *ngIf="ProfileItem.Id !== undefined">
-				<img src="assets/icon/Home.svg" alt="">
-				<span class="bread-arrow-right">></span>
-				<span (click)="viewProfileLineItems()">
-					{{ProfileItem?.Name}}</span>
-				<span class="bread-arrow-right">></span>	
-				<span class="current-page">{{LineItem?.Name}}</span>	
-			</div>
-			<div class="breadcrumb-main" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
-			<!-- <br style="clear:both !important;" />
-			<br style="clear:both !important;" /> -->
-		</ng-container>
-		<div class="tab-container">
-		<app-segment-selector [segments]="views" [initView]="{value: manageView}" *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
-			(selectedSegment)="segmentChanged($event)">
-		</app-segment-selector>
-		</div>
-		<div *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
-			<ion-segment [(ngModel)]="dynamicManageView" mode="md" style="border: none !important;" class="asset-lists">
-				<ion-segment-button *ngFor="let a of LineItem.View.ViewSegments" (click)="dynamicTabClickHandler(a.Id)"
-					[ngClass]="{'active': dynamicManageView === a.Id}" value="{{a.Id}}">
-					<h3 class="asset-list">{{a.Title}}</h3>
-				</ion-segment-button>
-			</ion-segment>
-		</div>
-	<!-- </div> -->
+  <!-- <div style="border-bottom:2px solid whitesmoke !important;"> -->
+  <!--<primary-menu [type]="itemMenu"
+          [subTitle]="LineItem.Name"
+          [title]="ProfileItem?.Name"
+          [propertyName]="ActiveProperty?.Name"
+          [isViewLoaded]="isViewLoaded"
+          (_openMenuClickHandler)="openMenu()"></primary-menu>-->
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <div class="header-title-with-icon">
+    <span>
+      <!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
+        class="left-icon" (click)="close()" /> -->
+      <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" (click)="close()">
+    </span>
+    <span class="title-with-img">
+      <span *ngIf="!isHideSegments">{{LineItem.Name}}</span>
+      <span *ngIf="isHideSegments">{{ProfileItem.Name}}</span>
+    </span>
+    <!-- <ion-col size="3"> -->
+    <div class="header-icon">
+      <img src="assets/icon/building-fill.svg"
+           width="24" height="24" (click)="openMenu()">
+      <span (click)="openMenu()">{{ActiveProperty?.Name}}</span>
+    </div>
+    <!-- </ion-col> -->
+  </div>
+  <!-- <ion-segment [(ngModel)]="manageView" mode="md"
+         style="border: none !important;"
+         *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded"
+         (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="my" >
+      <h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">My Stuff</h5>
+    </ion-segment-button>
+    <ion-segment-button value="wishlist">
+      <h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">Wishlist</h5>
+    </ion-segment-button>
+    <ion-segment-button value="suggested">
+      <h5 class="asset-list">Suggestions</h5>
+    </ion-segment-button>
+  </ion-segment> -->
+  <ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
+    <div class="breadcrumb-main" *ngIf="ProfileItem.Id !== undefined">
+      <img src="assets/icon/Home.svg" alt="">
+      <span class="bread-arrow-right">></span>
+      <span (click)="viewProfileLineItems()">
+        {{ProfileItem?.Name}}
+      </span>
+      <span class="bread-arrow-right">></span>
+      <span class="current-page">{{LineItem?.Name}}</span>
+    </div>
+    <div class="breadcrumb-main" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
+    <!-- <br style="clear:both !important;" />
+    <br style="clear:both !important;" /> -->
+  </ng-container>
+  <div class="tab-container">
+    <app-segment-selector [segments]="views"
+                          [initView]="{value: manageView}"
+                          *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
+                          (selectedSegment)="segmentChanged($event)">
+    </app-segment-selector>
+  </div>
+  <div *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
+    <ion-segment [(ngModel)]="dynamicManageView" mode="md" style="border: none !important;" class="asset-lists">
+      <ion-segment-button *ngFor="let a of LineItem.View.ViewSegments" (click)="dynamicTabClickHandler(a.Id)"
+                          [ngClass]="{'active': dynamicManageView === a.Id}" value="{{a.Id}}">
+        <h3 class="asset-list">{{a.Title}}</h3>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <!-- </div> -->
 
 </ion-header>
 <!-- <ion-content> -->
-	<div class="container-wrapper">
-		<div class="item-wrapper">
+<div class="container-wrapper">
+  <div class="item-wrapper">
 
-	<ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
-		<!-- <br style="clear:both;" /> -->
-		<div class="accordian-wrapper">
-		<div class="filter-wrapper" *ngIf="data?.Lists?.length > 0">
-			<span class="filter" (click)="showTagsFilter()">
-				<img src="assets/icon/Filter 2.svg" alt="">
-				Filter</span>
-		</div>
-		<ion-accordion-group class="main-accordion" [value]="['first']">
-			<ion-accordion [toggleIcon]="data?.Lists?.length > 0 ? 'assets/icon/chevron-down-circle.svg' : ''" toggleIconSlot="start" class="main-accordion-content" value="first">
-				<ion-item slot="header" class="main-accordion-item">
-					<ion-label class="main-accordian-label" *ngIf="data?.Lists?.length > 0">Collapse all</ion-label>
-					
-				  </ion-item>
-				  <div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0" slot="content">
-					<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
-				</div>
-			</ion-accordion>
-		</ion-accordion-group>
-	</div>
-		<div *ngIf="data?.Lists.length === 0 || data?.Lists[0].Items.length === 0">
-			<div class="nothing-notice">
-				<!-- <h3>There's nothing here yet.</h3>
-				<span>You need to add items into this list!</span>
-				<br /><br />
-				<p class="nothing-notice-description" >You can also use the input buttons below to start adding
-					items.</p> -->
-				<span>
-					<img src="assets/imgs/no-content backup.png" alt="">
-				</span>	
-				<ion-text>
-					Incorporate either an item already in your possession or conduct an online search to add one.
-				</ion-text>
-			</div>
-		</div>
-	</ng-container>
-	<ng-container *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
-		<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"
-			(_lotClickEventHandler)="lotClickEventHandler($event)"></icon-grid>
-	</ng-container>
-	<ng-container *ngIf="isHideSegments">
-		<icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
-	</ng-container>
+    <ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
+      <!-- <br style="clear:both;" /> -->
+      <div class="accordian-wrapper">
+        <div class="filter-wrapper" *ngIf="data?.Lists?.length > 0">
+          <span class="filter" (click)="showTagsFilter()">
+            <img src="assets/icon/Filter 2.svg" alt="">
+            Filter
+          </span>
+        </div>
+        <ion-accordion-group class="main-accordion" [value]="['first']">
+          <ion-accordion [toggleIcon]="data?.Lists?.length > 0 ? 'assets/icon/chevron-down-circle.svg' : ''" toggleIconSlot="start" class="main-accordion-content" value="first">
+            <ion-item slot="header" class="main-accordion-item">
+              <ion-label class="main-accordian-label" *ngIf="data?.Lists?.length > 0">Collapse all</ion-label>
 
-		</div>
-		<!-- <div class="formWrapper">
-			<div class="btnWrapper">
-				<ion-button class="continuebtn">Add an Item</ion-button>
-			</div>
-		</div> -->
-		</div>
+            </ion-item>
+            <div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0" slot="content">
+              <icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+      <div *ngIf="data?.Lists.length === 0 || data?.Lists[0].Items.length === 0">
+        <div class="nothing-notice">
+          <!--  -->
+          <span>
+            <img src="assets/imgs/no-content backup.png" alt="">
+          </span>
+          <ion-text>
+            <!--Incorporate either an item already in your possession or conduct an online search to add one.-->
+            <h3>There's nothing here yet.</h3>
+            <span>You need to add items into this list!</span>
+            <br /><br />
+            <p class="nothing-notice-description">
+              You can also use the input buttons below to start adding
+              items.
+            </p>
+          </ion-text>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
+      <icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"
+                 (_lotClickEventHandler)="lotClickEventHandler($event)"></icon-grid>
+    </ng-container>
+    <ng-container *ngIf="isHideSegments">
+      <icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
+    </ng-container>
+
+  </div>
+  <!-- <div class="formWrapper">
+    <div class="btnWrapper">
+      <ion-button class="continuebtn">Add an Item</ion-button>
+    </div>
+  </div> -->
+</div>
 <!-- </ion-content> -->
 <tab-menu [_isEnabled]="true" (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
-	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
-	(searchEvent)="search()"></tab-menu>
+          (cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+          (searchEvent)="search()"></tab-menu>

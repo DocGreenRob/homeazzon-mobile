@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'ionic-app-base',
+  appId: 'com.homeazzon.homeazzon',
+  appName: 'homeaZZon',
   webDir: 'www',
   server: {
     androidScheme: 'https'
