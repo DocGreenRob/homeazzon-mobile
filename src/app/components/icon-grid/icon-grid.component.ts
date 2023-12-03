@@ -25,6 +25,10 @@ export class IconGridComponent implements OnInit {
 	public emit(item: IGridListItem, listName: string) {
 		let gridList: IGridList = { Items: [item], Name: listName };
 		this._itemClickEventHandler.emit(gridList);
-	}
+  }
+
+  public toggleSeeAllItemsInList(c: any) {
+    c.showAllItems = !c.showAllItems;
+  }
 
 }

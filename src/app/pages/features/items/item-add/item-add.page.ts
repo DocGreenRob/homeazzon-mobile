@@ -86,7 +86,7 @@ export class ItemAddPage extends BasePage {
     this.navCtrl.pop();
   }
 
-  public async next() {
+  public async selectProfileItemLineItems() {
     this._loading = await this.loadingController.create({
       message: "getting lineitems ...",
       cssClass: "my-loading-class",
@@ -126,8 +126,8 @@ export class ItemAddPage extends BasePage {
     // 2. for each one selected, go get the lineitems
     // ../api/profileItem/{profileItemId}/PrivateLabelUser
     for (let i = 0; i < this.selectedProfileItems.length; i++) {
-      this.getProfileItemLineItems(this.selectedProfileItems[i], this.User.Types[0].Name).then(
-        () => {
+      await this.getProfileItemLineItems(this.selectedProfileItems[i], this.User.Types[0].Name).then(
+        (x:any) => {
           if (i == this.selectedProfileItems.length - 1) {
             this._loading.dismiss();
           }
@@ -153,6 +153,10 @@ export class ItemAddPage extends BasePage {
     obj.IsChecked = !event.target.checked;
     //var a = this.activePropertyBedrooms;
   }
+
+  public toggleState(profileItem: any, isSaveToRoom: boolean){
+		profileItem.IsSaveToRoom = isSaveToRoom;
+	}
 
   public back() {
     this.view = "SelectProfileItems";
@@ -195,20 +199,14 @@ export class ItemAddPage extends BasePage {
       this.ActiveItem = activeItem;
     }
 
-    //this.navController.push('ItemEditPage',
-    //	{
-    //		'IsFromItemAddPage': true,
-    //		'type': this._type,
-    //		source: source,
-    //		sourceParams: sourceParams
-    //	});
     this.QueryParams = {
-      IsFromItemAddPage: false,
+      IsFromItemAddPage: true,
       type: this._type,
       source: source,
       sourceParams: sourceParams,
     };
-    this.router.navigate(["item-edit"],{queryParams:this.QueryParams});
+
+    this.router.navigate(["item-edit"]);
     //if (!isSaveToRoom) {
 
     //	if (this._type != 'Amazon' &&
@@ -387,6 +385,8 @@ export class ItemAddPage extends BasePage {
               selectedProfileItem.Lineitems.push(x);
             }
           });
+
+          return selectedProfileItem;
         },
         (err) => {
           if (err.status == 401) {

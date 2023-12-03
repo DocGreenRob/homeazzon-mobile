@@ -76,3 +76,326 @@ pdf-viewer {
 iframe {
 	height: 420px !important;
 }
+
+//new sttyling
+
+.formWrapper{
+	padding-top: 24px !important;
+    padding-bottom: 63px !important;
+}
+.img-previewer{
+height: 184px;
+border-radius: 8px;
+border: 1px solid #E3E7EC;
+overflow: hidden;
+.img-container{
+	width: 100%;
+	height: 100%;
+	.image{
+		height: 100%;
+		width: 100%;
+		.pinch-img{
+			height: 100%;
+			width: 100%;
+			background-color: #fff !important;
+			img{
+				object-fit: contain;
+			}
+		}
+	}
+}
+}
+.item-type-container{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width:100%;
+	margin-top: 16px;
+	.item-type{
+		width: 105px;
+		height: 24px;
+		border-radius: 4px;
+		border: 1px solid  #E3E7EC;
+		color: #53677A;
+		font-family: Plus Jakarta Sans;
+		font-size: 10px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 13.664px;
+		letter-spacing: 0.05px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
+.title-wrapper{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+	.title{
+		color: #232C41;
+		font-family: Plus Jakarta Sans;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 140%;
+		letter-spacing: 0.08px;
+		width: 100%;
+	}
+	.price{
+		color: var(--hzn-positive-green, #00C566);
+		text-align: center;
+		font-family: Plus Jakarta Sans;
+		font-size: 15.148px;
+		font-style: normal;
+		font-weight: 800;
+		line-height: 100%; 
+		letter-spacing: 0.076px;
+	}
+}
+.item-btns-wrapper{
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 16px;
+	.item-btn{
+		height: 40px;
+		border-radius: 8px;
+		background: #E8EEF4;
+		color: var(--hzn-primary, #232C41);
+		font-family: Plus Jakarta Sans;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 12.606px;
+		letter-spacing: 0.06px;
+		display: flex;
+		align-items: center;
+		padding: 14px 13px;
+		justify-content: center;
+		img{
+			margin-right: 4px;
+		}
+	}
+	.edit{
+		background: #232C41;
+		color: #FCFCFC;
+	}
+}
+.tags-wrapper{
+	margin-top: 22px;
+	ion-label.tag-label{
+		color: var(--hzn-description-text, #53677A);
+		font-family: Plus Jakarta Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 22px;
+		letter-spacing: 0.07px;
+	}
+}
+.description-wrapper{
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	flex-direction: column;
+	.desc-label{
+		color: var(--hzn-description-text, #53677A);
+		font-family: Plus Jakarta Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 22px; 
+		letter-spacing: 0.07px;
+	}
+	.desc-field{
+		background-color: #fff;
+		border-radius: 8px;
+		padding: 14px 16px;
+		width: 100%;
+		span{
+			color: var(--hzn-primary, #232C41);
+			font-family: Plus Jakarta Sans;
+			font-size: 12px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 140%; 
+			letter-spacing: 0.06px;
+		}
+
+	}
+}
+
+.breadcrumb-main{
+    height: 38px;
+    padding: 12px 12px 12px 24px;
+    background: #2E3750;
+    margin-top: -1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #7F879D;
+    font-family: Plus Jakarta Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0.05px;
+	.bread-arrow-right{
+		color: #669BBC;
+		font-size: 8px;
+	}
+	.current-page{
+		color: #F6F8FE;
+		font-weight: 700;
+	}
+}
+
+.footer-btns-wrapper{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	height: 59px;
+	background: #E8EEF4;
+	padding: 10px 24px;
+	.footer-btn{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px 15px;
+		border-radius: 8px;
+		background: #FFF;
+		height: 40px;
+		gap: 4px;
+		color: var(--hzn-active-button, #5681AA);
+		text-align: center;
+		font-family: Plus Jakarta Sans;
+		font-size: 10px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 100%;
+		letter-spacing: 0.05px;
+	}
+}
+.item-fields-wrapper{
+    display: flex;
+    align-items: center;
+    height: 64px;
+    gap: 13px;
+    margin-top: 16px;
+	.item-field{
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		width: 73px;
+		align-items: flex-start;
+		ion-label{
+			color: var(--hzn-description-text, #53677A);
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 22px; 
+			letter-spacing: 0.07px;
+		}
+		span{
+			height: 33px;
+			border-radius: 8px;
+			background: #FFF;
+			padding: 8px 10px;
+			color: var(--hzn-primary, #232C41);
+			font-family: Plus Jakarta Sans;
+			font-size: 12px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 140%;
+			letter-spacing: 0.06px;
+			width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: inline-block;
+			white-space: nowrap;
+		}
+	}
+}
+:host::ng-deep{
+	.tag-item-main{
+		--background: transparent;
+		margin-top: 8px;
+		--padding-start: 0;
+		tag-input{
+			background:transparent !important;
+			.ng2-tag-input{
+				border-bottom: none !important;
+			}
+			input.ng2-tag-input__text-input{
+				border-radius: 8px;
+				background: #232C41;
+				color: #FFF;
+				text-align: center;
+				font-family: Plus Jakarta Sans;
+				font-size: 12px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 100%;
+				letter-spacing: -0.12px;
+				padding-left: 20px;
+				height: 40px !important;
+			}
+			.ng2-tags-container{
+				gap: 8px;
+				tag.ng-trigger{
+					order: 1 !important;
+					height: 40px;
+					border-radius: 8px;
+					background: #FFF;
+					color: var(--hzn-primary, #232C41);
+					text-align: center;
+					font-family: Plus Jakarta Sans;
+					font-size: 12px;
+					font-style: normal;
+					font-weight: 600;
+					// line-height: 100%;
+					letter-spacing: -0.12px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: 0 12px;
+					.tag-wrapper{
+						delete-icon[aria-label="Remove tag"]{
+							span{
+								background-color: #E8EEF4 !important;
+								border-radius: 4px;
+								svg{
+									fill: #5681AA;
+									stroke: #5681AA;
+									path{
+										fill: #5681AA;
+									}
+								}
+							}
+						}
+					}
+
+				}
+				tag-input-form{
+					order: 0 !important;
+					position: relative;
+				}
+			}
+		}
+	}
+}
+.tag-input-main{
+	position: relative;
+	.add-tag{
+		position: absolute;
+		left: 8px;
+		z-index: 9;
+		top: 12px;
+	}
+}
