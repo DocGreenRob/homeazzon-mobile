@@ -36,22 +36,6 @@ import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
-/**
- * MSAL integration
- */
-import {
-  MsalBroadcastService,
-  MsalGuard,
-  MsalInterceptor,
-  MsalModule,
-  MsalService,
-  MsalRedirectComponent,
-} from '@azure/msal-angular';
-import {
-  BrowserCacheLocation,
-  InteractionType,
-  PublicClientApplication,
-} from '@azure/msal-browser';
 
 @NgModule({
   declarations: [AppComponent],
@@ -70,29 +54,7 @@ import {
     SearchResultDetailsPageModule,
     PdfViewerModule,
     FormsModule,
-    ReactiveFormsModule,
-    MsalModule.forRoot(
-      new PublicClientApplication({
-        // MSAL Configuration
-        auth: {
-          clientId: '236c9456-da32-4c2c-81b4-842dfd0442f1', // new
-          authority: 'https://login.microsoftonline.com/common',
-          redirectUri: 'http://localhost:8100', //environment.redirectBaseUrl + SocialProvider.onedrive,
-        },
-        cache: {
-          cacheLocation: BrowserCacheLocation.LocalStorage,
-          storeAuthStateInCookie: true, // set to true for IE 11
-        },
-        system: {
-          loggerOptions: {
-            loggerCallback: () => {},
-            piiLoggingEnabled: false,
-          },
-        },
-      }),
-      null,
-      null
-    ),
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,
@@ -115,16 +77,8 @@ import {
     // ThemeableBrowser,
     SafariViewController,
 
-    SignInWithApple,
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: MsalInterceptor,
-    //   multi: true,
-    // },
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService,
+    SignInWithApple
   ],
-  bootstrap: [AppComponent, MsalRedirectComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

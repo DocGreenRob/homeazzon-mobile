@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { environment } from '@env';
 import {
   AlertController,
   LoadingController,
@@ -71,7 +73,7 @@ export class SignInPage extends BasePage {
     private iab: InAppBrowser,
     public override userTypesService: UserTypesService,
     public override uxNotifierService: UxNotifierService,
-    private firebaseAuth: FirebaseAuthService
+    private firebaseAuthService: FirebaseAuthService
   ) {
     super(
       navController,
@@ -85,6 +87,7 @@ export class SignInPage extends BasePage {
       null
     );
     this.constants = new Constants();
+    this.initializeApp();
 
     this.AppInsights.trackEvent({
       name: 'SignInPage.Constructor()',
@@ -123,29 +126,34 @@ export class SignInPage extends BasePage {
   }
 
   async signInAzure() {
-    // TODO: pull from config (.env file)
-    //const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A8100%2Fredirect&scope=openid&response_type=id_token&prompt=login`;
-    const url = `https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=https%3A%2F%2FhomeaZZon%2Ecom%2Fredirect&scope=openid&response_type=id_token&prompt=login`;
-    const browser = this.iab.create(url, '_self', {
-      location: 'no',
-      clearcache: 'yes',
-      clearsessioncache: 'yes',
-      hidenavigationbuttons: 'yes',
-      hideurlbar: 'yes',
-      fullscreen: 'yes',
-    });
+    const url = environment.azureB2CUrl;
+    //const browser = this.iab.create(url, '_self', {
+    //  location: 'no',
+    //  clearcache: 'yes',
+    //  clearsessioncache: 'yes',
+    //  hidenavigationbuttons: 'yes',
+    //  hideurlbar: 'yes',
+    //  fullscreen: 'yes',
+    //});
+    this.iab.create(url, '_self', {});
 
-    browser.on('loadstart').subscribe((event: any) => {
-      // debugger;
-      if (event.url.includes('#code')) {
-        browser.close();
-        const domain = event.url.split('#')[0];
-        const url = event.url.replace(domain, 'http://localhost');
-        window.location.href = 'http://localhost';
-      }
+    //browser.on('loadstart').subscribe((event: any) => {
+    //  // debugger;
+    //  if (event.url.includes('#code')) {
+    //    browser.close();
+    //    const domain = event.url.split('#')[0];
+    //    const url = event.url.replace(domain, 'http://localhost');
+    //    window.location.href = 'http://localhost';
+    //  }
+    //});
+  }
+
+  initializeApp() {
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      console.log('that is the reps');
+      console.log(event.url);
+      this.firebaseAuthService.browserLoginHandler(event.url);
     });
-    // this.authService.login();
-    // window.location.href = "https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=67b22975-4c48-4fe3-9b03-913511cfcae5&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fauth&scope=https%3A%2F%2Fcognitivegenerationenterpr.onmicrosoft.com%2Fhomeazzon-api%2Fpl&response_type=token&prompt=login";
   }
 
   loginHandler() {
@@ -241,12 +249,12 @@ export class SignInPage extends BasePage {
       .then(async (x: IUserDto) => {
         if (x === undefined || x === null) {
           const user: any = {
-            Email: this.firebaseAuth.FirebaseUser.email,
+            Email: this.firebaseAuthService.FirebaseUser.email,
             Types: [{ Id: 0, IsActive: null, Name: 'Owner' }], //TODO: need to not default to owner, maybe here need to ask user for their type
             // and then go into other registration screens (give option to save for later)
-            FullName: this.firebaseAuth.FirebaseUser.displayName,
-            Provider: this.firebaseAuth.FirebaseUser.provider,
-            ProviderUniqueId: this.firebaseAuth.FirebaseUser.uid,
+            FullName: this.firebaseAuthService.FirebaseUser.displayName,
+            Provider: this.firebaseAuthService.FirebaseUser.provider,
+            ProviderUniqueId: this.firebaseAuthService.FirebaseUser.uid,
           };
 
           await this.accountService
