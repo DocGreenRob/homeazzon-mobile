@@ -18,7 +18,7 @@
           <!-- <div > -->
           <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
             <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" src="{{i.IconPath}}"
-                 class="item-icon">
+                 class="item-image">
             <img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')"
                  src="{{i.ImagePath}}" class="item-image">
             <img *ngIf="i.IsTag"
