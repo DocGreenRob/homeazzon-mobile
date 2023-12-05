@@ -135,7 +135,7 @@ export class SignInPage extends BasePage {
     //  hideurlbar: 'yes',
     //  fullscreen: 'yes',
     //});
-    this.iab.create(url, '_self', {});
+    this.iab.create(url, '_system', {});
 
     //browser.on('loadstart').subscribe((event: any) => {
     //  // debugger;
