@@ -1,0 +1,34 @@
+.header-title-with-icon{
+    .title-with-img{
+        img{
+            filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);
+            height: 18px;
+            width: 18px;
+        }
+    }
+    .empty{
+        display: block;
+    }
+}
+.formWrapper{
+    padding: 29px 24px 37px;
+    height: 100%;
+}
+.stuff-items{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 43px;
+    border-bottom: 1px solid #E3E7EC;
+    margin-bottom: 15px;
+    ion-text{
+        color: #5681AA;
+        font-family: Plus Jakarta Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; 
+        letter-spacing: 0.06px;
+    }
+}

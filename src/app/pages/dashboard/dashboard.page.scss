@@ -292,16 +292,17 @@ ion-content,
     .wrap-items{
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: end;
       flex-direction: column;
       height: 100%;
       .items-wrapper{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: end;
         flex-direction: column;
         width: 100%;
         padding-bottom: 41px;
+        min-height: calc(100vh - 316px);
         .items-img-section{
           display: flex;
           align-items: center;
@@ -321,4 +322,19 @@ ion-content,
         }
       }
     }
+}
+::ng-deep{
+  .wrap-items{
+    icon-grid{
+      width: 100%;
+      ion-accordion-group{
+        .item-main-wrapper{
+          margin-top: 35px !important;
+        }
+        .see-section{
+          right: 37px !important;
+        }
+      }
+    }
+  }
 }
