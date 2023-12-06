@@ -1,5 +1,5 @@
 <ion-accordion-group [multiple]="true">
-  <div *ngFor="let c of _grid?.Lists; let ListIndex = index">
+  <div class="see-wrapper" *ngFor="let c of _grid.Lists; let ListIndex = index">
     <span class="see-section" *ngIf="!c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
       See all
       <img src="assets/icon/caret-right-circle.svg">
@@ -24,6 +24,8 @@
             <img *ngIf="i.IsTag"
                  src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ftag.svg?alt=media&token=ab9fee51-2ffc-47f9-97d8-2be5ed9ccd9a"
                  class="item-image">
+             <img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')" class="item-image"
+                 src="{{dafaultImage}}">
             <span class="item-title">{{i.Name}}</span>
           </div>
           <!-- </div> -->
@@ -36,6 +38,8 @@
             <img *ngIf="i.IconPath != null && i.IconPath != ''" src="{{i.IconPath}}" class="item-icon">
             <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''"
                  src="{{i.ImagePath}}" class="item-image">
+            <img *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')" class="item-image"
+                 src="{{dafaultImage}}">
             <span class="item-title">{{i.Name}}</span>
             <hr />
           </div>

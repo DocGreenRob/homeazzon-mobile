@@ -30,6 +30,13 @@
 			</div>
 		<!-- </ion-col> -->
 	</div>
+	<div class="breadcrumb-main">
+		<img src="assets/icon/Home.svg" alt="">
+		<span class="bread-arrow-right">></span>
+		<span class="current-page">
+		  {{ProfileItem?.Name}}
+		</span>
+	</div>
 	<div class="tab-container">
 	<app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
 		(selectedSegment)="handleSegmentChanged($event)">

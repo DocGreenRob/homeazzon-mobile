@@ -13,6 +13,8 @@ export class IconGridComponent implements OnInit {
 	showAllItems: boolean = false;
 	@Input() _grid: IGrid | any = {} as IGrid;
 	@Output() _itemClickEventHandler: any = new EventEmitter();
+	
+	dafaultImage = "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fcamera.svg?alt=media&token=e0af850d-247e-41a0-84ff-e6faa5e815b6";
 
 	constructor() {
 		console.log('Hello IconGridComponent Component');
