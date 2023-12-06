@@ -336,3 +336,28 @@ page-profile-items {
 		}
 	}
 }
+
+.breadcrumb-main{
+    height: 38px;
+    padding: 12px 12px 12px 24px;
+    background: #2E3750;
+    margin-top: -1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #7F879D;
+    font-family: Plus Jakarta Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0.05px;
+	.bread-arrow-right{
+		color: #669BBC;
+		font-size: 8px;
+	}
+	.current-page{
+		color: #F6F8FE;
+		font-weight: 700;
+	}
+}
