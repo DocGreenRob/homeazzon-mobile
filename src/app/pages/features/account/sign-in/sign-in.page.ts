@@ -126,8 +126,7 @@ export class SignInPage extends BasePage {
   }
 
   async signInAzure() {
-    const url =
-      environment.azureB2CUrl + '&redirect_uri=' + environment.redirectUrl;
+    const url = environment.azureB2CUrl; // + '&redirect_uri=' + environment.redirectUrl;
 
     //const browser = this.iab.create(url, '_self', {
     //  location: 'no',
