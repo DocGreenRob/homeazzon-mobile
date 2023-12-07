@@ -177,8 +177,16 @@ export class AppComponent extends BasePage {
   // TODO: Remove
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
-      this.displayName = this.User.UserName ?? '';
+      
+      if (this.User !== undefined && this.User !== null && this.User.UserName !== undefined && this.User.UserName !== null && this.User.UserName !== '') {
+        this.displayName = this.User.UserName;
+      } else {
+        this.displayName = '';
+      }
+      
       this.router.navigate(['login-success']);
+
+      // TODO: Put in login-success; don't route from here
       setTimeout(() => {
         this.router.navigate(['dashboard']);
       }, 3000)
