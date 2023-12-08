@@ -17,8 +17,8 @@
 <div class="container-wrapper">
   <ng-container>
     <div class="formWrapper">
-      <div class="spacer-halfRem"></div>
-      <div class="main-view" style="margin-bottom: .5em !important; margin-left: .5em !important; margin-right: .5em !important;">
+      <!-- <div class="spacer-halfRem"></div> -->
+      <div class="main-view">
         <img src="{{image}}" *ngIf="hasImage" />
         <!-- Show the URL for Google Web searches -->
         <div *ngIf="!hasImage && !isBookmark">
@@ -109,8 +109,8 @@
             <!-- </ion-item> -->
           </div>
           <div *ngIf="!profileItem.IsSaveToRoom">
-            <div class="roles" *ngFor="let lineitem of profileItem.Lineitems;">
-              <div *ngIf="lineitem.IsForDesign">
+            <div class="roles inner-roles" *ngFor="let lineitem of profileItem.Lineitems;">
+              <div class="roles inner-roles" *ngIf="lineitem.IsForDesign">
                 <!-- <ion-col col-2> -->
                 <ion-checkbox [(ngModel)]="lineitem.IsChecked" id="{{'s_' + lineitem.Id}}"></ion-checkbox>
                 <!-- </ion-col> -->
