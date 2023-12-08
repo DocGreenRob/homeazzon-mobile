@@ -264,7 +264,7 @@ ion-content,
     }
   }
   .container-add-btn {
-  margin-top: 280px;
+  margin-top: 284px;
   width: 100%;
     .add-btn{
       display: flex;
@@ -301,8 +301,7 @@ ion-content,
         justify-content: end;
         flex-direction: column;
         width: 100%;
-        padding-bottom: 41px;
-        min-height: calc(100vh - 316px);
+        margin-top: 85px;
         .items-img-section{
           display: flex;
           align-items: center;
@@ -325,16 +324,28 @@ ion-content,
 }
 ::ng-deep{
   .wrap-items{
-    icon-grid{
+    display: flex;
+    align-items: center;
+    justify-content: space-between !important;
+    flex-direction: column;
+    min-height: calc(100vh - 233px) !important;
+    .icon-grid-container{
       width: 100%;
-      ion-accordion-group{
-        .item-main-wrapper{
-          margin-top: 35px !important;
-        }
-        .see-wrapper{
-          position: relative;
+      icon-grid{
+        width: 100%;
+        ion-accordion-group{
+          .item-main-wrapper{
+            margin-top: 35px !important;
+          }
+          .see-wrapper{
+            position: relative;
+          }
         }
       }
+    }
+    .container-add-btn{
+      margin-top: 40px !important;
+      padding-bottom: 41px !important;
     }
   }
 }
