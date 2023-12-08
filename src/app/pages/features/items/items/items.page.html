@@ -84,8 +84,8 @@
             Filter
           </span>
         </div>
-        <ion-accordion-group class="main-accordion" [value]="['first']">
-          <ion-accordion [toggleIcon]="data?.Lists?.length > 0 ? 'assets/icon/chevron-down-circle.svg' : ''" toggleIconSlot="start" class="main-accordion-content" value="first">
+        <ion-accordion-group [value]="['first']" [ngClass]="data?.Lists?.length > 0 ? 'main-accordion' : 'hide'">
+            <ion-accordion toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start" class="main-accordion-content" value="first">
             <ion-item slot="header" class="main-accordion-item">
               <ion-label class="main-accordian-label" *ngIf="data?.Lists?.length > 0">Collapse all</ion-label>
 
