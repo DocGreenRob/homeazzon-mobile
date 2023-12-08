@@ -263,18 +263,20 @@
 		</div>
 
 		<div *ngIf="manageView == 'items'"  class="wrap-items">
+			<div class="icon-grid-container">
 			<icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)"></icon-grid>
-			<div class="items-wrapper">
-				<div class="items-img-section" *ngIf="!data?.Lists?.length">
+			</div>
+			<div class="items-wrapper" *ngIf="!data?.Lists?.length">
+				<div class="items-img-section" >
 					<img src="assets/icon/no content backup.svg" alt="no-img">
 					<ion-text>No Items at the moment coming soon</ion-text>
 				</div>
-				<div class="container-add-btn">
-					<ion-button class="add-btn" (click)="addItem()">
-						<img src="assets/icon/plus-icon.svg">
-						Add an Item
-					</ion-button>
-				</div>
+			</div>
+			<div class="container-add-btn">
+				<ion-button class="add-btn" (click)="addItem()">
+					<img src="assets/icon/plus-icon.svg">
+					Add an Item
+				</ion-button>
 			</div>
 		</div>
 	</div>
