@@ -4,10 +4,6 @@ export const environment = {
   // httpBaseUrl: "https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/api",
   // httpBase: "https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net",
 
-  // OLD 2
-  // httpBaseUrl: "https://mypaduat.azurewebsites.net/api",
-  // httpBase: "https://mypaduat.azurewebsites.net",
-
   // api.homeaZZon.com
   // httpBaseUrl: "https://api.homeazzon.com/api",
   // httpBase: "https://api.homeazzon.com",
