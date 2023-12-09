@@ -127,25 +127,8 @@ export class SignInPage extends BasePage {
 
   async signInAzure() {
     const url = environment.azureB2CUrl;
-    //const browser = this.iab.create(url, '_self', {
-    //  location: 'no',
-    //  clearcache: 'yes',
-    //  clearsessioncache: 'yes',
-    //  hidenavigationbuttons: 'yes',
-    //  hideurlbar: 'yes',
-    //  fullscreen: 'yes',
-    //});
-    this.iab.create(url, '_self', {});
 
-    //browser.on('loadstart').subscribe((event: any) => {
-    //  // debugger;
-    //  if (event.url.includes('#code')) {
-    //    browser.close();
-    //    const domain = event.url.split('#')[0];
-    //    const url = event.url.replace(domain, 'http://localhost');
-    //    window.location.href = 'http://localhost';
-    //  }
-    //});
+    this.iab.create(url, '_system', {});
   }
 
   initializeApp() {
