@@ -10,6 +10,7 @@
             <span class="registration-title-wrapper">
                 <span class="registration-title">{{pageTitle}}</span>
             </span>
+            <span class="dummy"></span>
             <!-- <ion-button >Cancel</ion-button> -->
         </div>
         <!-- <ion-col size="3">
@@ -23,15 +24,15 @@
             <div class="formWrapper">
             <!-- <div class="spacer-halfRem"></div> -->
             <div *ngIf="_type != 'Bookmark'" class="upload-main">
-                <label for="img-upload">
-                    <div class="upload-content">
-                        <img [src]="TempActiveItem?.Image" imageViewer>
+                <!-- <label for="img-upload"> -->
+                    <div [class]="showImage ? 'upload-main-img' : 'upload-content'">
+                             <img [src]="TempActiveItem?.Image" imageViewer> 
                         <div class="upload-icons">
                             <img src="assets/icon/paperclip.svg">
                             <span class="upload-text">Upload Image</span>
                         </div>
                     </div>   
-                </label>
+                <!-- </label> -->
                 <!-- <img src="{{TempActiveItem?.Image}}" imageViewer/> -->
             </div>
             <div *ngIf="_type == 'Bookmark'">
