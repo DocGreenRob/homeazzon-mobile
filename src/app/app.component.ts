@@ -66,6 +66,7 @@ export class AppComponent extends BasePage {
   userProperties: any = [];
   getPropertiesSubsription: any;
   constants = new Constants();
+  userInfo:any;
 
   //new
   constructor(
@@ -99,6 +100,7 @@ export class AppComponent extends BasePage {
 
   override async ngOnInit() {
     console.log('ngOnInit AppComponent');
+    this.userInfo = JSON.parse(localStorage.getItem('User'));
 
     await this.storage.create();
 

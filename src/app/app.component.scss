@@ -6,7 +6,7 @@ ion-menu{
 	overflow-y: auto;
 }
 .sidebar-wrapper{
-	padding: 25px 29px 47px 26px;
+	padding: 25px 28px 47px 26px;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -32,14 +32,21 @@ ion-menu{
 			flex-direction: column;
 			align-items: flex-start;
 			justify-content: center;
+			overflow: hidden;
+			width: 162px;
 			.name{
 				color: #111;
 				font-family: Plus Jakarta Sans;
 				font-size: 18px;
 				font-style: normal;
 				font-weight: 600;
-				line-height: 26px; 
+				line-height: 26px;
 				letter-spacing: 0.09px;
+				width: 100%;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				display: inline-block;
+				overflow: hidden;
 			}
 			.mail{
 				color:  #66707A;
@@ -49,6 +56,8 @@ ion-menu{
 				font-weight: 600;
 				line-height: 22px; 
 				letter-spacing: 0.06px;
+				width: 100%;
+				white-space: nowrap;
 			
 			}
 			.homes-number{
