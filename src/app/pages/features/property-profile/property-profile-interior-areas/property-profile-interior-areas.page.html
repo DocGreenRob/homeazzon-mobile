@@ -12,20 +12,20 @@
     <div class="formTitle">
       <ion-text>What about common areas?</ion-text>
     </div>
-      <div *ngFor="let interior of interiors">
-        <div class="fieldWrapper">
-          <ion-label>{{interior.Name}}</ion-label>
-          <app-number-input [(value)]="interior.Quantity" (click)="clearIfZero(interior)"></app-number-input>
-        </div>
+    <div *ngFor="let interior of interiors">
+      <div class="fieldWrapper">
+        <ion-label>{{interior.Name}}</ion-label>
+        <app-number-input [(value)]="interior.Quantity" (click)="clearIfZero(interior)"></app-number-input>
       </div>
+    </div>
   </div>
-	<div class="btnWrapper">
-		  <ion-button class="addRoombtn" (click)="addRoom()">
-			<img src="assets/icon/addbtn.svg" alt="">	
-			Add a room
-		</ion-button>
-		<ion-button class="continuebtn" (click)="continue()">
-		  Continue</ion-button
-		>
-	  </div>
+  <div class="btnWrapper">
+    <ion-button class="addRoombtn" (click)="addRoom()">
+      <img src="assets/icon/addbtn.svg" alt="">
+      Add a room
+    </ion-button>
+    <ion-button class="continuebtn" (click)="continue()">
+      Continue
+    </ion-button>
+  </div>
 </div>

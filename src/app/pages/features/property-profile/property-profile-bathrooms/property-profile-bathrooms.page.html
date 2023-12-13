@@ -1,31 +1,31 @@
 <ion-header>
-	<div class="header">
-	  <span (click)="goBack()">
-		<img src="/assets/icon/Arrow - Left Square.svg" alt="" />
-	  </span>
-	  <span class="headerTitle backtitle" (click)="goBack()"> Back </span>
-	</div>
-  </ion-header>
+  <div class="header">
+    <span (click)="goBack()">
+      <img src="/assets/icon/Arrow - Left Square.svg" alt="" />
+    </span>
+    <span class="headerTitle backtitle" (click)="goBack()"> Back </span>
+  </div>
+</ion-header>
 <div class="container-wrapper">
-	<div class="formWrapper">
-		<div class="formTitle">
-			<ion-text>Great! lets do bathrooms.</ion-text>
-		</div>
-		
-	<ion-row class="underLine">
-		<ion-col size="12" *ngFor="let  bathRoom of bathRooms">
-			<div class="fieldWrapper">
-			<ion-label>{{bathRoom.Name}}</ion-label>
-			<app-number-input [(value)]="bathRoom.Quantity" (click)="clearIfZero(bathRoom)"></app-number-input>
-			</div>
-		</ion-col>
+  <div class="formWrapper">
+    <div class="formTitle">
+      <ion-text>Great! lets do bathrooms.</ion-text>
+    </div>
 
-	</ion-row>
+    <ion-row class="underLine">
+      <ion-col size="12" *ngFor="let  bathRoom of bathRooms">
+        <div class="fieldWrapper">
+          <ion-label>{{bathRoom.Name}}</ion-label>
+          <app-number-input [(value)]="bathRoom.Quantity" (click)="clearIfZero(bathRoom)"></app-number-input>
+        </div>
+      </ion-col>
 
-	<div class="btnWrapper">
-		<ion-button class="continuebtn" (click)="continue()">
-		  Continue</ion-button
-		>
-	  </div>
-</div>
+    </ion-row>
+
+    <div class="btnWrapper">
+      <ion-button class="continuebtn" (click)="continue()">
+        Continue
+      </ion-button>
+    </div>
+  </div>
 </div>
