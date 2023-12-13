@@ -15,7 +15,7 @@
       <div *ngFor="let interior of interiors">
         <div class="fieldWrapper">
           <ion-label>{{interior.Name}}</ion-label>
-          <app-number-input [(value)]="interior.Quantity"></app-number-input>
+          <app-number-input [(value)]="interior.Quantity" (click)="clearIfZero(interior)"></app-number-input>
         </div>
       </div>
   </div>

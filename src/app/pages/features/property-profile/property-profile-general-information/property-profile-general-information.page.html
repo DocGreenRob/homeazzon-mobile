@@ -31,9 +31,7 @@
       <ion-col size="12" class="ion-no-padding">
         <div class="fieldWrapper">
           <ion-label>Number of levels</ion-label>
-          <app-number-input
-            [(value)]="property.TotalStories"
-          ></app-number-input>
+          <app-number-input [(value)]="property.TotalStories" (click)="clearIfZero(property)"></app-number-input>
         </div>
       </ion-col>
 
