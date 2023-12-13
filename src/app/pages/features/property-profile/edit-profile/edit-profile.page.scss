@@ -3,12 +3,22 @@
 }
 
 .formWrapper{
-    padding: 32px 24px 48px !important;
+    padding: 32px 24px 24px !important;
+    min-height: calc(100vh - 260px);
+    .formTitle{
+        flex-direction: row !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
     .fieldWrapper{
-        margin-bottom: 32px !important;
+        align-items: center;
+        flex-direction: row !important;
+        margin-top: 12px;
+        gap: 0px !important;
     }
-    .btnWrapper{
-        margin-top: 341px !important;
-        gap: 13px !important;
-    }
+}
+.btnWrapper{
+    padding: 0 24px 37px !important;
+    margin-top: 0px !important;
+    gap: 13px !important;
 }
