@@ -157,6 +157,7 @@ export class ItemEditPage extends BasePage {
 
       this.camera.getPicture(options).then(
         (imageData) => {
+          this.showImage = true;
           this.TempActiveItem.Image = "data:image/jpeg;base64," + imageData;
         },
         (error) => {
