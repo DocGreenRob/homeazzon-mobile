@@ -27,7 +27,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
     //this.AppInsights.trackPageView({ name: 'PropertyProfileGeneralInformationPage' });
   }
 
-  override ionViewDidLoad() {}
+  override ionViewDidLoad() { }
 
   //increment the quantity
   increment() {
@@ -84,6 +84,12 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   }
 
   goBack() {
-		this.navController.back();
-	}
+    this.navController.back();
+  }
+
+  public clearIfZero(item) {
+    if (item.TotalStories == undefined || item.TotalStories == null || item.TotalStories == 0) {
+      item.TotalStories = '';
+    }
+  }
 }
