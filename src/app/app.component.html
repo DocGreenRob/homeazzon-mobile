@@ -9,12 +9,12 @@
                     <span class="avatar">
                         <img src="../assets/icon/Profile.svg" alt="">
                     </span>
-                    <div class="info">
+                    <div class="info" *ngIf="User">
                         <span class="name">
-                            Robert Warren
+                            {{User.UserName ? User.UserName : User.Name ? User.Name : User.Email}}
                         </span>
                         <span class="mail">
-                            hello@robert.com
+                            {{User.Email}}
                         </span>
                     </div>
                 </div>

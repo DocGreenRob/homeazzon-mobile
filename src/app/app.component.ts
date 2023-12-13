@@ -99,7 +99,6 @@ export class AppComponent extends BasePage {
 
   override async ngOnInit() {
     console.log('ngOnInit AppComponent');
-
     await this.storage.create();
 
     this.listenPropertiesLoadedEvent();
