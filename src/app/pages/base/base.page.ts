@@ -123,12 +123,10 @@ export class BasePage implements OnInit {
 
   // UserTypes
   get UserTypes(): Array<IUserTypeDto> {
-    let a: Array<IUserTypeDto> = JSON.parse(localStorage.getItem("UserTypes"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+   const types = localStorage.getItem("UserTypes");
+   return types ? JSON.parse(types) : [];
   }
+
   set UserTypes(value: Array<IUserTypeDto>) {
     localStorage.setItem("UserTypes", JSON.stringify(value));
   }
