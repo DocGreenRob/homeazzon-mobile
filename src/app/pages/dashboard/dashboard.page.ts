@@ -26,6 +26,7 @@ import { UserDetailsService } from 'src/app/services/user-details/user-details.s
 import { UserTypesService } from 'src/app/services/user-types/user-types.service';
 import { UxNotifierService } from 'src/app/services/uxNotifier/ux-notifier.service';
 import { BasePage } from '../base/base.page';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -303,11 +304,17 @@ export class DashboardPage extends BasePage {
 
     this.Properties = userProperties;
 
-    if (this.IsFirstLoadCompleted !== true) {
-      if (this._loading != undefined) {
-        this._loading.dismiss();
-      }
-    }
+    const allProps = forkJoin([userProperties]);
+      allProps.subscribe({
+        complete: () => {
+          if (this.IsFirstLoadCompleted !== true) {
+            if (this._loading != undefined) {
+              this._loading.dismiss();
+            }
+          }
+        }
+      });
+    
   }
 
   private async getAreaTypes() {
@@ -603,7 +610,12 @@ export class DashboardPage extends BasePage {
         }
       }
 
-      this.closeLoader();
+      const allProps = forkJoin([userProperties]);
+      allProps.subscribe({
+        complete: () => {
+          this.closeLoader()
+        }
+      });
 
       this.AppInsights.trackEvent({
         name: 'end: getAllUserProperties()',
