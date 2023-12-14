@@ -614,11 +614,7 @@ export class DashboardPage extends BasePage {
         ],
       });
 
-      if (
-        this.User.Types.some(
-          (x) => x.Name == this._constants.UserTypes.Unassigned
-        )
-      ) {
+      if (!this.User?.Types?.length || this.User?.Types?.some((x) => x.Name == this._constants.UserTypes.Unassigned)) {
         this.router.navigate(['user-types-selector']);
       } else {
         if (propertyCount === 0) {
