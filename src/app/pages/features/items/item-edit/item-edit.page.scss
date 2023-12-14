@@ -93,6 +93,7 @@ ion-item,
 	border: 1px solid  #E3E7EC;
 	background: #FFF;
 	margin-bottom: 13px;
+	overflow: hidden;
 	.upload-main-img{
 		width: 100%;
 		height: 100%;
@@ -100,7 +101,7 @@ ion-item,
 		img{
 			width: 100%;
 			height: 100%;
-			object-fit: contain;
+			object-fit: cover;
 		}
 		.upload-icons{
 			display: none !important;
