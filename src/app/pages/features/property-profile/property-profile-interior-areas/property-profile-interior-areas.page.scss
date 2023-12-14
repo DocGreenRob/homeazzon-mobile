@@ -1,3 +1,6 @@
+.formWrapper{
+	min-height: calc(100vh - 249px);
+}
 .formTitle{
 	align-items: flex-start !important;
     padding-left: 11px;
@@ -7,7 +10,8 @@
 }
 
 .btnWrapper{
-    margin-bottom: 18px !important;
+	margin-top: 0px !important;
     gap: 13px !important;
+    padding: 0px 24px 54px;
 }
 

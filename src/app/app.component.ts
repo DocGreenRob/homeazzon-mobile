@@ -66,6 +66,7 @@ export class AppComponent extends BasePage {
   userProperties: any = [];
   getPropertiesSubsription: any;
   constants = new Constants();
+  userInfo:any;
 
   //new
   constructor(

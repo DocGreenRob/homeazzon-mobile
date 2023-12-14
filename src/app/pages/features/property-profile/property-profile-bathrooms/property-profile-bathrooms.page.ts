@@ -132,6 +132,13 @@ export class PropertyProfileBathroomsPage extends BasePage {
   }
 
   goBack() {
-		this.navController.back();
-	}
+    this.navController.back();
+  }
+
+  public clearIfZero(item) {
+    if (item.Quantity == undefined || item.Quantity == null || item.Quantity == 0) {
+      item.Quantity = '';
+    }
+  }
+
 }

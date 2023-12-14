@@ -7,20 +7,18 @@
   </div>
 </ion-header>
 
-<ion-content class="ion-padding" #content>
+<div class="container-wrapper" #content>
   <div class="formWrapper">
     <div class="formTitle">
       <ion-text>What about common areas?</ion-text>
     </div>
-    <ion-row lines="none">
-      <ion-col size="12" *ngFor="let interior of interiors">
+      <div *ngFor="let interior of interiors">
         <div class="fieldWrapper">
           <ion-label>{{interior.Name}}</ion-label>
-          <app-number-input [(value)]="interior.Quantity"></app-number-input>
+          <app-number-input [(value)]="interior.Quantity" (click)="clearIfZero(interior)"></app-number-input>
         </div>
-      </ion-col>
-    </ion-row>
-
+      </div>
+  </div>
 	<div class="btnWrapper">
 		  <ion-button class="addRoombtn" (click)="addRoom()">
 			<img src="assets/icon/addbtn.svg" alt="">	
@@ -30,5 +28,4 @@
 		  Continue</ion-button
 		>
 	  </div>
-  </div>
-</ion-content>
+</div>
