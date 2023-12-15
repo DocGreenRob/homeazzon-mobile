@@ -31,6 +31,7 @@ import { IPropertyDto } from "../../models/dto/interfaces/IPropertyDto";
 import { IUserTypeDto } from "../../models/dto/interfaces/IUserTypeDto";
 import { ProfileItemImageDto } from "../../models/dto/ProfileItemImageDto";
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-base",
@@ -561,7 +562,8 @@ export class BasePage implements OnInit {
     public uxNotifierService: UxNotifierService,
     public userTypesService: UserTypesService,
     public featuresService: FeaturesService,
-    public inAppBrowser: InAppBrowser = null
+    public inAppBrowser: InAppBrowser = null,
+    public storageService: LocalStorageService = null
   ) {
     console.log("constructor BasePage");
   }

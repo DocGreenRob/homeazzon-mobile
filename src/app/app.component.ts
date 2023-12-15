@@ -38,7 +38,6 @@ import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.servi
 //import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 //import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { LocalStorageService } from './services/local-storage.service';
 //import { EventMessage, EventType } from '@azure/msal-browser';
 @Component({
   selector: 'app-root',
@@ -83,8 +82,7 @@ export class AppComponent extends BasePage {
     public override router: Router,
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
-    private iab: InAppBrowser,
-    private storageService: LocalStorageService
+    private iab: InAppBrowser
     ) {
     super(null, null, communicator, menu, platform, router, null, null, null);
 

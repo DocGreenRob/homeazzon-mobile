@@ -26,7 +26,6 @@ import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.servi
 import { IBookmarkDto } from "../../../../models/dto/interfaces/IBookmarkDto";
 import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
-import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-item-edit",
@@ -67,7 +66,6 @@ export class ItemEditPage extends BasePage {
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
     public override router: Router,
-    private storageService: LocalStorageService
   ) {
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null);
     this._constants = new Constants();

@@ -34,7 +34,6 @@ import { IGoogleLinkDto } from "./../../../../models/dto/interfaces/IGoogleLinkD
 import { CommunicatorService } from "./../../../../services/communicator/communicator.service";
 import { MetattachService } from "./../../../../services/metattach/metattach.service";
 import { ITagDto } from "../../../../models/dto/interfaces/ITagDto";
-import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-item-details",
@@ -78,7 +77,6 @@ export class ItemDetailsPage extends BasePage {
     private modalCtrl: ModalController,
     private contactInformationService: ContactInformationService,
     private alertCtrl: AlertController,
-    private storageService: LocalStorageService
   ) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser);
     this._constants = new Constants();

@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { Router } from "@angular/router";
-import { LocalStorageService } from "@app/services/local-storage.service";
 import { AlertController, LoadingController, ModalController, NavController, NavParams, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { AssetIndexDto } from "src/app/models/dto/interfaces/AssetIndexDto";
@@ -41,8 +40,7 @@ export class SearchResultDetailsPage extends BasePage {
     public override router: Router,
     private modalController: ModalController,
     public sanitizerService: DomSanitizer,
-    public alertCtrl: AlertController,
-    private storageService: LocalStorageService
+    public alertCtrl: AlertController
   ) {
     super(navController, navParams, null, null, null, router, uxNotifierService, null, null);
     this._constants = new Constants();

@@ -12,7 +12,6 @@ import { StaticDataProvider } from "../../../../services/static-data/static-data
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
-import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-user-types-owner",
@@ -40,7 +39,6 @@ export class UserTypesOwnerPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private staticDataService: StaticDataProvider,
     private location: Location,
-    private storageService: LocalStorageService
   ) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
     console.log("ionViewDidLoad UserTypesOwnerPage");

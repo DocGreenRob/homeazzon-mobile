@@ -30,7 +30,6 @@ import { SavedProductSearchResultDto } from "../../../../models/dto/SavedProduct
 import { SavedSearchEngineSearchResultDto } from "../../../../models/dto/SavedSearchEngineSearchResultDto";
 import { SavedYouTubeSearchResultDto } from "../../../../models/dto/SavedYouTubeSearchResultDto";
 import { ActiveItem } from "../../../../models/ActiveItem";
-import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-items",
@@ -85,11 +84,10 @@ export class ItemsPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private ngzone: NgZone,
     private modalCtrl: ModalController,
-    private location: Location,
-    private storageService: LocalStorageService
+    private location: Location
   ) {
     super(navController, navParams, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser);
-    storageService.delete("ActiveItem");
+    this.storageService.delete("ActiveItem");
     this._tupleDictionary = new Dictionary();
     this._tupleDictionary.Entries = new Array<Entry>();
   }
