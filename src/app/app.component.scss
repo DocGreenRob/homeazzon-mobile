@@ -182,9 +182,12 @@ ion-menu{
 		}
 	}
 	.design-btn{
-		width: 100%;
+		width: 90%;
 		margin-top: 82px;
+		position: fixed;
+		bottom: 50px;
 		ion-button{
+			white-space: normal;
 			display: flex;
 			justify-content: center;
 			align-items: center;
