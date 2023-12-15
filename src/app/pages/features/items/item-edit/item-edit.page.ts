@@ -373,14 +373,12 @@ export class ItemEditPage extends BasePage {
   private processSelections() {
     // used for handling image saves to profile item
     if (this._type != "Bookmark") {
-      let x = this.storageService.get("TempActiveItem");
-      let y = JSON.parse(x);
-      this.TempActiveItem = y;
+      this.TempActiveItem = this.storageService.get("TempActiveItem");
     }
 
     let originalProfileItem: IProfileItemDto = this.ProfileItem;
     let selections = this.storageService.get("Selections");
-    this._selections = JSON.parse(selections);
+    this._selections = selections ? selections : [];
 
     let ctr: number = 0;
 

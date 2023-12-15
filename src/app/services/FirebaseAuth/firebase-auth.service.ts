@@ -104,18 +104,16 @@ export class FirebaseAuthService {
   }
 
   get FirebaseUser(): FirebaseUser {
-    const user = this.storageService.get('FirebaseUser');
-    if (user != null) {
-      return JSON.parse(user) as FirebaseUser;
-    }
-    return null;
+    const user: FirebaseUser = this.storageService.get('FirebaseUser');
+    return user
   }
 
   set FirebaseUser(value: FirebaseUser) {
-    if (value == null) {
+    if (!value) {
       this.storageService.delete('FirebaseUser');
+    }else{
+      this.storageService.set('FirebaseUser', value);
     }
-    this.storageService.set('FirebaseUser', JSON.stringify(value));
   }
 
   signInGoogle() {
@@ -269,10 +267,7 @@ export class FirebaseAuthService {
 
   // IdToken
   get IdToken(): IdTokenDto {
-    let a: IdTokenDto = this.storageService.get('IdToken');
-    if (a == undefined || a == null) {
-      return null;
-    }
+    const a: IdTokenDto = this.storageService.get('IdToken');
     return a;
   }
   set IdToken(value: IdTokenDto) {
@@ -281,10 +276,7 @@ export class FirebaseAuthService {
 
   // AuthToken
   get AuthToken(): IAuthTokenDto {
-    let a: IAuthTokenDto = this.storageService.get('AuthToken');
-    if (a == undefined || a == null) {
-      return null;
-    }
+    const a: IAuthTokenDto = this.storageService.get('AuthToken');
     return a;
   }
   set AuthToken(value: IAuthTokenDto) {

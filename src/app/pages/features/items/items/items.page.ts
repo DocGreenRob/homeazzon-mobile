@@ -266,11 +266,11 @@ export class ItemsPage extends BasePage {
 
     // show profile item images
     if (this.LineItem.Id == undefined) {
-      let profileItemImages = this.storageService.get('ProfileItemImages');
+      const profileItemImages = this.storageService.get('ProfileItemImages');
       this.isHideSegments = true;
       let profileItemImagesGridList: IGridList = { Name: "", Items: [] };
 
-      profileItemImages.forEach((x) => {
+      profileItemImages?.forEach((x) => {
         profileItemImagesGridList.Items.push({ Id: x.Id, Name: x.Title, IconPath: null, ImagePath: x.Url });
       });
 
