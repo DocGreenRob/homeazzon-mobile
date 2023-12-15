@@ -15,6 +15,7 @@ import {
   AppleSignInResponse,
 } from '@awesome-cordova-plugins/sign-in-with-apple/ngx';
 import firebase from 'firebase/compat/app';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,8 @@ export class FirebaseAuthService {
     private platform: Platform,
 
     private appleSignIn: SignInWithApple,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private storageService: LocalStorageService
   ) {
     this.listenAuthStateChange();
   }
@@ -89,7 +91,7 @@ export class FirebaseAuthService {
   async logOut() {
     return this.auth.signOut().then(
       async (x) => {
-        localStorage.clear();
+        this.storageService.clear();
         this.storage.clear();
         window.dispatchEvent(new CustomEvent('user:loggedOut'));
         this.router.navigate(['sign-in']);
@@ -102,7 +104,7 @@ export class FirebaseAuthService {
   }
 
   get FirebaseUser(): FirebaseUser {
-    const user = localStorage.getItem('FirebaseUser');
+    const user = this.storageService.get('FirebaseUser');
     if (user != null) {
       return JSON.parse(user) as FirebaseUser;
     }
@@ -111,9 +113,9 @@ export class FirebaseAuthService {
 
   set FirebaseUser(value: FirebaseUser) {
     if (value == null) {
-      localStorage.removeItem('FirebaseUser');
+      this.storageService.delete('FirebaseUser');
     }
-    localStorage.setItem('FirebaseUser', JSON.stringify(value));
+    this.storageService.set('FirebaseUser', JSON.stringify(value));
   }
 
   signInGoogle() {
@@ -267,26 +269,26 @@ export class FirebaseAuthService {
 
   // IdToken
   get IdToken(): IdTokenDto {
-    let a: IdTokenDto = JSON.parse(localStorage.getItem('IdToken'));
+    let a: IdTokenDto = this.storageService.get('IdToken');
     if (a == undefined || a == null) {
       return null;
     }
     return a;
   }
   set IdToken(value: IdTokenDto) {
-    localStorage.setItem('IdToken', JSON.stringify(value));
+    this.storageService.set('IdToken', JSON.stringify(value));
   }
 
   // AuthToken
   get AuthToken(): IAuthTokenDto {
-    let a: IAuthTokenDto = JSON.parse(localStorage.getItem('AuthToken'));
+    let a: IAuthTokenDto = this.storageService.get('AuthToken');
     if (a == undefined || a == null) {
       return null;
     }
     return a;
   }
   set AuthToken(value: IAuthTokenDto) {
-    localStorage.setItem('AuthToken', JSON.stringify(value));
+    this.storageService.set('AuthToken', JSON.stringify(value));
   }
 
   browserLoginHandler(response: string) {

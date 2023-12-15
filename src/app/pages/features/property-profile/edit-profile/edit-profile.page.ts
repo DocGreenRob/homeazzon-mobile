@@ -268,7 +268,7 @@ export class EditProfilePage extends BasePage {
   success(override: boolean = false) {
     this.loading.dismiss();
     this.toast.showToast("Property profile was updated successfully", this.constants.ToastColorGood);
-    //localStorage.setItem("restart", "true");
+    //this.storageService.setItem("restart", "true");
     let navExtras: NavigationExtras = {
       queryParams: {
         refreshActiveProperty: true,

@@ -15,6 +15,7 @@ import { PropertyProfilesService } from "src/app/services/property-profile/prope
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { ActiveItem } from "../../../../models/ActiveItem";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-item-add",
@@ -53,7 +54,8 @@ export class ItemAddPage extends BasePage {
     private loadingController: LoadingController,
     public searchService: SearchService,
     public override uxNotifierService: UxNotifierService,
-    public override router: Router
+    public override router: Router,
+    private storageService: LocalStorageService
   ) {
     super(navCtrl, null, null, null, platform, null, null, null, null);
 
@@ -186,7 +188,7 @@ export class ItemAddPage extends BasePage {
       }
     });
 
-    localStorage.setItem("Selections", JSON.stringify(selections));
+    this.storageService.set("Selections", JSON.stringify(selections));
 
     if (this._type == "Bookmark") {
       let activeItem: ActiveItem = new ActiveItem();
@@ -215,7 +217,7 @@ export class ItemAddPage extends BasePage {
     //		this._type != 'Google Web') {
     //		console.log('selections', selections);
 
-    //		localStorage.setItem('Selections', JSON.stringify(selections));
+    //		this.storageService.set('Selections', JSON.stringify(selections));
 
     //		this.navController.push('ItemEditPage',
     //			{
@@ -429,7 +431,7 @@ export class ItemAddPage extends BasePage {
         searchResultDto.ProductDetails = productDetails;
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this._type;
-        localStorage.setItem("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
 
         if (this._type === "Amazon") {
           await this.searchService.saveAmazonData(searchResultDto).then(
@@ -471,7 +473,7 @@ export class ItemAddPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this._type;
-        localStorage.setItem("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
 
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {},
@@ -500,7 +502,7 @@ export class ItemAddPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this._type;
-        localStorage.setItem("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
 
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {},

@@ -12,6 +12,7 @@ import { StaticDataProvider } from "../../../../services/static-data/static-data
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-user-types-owner",
@@ -38,7 +39,8 @@ export class UserTypesOwnerPage extends BasePage {
     public override featuresService: FeaturesService,
     public override inAppBrowser: InAppBrowser,
     private staticDataService: StaticDataProvider,
-    private location: Location
+    private location: Location,
+    private storageService: LocalStorageService
   ) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
     console.log("ionViewDidLoad UserTypesOwnerPage");
@@ -73,7 +75,7 @@ export class UserTypesOwnerPage extends BasePage {
       address.State = this.state;
       address.Zip = this.zip;
       customProperty.Address = address;
-      localStorage.setItem("CustomProperty", JSON.stringify(customProperty));
+      this.storageService.set("CustomProperty", JSON.stringify(customProperty));
       this.router.navigate(["property-profile-general-information"]);
     }
   }

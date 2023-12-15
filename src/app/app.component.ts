@@ -38,6 +38,7 @@ import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.servi
 //import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 //import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { LocalStorageService } from './services/local-storage.service';
 //import { EventMessage, EventType } from '@azure/msal-browser';
 @Component({
   selector: 'app-root',
@@ -82,7 +83,9 @@ export class AppComponent extends BasePage {
     public override router: Router,
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
-    private iab: InAppBrowser) {
+    private iab: InAppBrowser,
+    private storageService: LocalStorageService
+    ) {
     super(null, null, communicator, menu, platform, router, null, null, null);
 
     platform.ready().then(async () => {
@@ -230,7 +233,7 @@ export class AppComponent extends BasePage {
 
   async viewProperty(p: IPropertyDto) {
     await this.communicator.sendSelectedProperty(p);
-    localStorage.removeItem('Lineitems');
+    this.storageService.delete('Lineitems');
     this.menu.close('propertyMenu');
   }
 }

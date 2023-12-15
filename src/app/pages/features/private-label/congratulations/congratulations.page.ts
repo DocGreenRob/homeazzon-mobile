@@ -4,6 +4,7 @@ import { PrivateLabelService } from 'src/app/services/private-label/private-labe
 import { MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Component({
 	selector: 'app-congratulations',
@@ -21,7 +22,8 @@ export class CongratulationsPage implements OnInit {
 		private privatelabelService: PrivateLabelService,
 		private menuController: MenuController,
 		private router: Router,
-		public storage: Storage) {
+		public storage: Storage,
+		private storageService: LocalStorageService) {
 		//get userId form local-storage
 		this.storage.get('userId').then((userId) => {
 			this.userId = userId;
@@ -41,7 +43,7 @@ export class CongratulationsPage implements OnInit {
 	gotoMainPage() {
 		this.menuController.enable(true, 'regularMenu');
 		this.menuController.enable(true, 'propertyMenu');
-		localStorage.setItem("refreshProperties", "true");
+		this.storageService.set("refreshProperties", "true");
 		this.router.navigate(['dashboard'])
 
 	}

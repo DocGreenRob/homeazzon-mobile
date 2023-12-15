@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { AlertController, LoadingController, ModalController, NavController, NavParams, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { AssetIndexDto } from "src/app/models/dto/interfaces/AssetIndexDto";
@@ -40,7 +41,8 @@ export class SearchResultDetailsPage extends BasePage {
     public override router: Router,
     private modalController: ModalController,
     public sanitizerService: DomSanitizer,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private storageService: LocalStorageService
   ) {
     super(navController, navParams, null, null, null, router, uxNotifierService, null, null);
     this._constants = new Constants();
@@ -136,12 +138,12 @@ export class SearchResultDetailsPage extends BasePage {
         searchResultDto.ProductDetails = productDetails;
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this.source;
-        localStorage.setItem("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
 
         if (this.source === "Amazon") {
           await this.searchService.saveAmazonData(searchResultDto).then(
             (x: AssetIndexDto) => {
-              localStorage.setItem("AssetIndex", JSON.stringify(x));
+              this.storageService.set("AssetIndex", JSON.stringify(x));
               this._loading.dismiss();
               this.uxNotifierService.showToast("Amazon product saved successfully!", this._constants.ToastColorGood);
             },
@@ -160,7 +162,7 @@ export class SearchResultDetailsPage extends BasePage {
         if (this.source === "Google Shopping") {
           await this.searchService.saveGoogleProductData(searchResultDto).then(
             (x: AssetIndexDto) => {
-              localStorage.setItem("AssetIndex", JSON.stringify(x));
+              this.storageService.set("AssetIndex", JSON.stringify(x));
               this.uxNotifierService.showToast("Google product saved successfully!", this._constants.ToastColorGood);
               this._loading.dismiss();
             },
@@ -185,11 +187,11 @@ export class SearchResultDetailsPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this.source;
-        localStorage.setItem("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
 
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {
-            localStorage.setItem("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", JSON.stringify(x));
             this._loading.dismiss();
             this.uxNotifierService.showToast("Google results were saved successfully!", this._constants.ToastColorGood);
           },
@@ -218,13 +220,13 @@ export class SearchResultDetailsPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this.source;
-        localStorage.setItem("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
 
         this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + this.result.VideoID);
 
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {
-            localStorage.setItem("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", JSON.stringify(x));
             this._loading.dismiss();
             this.uxNotifierService.showToast("YouTube video saved successfully!", this._constants.ToastColorGood);
           },
@@ -246,7 +248,7 @@ export class SearchResultDetailsPage extends BasePage {
     if (!this.IsMetattachment) {
       this.router.navigate(["items"]);
     } else {
-      localStorage.setItem("ActiveItem", JSON.stringify(this.ActiveItem));
+      this.storageService.set("ActiveItem", JSON.stringify(this.ActiveItem));
       this.router.navigate(["create-metattach"]);
     }
   }

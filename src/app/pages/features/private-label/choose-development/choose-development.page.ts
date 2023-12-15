@@ -11,6 +11,7 @@ import { BasePage } from "src/app/pages/base/base.page";
 import { PrivateLabelService } from "src/app/services/private-label/private-label.service";
 import { UtilitiesService } from "src/app/services/utlities/utilities.service";
 import { LotDetailsPage } from "../lot-details/lot-details.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 @Component({
   selector: "app-choose-development",
   templateUrl: "./choose-development.page.html",
@@ -35,7 +36,8 @@ export class ChooseDevelopmentPage extends BasePage {
     private privatelabelService: PrivateLabelService,
     private staticDataService: UtilitiesService,
     private activeRoute: ActivatedRoute,
-    private storage: Storage
+    private storage: Storage,
+    private storageService: LocalStorageService
   ) {
     super(navCtrl, null, null, null, null, router, null, null, null);
     this.showDevelopments = true;
@@ -68,7 +70,7 @@ export class ChooseDevelopmentPage extends BasePage {
   async getDevelopments() {
     let loader = await this.loading.getLoader("getting property developments...");
     await loader.present();
-    let user: IUserDto = JSON.parse(localStorage.getItem("User"));
+    let user: IUserDto = this.storageService.get('User');
     //await this.privatelabelService.getPrivateLabelerDevelopments(user.PrivateLabeler.Id)
     await this.privatelabelService.getPrivateLabelerDevelopments(0).then(
       (x: Array<IDevelopmentDto>) => {

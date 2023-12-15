@@ -5,17 +5,18 @@ import { tap, catchError } from 'rxjs/operators';
 import { BasePage } from '../pages/base/base.page';
 import { IAuthTokenDto } from './dto/interfaces/IAuthTokenDto';
 import { Observable, throwError } from 'rxjs';
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Injectable()
 export class AuthInterceptor extends BasePage implements HttpInterceptor {
 
-	constructor() {
+	constructor(private storageService: LocalStorageService) {
 		super(null, null, null, null, null, null, null, null, null);
 	}
 
 	intercept(req: HttpRequest<any>, next: HttpHandler) {
 		// Get the auth token from the service.
-		let authToken: IAuthTokenDto = JSON.parse(localStorage.getItem('AuthToken'));
+		let authToken: IAuthTokenDto = this.storageService.get('AuthToken');
 		let authReq = req;
 
 		if (authToken != undefined && authToken != null) {

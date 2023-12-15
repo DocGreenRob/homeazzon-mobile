@@ -6,12 +6,13 @@ import { IUserDto } from "../../models/dto/interfaces/IUserDto";
 import { baseService } from "../base.service";
 import { IAuthTokenDto } from "./../../models/dto/interfaces/IAuthTokenDto";
 import { IdTokenDto } from "./../../models/dto/interfaces/IdTokenDto";
+import { LocalStorageService } from "../local-storage.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class AccountService extends baseService {
-  constructor(public override http: HttpClient) {
+  constructor(public override http: HttpClient, private storageService: LocalStorageService) {
     super(http);
   }
 
@@ -54,8 +55,8 @@ export class AccountService extends baseService {
   isAuthTokenValid() {
     try {
       // debugger;
-      let token: IAuthTokenDto = JSON.parse(localStorage.getItem("AuthToken"));
-      // let IdToken: IdTokenDto = JSON.parse(localStorage.getItem("IdToken"));
+      let token: IAuthTokenDto = this.storageService.get('AuthToken');
+      // let IdToken: IdTokenDto = this.storageService.get('IdToken');
 
       if (token == null) {
         return false;

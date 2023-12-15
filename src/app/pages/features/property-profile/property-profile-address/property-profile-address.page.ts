@@ -7,6 +7,7 @@ import { IPropertyDto } from "../../../../models/dto/interfaces/IPropertyDto";
 import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
 import { StaticDataProvider } from "../../../../services/static-data/static-data";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-property-profile-address",
@@ -22,7 +23,7 @@ export class PropertyProfileAddressPage extends BasePage {
   state: any = 0;
   zip: string = "";
 
-  constructor(public navCtrl: NavController, private staticDataService: StaticDataProvider, private alert: UxNotifierService, public override router: Router) {
+  constructor(public navCtrl: NavController, private staticDataService: StaticDataProvider, private alert: UxNotifierService, public override router: Router, private storageService: LocalStorageService) {
     super(navCtrl, null, null, null, null, null, null, null, null);
     console.log("ionViewDidLoad PropertyProfileAddressPage");
 
@@ -60,7 +61,7 @@ export class PropertyProfileAddressPage extends BasePage {
       address.State = this.state;
       address.Zip = this.zip;
       customProperty.Address = address;
-      localStorage.setItem("CustomProperty", JSON.stringify(customProperty));
+      this.storageService.set("CustomProperty", JSON.stringify(customProperty));
       this.router.navigate(["property-profile-general-information"]);
     }
   }

@@ -34,6 +34,7 @@ import { FirebaseUser } from '../../../../models/FirebaseUser';
 import { AuthService } from '../../../../services/auth.service';
 import { UserTypesService } from '../../../../services/user-types/user-types.service';
 import jwt_decode from 'jwt-decode';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -73,7 +74,8 @@ export class SignInPage extends BasePage {
     private iab: InAppBrowser,
     public override userTypesService: UserTypesService,
     public override uxNotifierService: UxNotifierService,
-    private firebaseAuthService: FirebaseAuthService
+    private firebaseAuthService: FirebaseAuthService,
+    private storageService: LocalStorageService
   ) {
     super(
       navController,
@@ -95,18 +97,18 @@ export class SignInPage extends BasePage {
     });
     //this.generateChallenge();
 
-    localStorage.removeItem('IsPropertiesFetched');
-    localStorage.removeItem('ProfileItem');
-    localStorage.removeItem('Metattachments');
-    localStorage.removeItem('User');
-    localStorage.removeItem('ProfileItemLineItems');
-    localStorage.removeItem('IsMetattachment');
-    localStorage.removeItem('ActiveItem');
-    localStorage.removeItem('LineItem');
-    localStorage.removeItem('Lineitems');
-    localStorage.removeItem('Properties');
-    localStorage.removeItem('ActiveAttachmentItem');
-    localStorage.removeItem('CurrentView');
+    this.storageService.delete('IsPropertiesFetched');
+    this.storageService.delete('ProfileItem');
+    this.storageService.delete('Metattachments');
+    this.storageService.delete('User');
+    this.storageService.delete('ProfileItemLineItems');
+    this.storageService.delete('IsMetattachment');
+    this.storageService.delete('ActiveItem');
+    this.storageService.delete('LineItem');
+    this.storageService.delete('Lineitems');
+    this.storageService.delete('Properties');
+    this.storageService.delete('ActiveAttachmentItem');
+    this.storageService.delete('CurrentView');
   }
 
   override async ngOnInit() {

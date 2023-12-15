@@ -7,6 +7,7 @@ import { NavController, Platform, LoadingController } from "@ionic/angular";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { PropertyProfilesService } from "src/app/services/property-profile/property-profiles.service";
 import { Router, NavigationExtras } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-search",
@@ -36,7 +37,8 @@ export class SearchPage extends BasePage {
     private propertyService: PropertyProfilesService,
     public override platform: Platform,
     public override router: Router,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private storageService: LocalStorageService
   ) {
     super(navController, null, null, null, platform, router, uxNotifierService, null, null);
 
@@ -88,14 +90,14 @@ export class SearchPage extends BasePage {
   public close() {
     if (this._originalProfileItem !== this.ProfileItem) {
       if (this._originalProfileItem.Id === undefined) {
-        localStorage.removeItem("ProfileItem");
+        this.storageService.delete("ProfileItem");
       } else {
-        localStorage.setItem("ProfileItem", JSON.stringify(this._originalProfileItem));
+        this.storageService.set("ProfileItem", JSON.stringify(this._originalProfileItem));
       }
     }
     if (this._originalLineItem !== this.LineItem) {
       if (this._originalLineItem.Id === undefined) {
-        localStorage.removeItem("LineItem");
+        this.storageService.delete("LineItem");
       } else {
         this.LineItem = this._originalLineItem;
       }
@@ -119,7 +121,7 @@ export class SearchPage extends BasePage {
 
     if (this.CurrentView === "Room") {
       let profileItem: IProfileItemDto = { Id: this.selectedProfileItem.Id, Name: this.selectedProfileItem.Name };
-      localStorage.setItem("ProfileItem", JSON.stringify(profileItem));
+      this.storageService.set("ProfileItem", JSON.stringify(profileItem));
     }
 
     let lineitem: ILineitemDto = { Id: this.selectedLineitem.Id, Name: this.selectedLineitem.Name };
