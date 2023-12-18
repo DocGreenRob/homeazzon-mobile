@@ -9,6 +9,7 @@ import { BasePage } from "src/app/pages/base/base.page";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { Constants } from "./../../../../common/Constants";
 import { MetattachService } from "./../../../../services/metattach/metattach.service";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-attachments",
@@ -30,9 +31,10 @@ export class AttachmentsPage extends BasePage {
     private activeRouter: ActivatedRoute,
     public override inAppBrowser: InAppBrowser,
     public override platform: Platform,
-    public override uxNotifierService: UxNotifierService
+    public override uxNotifierService: UxNotifierService,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, null, null, platform, router, uxNotifierService, null, null, inAppBrowser);
+    super(navController, null, null, null, platform, router, uxNotifierService, null, null, inAppBrowser, storageService);
   }
 
   override ngOnInit() {

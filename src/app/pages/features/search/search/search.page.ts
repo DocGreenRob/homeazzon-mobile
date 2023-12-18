@@ -7,6 +7,7 @@ import { NavController, Platform, LoadingController } from "@ionic/angular";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { PropertyProfilesService } from "src/app/services/property-profile/property-profiles.service";
 import { Router, NavigationExtras } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-search",
@@ -36,9 +37,10 @@ export class SearchPage extends BasePage {
     private propertyService: PropertyProfilesService,
     public override platform: Platform,
     public override router: Router,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, null, null, platform, router, uxNotifierService, null, null);
+    super(navController, null, null, null, platform, router, uxNotifierService, null, null, null, storageService);
 
     if (this.selectedProfileItem.Id !== undefined) {
       this.selectedProfileItem = {

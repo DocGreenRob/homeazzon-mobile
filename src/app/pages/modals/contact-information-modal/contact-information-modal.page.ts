@@ -11,6 +11,7 @@ import { UtilitiesService } from "../../../services/utlities/utilities.service";
 import { UxNotifierService } from "../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../base/base.page";
 import { EmailDto } from "src/app/models/dto/EmailDto";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-contact-information-modal",
@@ -42,9 +43,10 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     private iab: InAppBrowser,
     private utilityService: UtilitiesService,
     private contactInformationService: ContactInformationService,
-    private artifactIndexService: ArtifactIndexService
+    private artifactIndexService: ArtifactIndexService,
+    public override storageService: LocalStorageService
   ) {
-    super(null, navParams, null, null, platform, null, null, null, null, null);
+    super(null, navParams, null, null, platform, null, null, null, null, null, storageService);
   }
 
   override ngOnInit() {

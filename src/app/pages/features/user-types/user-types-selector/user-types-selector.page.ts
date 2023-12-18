@@ -10,6 +10,7 @@ import { FeaturesService } from "../../../../services/features/features.service"
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-user-types-selector",
@@ -31,9 +32,10 @@ export class UserTypesSelectorPage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     public override userTypesService: UserTypesService,
     public override inAppBrowser: InAppBrowser,
-    public override featuresService: FeaturesService
+    public override featuresService: FeaturesService,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
     this._constants = new Constants();
 
     this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned);

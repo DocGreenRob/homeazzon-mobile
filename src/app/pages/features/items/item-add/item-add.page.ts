@@ -15,6 +15,7 @@ import { PropertyProfilesService } from "src/app/services/property-profile/prope
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { ActiveItem } from "../../../../models/ActiveItem";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-item-add",
@@ -53,9 +54,10 @@ export class ItemAddPage extends BasePage {
     private loadingController: LoadingController,
     public searchService: SearchService,
     public override uxNotifierService: UxNotifierService,
-    public override router: Router
+    public override router: Router,
+    public override storageService: LocalStorageService
     ) {
-    super(navCtrl, null, null, null, platform, null, null, null, null);
+    super(navCtrl, null, null, null, platform, null, null, null, null, null, storageService);
 
     this._constants = new Constants();
     this.image = this.QueryParams.Image;

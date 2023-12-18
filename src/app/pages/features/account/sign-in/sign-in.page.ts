@@ -34,6 +34,7 @@ import { FirebaseUser } from '../../../../models/FirebaseUser';
 import { AuthService } from '../../../../services/auth.service';
 import { UserTypesService } from '../../../../services/user-types/user-types.service';
 import jwt_decode from 'jwt-decode';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -74,6 +75,7 @@ export class SignInPage extends BasePage {
     public override userTypesService: UserTypesService,
     public override uxNotifierService: UxNotifierService,
     private firebaseAuthService: FirebaseAuthService,
+    public override storageService: LocalStorageService
   ) {
     super(
       navController,
@@ -84,7 +86,9 @@ export class SignInPage extends BasePage {
       router,
       uxNotifierService,
       userTypesService,
-      null
+      null,
+      null,
+      storageService
     );
     this.constants = new Constants();
     this.initializeApp();

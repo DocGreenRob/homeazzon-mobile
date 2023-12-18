@@ -11,6 +11,7 @@ import { BasePage } from "src/app/pages/base/base.page";
 import { PrivateLabelService } from "src/app/services/private-label/private-label.service";
 import { UtilitiesService } from "src/app/services/utlities/utilities.service";
 import { LotDetailsPage } from "../lot-details/lot-details.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-choose-development",
@@ -36,9 +37,10 @@ export class ChooseDevelopmentPage extends BasePage {
     private privatelabelService: PrivateLabelService,
     private staticDataService: UtilitiesService,
     private activeRoute: ActivatedRoute,
-    private storage: Storage
+    private storage: Storage,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, null, router, null, null, null);
+    super(navCtrl, null, null, null, null, router, null, null, null,null, storageService);
     this.showDevelopments = true;
     this.showLots = false;
   }

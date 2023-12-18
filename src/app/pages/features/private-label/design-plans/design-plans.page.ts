@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { NavController } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { IDesignPanDto } from "src/app/models/dto/interfaces/IDesignPlanDto";
@@ -24,9 +25,11 @@ export class DesignPlansPage extends BasePage {
     private notificationProvider: UxNotifierService,
     public override router: Router,
     private activeRoute: ActivatedRoute,
-    private privateLabelService: PrivateLabelService
+    private privateLabelService: PrivateLabelService,
+    public override storageService: LocalStorageService
+
   ) {
-    super(null, null, null, null, null, router, null, null, null);
+    super(null, null, null, null, null, router, null, null, null,null,storageService);
   }
   override ngOnInit() {
     console.log("ngOnInit DesignPlansPage");

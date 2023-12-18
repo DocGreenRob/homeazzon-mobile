@@ -27,6 +27,7 @@ import { UserTypesService } from 'src/app/services/user-types/user-types.service
 import { UxNotifierService } from 'src/app/services/uxNotifier/ux-notifier.service';
 import { BasePage } from '../base/base.page';
 import { forkJoin } from 'rxjs';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -98,6 +99,7 @@ export class DashboardPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private activeRoute: ActivatedRoute,
     private ngzone: NgZone,
+    public override storageService: LocalStorageService
   ) {
     super(
       navController,
@@ -109,7 +111,8 @@ export class DashboardPage extends BasePage {
       uxNotifierService,
       userTypesService,
       featureService,
-      inAppBrowser
+      inAppBrowser,
+      storageService
     );
     this._constants = new Constants();
 

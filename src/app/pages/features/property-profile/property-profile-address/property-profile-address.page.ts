@@ -7,6 +7,7 @@ import { IPropertyDto } from "../../../../models/dto/interfaces/IPropertyDto";
 import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
 import { StaticDataProvider } from "../../../../services/static-data/static-data";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-property-profile-address",
@@ -22,8 +23,9 @@ export class PropertyProfileAddressPage extends BasePage {
   state: any = 0;
   zip: string = "";
 
-  constructor(public navCtrl: NavController, private staticDataService: StaticDataProvider, private alert: UxNotifierService, public override router: Router) {
-    super(navCtrl, null, null, null, null, null, null, null, null);
+  constructor(public navCtrl: NavController, private staticDataService: StaticDataProvider, private alert: UxNotifierService, public override router: Router, public override storageService: LocalStorageService
+    ) {
+    super(navCtrl, null, null, null, null, null, null, null, null, null, storageService);
     console.log("ionViewDidLoad PropertyProfileAddressPage");
 
     //this.AppInsights.trackPageView({ name: 'ProfileAddressPage', properties: { userId: this.User.Id } });

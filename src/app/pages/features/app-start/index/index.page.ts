@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '@app/services/local-storage.service';
 //import { MsalService } from '@azure/msal-angular';
 import { Storage } from '@ionic/storage';
 import { BasePage } from 'src/app/pages/base/base.page';
@@ -19,9 +20,10 @@ export class IndexPage extends BasePage {
     public storage: Storage,
     private accountService: AccountService,
     private http: HttpClient,
+    public override storageService: LocalStorageService
     //private msalService: MsalService
   ) {
-    super(null, null, null, null, null, router, null, null, null);
+    super(null, null, null, null, null, router, null, null, null,null,storageService);
   }
 
   override async ngOnInit() {

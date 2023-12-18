@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { ModalController, NavController, NavParams } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { Constants } from "src/app/common/Constants";
@@ -39,9 +40,10 @@ export class LotDetailsPage extends BasePage {
     private storage: Storage,
     private loading: UtilitiesService,
     public override router: Router,
-    private userService: UserDetailsService
+    private userService: UserDetailsService,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, navParams, null, null, null, router, uxNotifierService, null, null);
+    super(navCtrl, navParams, null, null, null, router, uxNotifierService, null, null,null,storageService);
     this.lotId = this.navParams.get("Id");
     this.lot = {} as ILotDto;
     this.constants = new Constants();

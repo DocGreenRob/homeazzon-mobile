@@ -5,12 +5,13 @@ import { tap, catchError } from 'rxjs/operators';
 import { BasePage } from '../pages/base/base.page';
 import { IAuthTokenDto } from './dto/interfaces/IAuthTokenDto';
 import { Observable, throwError } from 'rxjs';
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Injectable()
 export class AuthInterceptor extends BasePage implements HttpInterceptor {
 
-	constructor() {
-		super(null, null, null, null, null, null, null, null, null);
+	constructor(public override storageService: LocalStorageService) {
+		super(null, null, null, null, null, null, null, null, null, null, storageService);
 	}
 
 	intercept(req: HttpRequest<any>, next: HttpHandler) {
