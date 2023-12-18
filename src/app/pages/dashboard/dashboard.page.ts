@@ -27,6 +27,7 @@ import { UserTypesService } from 'src/app/services/user-types/user-types.service
 import { UxNotifierService } from 'src/app/services/uxNotifier/ux-notifier.service';
 import { BasePage } from '../base/base.page';
 import { forkJoin } from 'rxjs';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -97,7 +98,8 @@ export class DashboardPage extends BasePage {
     private suite16CategoryService: Suite16CategoryService,
     public override inAppBrowser: InAppBrowser,
     private activeRoute: ActivatedRoute,
-    private ngzone: NgZone
+    private ngzone: NgZone,
+    public override storageService: LocalStorageService
   ) {
     super(
       navController,
@@ -109,7 +111,8 @@ export class DashboardPage extends BasePage {
       uxNotifierService,
       userTypesService,
       featureService,
-      inAppBrowser
+      inAppBrowser,
+      storageService
     );
     this._constants = new Constants();
 
@@ -168,29 +171,29 @@ export class DashboardPage extends BasePage {
 
   async resetState() {
     // TODO: Remove magic strings
-    localStorage.removeItem('ActiveAttachment');
-    localStorage.removeItem('ActiveAttachmentItem');
-    localStorage.removeItem('ActiveItem');
-    localStorage.removeItem('LineItem');
-    localStorage.removeItem('LastSavedItem');
-    localStorage.removeItem('Metattachments');
-    localStorage.removeItem('Suite16Category');
-    localStorage.removeItem('IsMetattachment');
-    localStorage.removeItem('Lineitems');
-    localStorage.removeItem('ProfileItem');
-    localStorage.removeItem('AssetIndex');
-    localStorage.removeItem('DigiDocLineitems');
-    localStorage.removeItem('Suite16CategoryLineitems');
-    localStorage.removeItem('SearchSource');
-    localStorage.removeItem('TempActiveItem');
-    localStorage.removeItem('Selections');
-    localStorage.removeItem('QueryParams');
-    localStorage.removeItem('ProfileItemImages');
-    localStorage.removeItem('Features');
-    //localStorage.removeItem('Suite16Categories'); //TODO: Get in background
-    localStorage.removeItem('IsPropertiesFetched');
-    localStorage.removeItem('IsNewUserTypeSelected');
-    localStorage.removeItem('NewSelectedUserTypeId');
+    this.storageService.delete('ActiveAttachment');
+    this.storageService.delete('ActiveAttachmentItem');
+    this.storageService.delete('ActiveItem');
+    this.storageService.delete('LineItem');
+    this.storageService.delete('LastSavedItem');
+    this.storageService.delete('Metattachments');
+    this.storageService.delete('Suite16Category');
+    this.storageService.delete('IsMetattachment');
+    this.storageService.delete('Lineitems');
+    this.storageService.delete('ProfileItem');
+    this.storageService.delete('AssetIndex');
+    this.storageService.delete('DigiDocLineitems');
+    this.storageService.delete('Suite16CategoryLineitems');
+    this.storageService.delete('SearchSource');
+    this.storageService.delete('TempActiveItem');
+    this.storageService.delete('Selections');
+    this.storageService.delete('QueryParams');
+    this.storageService.delete('ProfileItemImages');
+    this.storageService.delete('Features');
+    //this.storageService.delete('Suite16Categories'); //TODO: Get in background
+    this.storageService.delete('IsPropertiesFetched');
+    this.storageService.delete('IsNewUserTypeSelected');
+    this.storageService.delete('NewSelectedUserTypeId');
   }
 
   public async start() {
@@ -223,9 +226,9 @@ export class DashboardPage extends BasePage {
 
       // TODO: Fix 'refreshProperties' should be 'RefreshProperties'; should be handeled at BasePage?; why is
       // one in params and other localStorage?
-      if (localStorage.getItem('refreshProperties')) {
+      if (this.storageService.get('refreshProperties')) {
         await this.refreshPropertiesAsync();
-        localStorage.removeItem('refreshProperties');
+        this.storageService.delete('refreshProperties');
       }
 
       if (this.CurrentView === 'Category') {
@@ -943,7 +946,7 @@ export class DashboardPage extends BasePage {
 
   private showCategories() {
     this.CurrentView = 'Category';
-    localStorage.removeItem('ProfileItem');
+    this.storageService.delete('ProfileItem');
     this.manageView = 'items';
     this.manageCategories();
   }

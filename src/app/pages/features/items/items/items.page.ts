@@ -30,6 +30,7 @@ import { SavedProductSearchResultDto } from "../../../../models/dto/SavedProduct
 import { SavedSearchEngineSearchResultDto } from "../../../../models/dto/SavedSearchEngineSearchResultDto";
 import { SavedYouTubeSearchResultDto } from "../../../../models/dto/SavedYouTubeSearchResultDto";
 import { ActiveItem } from "../../../../models/ActiveItem";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-items",
@@ -84,10 +85,11 @@ export class ItemsPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private ngzone: NgZone,
     private modalCtrl: ModalController,
-    private location: Location
+    private location: Location,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, navParams, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser);
-    localStorage.removeItem("ActiveItem");
+    super(navController, navParams, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser, storageService);
+    this.storageService.delete("ActiveItem");
     this._tupleDictionary = new Dictionary();
     this._tupleDictionary.Entries = new Array<Entry>();
   }
@@ -266,11 +268,11 @@ export class ItemsPage extends BasePage {
 
     // show profile item images
     if (this.LineItem.Id == undefined) {
-      let profileItemImages = JSON.parse(localStorage.getItem("ProfileItemImages"));
+      const profileItemImages = this.storageService.get('ProfileItemImages');
       this.isHideSegments = true;
       let profileItemImagesGridList: IGridList = { Name: "", Items: [] };
 
-      profileItemImages.forEach((x) => {
+      profileItemImages?.forEach((x) => {
         profileItemImagesGridList.Items.push({ Id: x.Id, Name: x.Title, IconPath: null, ImagePath: x.Url });
       });
 
@@ -873,7 +875,7 @@ export class ItemsPage extends BasePage {
 
   public close() {
     this.ProfileItemImages = [];
-    localStorage.removeItem("ProfileItemImages");
+    this.storageService.delete("ProfileItemImages");
 
     if (this.ProfileItem.Id !== undefined && this.ProfileItem.Id !== null && this.ProfileItem.Id !== 0) {
       this.QueryParams = {

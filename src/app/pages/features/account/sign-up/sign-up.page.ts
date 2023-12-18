@@ -9,6 +9,7 @@ import { IUserDto } from "../../../../models/dto/interfaces/IUserDto";
 import { AccountService } from "../../../../services/account/account.service";
 import { BasePage } from "../../../base/base.page";
 import { FirebaseUser } from "src/app/models/FirebaseUser";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-sign-up",
@@ -33,9 +34,10 @@ export class SignUpPage extends BasePage {
     public uxNotifier: UxNotifierService,
     private accountService: AccountService,
     private loadingCtrl: LoadingController,
-    private alert: AlertController
+    private alert: AlertController,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, null, router, uxNotifier, null, null, null);
+    super(navCtrl, null, null, null, null, router, uxNotifier, null, null, null,storageService);
   }
 
   override ngOnInit() {}

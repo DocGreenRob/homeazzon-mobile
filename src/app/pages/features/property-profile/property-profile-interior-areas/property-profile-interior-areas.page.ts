@@ -1,5 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { ModalController, NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { IPropertyDto } from "src/app/models/dto/interfaces/IPropertyDto";
@@ -41,9 +42,10 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
     public override router: Router,
     public override platform: Platform,
     private activeRoute: ActivatedRoute,
-    private prePreConstruction: PropertyProfilesService
+    private prePreConstruction: PropertyProfilesService,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, null, null, null);
+    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
     this.constants = new Constants();
   }
 

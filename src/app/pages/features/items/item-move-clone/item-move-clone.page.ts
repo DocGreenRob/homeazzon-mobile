@@ -12,6 +12,7 @@ import { PropertyProfilesService } from "../../../../services/property-profile/p
 import { ProductsService } from "../../../../services/products/products.service";
 import { AssetIndexDto } from "../../../../models/dto/interfaces/AssetIndexDto";
 import { CloneLineItemDto, CloneProfileItemDto, ClonePropertyDto } from "../../../../models/dto/PropertyCloneDto";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-item-move-clone",
@@ -56,9 +57,10 @@ export class ItemMoveClonePage extends BasePage {
     public sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     private modalCtrl: ModalController,
-    private productService: ProductsService
+    private productService: ProductsService,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null,null,storageService);
     this._constants = new Constants();
 
     //this.assetInfo = this.navParams.get("product");

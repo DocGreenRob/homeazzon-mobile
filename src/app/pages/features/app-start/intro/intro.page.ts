@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { IDeterminePathDto } from "src/app/models/dto/interfaces/IDeterminePathDto";
@@ -16,8 +17,9 @@ export class IntroPage extends BasePage {
   public user: IUserDto;
   public privateLabeler: IPrivateLabelerDto_Get;
 
-  constructor(public navCtrl: NavController, public override platform: Platform, public override router: Router, private storage: Storage) {
-    super(navCtrl, null, null, null, platform, router, null, null, null);
+  constructor(public navCtrl: NavController, public override platform: Platform, public override router: Router, private storage: Storage,    public override storageService: LocalStorageService
+    ) {
+    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
 
     this.user = {} as IUserDto;
     this.user.FirstName = "Chuck";

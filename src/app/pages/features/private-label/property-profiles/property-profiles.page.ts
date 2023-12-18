@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { ModalController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { IPropertyDto } from "src/app/models/dto/interfaces/IPropertyDto";
@@ -28,9 +29,10 @@ export class PropertyProfilesPage extends BasePage {
     public override router: Router,
     private privateLabelService: PrivateLabelService,
     private routerActive: ActivatedRoute,
-    private storage: Storage
+    private storage: Storage,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, null, null, null);
+    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
   }
 
   override async ngOnInit() {
