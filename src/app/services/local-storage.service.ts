@@ -13,7 +13,7 @@ export class LocalStorageService {
      * @returns {void}
      */
     set(key: string, value: any): void {
-        if(value){
+        if(value || value == false){
             localStorage.setItem(key, JSON.stringify(value));
         }
     }
