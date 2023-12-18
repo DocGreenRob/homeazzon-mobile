@@ -32,7 +32,6 @@ import { SignInWithApple } from '@awesome-cordova-plugins/sign-in-with-apple/ngx
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
-import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
@@ -73,7 +72,6 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
     StaticDataProvider,
     EditCategoriesPage,
     Storage,
-    Deeplinks,
     // ThemeableBrowser,
     SafariViewController,
     SignInWithApple

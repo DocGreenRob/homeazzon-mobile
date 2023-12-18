@@ -25,7 +25,6 @@
     "@awesome-cordova-plugins/barcode-scanner": "^6.4.0",
     "@awesome-cordova-plugins/camera": "^6.4.0",
     "@awesome-cordova-plugins/chooser": "^6.4.0",
-    "@awesome-cordova-plugins/deeplinks": "^6.4.0",
     "@awesome-cordova-plugins/in-app-browser": "^6.4.0",
     "@awesome-cordova-plugins/safari-view-controller": "^6.4.0",
     "@awesome-cordova-plugins/sign-in-with-apple": "^6.4.0",
