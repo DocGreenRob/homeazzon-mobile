@@ -6,6 +6,7 @@ import { ILineitemDto } from "src/app/models/dto/interfaces/ILineItemDto";
 import { IUserLineitemDto } from "src/app/models/dto/interfaces/IUserLineitemDto";
 import { LineitemService } from "src/app/services/lineitem/lineitem.service";
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
+import { LocalStorageService } from "@app/services/local-storage.service";
 @Component({
   selector: "app-edit-categories",
   templateUrl: "./edit-categories.page.html",
@@ -21,9 +22,10 @@ export class EditCategoriesPage extends BasePage {
     public override navParams: NavParams,
     public lineItemService: LineitemService,
     public viewCtrl: ModalController,
-    public override inAppBrowser: InAppBrowser
+    public override inAppBrowser: InAppBrowser,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, navParams, null, null, null, null, null, null, null, inAppBrowser);
+    super(navCtrl, navParams, null, null, null, null, null, null, null, inAppBrowser, storageService);
   }
 
   override ngOnInit() {

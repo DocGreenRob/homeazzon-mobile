@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { MenuController, NavController, Platform } from "@ionic/angular";
 import { ILineitemDto } from "src/app/models/dto/interfaces/ILineItemDto";
 import { BasePage } from "src/app/pages/base/base.page";
@@ -31,9 +32,10 @@ export class LineItemsPage extends BasePage {
     private suite16CategoryService: Suite16CategoryService,
     public override uxNotifierService: UxNotifierService,
     public override menuController: MenuController,
-    public override userTypesService: UserTypesService
+    public override userTypesService: UserTypesService,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featureService);
+    super(navCtrl, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featureService,null,storageService);
   }
 
   override ngOnInit() {

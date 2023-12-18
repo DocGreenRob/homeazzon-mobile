@@ -31,6 +31,7 @@ import { IPropertyDto } from "../../models/dto/interfaces/IPropertyDto";
 import { IUserTypeDto } from "../../models/dto/interfaces/IUserTypeDto";
 import { ProfileItemImageDto } from "../../models/dto/ProfileItemImageDto";
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-base",
@@ -87,248 +88,177 @@ export class BasePage implements OnInit {
 
   // AuthToken
   get AuthToken(): IAuthTokenDto {
-    let a: IAuthTokenDto = JSON.parse(localStorage.getItem("AuthToken"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    const token: IAuthTokenDto = this.storageService.get('AuthToken');
+    return token;
   }
   set AuthToken(value: IAuthTokenDto) {
-    localStorage.setItem("AuthToken", JSON.stringify(value));
+    this.storageService.set("AuthToken", value);
   }
 
   // IdToken
   get IdToken(): IdTokenDto {
-    let a: IdTokenDto = JSON.parse(localStorage.getItem("IdToken"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    const tokenId: IdTokenDto = this.storageService.get('IdToken');
+    return tokenId;
   }
   set IdToken(value: IdTokenDto) {
-    localStorage.setItem("IdToken", JSON.stringify(value));
+    this.storageService.set("IdToken", value);
   }
 
   // User
   get User(): IUserDto {
-    let a: IUserDto = JSON.parse(localStorage.getItem("User"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    let user: IUserDto = this.storageService.get('User');
+    return user;
   }
   set User(value: IUserDto) {
-    localStorage.setItem("User", JSON.stringify(value));
+    this.storageService.set("User", value);
   }
 
   // UserTypes
   get UserTypes(): Array<IUserTypeDto> {
-   const types = localStorage.getItem("UserTypes");
-   return types ? JSON.parse(types) : [];
+   const types = this.storageService.get("UserTypes");
+   return types ? types : [];
   }
-
   set UserTypes(value: Array<IUserTypeDto>) {
-    localStorage.setItem("UserTypes", JSON.stringify(value));
+    this.storageService.set("UserTypes", value);
   }
 
   // CompanyTypes
   get CompanyTypes(): ICompanyTypesLookupDto {
-    let a: ICompanyTypesLookupDto = JSON.parse(localStorage.getItem("CompanyTypes"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    const companyTypes = this.storageService.get('CompanyTypes');
+    return companyTypes;
   }
   set CompanyTypes(value: ICompanyTypesLookupDto) {
-    localStorage.setItem("CompanyTypes", JSON.stringify(value));
+    this.storageService.set("CompanyTypes", value);
   }
 
   // ActiveProperty
   get ActiveProperty(): INewPropertyDto {
-    let a: INewPropertyDto = {
-      City: "",
-      Customer: {
-        Email: "",
-        Id: 0,
-        Name: "",
-      },
-      Id: 0,
-      IsDefault: false,
-      IsProxy: false,
-      Name: "",
-      Profiles: [],
-      SqFt: 0,
-      State: "",
-      StreetAddress1: "",
-      TotalStories: 0,
-      UserTypeId: 0,
-    };
-
-    a = JSON.parse(localStorage.getItem("ActiveProperty"));
-
-    if (a == undefined || a == null) {
-      return a;
-    }
-    return a;
+   const activeProperty = this.storageService.get('ActiveProperty');
+    return activeProperty;
   }
   set ActiveProperty(value: INewPropertyDto) {
-    if (value != undefined) {
-      localStorage.setItem("ActiveProperty", JSON.stringify(value));
-    }
+      this.storageService.set("ActiveProperty", value);
   }
 
   // CustomProperty
   get CustomProperty(): IPropertyDto {
-    let a: IPropertyDto = {} as IPropertyDto;
-
-    a = JSON.parse(localStorage.getItem("CustomProperty"));
-
-    if (a == undefined || a == null) {
-      return a;
-    }
-    return a;
+    const prop: IPropertyDto = this.storageService.get('CustomProperty');
+    return prop;
   }
   set CustomProperty(value: IPropertyDto) {
-    if (value != undefined) {
-      localStorage.setItem("CustomProperty", JSON.stringify(value));
-    }
+    this.storageService.set("CustomProperty", value);
   }
 
   // Properties
   get Properties(): Array<INewPropertyDto> {
-    let a: Array<INewPropertyDto> = JSON.parse(localStorage.getItem("Properties"));
-    if (a == undefined || a == null) {
-      return new Array<INewPropertyDto>();
-    }
-    return a;
+    const newProp: Array<INewPropertyDto> = this.storageService.get('Properties');
+    return newProp ? newProp : [];
   }
   set Properties(value: Array<INewPropertyDto>) {
-    localStorage.setItem("Properties", JSON.stringify(value));
+    this.storageService.set("Properties", value);
   }
 
   // ProfileItem
   get ProfileItem(): IProfileItemDto {
-    let a: IProfileItemDto = JSON.parse(localStorage.getItem("ProfileItem"));
-    if (a == undefined || a == null) {
-      return { Id: 0, AreaId: 0, Name: "" };
-    }
-    return a;
+    const item: IProfileItemDto = this.storageService.get('ProfileItem');
+    return item ? item : { Id: 0, AreaId: 0, Name: "" };
   }
   set ProfileItem(value: IProfileItemDto) {
-    localStorage.setItem("ProfileItem", JSON.stringify(value));
+    this.storageService.set("ProfileItem", value);
   }
 
   // Lineitem
   get LineItem(): ILineitemDto {
-    let a: ILineitemDto = JSON.parse(localStorage.getItem("LineItem"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    const item: ILineitemDto = this.storageService.get('LineItem');
+    return item;
   }
   set LineItem(value: ILineitemDto) {
-    localStorage.setItem("LineItem", JSON.stringify(value));
+    this.storageService.set("LineItem", value);
   }
 
   // ProfileItemLineItems
   get ProfileItemLineItems(): Array<ILineitemDto> {
-    let a: Array<ILineitemDto> = JSON.parse(localStorage.getItem("ProfileItemLineItems"));
-    if (a == undefined || a == null) {
-      return new Array<ILineitemDto>();
-    }
-    return a;
+    const profileItem: Array<ILineitemDto> = this.storageService.get('ProfileItemLineItems');
+    return profileItem ? profileItem : [];
   }
   set ProfileItemLineItems(value: Array<ILineitemDto>) {
-    localStorage.setItem("ProfileItemLineItems", JSON.stringify(value));
+    this.storageService.set("ProfileItemLineItems", value);
   }
 
   // ActiveItem
   get ActiveItem(): ActiveItem {
-    let a: ActiveItem = JSON.parse(localStorage.getItem("ActiveItem"));
-    if (a == undefined || a == null) {
-      let activeItem: ActiveItem = new ActiveItem();
+    const item: ActiveItem = this.storageService.get('ActiveItem');
+    
+    if(item){
+      return item;
+    } else {
+      const activeItem: ActiveItem = new ActiveItem();
       activeItem.AssetInfo = new AssetInfoDto();
       return activeItem;
     }
-    return a;
   }
   set ActiveItem(value: ActiveItem) {
-    localStorage.setItem("ActiveItem", JSON.stringify(value));
+    this.storageService.set("ActiveItem", value);
   }
 
   // ActiveAttachmentItem
   get ActiveAttachmentItem(): ActiveItem {
-    let a: ActiveItem = JSON.parse(localStorage.getItem("ActiveAttachmentItem"));
-    if (a == undefined || a == null) {
-      let activeItem: ActiveItem = new ActiveItem();
+    const item: ActiveItem = this.storageService.get("ActiveAttachmentItem");
+    if(item){
+      return item;
+    } else {
+      const activeItem: ActiveItem = new ActiveItem();
       activeItem.AssetInfo = new AssetInfoDto();
       return activeItem;
     }
-    return a;
   }
   set ActiveAttachmentItem(value: ActiveItem) {
-    localStorage.setItem("ActiveAttachmentItem", JSON.stringify(value));
+    this.storageService.set("ActiveAttachmentItem", value);
   }
 
   // Metattachments
   get Metattachments(): Array<Array<IMetattachmentDto>> {
-    let a: Array<Array<IMetattachmentDto>> = JSON.parse(localStorage.getItem("Metattachments"));
-    if (a == undefined || a == null) {
-      return new Array<Array<IMetattachmentDto>>();
-    }
-    return a;
+    const meta: Array<Array<IMetattachmentDto>> = this.storageService.get("Metattachments");
+    return meta ? meta : new Array<Array<IMetattachmentDto>>();
   }
   set Metattachments(value: Array<Array<IMetattachmentDto>>) {
-    localStorage.setItem("Metattachments", JSON.stringify(value));
+    this.storageService.set("Metattachments", value);
   }
 
   // IsMetattachment
   get IsMetattachment(): boolean {
-    let a: boolean = JSON.parse(localStorage.getItem("IsMetattachment"));
-    if (a == undefined || a == null) {
-      return false;
-    }
-    return a;
+    const meta: boolean = this.storageService.get("IsMetattachment");
+    return meta ? meta : false;
   }
   set IsMetattachment(value: boolean) {
-    localStorage.setItem("IsMetattachment", JSON.stringify(value));
+    this.storageService.set("IsMetattachment", value);
   }
 
   // ActiveAttachment
   get ActiveAttachment(): IMetattachmentDto {
-    let a: IMetattachmentDto = JSON.parse(localStorage.getItem("ActiveAttachment"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    const active: IMetattachmentDto = this.storageService.get("ActiveAttachment");
+    return active;
   }
   set ActiveAttachment(value: IMetattachmentDto) {
-    localStorage.setItem("ActiveAttachment", JSON.stringify(value));
+    this.storageService.set("ActiveAttachment", value);
   }
 
   // AssetIndex
   get AssetIndex(): AssetIndexDto {
-    let a: AssetIndexDto = JSON.parse(localStorage.getItem("AssetIndex"));
-    if (a == undefined || a == null) {
-      let activeItem: AssetIndexDto = null;
-      return activeItem;
-    }
-    return a;
+    const asset: AssetIndexDto = this.storageService.get("AssetIndex");
+    return asset;
   }
   set AssetIndex(value: AssetIndexDto) {
-    localStorage.setItem("AssetIndex", JSON.stringify(value));
+    this.storageService.set("AssetIndex", value);
   }
 
   // LastSavedItem
   get LastSavedItem(): any {
-    let a: any = JSON.parse(localStorage.getItem("LastSavedItem"));
-    if (a == undefined || a == null) {
-      return {};
-    }
-    return a;
+    const saveItem: any = this.storageService.get("LastSavedItem");
+    return saveItem ? saveItem : {};
   }
   set LastSavedItem(value: any) {
-    localStorage.setItem("LastSavedItem", JSON.stringify(value));
+    this.storageService.set("LastSavedItem", value);
   }
 
   // Icons
@@ -336,216 +266,181 @@ export class BasePage implements OnInit {
     return [];
   }
 
-  private usedIcons: Array<number> = [];
-
   public getIconRandom() {
-    let a: number = this.IconList.length;
-    let idx: number = Math.floor(Math.random() * a);
+    const a: number = this.IconList.length;
+    const idx: number = Math.floor(Math.random() * a);
     return this.IconList[idx];
   }
 
   // CurrentView
   get CurrentView(): string {
-    let a: any = JSON.parse(localStorage.getItem("CurrentView"));
-    if (a == undefined || a == null || a == "") {
-      return "Room";
-    }
-    return a;
+    const vew: any = this.storageService.get("CurrentView");
+    return vew?.length ? vew : "Room";
   }
   set CurrentView(value: string) {
-    localStorage.setItem("CurrentView", JSON.stringify(value));
+    this.storageService.set("CurrentView", value);
   }
 
   // Lineitems
   get Lineitems(): Array<ILineitemDto> {
-    let a: Array<ILineitemDto> = JSON.parse(localStorage.getItem("Lineitems"));
-    if (a == undefined || a == null) {
-      return new Array<ILineitemDto>();
-    }
-    return a;
+    const lineItem: Array<ILineitemDto> = this.storageService.get("Lineitems");
+    return lineItem ? lineItem : [];
   }
   set Lineitems(value: Array<ILineitemDto>) {
-    localStorage.setItem("Lineitems", JSON.stringify(value));
+    this.storageService.set("Lineitems", value);
   }
 
   // Suite16Categories
   get Suite16Categories(): Array<ISuite16CategoryDto> {
-    let a: Array<ISuite16CategoryDto> = JSON.parse(localStorage.getItem("Suite16Categories"));
-    if (a == undefined || a == null) {
-      return new Array<ISuite16CategoryDto>();
-    }
-    return a;
+    const suite: Array<ISuite16CategoryDto> = this.storageService.get("Suite16Categories");
+    return suite ? suite : [];
   }
   set Suite16Categories(value: Array<ISuite16CategoryDto>) {
-    localStorage.setItem("Suite16Categories", JSON.stringify(value));
+    this.storageService.set("Suite16Categories", value);
   }
 
   // DigiDocLineitems
   get DigiDocLineitems(): Array<ILineitemDto> {
-    let a: Array<ILineitemDto> = JSON.parse(localStorage.getItem("DigiDocLineitems"));
-    if (a == undefined || a == null) {
-      return new Array<ILineitemDto>();
-    }
-    return a;
+    const digiDoc: Array<ILineitemDto> = this.storageService.get("DigiDocLineitems");
+    return digiDoc ? digiDoc : [];
   }
   set DigiDocLineitems(value: Array<ILineitemDto>) {
-    localStorage.setItem("DigiDocLineitems", JSON.stringify(value));
+    this.storageService.set("DigiDocLineitems", value);
   }
 
   // Suite16Category
   get Suite16Category(): ISuite16CategoryDto {
-    let a: ISuite16CategoryDto = JSON.parse(localStorage.getItem("Suite16Category"));
-    if (a == undefined || a == null) {
-      return new ISuite16CategoryDto();
-    }
-    return a;
+    const suite: ISuite16CategoryDto = this.storageService.get("Suite16Category");
+    return suite ? suite : new ISuite16CategoryDto();
   }
   set Suite16Category(value: ISuite16CategoryDto) {
-    localStorage.setItem("Suite16Category", JSON.stringify(value));
+    this.storageService.set("Suite16Category", value);
   }
 
   // Features
   get Features(): Array<IFeatureDto> {
-    let a: Array<IFeatureDto> = JSON.parse(localStorage.getItem("Features"));
-    if (a == undefined || a == null) {
-      return new Array<IFeatureDto>();
-    }
-    return a;
+    const feature: Array<IFeatureDto> = this.storageService.get("Features");
+    return feature ? feature : [];
   }
   set Features(value: Array<IFeatureDto>) {
-    localStorage.setItem("Features", JSON.stringify(value));
+    this.storageService.set("Features", value);
   }
 
   // Suite16CategoryLineitems
   get Suite16CategoryLineitems(): Array<ISuite16CategoryLineitemDto> {
-    let a: Array<ISuite16CategoryLineitemDto> = JSON.parse(localStorage.getItem("Suite16CategoryLineitems"));
-    if (a == undefined || a == null) {
-      return new Array<ISuite16CategoryLineitemDto>();
-    }
-    return a;
+    const suite: Array<ISuite16CategoryLineitemDto> = this.storageService.get("Suite16CategoryLineitems");
+    return suite ? suite : [];
   }
   set Suite16CategoryLineitems(value: Array<ISuite16CategoryLineitemDto>) {
-    localStorage.setItem("Suite16CategoryLineitems", JSON.stringify(value));
+    this.storageService.set("Suite16CategoryLineitems", value);
   }
 
   // SelectedSearchResult
   get SelectedSearchResultDetail(): ISearchResultDetailDto {
-    let a: ISearchResultDetailDto = JSON.parse(localStorage.getItem("SelectedSearchResultDetail"));
-    if (a == undefined || a == null) {
-      return {} as ISearchResultDetailDto;
-    }
-    return a;
+    const search: ISearchResultDetailDto = this.storageService.get("SelectedSearchResultDetail");
+    return search ? search : {} as ISearchResultDetailDto;
   }
   set SelectedSearchResultDetail(value: ISearchResultDetailDto) {
-    localStorage.setItem("SelectedSearchResultDetail", JSON.stringify(value));
+    this.storageService.set("SelectedSearchResultDetail", value);
   }
 
   // QueryParams
   get QueryParams(): any {
-    let a: any = JSON.parse(localStorage.getItem("QueryParams"));
-    if (a == undefined || a == null) {
-      return [];
-    }
-    return a;
+    const params: any = this.storageService.get("QueryParams");
+    return params ? params : [];
   }
   set QueryParams(value: any) {
-    localStorage.setItem("QueryParams", JSON.stringify(value));
+    this.storageService.set("QueryParams", value);
   }
 
   // IsPropertiesFetched
   get IsPropertiesFetched(): boolean {
-    let IsPropertiesFetched: boolean = JSON.parse(localStorage.getItem("IsPropertiesFetched"));
+    const IsPropertiesFetched: boolean = this.storageService.get("IsPropertiesFetched");
     return IsPropertiesFetched;
   }
   set IsPropertiesFetched(value: boolean) {
-    localStorage.setItem("IsPropertiesFetched", JSON.stringify(value));
+    this.storageService.set("IsPropertiesFetched", value);
   }
 
   // IsMy
   get IsMy(): boolean {
-    let IsMy: boolean = JSON.parse(localStorage.getItem("IsMy"));
+    const IsMy: boolean = this.storageService.get("IsMy");
     return IsMy;
   }
   set IsMy(value: boolean) {
-    localStorage.setItem("IsMy", JSON.stringify(value));
+    this.storageService.set("IsMy", value);
   }
 
   // IsWishlist
   get IsWishlist(): boolean {
-    let IsWishlist: boolean = JSON.parse(localStorage.getItem("IsWishlist"));
+    const IsWishlist: boolean = this.storageService.get("IsWishlist");
     return IsWishlist;
   }
   set IsWishlist(value: boolean) {
-    localStorage.setItem("IsWishlist", JSON.stringify(value));
+    this.storageService.set("IsWishlist", value);
   }
 
   // IsMy
   get IsSuggest(): boolean {
-    let IsSuggest: boolean = JSON.parse(localStorage.getItem("IsSuggest"));
+    const IsSuggest: boolean = this.storageService.get("IsSuggest");
     return IsSuggest;
   }
   set IsSuggest(value: boolean) {
-    localStorage.setItem("IsSuggest", JSON.stringify(value));
+    this.storageService.set("IsSuggest", value);
   }
 
   // ProfileItemImages
   get ProfileItemImages(): Array<ProfileItemImageDto> {
-    let ProfileItemImages: Array<ProfileItemImageDto> = JSON.parse(localStorage.getItem("ProfileItemImages"));
-    return ProfileItemImages;
+    const ProfileItemImages: Array<ProfileItemImageDto> = this.storageService.get("ProfileItemImages");
+    return ProfileItemImages ? ProfileItemImages : [];
   }
   set ProfileItemImages(value: Array<ProfileItemImageDto>) {
-    localStorage.setItem("ProfileItemImages", JSON.stringify(value));
+    this.storageService.set("ProfileItemImages", value);
   }
 
   // IsFirstLoadCompleted
   get IsFirstLoadCompleted(): boolean {
-    let IsFirstLoadCompleted: boolean = JSON.parse(localStorage.getItem("IsFirstLoadCompleted"));
+    const IsFirstLoadCompleted: boolean = this.storageService.get("IsFirstLoadCompleted");
     return IsFirstLoadCompleted;
   }
   set IsFirstLoadCompleted(value: boolean) {
-    localStorage.setItem("IsFirstLoadCompleted", JSON.stringify(value));
+    this.storageService.set("IsFirstLoadCompleted", value);
   }
 
   // IsSwitchingProperty
   get IsSwitchingProperty(): boolean {
-    let IsSwitchingProperty: boolean = JSON.parse(localStorage.getItem("IsSwitchingProperty"));
+    const IsSwitchingProperty: boolean = this.storageService.get("IsSwitchingProperty");
     return IsSwitchingProperty;
   }
   set IsSwitchingProperty(value: boolean) {
-    localStorage.setItem("IsSwitchingProperty", JSON.stringify(value));
+    this.storageService.set("IsSwitchingProperty", value);
   }
 
   // IsNewUserTypeSelected
   get IsNewUserTypeSelected(): boolean {
-    let IsNewUserTypeSelected: boolean = JSON.parse(localStorage.getItem("IsNewUserTypeSelected"));
+    const IsNewUserTypeSelected: boolean = this.storageService.get("IsNewUserTypeSelected");
     return IsNewUserTypeSelected;
   }
   set IsNewUserTypeSelected(value: boolean) {
-    localStorage.setItem("IsNewUserTypeSelected", JSON.stringify(value));
+    this.storageService.set("IsNewUserTypeSelected", value);
   }
 
   // NewSelectedUserType
   get NewSelectedUserTypeId(): number {
-    let a: any = JSON.parse(localStorage.getItem("NewSelectedUserTypeId"));
-    if (a == undefined || a == null || a == 0) {
-      return 0;
-    }
-    return a;
+    const user: any = this.storageService.get("NewSelectedUserTypeId");
+    return user ? user : 0;
   }
   set NewSelectedUserTypeId(value: number) {
-    localStorage.setItem("NewSelectedUserTypeId", JSON.stringify(value));
+    this.storageService.set("NewSelectedUserTypeId", value);
   }
 
   // CompanyInformation
   get CompanyInformation(): ICompanyInformationDto {
-    let a: any = JSON.parse(localStorage.getItem("CompanyInformation"));
-    if (a == undefined || a == null) {
-      return null;
-    }
-    return a;
+    const info: any = this.storageService.get("CompanyInformation");
+    return info;
   }
   set CompanyInformation(value: ICompanyInformationDto) {
-    localStorage.setItem("CompanyInformation", JSON.stringify(value));
+    this.storageService.set("CompanyInformation", value);
   }
 
   // ----------------------------------------------------------->
@@ -561,7 +456,8 @@ export class BasePage implements OnInit {
     public uxNotifierService: UxNotifierService,
     public userTypesService: UserTypesService,
     public featuresService: FeaturesService,
-    public inAppBrowser: InAppBrowser = null
+    public inAppBrowser: InAppBrowser = null,
+    public storageService: LocalStorageService
   ) {
     console.log("constructor BasePage");
   }
@@ -594,9 +490,9 @@ export class BasePage implements OnInit {
     // i did just make changes to the page so now have to check...
     //this.navController.setRoot(SearchPage);
 
-    localStorage.removeItem("ProfileItem");
-    localStorage.removeItem("LineItem");
-    localStorage.removeItem("ActiveItem");
+    this.storageService.delete("ProfileItem");
+    this.storageService.delete("LineItem");
+    this.storageService.delete("ActiveItem");
     this.router.navigate(["dashboard"]);
 
     // NOTE!!!!
@@ -621,7 +517,7 @@ export class BasePage implements OnInit {
 
   // Barcode
   public launchBarcode() {
-    localStorage.removeItem("ActiveAttachment");
+    this.storageService.delete("ActiveAttachment");
     //let navigationExtras: NavigationExtras = {
     //	queryParams: {
     //		type: 'barcode'
@@ -650,7 +546,7 @@ export class BasePage implements OnInit {
   public bookmark() {
     console.log("bookmark()");
     //this.AppInsights.trackTrace({ message: 'bookmark()' });
-    localStorage.removeItem("ActiveAttachment");
+    this.storageService.delete("ActiveAttachment");
     console.log(this.router.url);
     this.QueryParams = {
       type: "file",

@@ -8,6 +8,7 @@ import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.servi
 import { IMetattachTypeDto } from "../../../../models/dto/interfaces/IMetattachTypeDto";
 import { MetattachService } from "../../../../services/metattach/metattach.service";
 import { ActiveItem } from "./../../../../models/ActiveItem";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-create-metattach",
@@ -33,9 +34,10 @@ export class CreateMetattachPage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     private loadingCtrl: LoadingController,
     public override platform: Platform,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, uxNotifierService, null, null);
+    super(navCtrl, null, null, null, platform, router, uxNotifierService, null, null,null,storageService);
     this._constants = new Constants();
     this.TempActiveItem = this.ActiveItem;
   }

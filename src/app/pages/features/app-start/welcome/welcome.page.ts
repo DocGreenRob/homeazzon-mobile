@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { Constants } from "src/app/common/Constants";
@@ -33,9 +34,10 @@ export class WelcomePage extends BasePage {
     private userService: UserDetailsService,
     private privatelabelService: PrivateLabelService,
     public override menuController: MenuController,
-    public override platform: Platform
+    public override platform: Platform,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, null, null, null);
+    super(navCtrl, null, null, null, platform, router, null, null, null, null, storageService);
   }
 
   override ngOnInit() {
@@ -76,7 +78,7 @@ export class WelcomePage extends BasePage {
   private async getUserInformation() {
     let determinePathObj: IDeterminePathDto;
 
-    let authToken: IAuthTokenDto = JSON.parse(localStorage.getItem("AuthToken"));
+    let authToken: IAuthTokenDto = this.storageService.get('AuthToken');
     let expirationDate: any = new Date(authToken.Expires);
 
     if (expirationDate > new Date().getTime() / 1000) {

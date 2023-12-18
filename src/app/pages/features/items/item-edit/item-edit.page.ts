@@ -26,6 +26,7 @@ import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.servi
 import { IBookmarkDto } from "../../../../models/dto/interfaces/IBookmarkDto";
 import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-item-edit",
@@ -65,9 +66,10 @@ export class ItemEditPage extends BasePage {
     public alertCtrl: AlertController,
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
-    public override router: Router
+    public override router: Router,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null);
+    super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
   }
 
@@ -373,14 +375,12 @@ export class ItemEditPage extends BasePage {
   private processSelections() {
     // used for handling image saves to profile item
     if (this._type != "Bookmark") {
-      let x = localStorage.getItem("TempActiveItem");
-      let y = JSON.parse(x);
-      this.TempActiveItem = y;
+      this.TempActiveItem = this.storageService.get("TempActiveItem");
     }
 
     let originalProfileItem: IProfileItemDto = this.ProfileItem;
-    let selections = localStorage.getItem("Selections");
-    this._selections = JSON.parse(selections);
+    let selections = this.storageService.get("Selections");
+    this._selections = selections ? selections : [];
 
     let ctr: number = 0;
 
@@ -502,7 +502,7 @@ export class ItemEditPage extends BasePage {
 
         await this.barcodeService.postQrCode(this.TempActiveItem.QrCode).then(
           (x: AssetIndexDto) => {
-            localStorage.setItem("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", JSON.stringify(x));
             if (this._loading != undefined) {
               this._loading.dismiss();
             }
@@ -543,7 +543,7 @@ export class ItemEditPage extends BasePage {
 
         await this.barcodeService.postBarcodeProduct(this.TempActiveItem.Product).then(
           (x: AssetIndexDto) => {
-            localStorage.setItem("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", JSON.stringify(x));
             if (this._loading != undefined) {
               this._loading.dismiss();
             }
@@ -654,8 +654,8 @@ export class ItemEditPage extends BasePage {
                   if (this._loading != undefined) {
                     this._loading.dismiss();
                   }
-                  localStorage.setItem("SelectedFileContentType", this._selectedFile.mediaType);
-                  localStorage.setItem("SelectedFileURL", url);
+                  this.storageService.set("SelectedFileContentType", this._selectedFile.mediaType);
+                  this.storageService.set("SelectedFileURL", url);
                 })
                 .catch((x) => {
                   // add telemetry logging
@@ -668,7 +668,7 @@ export class ItemEditPage extends BasePage {
             (err) => {}
           );
         }
-        localStorage.setItem("TempActiveItem", JSON.stringify(this.TempActiveItem));
+        this.storageService.set("TempActiveItem", JSON.stringify(this.TempActiveItem));
         this.QueryParams = { Image: this.TempActiveItem.Image, type: this._type };
         this.router.navigate(["item-add"]);
       } else {
@@ -849,8 +849,8 @@ export class ItemEditPage extends BasePage {
     if (this.platform.is("mobileweb")) {
       await this.postDigiDocToApi(this.TempActiveItem.Image, "png", isSaveToRoom, profileItem, lineitem);
     } else {
-      let fileURL = localStorage.getItem("SelectedFileURL");
-      let fileContentType = localStorage.getItem("SelectedFileContentType");
+      let fileURL = this.storageService.get("SelectedFileURL");
+      let fileContentType = this.storageService.get("SelectedFileContentType");
 
       this.AppInsights.trackEvent({
         name: "Camera.saveDigiDocToFirebase()",
@@ -872,8 +872,8 @@ export class ItemEditPage extends BasePage {
           this._loading.dismiss();
         }
 
-        localStorage.removeItem("SelectedFileURL");
-        localStorage.removeItem("SelectedFileContentType");
+        this.storageService.delete("SelectedFileURL");
+        this.storageService.delete("SelectedFileContentType");
 
         await this.postDigiDocToApi(fileURL, fileContentType, isSaveToRoom, profileItem, lineitem);
       } else {
@@ -946,7 +946,7 @@ export class ItemEditPage extends BasePage {
     } else {
       this.itemService.upsertDigiDoc(digiDocDto, this.UserTypes).then(
         (x: AssetIndexDto) => {
-          localStorage.setItem("AssetIndex", JSON.stringify(x));
+          this.storageService.set("AssetIndex", JSON.stringify(x));
           if (this._loading != undefined) {
             this._loading.dismiss();
           }

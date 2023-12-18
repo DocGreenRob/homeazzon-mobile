@@ -9,6 +9,7 @@ import { ISearchProductRequestDto } from "src/app/models/dto/interfaces/ISearchP
 import { ISearchEngineRequestDto } from "src/app/models/dto/interfaces/ISearchEngineRequestDto";
 import { ISearchYouTubeRequestDto } from "src/app/models/dto/interfaces/ISearchYouTubeRequestDto";
 import { SearchResultDetailsPage } from "../search-result-details/search-result-details.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-search-results",
@@ -32,9 +33,10 @@ export class SearchResultsPage extends BasePage {
     public override platform: Platform,
     public override router: Router,
     private activeRoute: ActivatedRoute,
-    public override uxNotifierService: UxNotifierService
+    public override uxNotifierService: UxNotifierService,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, null, null, platform, router, uxNotifierService, null, null);
+    super(navController, null, null, null, platform, router, uxNotifierService, null, null,null,storageService);
   }
 
   override ngOnInit() {
