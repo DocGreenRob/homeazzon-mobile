@@ -147,11 +147,6 @@ export class AppComponent extends BasePage {
       }
 
       this.router.navigate(['login-success']);
-
-      // TODO: Put in login-success; don't route from here
-      setTimeout(() => {
-        this.router.navigate(['dashboard']);
-      }, 3000)
     });
   }
 

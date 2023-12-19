@@ -37,7 +37,28 @@ export class UserTypesSelectorPage extends BasePage {
   ) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
     this._constants = new Constants();
+  }
 
+  override ngOnInit() {
+    if (this.User?.Types?.length && this.User?.Types?.some((x) => x.Name !== this._constants.UserTypes.Unassigned)) {
+      this.router.navigate(["dashboard"]);
+    }
+    
+    if(this.UserTypes?.length){
+     this.filterUserTypes();
+    } else {
+      this.getUserTypes();
+    }
+  }
+
+  private async getUserTypes() {
+    this.userTypesService.getAllUserTypes().subscribe((response: Array<IUserTypeDto>) => {
+        this.UserTypes = response;
+        this.filterUserTypes();
+      });
+  }
+
+  filterUserTypes(){
     this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned);
     this.userTypesAnynomousType = this.userTypes;
 
@@ -53,8 +74,6 @@ export class UserTypesSelectorPage extends BasePage {
 
     this.profileItemImages = this.ProfileItemImages;
   }
-
-  override ngOnInit() {}
 
   public chooseRole(userTypeId: number) {
     let selectedUserType: IUserTypeDto = this.UserTypes.filter((x) => x.Id === userTypeId)[0];
