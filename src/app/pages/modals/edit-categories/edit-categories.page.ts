@@ -36,7 +36,7 @@ export class EditCategoriesPage extends BasePage {
   // TempActiveItem.Image
   public toggleCheck(event, suite16CategoryId, lineitem: ILineitemDto) {
     let isChecked: string = event.target.checked;
-    let newValue: string = (!isChecked).toString(); //== 'true' ? 'false' : 'true';
+    let newValue: string = (!isChecked)?.toString(); //== 'true' ? 'false' : 'true';
 
     //let suite16CategoryLineitem: ISuite16CategoryLineitemDto = this.suite16CategoriesAndLineitems.filter(x => x.Id == suite16CategoryId)[0];
     //let lineitem: ILineitemDto = suite16CategoryLineitem.Lineitems.filter(x => x.Id == lineitemId)[0];

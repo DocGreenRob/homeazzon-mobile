@@ -16,7 +16,7 @@ export class AuthGuardService {
     if (authToken == null) {
       navigate = false;
     } else {
-      let expiryDate = Date.parse(authToken.Expires.toString());
+      let expiryDate = Date.parse(authToken?.Expires?.toString());
       let now = Date.now();
       if (expiryDate < now) {
         navigate = false;

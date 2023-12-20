@@ -50,7 +50,7 @@ export class RedirectPage extends BasePage {
   }
 
   xyz(response: string) {
-    const tokenId = response.toString().split('id_token=').pop();
+    const tokenId = response?.toString()?.split('id_token=')?.pop();
     const decodedToken = jwt_decode(tokenId);
     console.log('claims', decodedToken);
 

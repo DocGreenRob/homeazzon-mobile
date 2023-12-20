@@ -284,7 +284,7 @@ export class FirebaseAuthService {
   }
 
   browserLoginHandler(response: string) {
-    const tokenId = response.toString().split('id_token=').pop();
+    const tokenId = response?.toString()?.split('id_token=')?.pop();
     console.log(tokenId);
     const decodedToken = jwt_decode(tokenId);
     console.log(decodedToken);
