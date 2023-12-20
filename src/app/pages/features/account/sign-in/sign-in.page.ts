@@ -137,7 +137,6 @@ export class SignInPage extends BasePage {
 
   initializeApp() {
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-      console.log('appUrlOpen:', event);
       if(event?.url) {
       this.firebaseAuthService.browserLoginHandler(event.url);
       }
