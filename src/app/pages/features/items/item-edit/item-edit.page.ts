@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 // import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 // import { Camera, CameraOptions } from "@awesome-cordova-plugins/camera/ngx";
-import { Camera, PermissionStatus } from "@capacitor/camera";
+import { Camera, CameraResultType, CameraSource, PermissionStatus, Photo } from "@capacitor/camera";
 // import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
 import { FilePicker, PickFilesOptions, PickFilesResult } from '@capawesome/capacitor-file-picker';
 import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
@@ -177,6 +177,40 @@ export class ItemEditPage extends BasePage {
       //     }
       //   }
       // );
+      Camera.checkPermissions().then((permissionStatus) => {
+        if (permissionStatus.camera === 'granted') {
+          Camera.getPhoto({
+            quality: 50,
+            resultType: CameraResultType.DataUrl,
+            source: CameraSource.Camera,
+            correctOrientation: true,
+            allowEditing: false
+          })
+          .then(
+            (imageData: Photo) => {
+              this.showImage = true;
+              this.TempActiveItem.Image = imageData.dataUrl;
+            },
+            (error) => {
+              console.log(error);
+              let sourceParams = this.QueryParams.sourceParamsCamera;
+              let componentName = this.QueryParams.sourceCamera;
+              if (componentName == "DashboardPage") {
+                this.router.navigate(["dashboard"]);
+              } else {
+                this.QueryParams = sourceParams;
+                this.router.navigate([componentName]);
+              }
+            }
+          );
+        } else {
+          Camera.requestPermissions().then((permission) => {
+            if (permission.camera === 'granted') {
+              this.launchCamera()
+            }
+          })
+        }
+      })
     }
   }
 
@@ -218,17 +252,17 @@ export class ItemEditPage extends BasePage {
     // } else {
       BarcodeScanner.checkPermission()
       .then((status) => {
-        // if (status.neverAsked) {
-        //   Camera.requestPermissions()
-        //   .then((permission: PermissionStatus) => {
-        //     if (permission.camera === 'granted') {
-        //       this.launchBarcode();
-        //     } else {
-        //       this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
-        //     }
-        //   })
-        //   return;
-        // }
+        if (status.neverAsked && Capacitor.isNativePlatform()) {
+          Camera.requestPermissions()
+          .then((permission: PermissionStatus) => {
+            if (permission.camera === 'granted') {
+              this.launchBarcode();
+            } else {
+              this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
+            }
+          })
+          return;
+        }
         if (status.granted || !Capacitor.isNativePlatform()) {
           BarcodeScanner.hideBackground();
           document.body.classList.add("qrscanner"); 
