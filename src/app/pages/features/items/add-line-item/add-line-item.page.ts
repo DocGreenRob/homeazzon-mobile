@@ -69,7 +69,7 @@ export class AddLineItemPage extends BasePage {
   }
 
   scrollToBottom() {
-    this.content.scrollToBottom(300);
+    this.content?.scrollToBottom(300);
   }
 
   getAllLineItems() {
@@ -264,7 +264,7 @@ export class AddLineItemPage extends BasePage {
       if (item.length > 0) {
         itemExists = true;
       }
-      if (x.IsChecked && !itemExists && x.Id != 0) {
+      if (x.IsChecked && itemExists && x.Id != 0) {
         LineitemIds.push(x.Id);
       }
 
