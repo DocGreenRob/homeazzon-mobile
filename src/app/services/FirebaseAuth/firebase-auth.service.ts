@@ -284,22 +284,22 @@ export class FirebaseAuthService {
   }
 
   browserLoginHandler(response: string) {
-    const tokenId = response?.toString()?.split('id_token=')?.pop();
-    console.log(tokenId);
-    const decodedToken = jwt_decode(tokenId);
-    console.log(decodedToken);
+    const tokenId = response.toString()?.split('id_token=')?.pop();
+    console.log("tokenId:", tokenId);
 
-    const userInfo = {
-      displayName: decodedToken['name'],
-      email: decodedToken['emails'][0],
-      emailVerified: true,
-      photoUrl: '',
-      uid: decodedToken['oid'],
-    };
-    console.log('Msal lgoin toekn ');
-
-    console.log(tokenId);
-
-    this.setUser(userInfo, 'microsoft', tokenId, '');
+    if(tokenId) {
+      const decodedToken = jwt_decode(tokenId);
+      console.log(decodedToken);
+  
+      const userInfo = {
+        displayName: decodedToken['name'],
+        email: decodedToken['emails'][0],
+        emailVerified: true,
+        photoUrl: '',
+        uid: decodedToken['oid'],
+      };
+      console.log('Msal lgoin toekn ');  
+      this.setUser(userInfo, 'microsoft', tokenId, '');
+    }
   }
 }

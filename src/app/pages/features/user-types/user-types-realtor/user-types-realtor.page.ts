@@ -71,7 +71,7 @@ export class UserTypesRealtorPage extends BasePage {
     this.streetAddress1 = this.streetAddress1.trim();
     this.streetAddress2 = this.streetAddress2.trim();
     this.city = this.city.trim();
-    this.zip = this.zip?.toString()?.trim();
+    this.zip = this.zip?.toString()?.trim() || "";
 
     if (
       this.companyName === "" ||

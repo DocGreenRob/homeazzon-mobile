@@ -12,15 +12,15 @@ export class AuthGuardService {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let navigate: boolean = true;
     let authToken: IAuthTokenDto = this.storageService.get('AuthToken');
-
-    if (authToken == null) {
-      navigate = false;
-    } else {
-      let expiryDate = Date.parse(authToken?.Expires?.toString());
+   
+    if (authToken?.Expires) {
+      let expiryDate = Date.parse(authToken.Expires.toString());
       let now = Date.now();
       if (expiryDate < now) {
         navigate = false;
       }
+    } else {
+      navigate = false;
     }
 
     if (navigate) {
