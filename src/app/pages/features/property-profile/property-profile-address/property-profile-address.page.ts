@@ -62,7 +62,7 @@ export class PropertyProfileAddressPage extends BasePage {
       address.State = this.state;
       address.Zip = this.zip;
       customProperty.Address = address;
-      this.storageService.set("CustomProperty", JSON.stringify(customProperty));
+      this.storageService.set("CustomProperty", customProperty);
       this.router.navigate(["property-profile-general-information"]);
     }
   }

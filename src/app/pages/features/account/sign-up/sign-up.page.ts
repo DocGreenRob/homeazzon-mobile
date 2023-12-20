@@ -9,7 +9,6 @@ import { IUserDto } from "../../../../models/dto/interfaces/IUserDto";
 import { AccountService } from "../../../../services/account/account.service";
 import { BasePage } from "../../../base/base.page";
 import { FirebaseUser } from "src/app/models/FirebaseUser";
-import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-sign-up",

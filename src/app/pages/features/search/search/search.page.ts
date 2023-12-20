@@ -92,7 +92,7 @@ export class SearchPage extends BasePage {
       if (this._originalProfileItem.Id === undefined) {
         this.storageService.delete("ProfileItem");
       } else {
-        this.storageService.set("ProfileItem", JSON.stringify(this._originalProfileItem));
+        this.storageService.set("ProfileItem", this._originalProfileItem);
       }
     }
     if (this._originalLineItem !== this.LineItem) {
@@ -121,7 +121,7 @@ export class SearchPage extends BasePage {
 
     if (this.CurrentView === "Room") {
       let profileItem: IProfileItemDto = { Id: this.selectedProfileItem.Id, Name: this.selectedProfileItem.Name };
-      this.storageService.set("ProfileItem", JSON.stringify(profileItem));
+      this.storageService.set("ProfileItem", profileItem);
     }
 
     let lineitem: ILineitemDto = { Id: this.selectedLineitem.Id, Name: this.selectedLineitem.Name };

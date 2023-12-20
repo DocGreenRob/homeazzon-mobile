@@ -187,7 +187,6 @@ export class FirebaseAuthService {
       //       return this.FirebaseUser;
       //     },
       //     async (error) => {
-      //       console.log(JSON.stringify(error));
       //       return false;
       //     }
       //   );
@@ -222,7 +221,7 @@ export class FirebaseAuthService {
     token: string = null,
     refreshToken: string = null
   ) {
-    console.log('UserInfo', JSON.stringify(userInfo));
+    console.log('UserInfo', userInfo);
     console.log('Provider', provider);
     console.log('token', token);
     console.log('refreshTokem', refreshToken);
@@ -271,7 +270,7 @@ export class FirebaseAuthService {
     return a;
   }
   set IdToken(value: IdTokenDto) {
-    this.storageService.set('IdToken', JSON.stringify(value));
+    this.storageService.set('IdToken', value);
   }
 
   // AuthToken
@@ -280,7 +279,7 @@ export class FirebaseAuthService {
     return a;
   }
   set AuthToken(value: IAuthTokenDto) {
-    this.storageService.set('AuthToken', JSON.stringify(value));
+    this.storageService.set('AuthToken', value);
   }
 
   browserLoginHandler(response: string) {
