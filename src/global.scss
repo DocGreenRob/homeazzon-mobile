@@ -99,6 +99,14 @@
 }
 
 
+.scanner-ui { display: none; }
+.scanner-hide { visibility: visible; }
+
+.qrscanner { background-color: transparent; }
+.qrscanner .scanner-ui { display: block; }
+.qrscanner .scanner-hide { visibility: hidden; }
+
+
 body,
 ion-title,
 ion-card-title,

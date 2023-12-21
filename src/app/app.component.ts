@@ -26,7 +26,6 @@ import { IAuthTokenDto } from './models/dto/interfaces/IAuthTokenDto';
 //import { JwtHelperService } from "@auth0/angular-jwt";
 import { Constants } from 'src/app/common/Constants';
 import Axios from 'axios';
-import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { IdTokenDto } from './models/dto/interfaces/IdTokenDto';
 import { ICompanyTypeDto } from './models/dto/interfaces/ICompanyTypeDto';
 import { CompanyTypesService } from './services/company-types/company-types.service';

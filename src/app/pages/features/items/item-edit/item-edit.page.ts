@@ -2,9 +2,12 @@ import { Location } from "@angular/common";
 import { Component } from "@angular/core";
 import { UploadTaskSnapshot } from "@angular/fire/compat/storage/interfaces";
 import { Router } from "@angular/router";
-import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
-import { Camera, CameraOptions } from "@awesome-cordova-plugins/camera/ngx";
-import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
+// import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
+import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
+// import { Camera, CameraOptions } from "@awesome-cordova-plugins/camera/ngx";
+import { Camera, CameraResultType, CameraSource, PermissionStatus, Photo } from "@capacitor/camera";
+// import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
+import { FilePicker, PickFilesOptions, PickFilesResult } from '@capawesome/capacitor-file-picker';
 import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { ActiveItem } from "src/app/models/ActiveItem";
@@ -26,6 +29,7 @@ import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.servi
 import { IBookmarkDto } from "../../../../models/dto/interfaces/IBookmarkDto";
 import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
+import { Capacitor } from "@capacitor/core";
 import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
@@ -53,16 +57,16 @@ export class ItemEditPage extends BasePage {
     private loadingCtrl: LoadingController,
     private itemService: ItemService,
     public override uxNotifierService: UxNotifierService,
-    private camera: Camera,
+    // private camera: Camera,
     private firebaseService: FirebaseUploadService,
-    private barcodeScanner: BarcodeScanner,
+    // private barcodeScanner: BarcodeScanner,
     private barcodeService: BarcodeService,
     private alertController: AlertController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
     private productService: ProductsService,
     public override platform: Platform,
-    private chooser: Chooser,
+    // private chooser: Chooser,
     public alertCtrl: AlertController,
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
@@ -95,6 +99,7 @@ export class ItemEditPage extends BasePage {
       console.log("abid you hit it with atahir")
       
       this.pageTitle = "Add Item";
+      console.log(this.pageTitle, this._type);
 
       switch (this._type) {
         case "camera":
@@ -148,167 +153,234 @@ export class ItemEditPage extends BasePage {
       this.TempActiveItem.Image = "assets/icon/Insert picture icon.svg";
       //this.TempActiveItem.Image = "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fcamera.svg?alt=media&token=e0af850d-247e-41a0-84ff-e6faa5e815b6";
     } else {
-      const options: CameraOptions = {
-        quality: 50,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
-        sourceType: this.camera.PictureSourceType.CAMERA,
-        correctOrientation: true,
-        allowEdit: false,
-      };
+      // const options: CameraOptions = {
+      //   quality: 50,
+      //   destinationType: this.camera.DestinationType.DATA_URL,
+      //   encodingType: this.camera.EncodingType.JPEG,
+      //   sourceType: this.camera.PictureSourceType.CAMERA,
+      //   correctOrientation: true,
+      //   allowEdit: false,
+      // };
 
-      this.camera.getPicture(options).then(
-        (imageData) => {
-          this.showImage = true;
-          this.TempActiveItem.Image = "data:image/jpeg;base64," + imageData;
-        },
-        (error) => {
-          console.log(error);
-          let sourceParams = this.QueryParams.sourceParamsCamera;
-          let componentName = this.QueryParams.sourceCamera;
-          if (componentName == "DashboardPage") {
-            this.router.navigate(["dashboard"]);
-          } else {
-            this.QueryParams = sourceParams;
-            this.router.navigate([componentName]);
-          }
+      // this.camera.getPicture(options).then(
+      //   (imageData) => {
+      //     this.showImage = true;
+      //     this.TempActiveItem.Image = "data:image/jpeg;base64," + imageData;
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //     let sourceParams = this.QueryParams.sourceParamsCamera;
+      //     let componentName = this.QueryParams.sourceCamera;
+      //     if (componentName == "DashboardPage") {
+      //       this.router.navigate(["dashboard"]);
+      //     } else {
+      //       this.QueryParams = sourceParams;
+      //       this.router.navigate([componentName]);
+      //     }
+      //   }
+      // );
+      Camera.checkPermissions().then((permissionStatus) => {
+        if (permissionStatus.camera === 'granted') {
+          Camera.getPhoto({
+            quality: 50,
+            resultType: CameraResultType.DataUrl,
+            source: CameraSource.Camera,
+            correctOrientation: true,
+            allowEditing: false
+          })
+          .then(
+            (imageData: Photo) => {
+              this.showImage = true;
+              this.TempActiveItem.Image = imageData.dataUrl;
+            },
+            (error) => {
+              console.log(error);
+              let sourceParams = this.QueryParams.sourceParamsCamera;
+              let componentName = this.QueryParams.sourceCamera;
+              if (componentName == "DashboardPage") {
+                this.router.navigate(["dashboard"]);
+              } else {
+                this.QueryParams = sourceParams;
+                this.router.navigate([componentName]);
+              }
+            }
+          );
+        } else {
+          Camera.requestPermissions().then((permission) => {
+            if (permission.camera === 'granted') {
+              this.launchCamera()
+            }
+          })
         }
-      );
+      })
     }
   }
 
   public override launchBarcode() {
-    if (this.platform.is("mobileweb")) {
-      let type: string = "UPC_A"; // QR_CODE
-      let barcode: string = "99999999";
-      this._scanType = type;
+    // if (this.platform.is("mobileweb")) {
+    //   let type: string = "UPC_A"; // QR_CODE
+    //   let barcode: string = "99999999";
+    //   this._scanType = type;
 
-      if (type === "UPC_A") {
-        // setup view
-        this.TempActiveItem.Image =
-          "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Fbarcode-alt.svg?alt=media&token=9a36a6dc-880c-45ee-971d-4b72a7a938dd";
-        this.TempActiveItem.AssetInfo.Title = "Dummy Product";
-        this.TempActiveItem.AssetInfo.Price = 9.99;
+    //   if (type === "UPC_A") {
+    //     // setup view
+    //     this.TempActiveItem.Image =
+    //       "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Fbarcode-alt.svg?alt=media&token=9a36a6dc-880c-45ee-971d-4b72a7a938dd";
+    //     this.TempActiveItem.AssetInfo.Title = "Dummy Product";
+    //     this.TempActiveItem.AssetInfo.Price = 9.99;
 
-        // setup Dto for Api
-        let product: IProductDto = {} as IProductDto;
-        product.Id = 0;
-        product.Name = this.TempActiveItem.AssetInfo.Title;
-        product.Image = this.TempActiveItem.Image;
-        product.BarCode = barcode;
-        product.BarCodeType = type;
-        product.Price = this.TempActiveItem.AssetInfo.Price;
-        this.TempActiveItem.Product = product;
-        this.showImage = true;
-      } else {
-        this.isQrCode = true;
+    //     // setup Dto for Api
+    //     let product: IProductDto = {} as IProductDto;
+    //     product.Id = 0;
+    //     product.Name = this.TempActiveItem.AssetInfo.Title;
+    //     product.Image = this.TempActiveItem.Image;
+    //     product.BarCode = barcode;
+    //     product.BarCodeType = type;
+    //     product.Price = this.TempActiveItem.AssetInfo.Price;
+    //     this.TempActiveItem.Product = product;
+    //     this.showImage = true;
+    //   } else {
+    //     this.isQrCode = true;
 
-        // setup view
-        this.TempActiveItem.Image =
-          "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
+    //     // setup view
+    //     this.TempActiveItem.Image =
+    //       "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
 
-        // setup Dto for Api
-        let qrCode: IQrCodeDto = {} as IQrCodeDto;
-        qrCode.Url = barcode;
-        this.TempActiveItem.QrCode = qrCode;
-      }
-    } else {
-      this.barcodeScanner
-        .scan()
-        .then((barcode) => {
-          this._scanType = barcode.format;
-          if (barcode.format != "QR_CODE") {
-            this.barcodeService.getBarCodeData(barcode.text).subscribe(
-              (response: any) => {
-                // setup view
-                this.TempActiveItem.Image = response.ImageUrl;
-                this.TempActiveItem.AssetInfo.Title = response.ProductName;
-                this.TempActiveItem.AssetInfo.Price = response.Price;
-
-                // setup Dto for Api
-                let product: IProductDto = {} as IProductDto;
-                product.Id = 0;
-                product.Name = response.ProductName;
-                product.Image = response.ImageUrl;
-                product.BarCode = barcode.text;
-                product.BarCodeType = barcode.format;
-                product.Price = response.Price;
-                this.TempActiveItem.Product = product;
-              },
-              async (err) => {
-                this.uxNotifierService.showToast("Upc Code not found!", this._constants.ToastColorBad);
-                const prompt = await this.alertController.create({
-                  header: "Take A Picture",
-                  message: "Upc Code was not found, Do you want to take a picture?",
-                  buttons: [
-                    {
-                      text: "No",
-                      handler: () => {
-                        this.navController.pop();
-                      },
+    //     // setup Dto for Api
+    //     let qrCode: IQrCodeDto = {} as IQrCodeDto;
+    //     qrCode.Url = barcode;
+    //     this.TempActiveItem.QrCode = qrCode;
+    //   }
+    // } else {
+      BarcodeScanner.checkPermission()
+      .then((status) => {
+        if (status.neverAsked && Capacitor.isNativePlatform()) {
+          Camera.requestPermissions()
+          .then((permission: PermissionStatus) => {
+            if (permission.camera === 'granted') {
+              this.launchBarcode();
+            } else {
+              this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
+            }
+          })
+          return;
+        }
+        if (status.granted || !Capacitor.isNativePlatform()) {
+          BarcodeScanner.hideBackground();
+          document.body.classList.add("qrscanner"); 
+          BarcodeScanner
+            .startScan()
+            .then((result: ScanResult) => {
+              document.body.classList.remove("qrscanner"); 
+              if (result.hasContent) {
+                this._scanType = result.format;
+                if (result.format != "QR_CODE") {
+                  this.barcodeService.getBarCodeData(result.content).subscribe(
+                    (response: any) => {
+                      // setup view
+                      this.TempActiveItem.Image = response.ImageUrl;
+                      this.TempActiveItem.AssetInfo.Title = response.ProductName;
+                      this.TempActiveItem.AssetInfo.Price = response.Price;
+  
+                      // setup Dto for Api
+                      let product: IProductDto = {} as IProductDto;
+                      product.Id = 0;
+                      product.Name = response.ProductName;
+                      product.Image = response.ImageUrl;
+                      product.BarCode = result.content;
+                      product.BarCodeType = result.format;
+                      product.Price = response.Price;
+                      this.TempActiveItem.Product = product;
                     },
-                    {
-                      text: "Yes",
-                      handler: () => {
-                        this._type = "camera";
-                        this.launchCamera();
-                      },
-                    },
-                  ],
-                });
-                await prompt.present();
+                    async (err) => {
+                      this.uxNotifierService.showToast("Upc Code not found!", this._constants.ToastColorBad);
+                      const prompt = await this.alertController.create({
+                        header: "Take A Picture",
+                        message: "Upc Code was not found, Do you want to take a picture?",
+                        buttons: [
+                          {
+                            text: "No",
+                            handler: () => {
+                              this.navController.pop();
+                            },
+                          },
+                          {
+                            text: "Yes",
+                            handler: () => {
+                              this._type = "camera";
+                              this.launchCamera();
+                            },
+                          },
+                        ],
+                      });
+                      await prompt.present();
+                    }
+                  );
+                } else {
+                  this.isQrCode = true;
+  
+                  // setup view
+                  this.TempActiveItem.Image =
+                    "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
+  
+                  // setup Dto for Api
+                  let qrCode: IQrCodeDto = {} as IQrCodeDto;
+                  qrCode.Url = result.content;
+                  this.TempActiveItem.QrCode = qrCode;
+                }
+              } else {
+
               }
-            );
-          } else {
-            this.isQrCode = true;
-
-            // setup view
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
-
-            // setup Dto for Api
-            let qrCode: IQrCodeDto = {} as IQrCodeDto;
-            qrCode.Url = barcode.text;
-            this.TempActiveItem.QrCode = qrCode;
-          }
-        })
-        .catch((err) => {
-          this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this._constants.ToastColorBad);
-        });
-    }
+            })
+            .catch((err) => {
+              this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this._constants.ToastColorBad);
+            });
+        } else {
+          this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
+        }
+      }) 
+      // }
   }
 
   public override async launchFileExplorer() {
-    let accept: ChooserOptions = {
-      mimeTypes:
-        "application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    const accept: PickFilesOptions = {
+      types: ["application/msword",
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "application/pdf",
+              "application/vnd.ms-excel",
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "application/vnd.ms-powerpoint",
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation"]
     };
-    await this.chooser
-      .getFile(accept)
-      .then((file) => {
-        if (file) {
-          if (file.mimeType == "application/pdf") {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-pdf.svg?alt=media&token=ec5d1f8a-8393-4b64-9a5b-5cc75ee01660";
-          } else if (file.mimeType == "application/msword" || file.mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-word.svg?alt=media&token=f2f34448-fefe-4cbe-bcc7-0e2fe9ae0ef2";
-          } else if (file.mimeType == "application/vnd.ms-excel" || file.mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-excel.svg?alt=media&token=853b9d8f-3040-4540-8e7a-a33da225e793";
-          } else if (
-            file.mimeType == "application/vnd.ms-powerpoint" ||
-            file.mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          ) {
-            this.TempActiveItem.Image =
-              "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-powerpoint.svg?alt=media&token=a603f641-db7d-408c-8622-ed0c628cbe7e";
-          } else if (file.mimeType == "image/png" || file.mimeType == "image/jpeg") {
-            this.TempActiveItem.Image = file.path;
+    await FilePicker
+      .pickFiles(accept)
+      .then((result: PickFilesResult) => {
+        if (result.files.length > 0) {
+          const file = result.files[0];
+          if (file) {
+            if (file.mimeType == "application/pdf") {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-pdf.svg?alt=media&token=ec5d1f8a-8393-4b64-9a5b-5cc75ee01660";
+            } else if (file.mimeType == "application/msword" || file.mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-word.svg?alt=media&token=f2f34448-fefe-4cbe-bcc7-0e2fe9ae0ef2";
+            } else if (file.mimeType == "application/vnd.ms-excel" || file.mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-excel.svg?alt=media&token=853b9d8f-3040-4540-8e7a-a33da225e793";
+            } else if (
+              file.mimeType == "application/vnd.ms-powerpoint" ||
+              file.mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            ) {
+              this.TempActiveItem.Image =
+                "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ffile-powerpoint.svg?alt=media&token=a603f641-db7d-408c-8622-ed0c628cbe7e";
+            } else if (file.mimeType == "image/png" || file.mimeType == "image/jpeg") {
+              this.TempActiveItem.Image = file.path;
+            }
+  
+            this._selectedFile = file;
+          } else {
+            this.fileUploadExceptionHandler();
           }
-
-          this._selectedFile = file;
-        } else {
-          this.fileUploadExceptionHandler();
         }
       })
       .catch(() => {

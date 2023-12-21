@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 // TODO: remove the '../../..' and use the "~" or whatever
 // TODO: remove the " and use '
-import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
@@ -51,7 +50,6 @@ export class SignInPage extends BasePage {
 
   constructor(
     private safariViewController: SafariViewController,
-    private deeplinks: Deeplinks,
     private authService: AuthService,
     // ionic
     public override platform: Platform,
