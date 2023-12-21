@@ -54,11 +54,11 @@ export class AttachmentsPage extends BasePage {
     });
     await this._loading.present();
 
-    this.storageService.set("IsMetattachment", JSON.stringify(true));
+    this.storageService.set("IsMetattachment", true);
 
     this.metattachService.getMetattachments(this.ActiveItem.AssetInfo.Id).then(
       (response: Array<Array<IMetattachmentDto>>) => {
-        this.storageService.set("Metattachments", JSON.stringify(response));
+        this.storageService.set("Metattachments", response);
 
         let grid: IGrid = { Lists: [] };
         let gridList: IGridList = null;

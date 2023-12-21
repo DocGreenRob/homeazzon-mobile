@@ -50,7 +50,8 @@ export class RedirectPage extends BasePage {
   }
 
   xyz(response: string) {
-    const tokenId = response.toString().split('id_token=').pop();
+    const tokenId = response.toString()?.split('id_token=')?.pop();
+   if(tokenId) {
     const decodedToken = jwt_decode(tokenId);
     console.log('claims', decodedToken);
 
@@ -67,6 +68,7 @@ export class RedirectPage extends BasePage {
     myAuthToken.Expires = Date.now() + 9548798453100;
     myAuthToken.Expires_in = 9086400;
     this.AuthToken = myAuthToken;
+    }
   }
 
   next() {

@@ -187,7 +187,6 @@ export class FirebaseAuthService {
       //       return this.FirebaseUser;
       //     },
       //     async (error) => {
-      //       console.log(JSON.stringify(error));
       //       return false;
       //     }
       //   );
@@ -222,7 +221,7 @@ export class FirebaseAuthService {
     token: string = null,
     refreshToken: string = null
   ) {
-    console.log('UserInfo', JSON.stringify(userInfo));
+    console.log('UserInfo', userInfo);
     console.log('Provider', provider);
     console.log('token', token);
     console.log('refreshTokem', refreshToken);
@@ -271,7 +270,7 @@ export class FirebaseAuthService {
     return a;
   }
   set IdToken(value: IdTokenDto) {
-    this.storageService.set('IdToken', JSON.stringify(value));
+    this.storageService.set('IdToken', value);
   }
 
   // AuthToken
@@ -280,26 +279,26 @@ export class FirebaseAuthService {
     return a;
   }
   set AuthToken(value: IAuthTokenDto) {
-    this.storageService.set('AuthToken', JSON.stringify(value));
+    this.storageService.set('AuthToken', value);
   }
 
   browserLoginHandler(response: string) {
-    const tokenId = response.toString().split('id_token=').pop();
-    console.log(tokenId);
-    const decodedToken = jwt_decode(tokenId);
-    console.log(decodedToken);
+    const tokenId = response.toString()?.split('id_token=')?.pop();
+    console.log("tokenId:", tokenId);
 
-    const userInfo = {
-      displayName: decodedToken['name'],
-      email: decodedToken['emails'][0],
-      emailVerified: true,
-      photoUrl: '',
-      uid: decodedToken['oid'],
-    };
-    console.log('Msal lgoin toekn ');
-
-    console.log(tokenId);
-
-    this.setUser(userInfo, 'microsoft', tokenId, '');
+    if(tokenId) {
+      const decodedToken = jwt_decode(tokenId);
+      console.log(decodedToken);
+  
+      const userInfo = {
+        displayName: decodedToken['name'],
+        email: decodedToken['emails'][0],
+        emailVerified: true,
+        photoUrl: '',
+        uid: decodedToken['oid'],
+      };
+      console.log('Msal lgoin toekn ');  
+      this.setUser(userInfo, 'microsoft', tokenId, '');
+    }
   }
 }
