@@ -84,7 +84,8 @@ export class AppComponent extends BasePage {
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
     private iab: InAppBrowser,
-    public override storageService: LocalStorageService
+    public override storageService: LocalStorageService,
+    private accountService: AccountService
     ) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
@@ -140,10 +141,13 @@ export class AppComponent extends BasePage {
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
 
-      if (this.User !== undefined && this.User !== null && this.User.UserName !== undefined && this.User.UserName !== null && this.User.UserName !== '') {
+      if (this.User?.UserName?.length) {
         this.displayName = this.User.UserName;
       } else {
-        this.displayName = '';
+        this.accountService.getUser().then((user) => {
+          this.User = user;
+          this.displayName = this.User.UserName;
+        }).catch((e) => {});
       }
 
       this.router.navigate(['login-success']);
