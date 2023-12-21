@@ -188,7 +188,7 @@ export class ItemAddPage extends BasePage {
       }
     });
 
-    this.storageService.set("Selections", JSON.stringify(selections));
+    this.storageService.set("Selections", selections);
 
     if (this._type == "Bookmark") {
       let activeItem: ActiveItem = new ActiveItem();
@@ -217,7 +217,7 @@ export class ItemAddPage extends BasePage {
     //		this._type != 'Google Web') {
     //		console.log('selections', selections);
 
-    //		this.storageService.set('Selections', JSON.stringify(selections));
+    //		this.storageService.set('Selections', selections);
 
     //		this.navController.push('ItemEditPage',
     //			{
@@ -431,7 +431,7 @@ export class ItemAddPage extends BasePage {
         searchResultDto.ProductDetails = productDetails;
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this._type;
-        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", lastSavedItem);
 
         if (this._type === "Amazon") {
           await this.searchService.saveAmazonData(searchResultDto).then(
@@ -473,7 +473,7 @@ export class ItemAddPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this._type;
-        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", lastSavedItem);
 
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {},
@@ -502,7 +502,7 @@ export class ItemAddPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this._type;
-        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", lastSavedItem);
 
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {},

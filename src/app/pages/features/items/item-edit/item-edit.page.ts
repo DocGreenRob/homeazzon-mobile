@@ -502,7 +502,7 @@ export class ItemEditPage extends BasePage {
 
         await this.barcodeService.postQrCode(this.TempActiveItem.QrCode).then(
           (x: AssetIndexDto) => {
-            this.storageService.set("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", x);
             if (this._loading != undefined) {
               this._loading.dismiss();
             }
@@ -543,7 +543,7 @@ export class ItemEditPage extends BasePage {
 
         await this.barcodeService.postBarcodeProduct(this.TempActiveItem.Product).then(
           (x: AssetIndexDto) => {
-            this.storageService.set("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", x);
             if (this._loading != undefined) {
               this._loading.dismiss();
             }
@@ -668,7 +668,7 @@ export class ItemEditPage extends BasePage {
             (err) => {}
           );
         }
-        this.storageService.set("TempActiveItem", JSON.stringify(this.TempActiveItem));
+        this.storageService.set("TempActiveItem", this.TempActiveItem);
         this.QueryParams = { Image: this.TempActiveItem.Image, type: this._type };
         this.router.navigate(["item-add"]);
       } else {
@@ -946,7 +946,7 @@ export class ItemEditPage extends BasePage {
     } else {
       this.itemService.upsertDigiDoc(digiDocDto, this.UserTypes).then(
         (x: AssetIndexDto) => {
-          this.storageService.set("AssetIndex", JSON.stringify(x));
+          this.storageService.set("AssetIndex", x);
           if (this._loading != undefined) {
             this._loading.dismiss();
           }

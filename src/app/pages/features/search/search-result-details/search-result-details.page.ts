@@ -138,12 +138,12 @@ export class SearchResultDetailsPage extends BasePage {
         searchResultDto.ProductDetails = productDetails;
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this.source;
-        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", lastSavedItem);
 
         if (this.source === "Amazon") {
           await this.searchService.saveAmazonData(searchResultDto).then(
             (x: AssetIndexDto) => {
-              this.storageService.set("AssetIndex", JSON.stringify(x));
+              this.storageService.set("AssetIndex", x);
               this._loading.dismiss();
               this.uxNotifierService.showToast("Amazon product saved successfully!", this._constants.ToastColorGood);
             },
@@ -162,7 +162,7 @@ export class SearchResultDetailsPage extends BasePage {
         if (this.source === "Google Shopping") {
           await this.searchService.saveGoogleProductData(searchResultDto).then(
             (x: AssetIndexDto) => {
-              this.storageService.set("AssetIndex", JSON.stringify(x));
+              this.storageService.set("AssetIndex", x);
               this.uxNotifierService.showToast("Google product saved successfully!", this._constants.ToastColorGood);
               this._loading.dismiss();
             },
@@ -187,11 +187,11 @@ export class SearchResultDetailsPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this.source;
-        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", lastSavedItem);
 
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {
-            this.storageService.set("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", x);
             this._loading.dismiss();
             this.uxNotifierService.showToast("Google results were saved successfully!", this._constants.ToastColorGood);
           },
@@ -220,13 +220,13 @@ export class SearchResultDetailsPage extends BasePage {
 
         lastSavedItem = searchResultDto;
         lastSavedItem.Type = this.source;
-        this.storageService.set("LastSavedItem", JSON.stringify(lastSavedItem));
+        this.storageService.set("LastSavedItem", lastSavedItem);
 
         this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + this.result.VideoID);
 
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {
-            this.storageService.set("AssetIndex", JSON.stringify(x));
+            this.storageService.set("AssetIndex", x);
             this._loading.dismiss();
             this.uxNotifierService.showToast("YouTube video saved successfully!", this._constants.ToastColorGood);
           },
@@ -248,7 +248,7 @@ export class SearchResultDetailsPage extends BasePage {
     if (!this.IsMetattachment) {
       this.router.navigate(["items"]);
     } else {
-      this.storageService.set("ActiveItem", JSON.stringify(this.ActiveItem));
+      this.storageService.set("ActiveItem", this.ActiveItem);
       this.router.navigate(["create-metattach"]);
     }
   }
