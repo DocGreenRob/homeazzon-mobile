@@ -21,6 +21,7 @@ import { PropertyProfilesService } from "src/app/services/property-profile/prope
 import { UserTypesService } from "src/app/services/user-types/user-types.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { ProfileItemImageDto } from "../../../../models/dto/ProfileItemImageDto";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: 'app-master-bedroom-category',
@@ -74,9 +75,10 @@ export class MasterBedroomCategoryComponent  extends BasePage {
     public override userTypesService: UserTypesService,
     public profileItemImageService: ProfileItemImageService,
     public editCategoriesPage: EditCategoriesPage,
-    public override inAppBrowser: InAppBrowser
+    public override inAppBrowser: InAppBrowser,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
     this.constants = new Constants();
   }
 

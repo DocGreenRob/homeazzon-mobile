@@ -9,6 +9,7 @@ import { Storage } from "@ionic/storage";
 import { Constants } from "src/app/common/Constants";
 import { IRoomTypeDto } from "src/app/models/dto/interfaces/IRoomTypeDto";
 import { IPropertyDto } from "src/app/models/dto/interfaces/IPropertyDto";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-property-profile-bedrooms",
@@ -37,9 +38,10 @@ export class PropertyProfileBedroomsPage extends BasePage {
     public override platform: Platform,
     public override router: Router,
     private activeRoute: ActivatedRoute,
-    private prePreConstruction: PropertyProfilesService
+    private prePreConstruction: PropertyProfilesService,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, null, null, null);
+    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
     this.constants = new Constants();
   }
 

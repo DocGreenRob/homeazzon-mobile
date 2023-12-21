@@ -5,6 +5,7 @@ import { IAuthTokenDto } from '../../models/dto/interfaces/IAuthTokenDto';
 import { IUserDto } from '../../models/dto/interfaces/IUserDto';
 import { AccountService } from '../../services/account/account.service';
 import { BasePage } from '../base/base.page';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Component({
   selector: 'app-redirect',
@@ -18,6 +19,7 @@ export class RedirectPage extends BasePage {
     public override router: Router,
     // services
     private accountService: AccountService,
+    public override storageService: LocalStorageService
   ) {
     super(
       null,
@@ -29,7 +31,8 @@ export class RedirectPage extends BasePage {
       null,
       null,
       null,
-      null
+      null,
+      storageService
     );
   }
 
@@ -47,7 +50,8 @@ export class RedirectPage extends BasePage {
   }
 
   xyz(response: string) {
-    const tokenId = response.toString().split('id_token=').pop();
+    const tokenId = response.toString()?.split('id_token=')?.pop();
+   if(tokenId) {
     const decodedToken = jwt_decode(tokenId);
     console.log('claims', decodedToken);
 
@@ -64,6 +68,7 @@ export class RedirectPage extends BasePage {
     myAuthToken.Expires = Date.now() + 9548798453100;
     myAuthToken.Expires_in = 9086400;
     this.AuthToken = myAuthToken;
+    }
   }
 
   next() {

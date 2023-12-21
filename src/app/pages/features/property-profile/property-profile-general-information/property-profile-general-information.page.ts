@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { IPropertyDto } from "src/app/models/dto/interfaces/IPropertyDto";
@@ -15,8 +16,9 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   public property: IPropertyDto;
   constants = new Constants();
 
-  constructor(public navCtrl: NavController, public override platform: Platform, public override router: Router, private toast: UxNotifierService) {
-    super(navCtrl, null, null, null, platform, router, null, null, null);
+  constructor(public navCtrl: NavController, public override platform: Platform, public override router: Router, private toast: UxNotifierService, public override storageService: LocalStorageService
+    ) {
+    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
     this.constants = new Constants();
 
     this.property = {} as IPropertyDto;
@@ -63,18 +65,14 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       this.toast.showToast("Please enter a name", this.constants.ToastColorBad);
       return;
     }
-
-    let customProperty = this.CustomProperty;
-
-    if (customProperty == null) {
-      customProperty = {} as IPropertyDto;
+    
+    if (this.CustomProperty == null) {
+      this.CustomProperty = {} as IPropertyDto;
     }
 
-    customProperty.TotalStories = this.property.TotalStories;
-    customProperty.SqFt = this.property.SqFt;
-    customProperty.Name = this.property.Name;
+    const {TotalStories, SqFt, Name} = this.property;
 
-    this.CustomProperty = customProperty;
+    this.CustomProperty = { TotalStories, SqFt, Name, ...this.CustomProperty};
 
     this.router.navigate(["property-profile-bedrooms"]);
   }

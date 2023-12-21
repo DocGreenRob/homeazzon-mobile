@@ -10,6 +10,7 @@ import { FeaturesService } from "../../../../services/features/features.service"
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-user-types-selector",
@@ -31,11 +32,33 @@ export class UserTypesSelectorPage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     public override userTypesService: UserTypesService,
     public override inAppBrowser: InAppBrowser,
-    public override featuresService: FeaturesService
+    public override featuresService: FeaturesService,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
     this._constants = new Constants();
+  }
 
+  override ngOnInit() {
+    if (this.User?.Types?.length && this.User?.Types?.some((x) => x.Name !== this._constants.UserTypes.Unassigned)) {
+      this.router.navigate(["dashboard"]);
+    }
+    
+    if(this.UserTypes?.length){
+     this.filterUserTypes();
+    } else {
+      this.getUserTypes();
+    }
+  }
+
+  private async getUserTypes() {
+    this.userTypesService.getAllUserTypes().subscribe((response: Array<IUserTypeDto>) => {
+        this.UserTypes = response;
+        this.filterUserTypes();
+      });
+  }
+
+  filterUserTypes(){
     this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned);
     this.userTypesAnynomousType = this.userTypes;
 
@@ -51,8 +74,6 @@ export class UserTypesSelectorPage extends BasePage {
 
     this.profileItemImages = this.ProfileItemImages;
   }
-
-  override ngOnInit() {}
 
   public chooseRole(userTypeId: number) {
     let selectedUserType: IUserTypeDto = this.UserTypes.filter((x) => x.Id === userTypeId)[0];

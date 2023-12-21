@@ -9,6 +9,7 @@ import { BasePage } from "src/app/pages/base/base.page";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { Constants } from "./../../../../common/Constants";
 import { MetattachService } from "./../../../../services/metattach/metattach.service";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-attachments",
@@ -30,9 +31,10 @@ export class AttachmentsPage extends BasePage {
     private activeRouter: ActivatedRoute,
     public override inAppBrowser: InAppBrowser,
     public override platform: Platform,
-    public override uxNotifierService: UxNotifierService
+    public override uxNotifierService: UxNotifierService,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, null, null, platform, router, uxNotifierService, null, null, inAppBrowser);
+    super(navController, null, null, null, platform, router, uxNotifierService, null, null, inAppBrowser, storageService);
   }
 
   override ngOnInit() {
@@ -52,11 +54,11 @@ export class AttachmentsPage extends BasePage {
     });
     await this._loading.present();
 
-    localStorage.setItem("IsMetattachment", JSON.stringify(true));
+    this.storageService.set("IsMetattachment", true);
 
     this.metattachService.getMetattachments(this.ActiveItem.AssetInfo.Id).then(
       (response: Array<Array<IMetattachmentDto>>) => {
-        localStorage.setItem("Metattachments", JSON.stringify(response));
+        this.storageService.set("Metattachments", response);
 
         let grid: IGrid = { Lists: [] };
         let gridList: IGridList = null;

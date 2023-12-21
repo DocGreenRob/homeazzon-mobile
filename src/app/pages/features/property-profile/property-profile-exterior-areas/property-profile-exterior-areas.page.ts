@@ -16,6 +16,7 @@ import { AccountService } from "../../../../services/account/account.service";
 import { CacheService } from "../../../../services/cache/cache.service";
 import { CompanyInformationService } from "../../../../services/company-information/company-information.service";
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-property-profile-exterior-areas",
@@ -62,9 +63,10 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     private cacheService: CacheService,
     public override userTypesService: UserTypesService,
     private accountService: AccountService,
-    private companyInformationService: CompanyInformationService
+    private companyInformationService: CompanyInformationService,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, toast, null, null);
+    super(navCtrl, null, null, null, platform, router, toast, null, null,null,storageService);
     this.constants = new Constants();
   }
 

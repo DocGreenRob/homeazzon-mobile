@@ -15,6 +15,7 @@ import {
   AppleSignInResponse,
 } from '@awesome-cordova-plugins/sign-in-with-apple/ngx';
 import firebase from 'firebase/compat/app';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,8 @@ export class FirebaseAuthService {
     private platform: Platform,
 
     private appleSignIn: SignInWithApple,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private storageService: LocalStorageService
   ) {
     this.listenAuthStateChange();
   }
@@ -89,7 +91,7 @@ export class FirebaseAuthService {
   async logOut() {
     return this.auth.signOut().then(
       async (x) => {
-        localStorage.clear();
+        this.storageService.clear();
         this.storage.clear();
         window.dispatchEvent(new CustomEvent('user:loggedOut'));
         this.router.navigate(['sign-in']);
@@ -102,18 +104,16 @@ export class FirebaseAuthService {
   }
 
   get FirebaseUser(): FirebaseUser {
-    const user = localStorage.getItem('FirebaseUser');
-    if (user != null) {
-      return JSON.parse(user) as FirebaseUser;
-    }
-    return null;
+    const user: FirebaseUser = this.storageService.get('FirebaseUser');
+    return user
   }
 
   set FirebaseUser(value: FirebaseUser) {
-    if (value == null) {
-      localStorage.removeItem('FirebaseUser');
+    if (!value) {
+      this.storageService.delete('FirebaseUser');
+    }else{
+      this.storageService.set('FirebaseUser', value);
     }
-    localStorage.setItem('FirebaseUser', JSON.stringify(value));
   }
 
   signInGoogle() {
@@ -187,7 +187,6 @@ export class FirebaseAuthService {
       //       return this.FirebaseUser;
       //     },
       //     async (error) => {
-      //       console.log(JSON.stringify(error));
       //       return false;
       //     }
       //   );
@@ -222,7 +221,7 @@ export class FirebaseAuthService {
     token: string = null,
     refreshToken: string = null
   ) {
-    console.log('UserInfo', JSON.stringify(userInfo));
+    console.log('UserInfo', userInfo);
     console.log('Provider', provider);
     console.log('token', token);
     console.log('refreshTokem', refreshToken);
@@ -267,45 +266,39 @@ export class FirebaseAuthService {
 
   // IdToken
   get IdToken(): IdTokenDto {
-    let a: IdTokenDto = JSON.parse(localStorage.getItem('IdToken'));
-    if (a == undefined || a == null) {
-      return null;
-    }
+    const a: IdTokenDto = this.storageService.get('IdToken');
     return a;
   }
   set IdToken(value: IdTokenDto) {
-    localStorage.setItem('IdToken', JSON.stringify(value));
+    this.storageService.set('IdToken', value);
   }
 
   // AuthToken
   get AuthToken(): IAuthTokenDto {
-    let a: IAuthTokenDto = JSON.parse(localStorage.getItem('AuthToken'));
-    if (a == undefined || a == null) {
-      return null;
-    }
+    const a: IAuthTokenDto = this.storageService.get('AuthToken');
     return a;
   }
   set AuthToken(value: IAuthTokenDto) {
-    localStorage.setItem('AuthToken', JSON.stringify(value));
+    this.storageService.set('AuthToken', value);
   }
 
   browserLoginHandler(response: string) {
-    const tokenId = response.toString().split('id_token=').pop();
-    console.log(tokenId);
-    const decodedToken = jwt_decode(tokenId);
-    console.log(decodedToken);
+    const tokenId = response.toString()?.split('id_token=')?.pop();
+    console.log("tokenId:", tokenId);
 
-    const userInfo = {
-      displayName: decodedToken['name'],
-      email: decodedToken['emails'][0],
-      emailVerified: true,
-      photoUrl: '',
-      uid: decodedToken['oid'],
-    };
-    console.log('Msal lgoin toekn ');
-
-    console.log(tokenId);
-
-    this.setUser(userInfo, 'microsoft', tokenId, '');
+    if(tokenId) {
+      const decodedToken = jwt_decode(tokenId);
+      console.log(decodedToken);
+  
+      const userInfo = {
+        displayName: decodedToken['name'],
+        email: decodedToken['emails'][0],
+        emailVerified: true,
+        photoUrl: '',
+        uid: decodedToken['oid'],
+      };
+      console.log('Msal lgoin toekn ');  
+      this.setUser(userInfo, 'microsoft', tokenId, '');
+    }
   }
 }

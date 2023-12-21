@@ -15,6 +15,7 @@ import { NavController, LoadingController, MenuController, ModalController, Plat
 import { Router } from "@angular/router";
 import { BasePage } from "src/app/pages/base/base.page";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-add-line-item",
@@ -47,10 +48,10 @@ export class AddLineItemPage extends BasePage {
     public override userTypesService: UserTypesService,
     public profileItemImageService: ProfileItemImageService,
     public editCategoriesPage: EditCategoriesPage,
-
+    public override storageService: LocalStorageService,
     public override inAppBrowser: InAppBrowser
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
     this.constants = new Constants();
   }
 
@@ -68,7 +69,7 @@ export class AddLineItemPage extends BasePage {
   }
 
   scrollToBottom() {
-    this.content.scrollToBottom(300);
+    this.content?.scrollToBottom(300);
   }
 
   getAllLineItems() {
@@ -263,7 +264,7 @@ export class AddLineItemPage extends BasePage {
       if (item.length > 0) {
         itemExists = true;
       }
-      if (x.IsChecked && !itemExists && x.Id != 0) {
+      if (x.IsChecked && itemExists && x.Id != 0) {
         LineitemIds.push(x.Id);
       }
 

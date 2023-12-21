@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { AlertController, LoadingController, MenuController, ModalController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { Constants } from "src/app/common/Constants";
@@ -60,9 +61,10 @@ export class EditProfilePage extends BasePage {
     public override router: Router,
     private activeRoute: ActivatedRoute,
     public override menuController: MenuController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, menuController, platform, router, toast, null, null);
+    super(navCtrl, null, null, menuController, platform, router, toast, null, null, null, storageService);
     this.constants = new Constants();
   }
 
@@ -268,7 +270,7 @@ export class EditProfilePage extends BasePage {
   success(override: boolean = false) {
     this.loading.dismiss();
     this.toast.showToast("Property profile was updated successfully", this.constants.ToastColorGood);
-    //localStorage.setItem("restart", "true");
+    //this.storageService.setItem("restart", "true");
     let navExtras: NavigationExtras = {
       queryParams: {
         refreshActiveProperty: true,

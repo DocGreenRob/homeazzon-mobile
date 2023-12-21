@@ -37,6 +37,7 @@ import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.servi
 //import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 //import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { LocalStorageService } from './services/local-storage.service';
 //import { EventMessage, EventType } from '@azure/msal-browser';
 @Component({
   selector: 'app-root',
@@ -81,8 +82,10 @@ export class AppComponent extends BasePage {
     public override router: Router,
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
-    private iab: InAppBrowser) {
-    super(null, null, communicator, menu, platform, router, null, null, null);
+    private iab: InAppBrowser,
+    public override storageService: LocalStorageService
+    ) {
+    super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
       // Okay, so the platform is ready and our plugins are available.
@@ -143,11 +146,6 @@ export class AppComponent extends BasePage {
       }
 
       this.router.navigate(['login-success']);
-
-      // TODO: Put in login-success; don't route from here
-      setTimeout(() => {
-        this.router.navigate(['dashboard']);
-      }, 3000)
     });
   }
 
@@ -229,7 +227,7 @@ export class AppComponent extends BasePage {
 
   async viewProperty(p: IPropertyDto) {
     await this.communicator.sendSelectedProperty(p);
-    localStorage.removeItem('Lineitems');
+    this.storageService.delete('Lineitems');
     this.menu.close('propertyMenu');
   }
 }

@@ -12,6 +12,7 @@ import { StaticDataProvider } from "../../../../services/static-data/static-data
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
+import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
   selector: "app-user-types-realtor",
@@ -42,9 +43,10 @@ export class UserTypesRealtorPage extends BasePage {
     public override featuresService: FeaturesService,
     public override inAppBrowser: InAppBrowser,
     private staticDataService: StaticDataProvider,
-    private location: Location
+    private location: Location,
+    public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
     console.log("ionViewDidLoad UserTypesOwnerPage");
 
     this.staticDataService.getStates().then(
@@ -69,7 +71,7 @@ export class UserTypesRealtorPage extends BasePage {
     this.streetAddress1 = this.streetAddress1.trim();
     this.streetAddress2 = this.streetAddress2.trim();
     this.city = this.city.trim();
-    this.zip = this.zip.toString().trim();
+    this.zip = this.zip?.toString()?.trim() || "";
 
     if (
       this.companyName === "" ||

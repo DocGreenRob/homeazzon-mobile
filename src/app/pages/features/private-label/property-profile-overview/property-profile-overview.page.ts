@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { AlertController, LoadingController, ModalController, NavController } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { ILinkDto } from "src/app/models/dto/interfaces/ILinkDto";
@@ -28,9 +29,10 @@ export class PropertyProfileOverviewPage extends BasePage {
     private activeRoute: ActivatedRoute,
     public override router: Router,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public override storageService: LocalStorageService
   ) {
-    super(null, null, null, null, null, router, null, null, null);
+    super(null, null, null, null, null, router, null, null, null,null,storageService);
     this.links = new Array<ILinkDto>();
   }
 
