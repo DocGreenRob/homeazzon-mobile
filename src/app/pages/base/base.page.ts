@@ -30,7 +30,7 @@ import { IdTokenDto } from "../../models/dto/interfaces/IdTokenDto";
 import { IPropertyDto } from "../../models/dto/interfaces/IPropertyDto";
 import { IUserTypeDto } from "../../models/dto/interfaces/IUserTypeDto";
 import { ProfileItemImageDto } from "../../models/dto/ProfileItemImageDto";
-import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
+import { InAppBrowser, InAppBrowserOptions } from "@awesome-cordova-plugins/in-app-browser/ngx";
 import { LocalStorageService } from "@app/services/local-storage.service";
 
 @Component({
@@ -39,7 +39,7 @@ import { LocalStorageService } from "@app/services/local-storage.service";
   styleUrls: ["./base.page.scss"],
 })
 export class BasePage implements OnInit {
-  ngOnInit() {}
+  ngOnInit() { }
 
   private applicationInsights: ApplicationInsights = null;
 
@@ -115,8 +115,8 @@ export class BasePage implements OnInit {
 
   // UserTypes
   get UserTypes(): Array<IUserTypeDto> {
-   const types = this.storageService.get("UserTypes");
-   return types ? types : [];
+    const types = this.storageService.get("UserTypes");
+    return types ? types : [];
   }
   set UserTypes(value: Array<IUserTypeDto>) {
     this.storageService.set("UserTypes", value);
@@ -133,11 +133,11 @@ export class BasePage implements OnInit {
 
   // ActiveProperty
   get ActiveProperty(): INewPropertyDto {
-   const activeProperty = this.storageService.get('ActiveProperty');
+    const activeProperty = this.storageService.get('ActiveProperty');
     return activeProperty;
   }
   set ActiveProperty(value: INewPropertyDto) {
-      this.storageService.set("ActiveProperty", value);
+    this.storageService.set("ActiveProperty", value);
   }
 
   // CustomProperty
@@ -188,8 +188,8 @@ export class BasePage implements OnInit {
   // ActiveItem
   get ActiveItem(): ActiveItem {
     const item: ActiveItem = this.storageService.get('ActiveItem');
-    
-    if(item){
+
+    if (item) {
       return item;
     } else {
       const activeItem: ActiveItem = new ActiveItem();
@@ -204,7 +204,7 @@ export class BasePage implements OnInit {
   // ActiveAttachmentItem
   get ActiveAttachmentItem(): ActiveItem {
     const item: ActiveItem = this.storageService.get("ActiveAttachmentItem");
-    if(item){
+    if (item) {
       return item;
     } else {
       const activeItem: ActiveItem = new ActiveItem();
@@ -603,120 +603,110 @@ export class BasePage implements OnInit {
           this.router.navigate(["item-add"]);
         }
       } else {
-        // const options: ThemeableBrowserOptions = {
-        //   statusbar: {
-        //     color: "#000000",
-        //   },
-        //   toolbar: {
-        //     height: 44,
-        //     color: "#ffffff",
-        //   },
-        //   title: {
-        //     color: "#000000",
-        //     showPageTitle: true,
-        //     staticText: "MyPad",
-        //   },
-        //   closeButton: {
-        //     wwwImage: "assets/imgs/themeable-browser/times.png",
-        //     align: "right",
-        //     event: "closePressed",
-        //   },
-        //   customButtons: [
-        //     {
-        //       image: "assets/imgs/themeable-browser/home-icon.png",
-        //       wwwImage: "assets/imgs/themeable-browser/home-icon.png",
-        //       imagePressed: "share_pressed",
-        //       align: "left",
-        //       event: "home",
-        //     },
-        //     {
-        //       image: "assets/imgs/themeable-browser/bookmark.png",
-        //       wwwImage: "assets/imgs/themeable-browser/bookmark.png",
-        //       imagePressed: "share_pressed",
-        //       align: "left",
-        //       event: "bookmark",
-        //     },
-        //     {
-        //       image: "assets/imgs/themeable-browser/browse.png",
-        //       wwwImage: "assets/imgs/themeable-browser/browse.png",
-        //       imagePressed: "share_pressed",
-        //       align: "left",
-        //       event: "browse",
-        //     },
-        //   ],
-        //   menu: {
-        //     image: "assets/imgs/themeable-browser/bars.png",
-        //     imagePressed: "assets/imgs/themeable-browser/bars.png",
-        //     align: "left",
-        //     items: [],
-        //   },
-        //   backButtonCanClose: false,
-        // };
 
-        // options.menu.items.push({ event: "home", label: "Home" });
-        // options.menu.items.push({ event: "bookmark", label: "Bookmark" });
-        // options.menu.items.push({ event: "browse", label: "Browse" });
+        const options: InAppBrowserOptions = {
+          toolbarcolor: '#c36d23',
+          navigationbuttoncolor: '#000000',
+          closebuttoncolor: '#000000',
+          hidenavigationbuttons: 'no',
+          hideurlbar: 'no', // Assuming you want the URL bar to be visible
+          fullscreen: 'yes', // To use the full screen
+          clearcache: 'yes',
+          cleardata: 'yes',
+          clearsessioncache: 'yes'
+        };
 
-        const browser = this.inAppBrowser.create("https://www.google.com", "_blank");
+        const browser = this.inAppBrowser.create("https://www.google.com", "_blank", options);
 
-        browser.on("loadstart").subscribe(() => {
-          browser.executeScript({
-            code: "window.location.href ='http://www.google.com';",
-          });
+        browser.executeScript({
+        code: `
+          var button = document.createElement('button');
+          button.innerText = 'Custom Button';
+          button.style.position = 'fixed';
+          button.style.left = '20px';
+          button.style.bottom = '20px';
+          button.style.zIndex = '1000';
+          button.onclick = function() {
+            alert('button clicked'); window.postMessage({ type: 'bookmark' }, '*');
+          };
+          document.body.appendChild(button);
+        `
+        });
+
+        browser.executeScript({
+          code: `
+                var button = document.createElement('button');
+                button.innerText = 'Home';
+                button.onclick = function() { window.location.href ='https://www.google.com'; };
+                document.body.appendChild(button);
+              `
+        });
+
+        browser.executeScript({
+          code: `
+              var button = document.createElement('button');
+              button.innerText = 'Bookmark';
+              button.onclick = function() { window.postMessage({ type: 'bookmark' }, '*'); };
+              document.body.appendChild(button);
+            `
+        });
+
+        browser.executeScript({
+          code: `
+                var button = document.createElement('button');
+                button.innerText = 'Browse';
+                button.onclick = function() { var url = prompt('Enter Url', 'https://www.');window.location.href=url; };
+                document.body.appendChild(button);
+              `
+        });
+
+        let defaultUrl: string = "https://www.google.com";
+
+        browser.on("loadstart").subscribe((x) => {
+
+          if (x.url != defaultUrl) {
+            defaultUrl = x.url;
+            browser.executeScript({
+              code: `window.location.href ='${defaultUrl}';`,
+            });
+          }
+
         });
 
         browser.on("message").subscribe((x: any) => {
-          browser.close();
-          if (this.LineItem.Id !== undefined) {
-            let activeItem: ActiveItem = new ActiveItem();
-            let bookmark: IBookmarkDto = {} as IBookmarkDto;
+          alert(JSON.stringify(x));
 
-            bookmark.Url = x.url;
-            activeItem.Bookmark = bookmark;
-            activeItem.AssetInfo = {} as IAssetInfoDto;
+          if (x.data.type === 'bookmark') {
+            browser.close();
+            if (this.LineItem.Id !== undefined) {
+              let activeItem: ActiveItem = new ActiveItem();
+              let bookmark: IBookmarkDto = {} as IBookmarkDto;
 
-            this.ActiveItem = activeItem;
+              bookmark.Url = x.url;
+              activeItem.Bookmark = bookmark;
+              activeItem.AssetInfo = {} as IAssetInfoDto;
 
-            //let navigationExtras: NavigationExtras = {
-            //	queryParams: {
-            //		IsFromItemAddPage: true,
-            //		'type': 'Bookmark',
-            //		source: componentName,
-            //		//sourceParams: this.navParams.data
-            //	}
-            //};
+              this.ActiveItem = activeItem;
 
-            this.QueryParams = {
-              IsFromItemAddPage: true,
-              type: "Bookmark",
-              source: componentName,
-              //sourceParams: this.navParams.data
-            };
-            this.router.navigate(["item-edit"]);
-          } else {
-            //this.navController.push('ItemAddPage', { 'Image': null, 'type': 'Bookmark', 'Url': x.url });
-            //let navigationExtras: NavigationExtras = {
-            //	queryParams: {
-            //		'Image': null,
-            //		'type': 'Bookmark',
-            //		'Url': x.url
-            //	}
-            //};
+              this.QueryParams = {
+                IsFromItemAddPage: true,
+                type: "Bookmark",
+                source: componentName
+              };
+              this.router.navigate(["item-edit"]);
+            } else {
 
-            this.QueryParams = {
-              Image: null,
-              type: "Bookmark",
-              Url: x.url,
-            };
-            this.router.navigate(["item-add"]);
+              this.QueryParams = {
+                Image: null,
+                type: "Bookmark",
+                Url: x.url,
+              };
+              this.router.navigate(["item-add"]);
+            }
           }
+
         });
 
-        browser.on("loadstart").subscribe((x: any) => {
-          browser.executeScript({
-            code: "var url = prompt('Enter Url', 'https://www.');window.location.href=url;",
-          });
-        });
       }
     } catch (e) {
       //alert(JSON.stringify(e));

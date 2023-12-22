@@ -53,8 +53,13 @@
                 </div>
 
                 <div class="home-list-wrapper" *ngIf="userProperties?.length > 0">
-                    <div class="home-list" *ngFor="let p of userProperties" (click)="viewProperty(p)">
-                        <img [src]="p.image" width="24" height="24" >
+                    <div class="home-list"
+                         *ngFor="let p of userProperties"
+                         (click)="viewProperty(p)">
+                        <img [src]="p.Image"
+                             width="24"
+                             height="24"
+                             style="background-color:#526EA0 !important;" />
                         <span> {{p.Name}}</span>
                     </div>
                 </div>
