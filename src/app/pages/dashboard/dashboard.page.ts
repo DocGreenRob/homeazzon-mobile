@@ -305,19 +305,27 @@ export class DashboardPage extends BasePage {
         });
     }
 
-    this.Properties = userProperties;
-
     const allProps = forkJoin([userProperties]);
       allProps.subscribe({
         complete: () => {
           if (this.IsFirstLoadCompleted !== true) {
-            if (this._loading != undefined) {
-              this._loading.dismiss();
-            }
-          }
+              this._loading?.dismiss();
+              this.checkFirstLogin(userProperties);
+            }      
         }
       });
-    
+  }
+
+  checkFirstLogin(userProperties: INewPropertyDto[]){
+    if (!this.User?.Types?.length || this.User?.Types?.some((x) => x.Name == this._constants.UserTypes.Unassigned)) {
+      this.router.navigate(['user-types-selector']);
+    } else {
+      if (userProperties?.length) {
+        this.Properties = userProperties;
+      } else {
+        this.router.navigate(['property-profiles']);
+      }
+    }
   }
 
   private async getAreaTypes() {
@@ -450,11 +458,7 @@ export class DashboardPage extends BasePage {
       let userProperties: Array<INewPropertyDto> = new Array<INewPropertyDto>();
       let propertyCount = 0;
 
-      if (
-        this.User.Types != null &&
-        this.User.Types !== undefined &&
-        this.User.Types.length !== 0
-      ) {
+      if (this.User?.Types?.length) {
         for (let userType of this.User.Types) {
           await this.userDetailsService
             .getProperties(userType.Id)
@@ -616,28 +620,20 @@ export class DashboardPage extends BasePage {
       const allProps = forkJoin([userProperties]);
       allProps.subscribe({
         complete: () => {
-          this.closeLoader()
+          this.closeLoader();
+          
+          this.AppInsights.trackEvent({
+            name: 'end: getAllUserProperties()',
+            properties: [
+              {
+                userID: this.User.Id,
+              },
+            ]
+          });
+
+          this.checkFirstLogin(userProperties);
         }
       });
-
-      this.AppInsights.trackEvent({
-        name: 'end: getAllUserProperties()',
-        properties: [
-          {
-            userID: this.User.Id,
-          },
-        ],
-      });
-
-      if (!this.User?.Types?.length || this.User?.Types?.some((x) => x.Name == this._constants.UserTypes.Unassigned)) {
-        this.router.navigate(['user-types-selector']);
-      } else {
-        if (propertyCount === 0) {
-          this.router.navigate(['property-profiles']);
-        } else {
-          this.Properties = userProperties;
-        }
-      }
     } catch (e) {
       this.AppInsights.trackException(e);
       console.log(`error: ${e}`);
