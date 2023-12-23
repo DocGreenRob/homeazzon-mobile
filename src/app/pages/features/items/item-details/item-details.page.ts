@@ -718,7 +718,6 @@ export class ItemDetailsPage extends BasePage {
   }
 
   public attachments() {
-    debugger;
     this.router.navigate(["attachments"]);
   }
 
