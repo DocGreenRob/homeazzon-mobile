@@ -308,16 +308,16 @@ export class DashboardPage extends BasePage {
     this.Properties = userProperties;
 
     const allProps = forkJoin([userProperties]);
-      allProps.subscribe({
-        complete: () => {
-          if (this.IsFirstLoadCompleted !== true) {
-            if (this._loading != undefined) {
-              this._loading.dismiss();
-            }
+    allProps.subscribe({
+      complete: () => {
+        if (this.IsFirstLoadCompleted !== true) {
+          if (this._loading != undefined) {
+            this._loading.dismiss();
           }
         }
-      });
-    
+      }
+    });
+
   }
 
   private async getAreaTypes() {
@@ -341,7 +341,7 @@ export class DashboardPage extends BasePage {
 
         //TODO: why are we not getting commonAreas and exteriorAreas
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -491,7 +491,7 @@ export class DashboardPage extends BasePage {
                             (x: any) => {
                               this.setupProperty(x);
                             },
-                            (err) => {}
+                            (err) => { }
                           )
                           .catch((error) => {
                             this.AppInsights.trackEvent({
@@ -539,7 +539,7 @@ export class DashboardPage extends BasePage {
                               });
                               //this.closeLoader();
                             },
-                            (err) => {}
+                            (err) => { }
                           )
                           .catch((error) => {
                             this.AppInsights.trackEvent({
@@ -923,7 +923,7 @@ export class DashboardPage extends BasePage {
     this.router.navigate(['edit-profile']);
   }
 
-  addItem(){
+  addItem() {
     this.router.navigate(['item-edit']);
   }
 
@@ -1004,33 +1004,34 @@ export class DashboardPage extends BasePage {
   }
 
   public async getSuite16Categories() {
-    if (
-      this.Suite16Categories == undefined ||
-      this.Suite16Categories == null ||
-      this.Suite16Categories.length == 0
-    ) {
-      await this.suite16CategoryService.getSuite16Categories().then(
-        (x: Array<ISuite16CategoryDto>) => {
-          this.Suite16Categories = x;
-        },
-        (err) => {
-          this.uxNotifierService.showToast(
-            'An error occured getting some resources.',
-            this._constants.ToastColorBad
-          );
+    // TODO: Temporarily get because when we make changes from Backoffice
+    // they aren't refreshed. We will modify the API such that it will tell the
+    // client when it needs to refresh a particular local stored value or ALL local storage.
 
-          if (
-            this.Suite16Categories === undefined ||
-            this.Suite16Categories === null ||
-            this.Suite16Categories.length === 0
-          ) {
-            //this.getSuite16Categories();
-          }
+    //if (
+    //  this.Suite16Categories == undefined ||
+    //  this.Suite16Categories == null ||
+    //  this.Suite16Categories.length == 0
+    //) {
+    await this.suite16CategoryService.getSuite16Categories().then(
+      (x: Array<ISuite16CategoryDto>) => {
+        this.Suite16Categories = x;
+      },
+      (err) => {
+        this.uxNotifierService.showToast('An error occured getting some resources.', this._constants.ToastColorBad);
 
-          //alert(`err: getSuite16Categories() ${err}`);
+        if (
+          this.Suite16Categories === undefined ||
+          this.Suite16Categories === null ||
+          this.Suite16Categories.length === 0
+        ) {
+          //this.getSuite16Categories();
         }
-      );
-    }
+
+        //alert(`err: getSuite16Categories() ${err}`);
+      }
+    );
+    //}
   }
 
   public suite16CategoryClickEventHandler(gridList: IGridList) {
@@ -1039,6 +1040,7 @@ export class DashboardPage extends BasePage {
     suite16Category.Name = gridList.Items[0].Name;
     suite16Category.ImageUrl = gridList.Items[0].IconPath;
     this.Suite16Category = suite16Category;
+
     this.router.navigate(['line-items']);
   }
 
