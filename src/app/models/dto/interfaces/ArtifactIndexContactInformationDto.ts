@@ -1,5 +1,6 @@
-﻿
+
 export class ArtifactIndexContactInformationDto {
-    ArtifactIndexId: number;
-    ContactInformationId: number;
+  ArtifactIndexId: number;
+  ArtifactType: string;
+  ContactInformationId: number;
 }

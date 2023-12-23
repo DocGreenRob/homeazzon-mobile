@@ -72,30 +72,32 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     this.view = "add-edit";
   }
 
+  // TODO: I modified the logic thinking it was broke, also there were some missing stored procs in API Manager
+  // So I refactored, but maybe add back (either way this may suffice until re-write into microservices)
   saveContactInformation() {
     if (this.contactInformation) {
-      this.contactInformationService
-        .upsertContactInformationAsync(this.contactInformation)
-        .then((x: number) => {
-          // make the association
-          var artifactIndexContactInformationDto: ArtifactIndexContactInformationDto = new ArtifactIndexContactInformationDto();
-          artifactIndexContactInformationDto.ArtifactIndexId = this.ActiveItem.ArtifactIndexId;
-          artifactIndexContactInformationDto.ContactInformationId = x;
+      let activeItem = this.ActiveItem;
+      //this.contactInformation.ArtifactIndexId = activeItem.ArtifactIndexId;
+      //this.contactInformation.ArtifactType = activeItem.Type;
+      this.contactInformationService.upsertContactInformationAsync(this.contactInformation).then((x: number) => {
+        var artifactIndexContactInformationDto: ArtifactIndexContactInformationDto = new ArtifactIndexContactInformationDto();
 
-          this.artifactIndexService
-            .insertContactInformation(artifactIndexContactInformationDto)
-            .then((y) => {
-              this.alertService.showToast("Contact Information Updated", this.constants.ToastColorGood);
+        artifactIndexContactInformationDto.ArtifactIndexId = activeItem.ArtifactIndexId;
+        artifactIndexContactInformationDto.ArtifactType = activeItem.Type;
+        artifactIndexContactInformationDto.ContactInformationId = x;
 
-              if (this.modalController != undefined && this.modalController != null) {
-                this.modalController.dismiss(this.contactInformation);
-              }
-            })
-            .catch((e) => {});
-        })
-        .catch((e) => {
+        this.artifactIndexService.insertContactInformation(artifactIndexContactInformationDto).then((y) => {
+          this.alertService.showToast("Contact Information Updated", this.constants.ToastColorGood);
+
+          if (this.modalController != undefined && this.modalController != null) {
+            this.modalController.dismiss(this.contactInformation);
+          }
+        }).catch((e) => {
           this.alertService.showToast(`Error: ${e.Message}`, this.constants.ToastColorBad);
         });
+      }).catch((e) => {
+        this.alertService.showToast(`Error: ${e.Message}`, this.constants.ToastColorBad);
+      });
     } else {
       this.alertService.showToast("Please fill all the fields to continue", this.constants.ToastColorBad);
     }
@@ -180,6 +182,6 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
       .then((x) => {
         this.contacts = x;
       })
-      .catch((e) => {});
+      .catch((e) => { });
   }
 }
