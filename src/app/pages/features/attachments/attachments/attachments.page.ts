@@ -17,7 +17,7 @@ import { LocalStorageService } from "@app/services/local-storage.service";
   styleUrls: ["./attachments.page.scss"],
 })
 export class AttachmentsPage extends BasePage {
-  public data: IGrid;
+  public data: IGrid = {} as IGrid;
 
   private _loading: any;
   private _constants = new Constants();

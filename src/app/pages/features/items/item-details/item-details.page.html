@@ -58,23 +58,29 @@
 				<div *ngIf="ActiveItem.Type != 'Bookmarks'" class="img-container"> <!--TODO: needs to be dynamic-->
 					<div *ngIf="IsMetattachment" class="image">
 						<pinch-zoom class="pinch-img">
-							<img src="{{ ActiveAttachmentItem?.Image}}" />
+							<img style="object-fit: cover !important; width:100% !important; height:auto !important;"
+									 src="{{ ActiveAttachmentItem?.Image}}" />
 						</pinch-zoom>
 					</div>
 					<div *ngIf="!IsMetattachment" class="image">
             <ng-container *ngIf="ActiveItem.Type == 'Amazon Products' || ActiveItem.Type == 'Google Shopping Products'">
 							<pinch-zoom>
-								<img [src]="ActiveItem?.Image" />
+								<img style="object-fit: cover !important; width:100% !important; height:auto !important;"
+										 [src]="ActiveItem?.Image" />
 							</pinch-zoom>
 						</ng-container>
 						<ng-container *ngIf="ActiveItem.IsProfileItemImage || (ActiveItem.Type === 'DigiDoc' || ActiveItem.Type === 'Pics & Files' && imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType)) || ActiveItem.Type == 'Google Shopping Products'">
 							<pinch-zoom class="pinch-img">
-								<img [src]="ActiveItem?.Image" />
+								<img style="object-fit: cover !important; width:100% !important; height:auto !important;"
+										 [src]="ActiveItem?.Image" />
 							</pinch-zoom>
 						</ng-container>
 						<ng-container *ngIf="(!ActiveItem.IsProfileItemImage && (ActiveItem.Type == 'DigiDoc' || ActiveItem.Type == 'Pics & Files') && !imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType))">
-							<document-viewer [docUrl]="ActiveItem?.Image" [fileType]="ActiveItem.DigiDoc.ContentType"
-								*ngIf="ActiveItem?.Image" style="height: 420px" [title]="ActiveItem?.Name">
+							<document-viewer [docUrl]="ActiveItem?.Image"
+															 [fileType]="ActiveItem.DigiDoc.ContentType"
+															 *ngIf="ActiveItem?.Image"
+															 style="object-fit: cover !important; width:100% !important; height:auto !important;"
+															 [title]="ActiveItem?.Name">
 							</document-viewer>
 						</ng-container>
 					</div>
@@ -136,7 +142,9 @@
 						<!-- </h6> -->
 						</span>
 
-						<span class="item-btn edit" (click)="edit()" *ngIf="(ActiveItem?.Type != 'Google Web Links' && ActiveItem?.Type != 'YouTube Videos' && ActiveItem?.Type != 'Qr Codes') && (User.IsPrivateLabelUser == false || (User.IsPrivateLabelUser == true && ActiveItem.IsSuggest == false) && (ActiveAttachment?.Type != 'Qr Codes' && ActiveAttachment?.Type != 'Google Search Result (link)' && ActiveAttachment?.Type != 'Video'))" >
+						<span class="item-btn edit"
+									(click)="edit()"
+									*ngIf="(ActiveItem?.Type != 'Google Web Links' && ActiveItem?.Type != 'YouTube Videos' && ActiveItem?.Type != 'Qr Codes') && (User.IsPrivateLabelUser == false || (User.IsPrivateLabelUser == true && ActiveItem.IsSuggest == false) && (ActiveAttachment?.Type != 'Qr Codes' && ActiveAttachment?.Type != 'Google Search Result (link)' && ActiveAttachment?.Type != 'Video'))" >
 							<!-- <h6 class="mypad-green"> -->
 								<!-- <ion-icon name="attach"></ion-icon> -->
 								<img src="assets/icon/Icon-Edit-white.svg" alt="">
