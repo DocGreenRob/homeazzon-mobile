@@ -10,11 +10,14 @@
 		</div>
 	</div>
 	<div class="home-btn-wrapper">
-		<ion-button class="add-property-btn" (click)="goToBuildYourGeneral()">
+		<ion-button class="add-property-btn"
+								*ngIf="isOwner"
+								(click)="goToBuildYourGeneral()">
 			<img src="assets/icon/building-fill-white.svg" alt="">
 			Add New property
 		</ion-button>
-		<ion-button class="new-reality-btn">
+		<ion-button class="new-reality-btn"
+								*ngIf="isRealtor">
 			<img src="assets/icon/person.svg" alt="">
 			New Realty Customer
 		</ion-button>

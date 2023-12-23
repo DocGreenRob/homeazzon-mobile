@@ -1,57 +1,61 @@
 <ion-header>
-    <div class="header-items">
-        <span>Search the Web</span>
-        <ion-button (click)="close()">Cancel</ion-button>
-    </div>
+  <div class="header-items">
+    <span>Search the Web</span>
+    <ion-button (click)="close()">Cancel</ion-button>
+  </div>
 </ion-header>
 
 <div class="container-wrapper">
-    <div class="formWrapper">
-        <div class="fieldWrapper">
-            <ion-label>Keywords</ion-label>
-            <div class="inputField">
-                <ion-input type="text" [(ngModel)]="keywords" placeholder="Enter keywords"></ion-input>
-            </div>
-        </div>
-        <div class="spacer-oneRem" *ngIf="CurrentView == 'Room'"></div>
-
-        <div class="fieldWrapper">
-            <ion-label *ngIf="CurrentView == 'Room'">Room type</ion-label>
-            <div class="inputField" *ngIf="CurrentView == 'Room'">
-                <ion-select [(ngModel)]="selectedProfileItem"
-                [compareWith]="compareFn" 
-                (ionChange)="getLineitems()"
-                disabled="{{disableProfileItems}}"
-                placeholder="Please select">
-                <ion-select-option *ngFor="let profileItem of profileItems" [value]="profileItem">
-                    {{profileItem.Name}}
-                </ion-select-option>
-            </ion-select>
-            <img _ngcontent-ng-c558513586="" src="assets/icon/Icon - Next.svg" alt="" class="iconSelect">
-            </div>
-        </div>
-
-        <div class="fieldWrapper">
-            <ion-label>Category</ion-label>
-            <div class="inputField">
-                <ion-select [(ngModel)]="selectedLineitem" [compareWith]="compareFn" disabled="{{disableLineItems}}" placeholder="Please select">
-                    <ion-select-option *ngFor="let lineitem of lineitems" [value]="lineitem">
-                        {{lineitem.Name}}
-                    </ion-select-option>
-                </ion-select>
-            <img _ngcontent-ng-c558513586="" src="assets/icon/Icon - Next.svg" alt="" class="iconSelect">
-            </div>
-        </div>
-
-        <div class="fieldWrapper">
-            <ion-label>Where to Search</ion-label>
-            <div class="inputField">
-                <ion-input type="text" placeholder="Category..." [(ngModel)]="searchSource"></ion-input>
-            </div>
-        </div>
-
-        <div class="btnWrapper">
-            <ion-button class="search-btn" (click)="search()">Search</ion-button>
-        </div>
+  <div class="formWrapper">
+    <div class="fieldWrapper">
+      <ion-label>Enter some keywords!</ion-label>
+      <div class="inputField">
+        <ion-input type="text" [(ngModel)]="keywords" placeholder="Enter keywords"></ion-input>
+      </div>
     </div>
+    <div class="spacer-oneRem" *ngIf="CurrentView == 'Room'"></div>
+
+    <div class="fieldWrapper">
+      <ion-label *ngIf="CurrentView == 'Room'">What room?</ion-label>
+      <div class="inputField" *ngIf="CurrentView == 'Room'">
+        <ion-select [(ngModel)]="selectedProfileItem"
+                    [compareWith]="compareFn"
+                    (ionChange)="getLineitems()"
+                    disabled="{{disableProfileItems}}"
+                    placeholder="Please select">
+          <ion-select-option *ngFor="let profileItem of profileItems" [value]="profileItem">
+            {{profileItem.Name}}
+          </ion-select-option>
+        </ion-select>
+        <img _ngcontent-ng-c558513586="" src="assets/icon/Icon - Next.svg" alt="" class="iconSelect">
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>What category?</ion-label>
+      <div class="inputField">
+        <ion-select [(ngModel)]="selectedLineitem" [compareWith]="compareFn" disabled="{{disableLineItems}}" placeholder="Please select">
+          <ion-select-option *ngFor="let lineitem of lineitems" [value]="lineitem">
+            {{lineitem.Name}}
+          </ion-select-option>
+        </ion-select>
+        <img _ngcontent-ng-c558513586="" src="assets/icon/Icon - Next.svg" alt="" class="iconSelect">
+      </div>
+    </div>
+
+    <div class="fieldWrapper">
+      <ion-label>Where to search?</ion-label>
+      <div class="inputField">
+        <ion-select [(ngModel)]="searchSource" disabled="{{disableLineItems}}" placeholder="Please select">
+          <ion-select-option *ngFor="let source of searchSources" [value]="source">
+            {{source}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+
+    <div class="btnWrapper">
+      <ion-button class="search-btn" (click)="search()">Search</ion-button>
+    </div>
+  </div>
 </div>

@@ -77,7 +77,7 @@ export class ItemEditPage extends BasePage {
     this._constants = new Constants();
   }
 
-  override ngOnInit() {}
+  override ngOnInit() { }
 
   public async ionViewDidEnter() {
     console.log("ionViewDidEnter ItemEditPage");
@@ -93,11 +93,11 @@ export class ItemEditPage extends BasePage {
     } else {
       this.TempActiveItem = this.ActiveAttachmentItem;
     }
-
+    debugger;
     if (this._isFromItemAddPage) {
-      console.log(this._isFromItemAddPage,"abid")
+      console.log(this._isFromItemAddPage, "abid")
       console.log("abid you hit it with atahir")
-      
+
       this.pageTitle = "Add Item";
       console.log(this.pageTitle, this._type);
 
@@ -119,9 +119,12 @@ export class ItemEditPage extends BasePage {
       }
     } else {
       this.isDisplayReady = true;
+
       if (this._type !== undefined && this._type !== null && this._type !== "") {
+
         this.pageTitle = "Add Item";
         this.TempActiveItem.AssetInfo = new AssetInfoDto();
+
         console.log("tempActiveItem 89", this.TempActiveItem);
 
         switch (this._type) {
@@ -141,9 +144,9 @@ export class ItemEditPage extends BasePage {
 
   // ** unused methods **/
 
-  public updateItemLineitems() {}
+  public updateItemLineitems() { }
 
-  public updateItemLocation() {}
+  public updateItemLocation() { }
 
   // ** end unused methods **/
 
@@ -182,29 +185,29 @@ export class ItemEditPage extends BasePage {
       Camera.checkPermissions().then((permissionStatus) => {
         if (permissionStatus.camera === 'granted') {
           Camera.getPhoto({
-            quality: 50,
+            quality: 80,
             resultType: CameraResultType.DataUrl,
             source: CameraSource.Camera,
             correctOrientation: true,
-            allowEditing: false
+            allowEditing: true
           })
-          .then(
-            (imageData: Photo) => {
-              this.showImage = true;
-              this.TempActiveItem.Image = imageData.dataUrl;
-            },
-            (error) => {
-              console.log(error);
-              let sourceParams = this.QueryParams.sourceParamsCamera;
-              let componentName = this.QueryParams.sourceCamera;
-              if (componentName == "DashboardPage") {
-                this.router.navigate(["dashboard"]);
-              } else {
-                this.QueryParams = sourceParams;
-                this.router.navigate([componentName]);
+            .then(
+              (imageData: Photo) => {
+                this.showImage = true;
+                this.TempActiveItem.Image = imageData.dataUrl;
+              },
+              (error) => {
+                console.log(error);
+                let sourceParams = this.QueryParams.sourceParamsCamera;
+                let componentName = this.QueryParams.sourceCamera;
+                if (componentName == "DashboardPage") {
+                  this.router.navigate(["dashboard"]);
+                } else {
+                  this.QueryParams = sourceParams;
+                  this.router.navigate([componentName]);
+                }
               }
-            }
-          );
+            );
         } else {
           Camera.requestPermissions().then((permission) => {
             if (permission.camera === 'granted') {
@@ -217,140 +220,139 @@ export class ItemEditPage extends BasePage {
   }
 
   public override launchBarcode() {
-    // if (this.platform.is("mobileweb")) {
-    //   let type: string = "UPC_A"; // QR_CODE
-    //   let barcode: string = "99999999";
-    //   this._scanType = type;
+    if (this.platform.is("mobileweb")) {
+      let type: string = "UPC_A"; // QR_CODE
+      let barcode: string = "99999999";
+      this._scanType = type;
 
-    //   if (type === "UPC_A") {
-    //     // setup view
-    //     this.TempActiveItem.Image =
-    //       "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Fbarcode-alt.svg?alt=media&token=9a36a6dc-880c-45ee-971d-4b72a7a938dd";
-    //     this.TempActiveItem.AssetInfo.Title = "Dummy Product";
-    //     this.TempActiveItem.AssetInfo.Price = 9.99;
+      if (type === "UPC_A") {
+        // setup view
+        this.TempActiveItem.Image =
+          "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Fbarcode-alt.svg?alt=media&token=9a36a6dc-880c-45ee-971d-4b72a7a938dd";
+        this.TempActiveItem.AssetInfo.Title = "Dummy Product";
+        this.TempActiveItem.AssetInfo.Price = 9.99;
 
-    //     // setup Dto for Api
-    //     let product: IProductDto = {} as IProductDto;
-    //     product.Id = 0;
-    //     product.Name = this.TempActiveItem.AssetInfo.Title;
-    //     product.Image = this.TempActiveItem.Image;
-    //     product.BarCode = barcode;
-    //     product.BarCodeType = type;
-    //     product.Price = this.TempActiveItem.AssetInfo.Price;
-    //     this.TempActiveItem.Product = product;
-    //     this.showImage = true;
-    //   } else {
-    //     this.isQrCode = true;
+        // setup Dto for Api
+        let product: IProductDto = {} as IProductDto;
+        product.Id = 0;
+        product.Name = this.TempActiveItem.AssetInfo.Title;
+        product.Image = this.TempActiveItem.Image;
+        product.BarCode = barcode;
+        product.BarCodeType = type;
+        product.Price = this.TempActiveItem.AssetInfo.Price;
+        this.TempActiveItem.Product = product;
+        this.showImage = true;
+      } else {
+        this.isQrCode = true;
 
-    //     // setup view
-    //     this.TempActiveItem.Image =
-    //       "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
+        // setup view
+        this.TempActiveItem.Image =
+          "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
 
-    //     // setup Dto for Api
-    //     let qrCode: IQrCodeDto = {} as IQrCodeDto;
-    //     qrCode.Url = barcode;
-    //     this.TempActiveItem.QrCode = qrCode;
-    //   }
-    // } else {
-      BarcodeScanner.checkPermission()
-      .then((status) => {
+        // setup Dto for Api
+        let qrCode: IQrCodeDto = {} as IQrCodeDto;
+        qrCode.Url = barcode;
+        this.TempActiveItem.QrCode = qrCode;
+      }
+    } else {
+      BarcodeScanner.checkPermission().then((status) => {
         if (status.neverAsked && Capacitor.isNativePlatform()) {
           Camera.requestPermissions()
-          .then((permission: PermissionStatus) => {
-            if (permission.camera === 'granted') {
-              this.launchBarcode();
-            } else {
-              this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
-            }
-          })
-          return;
-        }
-        if (status.granted || !Capacitor.isNativePlatform()) {
-          BarcodeScanner.hideBackground();
-          document.body.classList.add("qrscanner"); 
-          BarcodeScanner
-            .startScan()
-            .then((result: ScanResult) => {
-              document.body.classList.remove("qrscanner"); 
-              if (result.hasContent) {
-                this._scanType = result.format;
-                if (result.format != "QR_CODE") {
-                  this.barcodeService.getBarCodeData(result.content).subscribe(
-                    (response: any) => {
-                      // setup view
-                      this.TempActiveItem.Image = response.ImageUrl;
-                      this.TempActiveItem.AssetInfo.Title = response.ProductName;
-                      this.TempActiveItem.AssetInfo.Price = response.Price;
-  
-                      // setup Dto for Api
-                      let product: IProductDto = {} as IProductDto;
-                      product.Id = 0;
-                      product.Name = response.ProductName;
-                      product.Image = response.ImageUrl;
-                      product.BarCode = result.content;
-                      product.BarCodeType = result.format;
-                      product.Price = response.Price;
-                      this.TempActiveItem.Product = product;
-                    },
-                    async (err) => {
-                      this.uxNotifierService.showToast("Upc Code not found!", this._constants.ToastColorBad);
-                      const prompt = await this.alertController.create({
-                        header: "Take A Picture",
-                        message: "Upc Code was not found, Do you want to take a picture?",
-                        buttons: [
-                          {
-                            text: "No",
-                            handler: () => {
-                              this.navController.pop();
-                            },
-                          },
-                          {
-                            text: "Yes",
-                            handler: () => {
-                              this._type = "camera";
-                              this.launchCamera();
-                            },
-                          },
-                        ],
-                      });
-                      await prompt.present();
-                    }
-                  );
-                } else {
-                  this.isQrCode = true;
-  
-                  // setup view
-                  this.TempActiveItem.Image =
-                    "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
-  
-                  // setup Dto for Api
-                  let qrCode: IQrCodeDto = {} as IQrCodeDto;
-                  qrCode.Url = result.content;
-                  this.TempActiveItem.QrCode = qrCode;
-                }
+            .then((permission: PermissionStatus) => {
+              if (permission.camera === 'granted') {
+                this.launchBarcode();
               } else {
-
+                this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
               }
             })
+          return;
+        }
+
+        if (status.granted || !Capacitor.isNativePlatform()) {
+          BarcodeScanner.hideBackground();
+          document.body.classList.add("qrscanner");
+
+          BarcodeScanner.startScan().then((result: ScanResult) => {
+            document.body.classList.remove("qrscanner");
+            if (result.hasContent) {
+              this._scanType = result.format;
+              if (result.format != "QR_CODE") {
+                this.barcodeService.getBarCodeData(result.content).subscribe(
+                  (response: any) => {
+                    // setup view
+                    this.TempActiveItem.Image = response.ImageUrl;
+                    this.TempActiveItem.AssetInfo.Title = response.ProductName;
+                    this.TempActiveItem.AssetInfo.Price = response.Price;
+
+                    // setup Dto for Api
+                    let product: IProductDto = {} as IProductDto;
+                    product.Id = 0;
+                    product.Name = response.ProductName;
+                    product.Image = response.ImageUrl;
+                    product.BarCode = result.content;
+                    product.BarCodeType = result.format;
+                    product.Price = response.Price;
+                    this.TempActiveItem.Product = product;
+                  },
+                  async (err) => {
+                    this.uxNotifierService.showToast("Upc Code not found!", this._constants.ToastColorBad);
+                    const prompt = await this.alertController.create({
+                      header: "Take A Picture",
+                      message: "Upc Code was not found, Do you want to take a picture?",
+                      buttons: [
+                        {
+                          text: "No",
+                          handler: () => {
+                            this.navController.pop();
+                          },
+                        },
+                        {
+                          text: "Yes",
+                          handler: () => {
+                            this._type = "camera";
+                            this.launchCamera();
+                          },
+                        },
+                      ],
+                    });
+                    await prompt.present();
+                  }
+                );
+              } else {
+                this.isQrCode = true;
+
+                // setup view
+                this.TempActiveItem.Image =
+                  "https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6";
+
+                // setup Dto for Api
+                let qrCode: IQrCodeDto = {} as IQrCodeDto;
+                qrCode.Url = result.content;
+                this.TempActiveItem.QrCode = qrCode;
+              }
+            } else {
+
+            }
+          })
             .catch((err) => {
               this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this._constants.ToastColorBad);
             });
         } else {
           this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
         }
-      }) 
-      // }
+      })
+    }
   }
 
   public override async launchFileExplorer() {
     const accept: PickFilesOptions = {
       types: ["application/msword",
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-              "application/pdf",
-              "application/vnd.ms-excel",
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              "application/vnd.ms-powerpoint",
-              "application/vnd.openxmlformats-officedocument.presentationml.presentation"]
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/pdf",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation"]
     };
     await FilePicker
       .pickFiles(accept)
@@ -376,7 +378,7 @@ export class ItemEditPage extends BasePage {
             } else if (file.mimeType == "image/png" || file.mimeType == "image/jpeg") {
               this.TempActiveItem.Image = file.path;
             }
-  
+
             this._selectedFile = file;
           } else {
             this.fileUploadExceptionHandler();
@@ -471,7 +473,7 @@ export class ItemEditPage extends BasePage {
                 this.ProfileItem = originalProfileItem;
               }
             },
-            (err) => {}
+            (err) => { }
           );
         } else {
           if (this._type == "Bookmark") {
@@ -485,8 +487,8 @@ export class ItemEditPage extends BasePage {
             selectedProfileItem.Lineitems.forEach(async (x) => {
               if (x.IsChecked) {
                 await this.addCameraBarcodeFile(selectedProfileItem, x, false).then(
-                  () => {},
-                  (err) => {}
+                  () => { },
+                  (err) => { }
                 );
               }
             });
@@ -526,7 +528,7 @@ export class ItemEditPage extends BasePage {
         this.IsWishlist = false;
         this.IsSuggest = false;
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -737,7 +739,7 @@ export class ItemEditPage extends BasePage {
                   this.uxNotifierService.showToast("An Error occured while uploading the file.Please try again Later", this._constants.ToastColorBad);
                 });
             },
-            (err) => {}
+            (err) => { }
           );
         }
         this.storageService.set("TempActiveItem", this.TempActiveItem);
@@ -978,7 +980,7 @@ export class ItemEditPage extends BasePage {
                 this.uxNotifierService.showToast("An Error occured while uploading the file.Please try again Later", this._constants.ToastColorBad);
               });
           },
-          (err) => {}
+          (err) => { }
         );
       }
     }

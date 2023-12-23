@@ -85,7 +85,7 @@ export class AppComponent extends BasePage {
     private iab: InAppBrowser,
     public override storageService: LocalStorageService,
     private accountService: AccountService
-    ) {
+  ) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
@@ -146,7 +146,7 @@ export class AppComponent extends BasePage {
         this.accountService.getUser().then((user) => {
           this.User = user;
           this.displayName = this.User.UserName;
-        }).catch((e) => {});
+        }).catch((e) => { });
       }
 
       this.router.navigate(['login-success']);
@@ -165,8 +165,28 @@ export class AppComponent extends BasePage {
       this.ngzone.run(() => {
         this.userProperties = x.detail;
         this.displayName = this.User.UserName;
+        let userTypes = this.UserTypes;
+
+        let _ = this.userProperties;
+        _.map((x: any) => {
+          let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
+          this.setPropertyImage(_u[0].Name, x);
+        });
+
+        this.userProperties = _;
       });
     });
+  }
+
+  private setPropertyImage(userType: string, property: any) {
+    switch (userType) {
+      case 'Owner':
+        property.Image = '../assets/icon/person.svg';
+        break;
+      case 'Realtor':
+        property.Image = '../assets/icon/building-fill-white.svg';
+        break;
+    }
   }
 
   async showAlertToUserAfterUpdate(title, message) {

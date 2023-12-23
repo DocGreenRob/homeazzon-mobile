@@ -20,6 +20,8 @@ export class PropertyProfilesPage extends BasePage {
   private userName: any;
   public privateLabelProperties: any = [];
   public showBackButton: boolean = false;
+  public isOwner: boolean = false;
+  public isRealtor: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -32,7 +34,7 @@ export class PropertyProfilesPage extends BasePage {
     private storage: Storage,
     public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
+    super(navCtrl, null, null, null, platform, router, null, null, null, null, storageService);
   }
 
   override async ngOnInit() {
@@ -53,6 +55,17 @@ export class PropertyProfilesPage extends BasePage {
       this.userName = value;
       console.log(this.userName, "this.userName value");
     });
+
+    let _ = this.User;
+    if (this.User?.Types) {
+      this.User.Types.map((x) => {
+        if (x.Name === "Owner") {
+          this.isOwner = true;
+        } else if (x.Name === "Realtor") {
+          this.isRealtor = true;
+        }
+      });
+    }
   }
 
   // open Modal for get profile details
@@ -97,7 +110,7 @@ export class PropertyProfilesPage extends BasePage {
       (x) => {
         this.router.navigate(["property-profile-general-information"]);
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -105,6 +118,6 @@ export class PropertyProfilesPage extends BasePage {
     this.navCtrl.pop();
   }
   goBack() {
-		this.navController.back();
-	}
+    this.navController.back();
+  }
 }

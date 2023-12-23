@@ -35,7 +35,7 @@ export class UserTypesSelectorPage extends BasePage {
     public override featuresService: FeaturesService,
     public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
   }
 
@@ -43,9 +43,9 @@ export class UserTypesSelectorPage extends BasePage {
     if (this.User?.Types?.length && this.User?.Types?.some((x) => x.Name !== this._constants.UserTypes.Unassigned)) {
       this.router.navigate(["dashboard"]);
     }
-    
-    if(this.UserTypes?.length){
-     this.filterUserTypes();
+
+    if (this.UserTypes?.length) {
+      this.filterUserTypes();
     } else {
       this.getUserTypes();
     }
@@ -53,12 +53,12 @@ export class UserTypesSelectorPage extends BasePage {
 
   private async getUserTypes() {
     this.userTypesService.getAllUserTypes().subscribe((response: Array<IUserTypeDto>) => {
-        this.UserTypes = response;
-        this.filterUserTypes();
-      });
+      this.UserTypes = response;
+      this.filterUserTypes();
+    });
   }
 
-  filterUserTypes(){
+  filterUserTypes() {
     this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned);
     this.userTypesAnynomousType = this.userTypes;
 
@@ -69,6 +69,10 @@ export class UserTypesSelectorPage extends BasePage {
         this.userTypesAnynomousType[i].IsSubscribed = true;
       } else {
         this.userTypesAnynomousType[i].IsSubscribed = false;
+      }
+
+      if (this.userTypesAnynomousType[i].Name != 'Owner' || this.userTypesAnynomousType[i].Name != 'Realtor') {
+        this.userTypesAnynomousType[i].IsDisabled = true;
       }
     }
 
@@ -83,14 +87,18 @@ export class UserTypesSelectorPage extends BasePage {
 
     switch (selectedUserType.Name) {
       case this._constants.UserTypes.Appraiser:
-        this.router.navigate(["dashboard"]);
+        alert('Not available yet! Subscription required.');
+        //this.router.navigate(["dashboard"]);
         break;
       case this._constants.UserTypes.Architect:
+        alert('Not available yet! Subscription required.');
         break;
       case this._constants.UserTypes.Bank:
+        alert('Not available yet! Subscription required.');
         break;
       case this._constants.UserTypes.Developer:
-        this.router.navigate(["user-types-developer"]);
+        alert('Not available yet! Subscription required.');
+        //this.router.navigate(["user-types-developer"]);
         break;
       case this._constants.UserTypes.Owner:
         this.router.navigate(["user-types-owner"]);
@@ -101,15 +109,18 @@ export class UserTypesSelectorPage extends BasePage {
         this.router.navigate(["user-types-realtor"]);
         break;
       case this._constants.UserTypes.Renter:
-        this.router.navigate(["user-types-renter"]);
+        alert('Not available yet! Subscription required.');
+        //this.router.navigate(["user-types-renter"]);
         break;
       case this._constants.UserTypes.Tradesman:
-        this.router.navigate(["user-types-tradesman"]);
+        alert('Not available yet! Subscription required.');
+        //this.router.navigate(["user-types-tradesman"]);
         break;
       case this._constants.UserTypes.Unassigned:
         break;
       case this._constants.UserTypes.Vendor:
-        this.router.navigate(["user-types-vendor"]);
+        alert('Not available yet! Subscription required.');
+        //this.router.navigate(["user-types-vendor"]);
         break;
     }
   }
