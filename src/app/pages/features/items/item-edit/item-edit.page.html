@@ -1,232 +1,232 @@
 <ion-header>
-    <!--<save-sub-menu [title]="pageTitle" (_saveClickEventHandler)="save()"></save-sub-menu>-->
-    <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-    <!-- <ion-row class="top-row"> -->
-        <div class="registration-header">
-            
-        <!-- </ion-col> -->
-        <!-- <ion-col size="6"> -->
-            <img src="assets/icon/Close-Square-white.svg" (click)="close()">
-            <span class="registration-title-wrapper">
-                <span class="registration-title">{{pageTitle}}</span>
-            </span>
-            <span class="dummy"></span>
-            <!-- <ion-button >Cancel</ion-button> -->
-        </div>
-        <!-- <ion-col size="3">
-            <h4 class="mypad-green save-button SAVE-ITEM-UPDATES" (click)="save()">Save</h4>
-        </ion-col> -->
-    <!-- </ion-row> -->
+  <!--<save-sub-menu [title]="pageTitle" (_saveClickEventHandler)="save()"></save-sub-menu>-->
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <!-- <ion-row class="top-row"> -->
+  <div class="registration-header">
+
+    <!-- </ion-col> -->
+    <!-- <ion-col size="6"> -->
+    <img src="assets/icon/Close-Square-white.svg" (click)="close()">
+    <span class="registration-title-wrapper">
+      <span class="registration-title">{{pageTitle}}</span>
+    </span>
+    <span class="dummy"></span>
+    <!-- <ion-button >Cancel</ion-button> -->
+  </div>
+  <!-- <ion-col size="3">
+      <h4 class="mypad-green save-button SAVE-ITEM-UPDATES" (click)="save()">Save</h4>
+  </ion-col> -->
+  <!-- </ion-row> -->
 </ion-header>
 <!-- <ion-content> -->
-    <ng-container *ngIf="isDisplayReady">
-        <div class="container-wrapper" >
-            <div class="formWrapper">
-            <!-- <div class="spacer-halfRem"></div> -->
-            <div *ngIf="_type != 'Bookmark'" class="upload-main">
-                <!-- <label for="img-upload"> -->
-                    <div [class]="showImage ? 'upload-main-img' : 'upload-content'">
-                             <img [src]="TempActiveItem?.Image" imageViewer> 
-                        <div class="upload-icons">
-                            <img src="assets/icon/paperclip.svg">
-                            <span class="upload-text">Upload Image</span>
-                        </div>
-                    </div>   
-                <!-- </label> -->
-                <!-- <img src="{{TempActiveItem?.Image}}" imageViewer/> -->
-            </div>
-            <div *ngIf="_type == 'Bookmark'">
-                <h4 style="color:blue !important;">{{_bookmark}}</h4>
-            </div>
-            <ng-container *ngIf="isQrCode == false">
-                <!-- Edit Item -->
-                <div  *ngIf="pageTitle != 'Add Item'">
-                    <!-- Attachment link goes here -->
-                    <div class="fieldWrapper attach-end"  *ngIf="IsMetattachment == false">
-                        <ion-label >
-                            <ion-icon name="md-attach"></ion-icon>
-                            Attachments
-                        </ion-label>
-                    </div>
-                    <!--<div class="spacer-oneRem"></div>-->
-                    <div class="fieldWrapper">
-                        <div class="inputField">
-                            <!-- <ion-item style="background-color: #fff !important;" lines="none"> -->
-                                <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Title..." (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                            <!-- </ion-item> -->
-                        </div>
-                    </div>
-                
-                    <!-- <hr /> -->
-                    <!-- Where does this belong? -->
-                    <div class="fieldWrapper">
-                    <ion-label>Where does this belong?</ion-label>
-                    <ion-label class="italics" *ngIf="IsMetattachment == false">(Select all that apply)</ion-label>
-                    {{ProfileItem.Name}}
-                    <div class="edit-item">
-                        <span class="mypad-green" (click)="updateItemLocation()" *ngIf="IsMetattachment == false">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
-                        </span>
-                    </div>
-                    </div>
-                    <!-- <hr /> -->
-                    <!-- What category does this belong in? -->
-                    <div class="fieldWrapper">
-                    <ion-label >What category does this belong in?</ion-label>
-                    <ion-label class="italics" *ngIf="IsMetattachment == false">(Select all that apply)</ion-label>
-                    {{LineItem.Name}}
-                    <div class="edit-item">
-                        <span class="mypad-green" (click)="updateItemLineitems()" *ngIf="IsMetattachment == false">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
-                        </span>
-                    </div>
-                    </div>
-                    <!-- <hr /> -->
-                    <!-- Which list does this belong in? -->
-                    <div class="fieldWrapper">
-                    <ion-label>Which list does this belong in?</ion-label>
-                    <ion-label class="italics" *ngIf="IsMetattachment == false">(Select all that apply)</ion-label>
-                    <div *ngIf="TempActiveItem?.IsMy == true">My List</div>
-                    <div *ngIf="TempActiveItem?.IsWishlist == true">Wishlist</div>
-                    <div *ngIf="TempActiveItem?.IsSuggest == true">Suggested</div>
-                    <div class="edit-item" *ngIf="IsMetattachment == false">
-                        <span class="mypad-green" (click)="updateItemLineitems()">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
-                        </span>
-                    </div>
-                    </div>
-                    <br />
-                    <hr />
-                </div>
-                <!-- Add Item-->
-                <div class="fieldWrapper" *ngIf="pageTitle == 'Add Item'">
-                    <!-- <div class="spacer-oneRem"></div> -->
-                    <ion-label>Title</ion-label>
-                    <div class="inputField">
-                        <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Enter title" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                    </div>
-                    <!-- <hr /> -->
-                </div>
-                <!-- Details -->
-                <div class="fieldWrapper details-wrapper">
-                    <ion-label >Details</ion-label>
-                    <div class="inputField text-area">
-                        <ion-textarea [(ngModel)]="TempActiveItem?.AssetInfo.Description" (focus)="selectInput($event)" placeholder="Description"
-                            (keyup.enter)="save()"></ion-textarea>
-                    </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label >Price</ion-label>
-                <div class="inputField">
-                    <ion-input type="number" [(ngModel)]="TempActiveItem?.AssetInfo.Price" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label>Item Number</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.ItemNumber" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label>Manufacturer</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Manufacturer" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">               
-                <ion-label >Make</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Make" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label>Mode</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Model" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>               
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label>Serial Number</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.SerialNumber" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Size</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Size" placeholder="Enter size" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label>Length</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Length" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <div class="fieldWrapper">
-                <ion-label>Height</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Height" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div>
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Depth</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Depth" placeholder="Enter depth" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Width</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Width" placeholder="Enter width" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Total Quantity</ion-label>
-                <div class="inputField">
-                    <ion-input type="number" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantity" placeholder="Enter total quantity" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Total Quantity Unit</ion-label>
-                <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantityUnit" placeholder="Enter total quantity unit" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Notes</ion-label>
-                <div class="inputField text-area">
-                    <ion-textarea [(ngModel)]="TempActiveItem?.AssetInfo.Notes" placeholder="Enter notes" (keyup.enter)="save()"></ion-textarea>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="fieldWrapper">
-                <ion-label>Color</ion-label> -->
-                <!-- <div class="spacer-oneRem"></div> -->
-                <!-- <div class="inputField">
-                    <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Color" placeholder="Enter color" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
-                </div>
-                </div> -->
-                <!-- <div class="spacer-oneAndHalfRem"></div> -->
-            </ng-container>
-            <div class="btnWrapper">
-                <ion-button class="save-btn" (click)="save()">Save</ion-button>
-            </div>
+<ng-container *ngIf="isDisplayReady">
+  <div class="container-wrapper">
+    <div class="formWrapper">
+      <!-- <div class="spacer-halfRem"></div> -->
+      <div *ngIf="_type != 'Bookmark'" class="upload-main">
+        <!-- <label for="img-upload"> -->
+        <div [class]="showImage ? 'upload-main-img' : 'upload-content'">
+          <img [src]="TempActiveItem?.Image" imageViewer>
+          <div class="upload-icons">
+            <img src="assets/icon/paperclip.svg">
+            <span class="upload-text">Upload Image</span>
+          </div>
         </div>
+        <!-- </label> -->
+        <!-- <img src="{{TempActiveItem?.Image}}" imageViewer/> -->
+      </div>
+      <div *ngIf="_type == 'Bookmark'">
+        <h4 style="color:blue !important;">{{_bookmark}}</h4>
+      </div>
+      <ng-container *ngIf="isQrCode == false">
+        <!-- Edit Item -->
+        <div *ngIf="pageTitle != 'Add Item'">
+          <!-- Attachment link goes here -->
+          <div class="fieldWrapper attach-end" *ngIf="IsMetattachment == false">
+            <ion-label>
+              <ion-icon name="md-attach"></ion-icon>
+              Attachments
+            </ion-label>
+          </div>
+          <!--<div class="spacer-oneRem"></div>-->
+          <div class="fieldWrapper">
+            <div class="inputField">
+              <!-- <ion-item style="background-color: #fff !important;" lines="none"> -->
+              <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Title..." (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+              <!-- </ion-item> -->
+            </div>
+          </div>
+
+          <!-- <hr /> -->
+          <!-- Where does this belong? -->
+          <div class="fieldWrapper">
+            <ion-label>Where does this belong?</ion-label>
+            <ion-label class="italics" *ngIf="IsMetattachment == false">(Select all that apply)</ion-label>
+            {{ProfileItem.Name}}
+            <div class="edit-item">
+              <span class="mypad-green" (click)="updateItemLocation()" *ngIf="IsMetattachment == false">
+                <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
+              </span>
+            </div>
+          </div>
+          <!-- <hr /> -->
+          <!-- What category does this belong in? -->
+          <div class="fieldWrapper">
+            <ion-label>What category does this belong in?</ion-label>
+            <ion-label class="italics" *ngIf="IsMetattachment == false">(Select all that apply)</ion-label>
+            {{LineItem.Name}}
+            <div class="edit-item">
+              <span class="mypad-green" (click)="updateItemLineitems()" *ngIf="IsMetattachment == false">
+                <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
+              </span>
+            </div>
+          </div>
+          <!-- <hr /> -->
+          <!-- Which list does this belong in? -->
+          <div class="fieldWrapper">
+            <ion-label>Which list does this belong in?</ion-label>
+            <ion-label class="italics" *ngIf="IsMetattachment == false">(Select all that apply)</ion-label>
+            <div *ngIf="TempActiveItem?.IsMy == true">My List</div>
+            <div *ngIf="TempActiveItem?.IsWishlist == true">Wishlist</div>
+            <div *ngIf="TempActiveItem?.IsSuggest == true">Suggested</div>
+            <div class="edit-item" *ngIf="IsMetattachment == false">
+              <span class="mypad-green" (click)="updateItemLineitems()">
+                <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fpencil.svg?alt=media&token=4534ffd7-bd6a-48fe-90d0-44eed30a3191" class="icon-img mypad-green" /> Edit Item
+              </span>
+            </div>
+          </div>
+          <br />
+          <hr />
         </div>
-    </ng-container>
+        <!-- Add Item-->
+        <div class="fieldWrapper" *ngIf="pageTitle == 'Add Item'">
+          <!-- <div class="spacer-oneRem"></div> -->
+          <ion-label>Title</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Title" placeholder="Enter title" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+          <!-- <hr /> -->
+        </div>
+        <!-- Details -->
+        <div class="fieldWrapper details-wrapper">
+          <ion-label>Details</ion-label>
+          <div class="inputField text-area">
+            <ion-textarea [(ngModel)]="TempActiveItem?.AssetInfo.Description" (focus)="selectInput($event)" placeholder="Description"
+                          (keyup.enter)="save()"></ion-textarea>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Price</ion-label>
+          <div class="inputField">
+            <ion-input type="number" [(ngModel)]="TempActiveItem?.AssetInfo.Price" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Item Number</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.ItemNumber" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Manufacturer</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Manufacturer" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Make</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Make" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Mode</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Model" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Serial Number</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.SerialNumber" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <!-- <div class="fieldWrapper">
+        <ion-label>Size</ion-label>
+        <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Size" placeholder="Enter size" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+        </div>
+        </div> -->
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Length</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Length" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Height</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Height" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Depth</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Depth" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Width</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Width" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Total Quantity</ion-label>
+          <div class="inputField">
+            <ion-input type="number" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantity" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Total Quantity Unit</ion-label>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.TotalQuantityUnit" placeholder="0" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Notes</ion-label>
+          <div class="inputField text-area">
+            <ion-textarea [(ngModel)]="TempActiveItem?.AssetInfo.Notes" placeholder="Enter notes" (keyup.enter)="save()"></ion-textarea>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneRem"></div> -->
+        <div class="fieldWrapper">
+          <ion-label>Color</ion-label>
+          <div class="spacer-oneRem"></div>
+          <div class="inputField">
+            <ion-input type="text" [(ngModel)]="TempActiveItem?.AssetInfo.Color" placeholder="Enter color" (focus)="selectInput($event)" (keyup.enter)="save()"></ion-input>
+          </div>
+        </div>
+        <!-- <div class="spacer-oneAndHalfRem"></div> -->
+      </ng-container>
+      <div class="btnWrapper">
+        <ion-button class="save-btn" (click)="save()">Save</ion-button>
+      </div>
+    </div>
+  </div>
+</ng-container>
 <!-- </ion-content> -->
