@@ -31,7 +31,7 @@
 			<ion-button (click)="addLineItem()" class="addRoombtn"
 				*ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
 				<img src="../../../../../assets/icon/plus-icon.svg" alt="">
-				Add Line Item
+				Add List Item
 		</ion-button>
 		<ion-button class="save-btn" (click)="saveLineItems()">
 			Save
