@@ -205,12 +205,12 @@ export class AddLineItemPage extends BasePage {
   async addLineItem() {
     const alert = await this.alertCtrl.create({
       cssClass: "my-custom-class",
-      header: "Add New LineItem",
+      header: "List Name",
       inputs: [
         {
           name: "lineItemName",
           type: "text",
-          label: "New LineItem Name",
+          label: "New List Name",
           value: "",
         },
       ],
