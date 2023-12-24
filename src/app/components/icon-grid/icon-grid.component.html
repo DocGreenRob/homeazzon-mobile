@@ -11,7 +11,6 @@
     <ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start">
       <ion-item slot="header">
         <ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
-
       </ion-item>
       <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main">
         <div *ngFor="let i of c.Items; let index = index">
