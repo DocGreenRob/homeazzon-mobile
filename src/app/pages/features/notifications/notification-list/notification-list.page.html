@@ -1,0 +1,55 @@
+<ion-header>
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <div class="header-title-with-icon">
+    <!--<span (click)="close()">
+      <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" alt="">
+    </span>-->
+    <span class="title-with-img">
+      <span>Notifications</span>
+    </span>
+    <div class="header-icon">
+      <div class="cross-icon">
+        <img src="assets/icon/Close Square.svg" (click)="close()" alt="">
+      </div>
+    </div>
+  </div>
+  <!--<div class="breadcrumb-main">
+    <img src="assets/icon/Home.svg" alt="">
+    <span class="bread-arrow-right">></span>
+    <span class="current-page">
+      My Breadcrumb
+    </span>
+  </div>-->
+  <!--<div class="tab-container">-->
+    <!--<app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
+                          (selectedSegment)="handleSegmentChanged($event)">
+    </app-segment-selector>-->
+  <!--</div>-->
+</ion-header>
+<div class="container-wrapper">
+  <div class="notifications-container">
+    <div class="notifications-header">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-3><h6 style="padding-left:2em;">Date</h6></ion-col>
+          <ion-col col-6><h6>Notification</h6></ion-col>
+          <ion-col col-3><h6 style="float:left">Sender</h6> </ion-col>
+          <!--<ion-col size="3"><h6>Date</h6></ion-col>
+          <ion-col size="6"><h6>Notification</h6></ion-col>
+          <ion-col size="3"><h6>Sender</h6></ion-col>-->
+        </ion-row>
+
+      </ion-grid>
+    </div>
+    <!--<div class="notifications-content" *ngFor="let notification of notifications" (click)="viewFullNotification(notification)">-->
+    <div class="notifications-content" *ngFor="let notification of notifications">
+      <ion-grid>
+        <ion-row [class.unread]="!notification.IsOpened" class="notification-item">
+            <ion-col col-3><p class="notification-date">{{notification.Date}}</p></ion-col>
+            <ion-col col-4><p class="notification-type">{{notification.Type}}</p></ion-col>
+            <ion-col col-4><p style="float:left" class="sender">{{notification.Sender}}</p> </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</div>

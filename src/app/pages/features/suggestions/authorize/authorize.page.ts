@@ -2,7 +2,7 @@ import { Location } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { BasePage } from '../../../base/base.page';
 import { LocalStorageService } from '../../../../services/local-storage.service';
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, Platform } from "@ionic/angular";
 import { NotificationService } from "../../../../services/notification/notification.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { Constants } from "../../../../common/Constants";
@@ -21,19 +21,19 @@ export class AuthorizePage extends BasePage {
     private location: Location,
     private loadingController: LoadingController,
     private notificationService: NotificationService,
-    public override uxNotifierService: UxNotifierService,) {
+    public override uxNotifierService: UxNotifierService,
+    public override platform: Platform) {
     super(null,
       null,
       null,
       null,
-      null,
+      platform,
       null,
       uxNotifierService,
       null,
       null,
       null,
-      storageService
-    );
+      storageService);
 
     this._constants = new Constants();  
   }

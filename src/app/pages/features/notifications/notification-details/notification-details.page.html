@@ -1,0 +1,28 @@
+<ion-header>
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <div class="header-title-with-icon">
+    <!--<span (click)="close()">
+      <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" alt="">
+    </span>-->
+    <span class="title-with-img">
+      <span>Notifications</span>
+    </span>
+    <div class="header-icon">
+      <div class="cross-icon">
+        <img src="assets/icon/Close Square.svg" (click)="close()" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="breadcrumb-main">
+    <img src="assets/icon/Home.svg" alt="">
+    <span class="bread-arrow-right">></span>
+    <span class="current-page">
+      <!--{{ProfileItem?.Name}}-->
+    </span>
+  </div>
+  <div class="tab-container">
+    <!--<app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
+                          (selectedSegment)="handleSegmentChanged($event)">
+    </app-segment-selector>-->
+  </div>
+</ion-header>

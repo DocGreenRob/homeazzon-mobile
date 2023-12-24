@@ -296,6 +296,14 @@ const routes: Routes = [
     path: 'authorize',
     loadChildren: () => import('./pages/features/suggestions/authorize/authorize.module').then( m => m.AuthorizePageModule)
   },
+  {
+    path: 'notification-list',
+    loadChildren: () => import('./pages/features/notifications/notification-list/notification-list.module').then( m => m.NotificationListPageModule)
+  },
+  {
+    path: 'notification-details',
+    loadChildren: () => import('./pages/features/notifications/notification-details/notification-details.module').then( m => m.NotificationDetailsPageModule)
+  },
 
 ];
 
