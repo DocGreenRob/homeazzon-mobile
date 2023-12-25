@@ -39,7 +39,10 @@ export class NotificationDetailsPage extends BasePage {
     this._constants = new Constants();
   }
 
-  override async ngOnInit() { }
+  override async ngOnInit() {
+    let _ = this.Notification;
+    this.notification = _;
+  }
 
   public close() {
     this.location.back();

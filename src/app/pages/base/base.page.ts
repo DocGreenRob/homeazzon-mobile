@@ -443,6 +443,16 @@ export class BasePage implements OnInit {
     this.storageService.set("CompanyInformation", value);
   }
 
+   // Notification
+   // TODO: Use Dto
+ get Notification(): any {
+   const info: any = this.storageService.get("Notification");
+   return info;
+ }
+ set Notification(value: any) {
+   this.storageService.set("Notification", value);
+ }
+
   // ----------------------------------------------------------->
   // ----------------------------------------------------------->
   // ----------------------------------------------------------->
