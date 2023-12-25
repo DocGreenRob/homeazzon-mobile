@@ -185,10 +185,6 @@ export class PropertyProfilesService extends baseService {
   }
 
   async getProfileItemsByIds(profileItemIds, userType) {
-    var data = {
-      profileItemIds: profileItemIds,
-      userType: userType,
-    };
     return await this.post("/getProfileItems/" + userType, profileItemIds).toPromise();
   }
 }

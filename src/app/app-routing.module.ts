@@ -304,6 +304,10 @@ const routes: Routes = [
     path: 'notification-details',
     loadChildren: () => import('./pages/features/notifications/notification-details/notification-details.module').then( m => m.NotificationDetailsPageModule)
   },
+  {
+    path: 'property-selector',
+    loadChildren: () => import('./pages/features/property-profile/property-selector/property-selector.module').then( m => m.PropertySelectorPageModule)
+  },
 
 ];
 
