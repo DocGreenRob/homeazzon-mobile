@@ -13,6 +13,9 @@ import { UserTypesService } from "../../../../services/user-types/user-types.ser
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
 import { LocalStorageService } from "@app/services/local-storage.service";
+import { Storage } from "@ionic/storage";
+import { PropertyService } from "../../../../services/property/property.service";
+import { Constants } from "../../../../common/Constants";
 
 @Component({
   selector: "app-user-types-owner",
@@ -21,12 +24,15 @@ import { LocalStorageService } from "@app/services/local-storage.service";
 })
 export class UserTypesOwnerPage extends BasePage {
   public states: Array<IStateDto>;
-  selected: boolean = true;
-  streetAddress1: string = "";
-  streetAddress2: string = "";
-  city: string = "";
-  state: any = 0;
-  zip: string = "";
+  public selected: boolean = true;
+  public streetAddress1: string = "";
+  public streetAddress2: string = "";
+  public city: string = "";
+  public state: any = 0;
+  public zip: string = "";
+
+  private _isEditingProperty: boolean = false;
+  private _constants: Constants;
 
   constructor(
     public override navController: NavController,
@@ -40,7 +46,9 @@ export class UserTypesOwnerPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private staticDataService: StaticDataProvider,
     private location: Location,
-    public override storageService: LocalStorageService
+    public override storageService: LocalStorageService,
+    private storage: Storage,
+    private propertyService: PropertyService
   ) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesOwnerPage");
@@ -49,16 +57,37 @@ export class UserTypesOwnerPage extends BasePage {
       (x: Array<IStateDto>) => {
         this.states = x;
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
   override async ngOnInit() {
     console.log("ngOnInit UserTypesOwnerPage");
-  }
-  ionViewWillLoad() {}
+    this._isEditingProperty = this.IsEditingProperty; // await this.storageService.get("IsEditingProperty");
 
-  continue() {
+    if (this._isEditingProperty) {
+      let p = this.SelectedProperty;
+
+      this.streetAddress1 = p.Address.StreetAddress1;
+      this.streetAddress2 = p.Address.StreetAddress2;
+      this.city = p.Address.City;
+      this.state = p.Address.State;
+      this.zip = p.Address.Zip;
+    }
+  }
+
+  ionViewWillLoad() { }
+
+  goToBuildYourGeneral() {
+    this.storage.remove("SelectedPrivateLabelerProperty").then(
+      (x) => {
+        this.router.navigate(["property-profile-general-information"]);
+      },
+      (err) => { }
+    );
+  }
+
+  async continue() {
     this.streetAddress1 = this.streetAddress1.trim();
     this.streetAddress2 = this.streetAddress2.trim();
     this.city = this.city.trim();
@@ -76,7 +105,20 @@ export class UserTypesOwnerPage extends BasePage {
       address.Zip = this.zip;
       customProperty.Address = address;
       this.storageService.set("CustomProperty", customProperty);
-      this.router.navigate(["property-profile-general-information"]);
+
+      if (this._isEditingProperty) {
+        // save property address information
+        await this.propertyService.updateAddress(customProperty).then((x) => {
+          this.uxNotifierService.showToast("Address updated.", this._constants.ToastColorGood);
+          // go to dashboard
+          this.router.navigate(["dashboard"]);
+        }).catch((err) => {
+          this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
+        });
+      } else {
+        this.router.navigate(["property-profile-general-information"]);
+      }
+
     }
   }
 

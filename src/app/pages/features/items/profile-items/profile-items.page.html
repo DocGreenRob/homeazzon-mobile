@@ -1,177 +1,148 @@
-<ion-header >
-	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-	<div class="header-title-with-icon">
-		<!-- <ion-col size="3"> -->
-			<!-- <ion-buttons left> -->
-				<!-- <button ion-button (click)="close()"> -->
-					
-					<span (click)="close()">
-						<!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" -->
-							<!-- class="left-icon" style="margin: .5em !important;" /> -->
-						<img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" alt="">
-					</span>
-				<!-- </button> -->
-			<!-- </ion-buttons> -->
-		<!-- </ion-col> -->
-		<!-- <ion-col size="6"> -->
-			<span class="title-with-img">
-				<img *ngIf="ProfileItem.ItemCount > 0" (click)="seeProfileItemItems()" width="18" height="18"
-					style="filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);"
-					src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Ffolders.svg?alt=media&token=9cd3829f-8c7b-403f-bbdf-3548bf77d443">
-					<span>{{ProfileItem.Name}}</span>
-			</span>
-		<!-- </ion-col> -->
-		<!-- <ion-col size="3"> -->
-			<div class="header-icon">
-				<!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259"
-					 (click)="openMenu()"> -->
-					<img src="assets/icon/building-fill.svg" width="24" height="24" (click)="openMenu()" alt="">
-				<span (click)="openMenu()">{{ActiveProperty?.Name}}</span>
-			</div>
-		<!-- </ion-col> -->
-	</div>
-	<div class="breadcrumb-main">
-		<img src="assets/icon/Home.svg" alt="">
-		<span class="bread-arrow-right">></span>
-		<span class="current-page">
-		  {{ProfileItem?.Name}}
-		</span>
-	</div>
-	<div class="tab-container">
-	<app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
-		(selectedSegment)="handleSegmentChanged($event)">
-	</app-segment-selector>
-	</div>
+<ion-header>
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <div class="header-title-with-icon">
+    <span (click)="close()">
+      <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" alt="">
+    </span>
+    <span class="title-with-img">
+      <img *ngIf="ProfileItem.ItemCount > 0" (click)="seeProfileItemItems()" width="18" height="18"
+           style="filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);"
+           src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Ffolders.svg?alt=media&token=9cd3829f-8c7b-403f-bbdf-3548bf77d443">
+      <span>{{ProfileItem.Name}}</span>
+    </span>
+    <div class="header-icon">
+      <img src="assets/icon/building-fill.svg" width="24" height="24" (click)="openMenu()" alt="">
+      <span (click)="openMenu()">{{ActiveProperty?.Name}}</span>
+    </div>
+  </div>
+  <div class="breadcrumb-main">
+    <img src="assets/icon/Home.svg" alt="">
+    <span class="bread-arrow-right">></span>
+    <span class="current-page">
+      {{ProfileItem?.Name}}
+    </span>
+  </div>
+  <div class="tab-container">
+    <app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
+                          (selectedSegment)="handleSegmentChanged($event)">
+    </app-segment-selector>
+  </div>
 </ion-header>
 <div class="container-wrapper">
-	<div class="bedroom-content-container">
-		<!-- My Stuff -->
-		<div *ngIf="manageProfileItemsView == 'digiDoc' && isViewLoaded" class="room-list">
-			<div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
-				<!-- <ion-row class="profile-item-row"> -->
-					<!-- <ion-col size="8"> -->
-						<ion-text>
-							{{lineitem.Name}}
-						</ion-text>
-					<!-- </ion-col> -->
-					<!-- <ion-col size="4"> -->
-						<span class="no-value" *ngIf="lineitem.DigiDocCount == 0" >
-							{{lineitem.DigiDocCount}}
-						</span>
-						<span *ngIf="lineitem.DigiDocCount > 0">
-							{{lineitem.DigiDocCount}}
-						</span>
-					<!-- </ion-col> -->
-				<!-- </ion-row> -->
-				<!-- <div class="hr2"> </div> -->
-			</div>
-			<!-- <br> -->
-			<!-- temp removal, RAG 11.30.20 -->
-			<!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
-				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
-				&nbsp; Optional Items
-			</button>-->
-			<!-- <br> -->
-			<!-- <br> -->
-		</div>
-		<!-- Wishlist -->
-		<div *ngIf="manageProfileItemsView == 'wishlist' && isViewLoaded" class="room-list">
-			<div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
-				<!-- <ion-row class="profile-item-row">
-					<ion-col size="8"> -->
-						<ion-text >
-							{{lineitem.Name}}
-						</ion-text>
-					<!-- </ion-col> -->
-					<!-- <ion-col size="4"> -->
-						<span class="no-value" *ngIf="lineitem.WishlistCount == 0">
-							{{lineitem.WishlistCount}}
-						</span>
-						<span  *ngIf="lineitem.WishlistCount > 0">
-							{{lineitem.WishlistCount}}
-						</span>
-					<!-- </ion-col> -->
-				<!-- </ion-row> -->
-				<!-- <div class="hr2"> </div> -->
-			</div>
-			<!-- <br> -->
-			<!-- temp removal, RAG 11.30.20 -->
-			<!--<button clear ion-button class="edit-profile-item"
-					(click)="clickOptionalItems()">
-				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd"
-					 class="edit-profile-items-icon use_default_baby_blue">
-				&nbsp; Optional Items
-			</button>-->
-			<!-- <br> -->
-			<!-- <br> -->
-		</div>
-		<!-- Suggestions -->
-		<div *ngIf="manageProfileItemsView == 'suggested' && isViewLoaded" class="room-list">
-			<div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
-				<!-- <ion-row class="profile-item-row"> -->
-					<!-- <ion-col size="8"> -->
-						<ion-text>
-							{{lineitem.Name}}
-							<ion-badge color="green" *ngIf="lineitem.UnopenedSuggestionCount > 0">
-								{{lineitem.UnopenedSuggestionCount}}</ion-badge>
-						</ion-text>
-					<!-- </ion-col> -->
-					<!-- <ion-col size="4"> -->
-						<span class="no-value" *ngIf="lineitem.SuggestCount == 0">
-							{{lineitem.SuggestCount}}</span>
-						<span *ngIf="lineitem.SuggestCount > 0" >
-							{{lineitem.SuggestCount}}</span>
-					<!-- </ion-col> -->
-				<!-- </ion-row> -->
-				<!-- <div class="hr2"> </div> -->
-			</div>
-			<!-- <br> -->
-			<!-- temp removal, RAG 11.30.20 -->
-			<!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
-				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
-				&nbsp; Optional Items
-				 </button>-->
+  <div class="bedroom-content-container">
+    <!-- My Stuff -->
+    <div *ngIf="manageProfileItemsView == 'digiDoc' && isViewLoaded" class="room-list">
+      <div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
+        <!-- <ion-row class="profile-item-row"> -->
+        <!-- <ion-col size="8"> -->
+        <ion-text>
+          {{lineitem.Name}}
+        </ion-text>
+        <!-- </ion-col> -->
+        <!-- <ion-col size="4"> -->
+        <span class="no-value" *ngIf="lineitem.DigiDocCount == 0">
+          {{lineitem.DigiDocCount}}
+        </span>
+        <span *ngIf="lineitem.DigiDocCount > 0">
+          {{lineitem.DigiDocCount}}
+        </span>
+        <!-- </ion-col> -->
+        <!-- </ion-row> -->
+        <!-- <div class="hr2"> </div> -->
+      </div>
+      <!-- <br> -->
+      <!-- temp removal, RAG 11.30.20 -->
+      <!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
+        <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
+        &nbsp; Optional Items
+      </button>-->
+      <!-- <br> -->
+      <!-- <br> -->
+    </div>
+    <!-- Wishlist -->
+    <div *ngIf="manageProfileItemsView == 'wishlist' && isViewLoaded" class="room-list">
+      <div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
+        <!-- <ion-row class="profile-item-row">
+          <ion-col size="8"> -->
+        <ion-text>
+          {{lineitem.Name}}
+        </ion-text>
+        <!-- </ion-col> -->
+        <!-- <ion-col size="4"> -->
+        <span class="no-value" *ngIf="lineitem.WishlistCount == 0">
+          {{lineitem.WishlistCount}}
+        </span>
+        <span *ngIf="lineitem.WishlistCount > 0">
+          {{lineitem.WishlistCount}}
+        </span>
+        <!-- </ion-col> -->
+        <!-- </ion-row> -->
+        <!-- <div class="hr2"> </div> -->
+      </div>
+      <!-- <br> -->
+      <!-- temp removal, RAG 11.30.20 -->
+      <!--<button clear ion-button class="edit-profile-item"
+          (click)="clickOptionalItems()">
+        <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd"
+           class="edit-profile-items-icon use_default_baby_blue">
+        &nbsp; Optional Items
+      </button>-->
+      <!-- <br> -->
+      <!-- <br> -->
+    </div>
+    <!-- Suggestions -->
+    <div *ngIf="manageProfileItemsView == 'suggested' && isViewLoaded" class="room-list">
+      <div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
+        <!-- <ion-row class="profile-item-row"> -->
+        <!-- <ion-col size="8"> -->
+        <ion-text>
+          {{lineitem.Name}}
+          <ion-badge color="green" *ngIf="lineitem.UnopenedSuggestionCount > 0">
+            {{lineitem.UnopenedSuggestionCount}}
+          </ion-badge>
+        </ion-text>
+        <!-- </ion-col> -->
+        <!-- <ion-col size="4"> -->
+        <span class="no-value" *ngIf="lineitem.SuggestCount == 0">
+          {{lineitem.SuggestCount}}
+        </span>
+        <span *ngIf="lineitem.SuggestCount > 0">
+          {{lineitem.SuggestCount}}
+        </span>
+        <!-- </ion-col> -->
+        <!-- </ion-row> -->
+        <!-- <div class="hr2"> </div> -->
+      </div>
+      <!-- <br> -->
+      <!-- temp removal, RAG 11.30.20 -->
+      <!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
+        <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
+        &nbsp; Optional Items
+         </button>-->
+      <!-- <br>
+      <br> -->
+    </div>
+    <!-- <br style="clear:both;" />
+    <br style="clear:both;" /> -->
+  </div>
+  <div class="no-items-container" *ngIf="!lineitems?.length">
+    <div class="no-item-content">
+      <img src="assets/imgs/no-content backup.png" alt="">
+      <span class="desc">
+        No items are currently present. Establish a folder and incorporate either an item already in your possession or conduct an online search to add one.
+      </span>
+    </div>
 
-
-			<!-- <br>
-			<br> -->
-		</div>
-		<!-- <br style="clear:both;" />
-		<br style="clear:both;" /> -->
-	</div>
-	<!-- <br><br> -->
-	<!-- <ion-row> -->
-		<!-- <ion-col size="6"> -->
-		<!-- </ion-col> -->
-		<!-- <ion-col size="6"> -->
-			<!-- <div class="optional-item-btn" *ngIf="lineitems?.length > 0">
-			<ion-button   (click)="addLineItems()">
-				<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fplus-circle.svg?alt=media&token=e8b32f5c-685f-4cd4-9e57-bcce3138dce7"
-					class="edit-profile-items-icon use_default_baby_blue">
-					<img src="assets/icon/Edit Square.svg" alt="">
-					 Add Line Items
-			</ion-button>
-		</div> -->
-		<!-- </ion-col> -->
-	<!-- </ion-row> -->
-
-	<div class="no-items-container" *ngIf="!lineitems?.length">
-		<div class="no-item-content">
-			<img src="assets/imgs/no-content backup.png" alt="">
-			<span class="desc">
-				No items are currently present. Establish a folder and incorporate either an item already in your possession or conduct an online search to add one.
-			</span>
-		</div>
-		
-	</div>
-	<div class="formWrapper">
-		<div class="btnWrapper">
-			<ion-button class="add-line-item-btn" (click)="addLineItems()">
-				<img src="assets/icon/Plus.svg" alt="">
-				Add new item or edit list</ion-button>
-		</div>
-	</div>
+  </div>
+  <div class="formWrapper">
+    <div class="btnWrapper">
+      <ion-button class="add-line-item-btn" (click)="addLineItems()">
+        <img src="assets/icon/Plus.svg" alt="">
+        Add new item or edit list
+      </ion-button>
+    </div>
+  </div>
 </div>
 <tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
-	(cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
-	(searchEvent)="search()"></tab-menu>
+          (cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+          (searchEvent)="search()"></tab-menu>

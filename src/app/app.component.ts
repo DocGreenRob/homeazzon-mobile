@@ -119,7 +119,7 @@ export class AppComponent extends BasePage {
         image:
           '../assets/icon/Notification.svg',
         title: 'Notifications',
-        url: 'notifications',
+        url: 'notification-list',
       },
       {
         image:
