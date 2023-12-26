@@ -1,77 +1,78 @@
 <ion-app class="scanner-hide">
   <ion-split-pane contentId="main-content">
-      <!-- Side Menu (top-left) -->
-      <ion-menu contentId="main-content" type="overlay" side="start" menuId="mainMenu">
-        <div style="height:2em;" *ngIf="platform.is('ios')"></div>
-          <div class="main-wrapper">
-              <div class="sidebar-wrapper">
-                <div class="profile-info">
-                    <span class="avatar">
-                        <img src="../assets/icon/Profile.svg" alt="">
-                    </span>
-                    <div class="info" *ngIf="User">
-                        <span class="name">
-                            {{User.UserName ? User.UserName : User.Name ? User.Name : User.Email}}
-                        </span>
-                        <span class="mail">
-                            {{User.Email}}
-                        </span>
-                    </div>
-                </div>
-                <div class="menu-list" >
-                    <div class="list"  *ngFor="let p of pages" (click)="openPage(p)">
-                        <img src="{{p.image}}" width="24" height="24" > 
-                        <span>{{p.title}}</span>
-                    </div>
-                </div>
-                <div class="logout" (click)="openPage({ url: 'logout' })">
-                    <ion-button>Log Out</ion-button>
-                </div>
-              </div>
+    <!-- Side Menu (top-left) -->
+    <ion-menu contentId="main-content" type="overlay" side="start" menuId="mainMenu">
+      <div style="height:2em;" *ngIf="platform.is('ios')"></div>
+      <div class="main-wrapper">
+        <div class="sidebar-wrapper">
+          <div class="profile-info">
+            <span class="avatar">
+              <img src="../assets/icon/Profile.svg" alt="">
+            </span>
+            <div class="info" *ngIf="User">
+              <span class="name">
+                {{User.UserName ? User.UserName : User.Name ? User.Name : User.Email}}
+              </span>
+              <span class="mail">
+                {{User.Email}}
+              </span>
             </div>
-      </ion-menu>
-      <!-- Property Menu (top-right) -->
-      <ion-menu contentId="main-content" type="overlay" side="end" menuId="propertyMenu">
-        <div class="main-wrapper">
-            <div class="sidebar-wrapper">
-                <div class="profile-info">
-                    <span class="avatar">
-                        <img src="../assets/icon/home-building.svg" alt="">
-                    </span>
-                    <div class="info">
-                        <span class="name">
-                            Homes
-                        </span>
-                        <span class="homes-number">
-                            <span>( {{ userProperties?.length }} )</span> Number of homes available
-                        </span>
-                    </div>
-                </div>
-                <div class="not-available" *ngIf="!userProperties?.length">
-                    <img src="../assets/icon/empty-home.svg" alt="">
-                    <ion-text>No home available at the moment</ion-text>
-                </div>
-
-                <div class="home-list-wrapper" *ngIf="userProperties?.length > 0">
-                    <div class="home-list"
-                         *ngFor="let p of userProperties"
-                         (click)="viewProperty(p)">
-                        <img [src]="p.Image"
-                             width="24"
-                             height="24"
-                             style="background-color:#526EA0 !important;" />
-                        <span> {{p.Name}}</span>
-                    </div>
-                </div>
-                <div class="design-btn">
-                    <ion-button (click)="designHome()">Design/ Choose a new home</ion-button>
-                </div>
+          </div>
+          <div class="menu-list">
+            <div class="list" *ngFor="let p of pages" (click)="openPage(p)">
+              <img src="{{p.image}}" width="24" height="24">
+              <span>{{p.title}}</span>
             </div>
+          </div>
+          <div class="logout" (click)="openPage({ url: 'logout' })">
+            <ion-button>Log Out</ion-button>
+          </div>
+          <i style="font-size:.6em;">v 11.8.7</i>
         </div>
-      </ion-menu>
-      <ion-router-outlet id="main-content"></ion-router-outlet>
+      </div>
+    </ion-menu>
+    <!-- Property Menu (top-right) -->
+    <ion-menu contentId="main-content" type="overlay" side="end" menuId="propertyMenu">
+      <div class="main-wrapper">
+        <div class="sidebar-wrapper">
+          <div class="profile-info">
+            <span class="avatar">
+              <img src="../assets/icon/home-building.svg" alt="">
+            </span>
+            <div class="info">
+              <span class="name">
+                Homes
+              </span>
+              <span class="homes-number">
+                <span>( {{ userProperties?.length }} )</span> Number of homes available
+              </span>
+            </div>
+          </div>
+          <div class="not-available" *ngIf="!userProperties?.length">
+            <img src="../assets/icon/empty-home.svg" alt="">
+            <ion-text>No home available at the moment</ion-text>
+          </div>
+
+          <div class="home-list-wrapper" *ngIf="userProperties?.length > 0">
+            <div class="home-list"
+                 *ngFor="let p of userProperties"
+                 (click)="viewProperty(p)">
+              <img [src]="p.Image"
+                   width="24"
+                   height="24"
+                   style="background-color:#526EA0 !important;" />
+              <span> {{p.Name}}</span>
+            </div>
+          </div>
+          <div class="design-btn">
+            <ion-button (click)="designHome()">Design/ Choose a new home</ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
 <div class="scanner-ui">
-    
+
 </div>
