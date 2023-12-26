@@ -37,6 +37,7 @@ import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.servi
 //import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 //import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 //import { EventMessage, EventType } from '@azure/msal-browser';
 @Component({
   selector: 'app-root',
@@ -65,7 +66,6 @@ export class AppComponent extends BasePage {
   userProperties: any = [];
   getPropertiesSubsription: any;
   constants = new Constants();
-
   //new
   constructor(
     public override platform: Platform,
@@ -231,5 +231,10 @@ export class AppComponent extends BasePage {
     await this.communicator.sendSelectedProperty(p);
     localStorage.removeItem('Lineitems');
     this.menu.close('propertyMenu');
+  }
+  async stopScan(): Promise<void> {
+    await BarcodeScanner.stopScan();
+    document.body.classList.remove("qrscanner"); 
+    BarcodeScanner.prepare();
   }
 }

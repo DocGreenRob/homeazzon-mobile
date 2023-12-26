@@ -68,5 +68,30 @@
   </ion-split-pane>
 </ion-app>
 <div class="scanner-ui">
-    ...Scanner Interface
+    <ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-back-button
+              default-href="#"
+              (click)="stopScan()"
+            ></ion-back-button>
+          </ion-buttons>
+          <ion-title>
+            <h5>
+                 Scan Item Code
+            </h5>
+         </ion-title>
+        </ion-toolbar>
+      </ion-header>
+     <ion-content [fullscreen]="true">
+        <div class="container">
+            <div class="barcode-scanner--area--container">
+               <div class="square surround-cover">
+                    <div class="barcode-scanner--area--outer surround-cover">
+                        <div class="barcode-scanner--area--inner"></div>
+                  </div>
+              </div>
+         </div>
+      </div>
+   </ion-content>
 </div>
