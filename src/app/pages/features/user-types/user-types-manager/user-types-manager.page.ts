@@ -71,6 +71,13 @@ export class UserTypesManagerPage extends BasePage {
     this.IsNewUserTypeSelected = true;
     this.NewSelectedUserTypeId = selectedUserType.Id;
 
+    let properties = this.Properties;
+    let user = this.User;
+
+    // does user already have this role assigned?
+    let isUserTypeAssigned = user.Types.some((x) => x.Id === userTypeId);
+    this.NewSelectedUserTypeId = userTypeId;
+
     switch (selectedUserType.Name) {
       case this._constants.UserTypes.Appraiser:
         this.router.navigate(["dashboard"]);
@@ -83,7 +90,11 @@ export class UserTypesManagerPage extends BasePage {
         this.router.navigate(["user-types-developer"]);
         break;
       case this._constants.UserTypes.Owner:
-        this.router.navigate(["user-types-owner"]);
+        if (isUserTypeAssigned) {
+          this.router.navigate(["property-selector"]);
+        } else {
+          this.router.navigate(["user-types-owner"]);
+        }
         break;
       case this._constants.UserTypes.PrivateLabelUser:
         break;

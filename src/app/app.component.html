@@ -1,9 +1,13 @@
+<div style="height:2em;" *ngIf="platform.is('ios')"></div>
 <ion-app class="scanner-hide">
   <ion-split-pane contentId="main-content">
     <!-- Side Menu (top-left) -->
     <ion-menu contentId="main-content" type="overlay" side="start" menuId="mainMenu">
+      <div style="font-size:.6em; text-align:center; padding-top:1em;">
+        <i>v 12.0.0</i>
+      </div>
       <div style="height:2em;" *ngIf="platform.is('ios')"></div>
-      <div class="main-wrapper">
+      <div class="main-wrapper" style="overflow:hidden !important;">
         <div class="sidebar-wrapper">
           <div class="profile-info">
             <span class="avatar">
@@ -27,7 +31,6 @@
           <div class="logout" (click)="openPage({ url: 'logout' })">
             <ion-button>Log Out</ion-button>
           </div>
-          <i style="font-size:.6em;">v 11.8.7</i>
         </div>
       </div>
     </ion-menu>
@@ -59,8 +62,7 @@
                  (click)="viewProperty(p)">
               <img [src]="p.Image"
                    width="24"
-                   height="24"
-                   style="background-color:#526EA0 !important;" />
+                   height="24" />
               <span> {{p.Name}}</span>
             </div>
           </div>

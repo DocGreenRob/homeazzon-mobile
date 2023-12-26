@@ -18,12 +18,10 @@
         <div class="fieldWrapper">
           <ion-label>Name your home design</ion-label>
           <div class="inputField">
-            <ion-input
-              type="text"
-              [(ngModel)]="property.Name"
-              placeholder="Enter name"
-              required
-            ></ion-input>
+            <ion-input type="text"
+                       [(ngModel)]="property.Name"
+                       placeholder="Enter name"
+                       required></ion-input>
           </div>
         </div>
       </ion-col>
@@ -39,21 +37,29 @@
         <div class="fieldWrapper">
           <ion-label>Square Footage</ion-label>
           <div class="inputField">
-            <ion-input
-              type="text"
-              placeholder="0 Sq Ft"
-              [(ngModel)]="property.SqFt"
-              required
-              (focus)="selectInput($event)"
-            ></ion-input>
+            <ion-input type="text"
+                       placeholder="0 Sq Ft"
+                       [(ngModel)]="property.SqFt"
+                       required
+                       (focus)="selectInput($event)"></ion-input>
           </div>
         </div>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="isEditingProperty">
+      <div class="fieldWrapper2">
+        <ion-label>
+          <i style="font-size:.7em !important; color:#808080;">(to load first on the dashboard)</i>
+        </ion-label>
+        <div class="inputField2">
+          <ion-toggle [(ngModel)]="isDefault">Is Default</ion-toggle>
+        </div>
+      </div>
+    </ion-row>
     <div class="btnWrapper">
       <ion-button class="continuebtn" (click)="goToBedroomsPage()">
-        Continue</ion-button
-      >
+        Continue
+      </ion-button>
     </div>
   </div>
 </div>

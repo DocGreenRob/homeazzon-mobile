@@ -1,6 +1,6 @@
 {
   "name": "homeaZZon",
-  "version": "11.8.7",
+  "version": "11.8.9",
   "author": "HomeaZZon, LLC.",
   "homepage": "https://homeaZZon.com/",
   "scripts": {
@@ -48,7 +48,6 @@
     "@mtnair/ngx-pinch-zoom": "^2.5.12",
     "cordova-plugin-camera": "^7.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
-    "crypto-browserify": "^3.12.0",
     "ionicons": "^7.0.0",
     "jwt-decode": "^3.1.2",
     "ng2-pdf-viewer": "^10.0.0",
