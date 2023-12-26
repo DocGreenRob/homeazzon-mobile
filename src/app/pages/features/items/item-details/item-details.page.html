@@ -222,7 +222,7 @@ IsMetattachment ?
 		&& ActiveItem?.AssetInfo?.Length != ''))
 		|| (ActiveAttachmentItem?.AssetInfo?.Length != undefined
 		&& ActiveAttachmentItem?.AssetInfo?.Length != '')">
-          <ion-label>Length</ion-label>
+          <ion-label>Length:</ion-label>
           <span>
             {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Length : ActiveItem?.AssetInfo?.Length }}
           </span>
@@ -249,7 +249,7 @@ IsMetattachment ?
 		&& ActiveItem?.AssetInfo?.Width != ''))
 		|| (ActiveAttachmentItem?.AssetInfo?.Width != undefined
 		&& ActiveAttachmentItem?.AssetInfo?.Width != '')" class="item-field">
-          <ion-label>Width</ion-label>
+          <ion-label>Width:</ion-label>
           <span>
             {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Width : ActiveItem?.AssetInfo?.Width }}
           </span>
@@ -280,7 +280,7 @@ IsMetattachment ?
 		&& ActiveItem?.AssetInfo?.Color != ''))
 		|| (ActiveAttachmentItem?.AssetInfo?.Color != undefined
 		&& ActiveAttachmentItem?.AssetInfo?.Color != '')" class="item-field">
-          <ion-label>Color</ion-label>
+          <ion-label>Color:</ion-label>
           <span>
             {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Color : ActiveItem?.AssetInfo?.Color }}
           </span>
@@ -289,7 +289,7 @@ IsMetattachment ?
       <br style="clear:both" />
       <!-- Row 3 -->
       <div class="other-specifications-wrapper">
-        <ion-label class="other-specifications-label">Other Specifications</ion-label>
+        <ion-label class="other-specifications-label">Other Specifications:</ion-label>
         <div class="fields">
           <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Manufacturer != undefined
 					  && ActiveItem?.AssetInfo?.Manufacturer != ''))
@@ -338,6 +338,7 @@ IsMetattachment ?
           </div>
         </div>
       </div>
+      <br style="clear:both" />
       <!-- Notes -->
       <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Notes != undefined
 				&& ActiveItem?.AssetInfo?.Notes != ''))

@@ -25,5 +25,7 @@ export interface IPropertyDto {
 	IsWishlist?: boolean;
 	IsSuggested?: boolean;
 	User?: IUserDto;
-	UserTypeId: number;
+  UserTypeId: number;
+  IsDefault: boolean;
+  IsPublicProperty: boolean;
 }

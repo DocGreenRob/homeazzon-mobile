@@ -1,0 +1,83 @@
+<ion-header>
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <div class="header-title-with-icon">
+    <span (click)="close()">
+      <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" alt="">
+    </span>
+    <span class="title-with-img">
+      <span>Authorize {{notification.Sender}}</span>
+    </span>
+    <div class="header-icon">
+      <img src="assets/icon/building-fill.svg"
+           width="24"
+           height="24"
+           (click)="openMenu()"
+           alt="" />
+      <span (click)="openMenu()">{{ActiveProperty?.Name}}</span>
+    </div>
+  </div>
+  <!--<div class="breadcrumb-main">
+    <img src="assets/icon/Home.svg" alt="">
+    <span class="bread-arrow-right">></span>
+    <span class="current-page">
+      {{ProfileItem?.Name}}
+    </span>
+  </div>-->
+  <!--<div class="tab-container">
+    <app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
+                          (selectedSegment)="handleSegmentChanged($event)">
+    </app-segment-selector>
+  </div>-->
+</ion-header>
+
+<!--<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">authorize</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>-->
+<!-- </ion-col> -->
+
+<div class="container-wrapper">
+  <div class="authorize-content-container">
+    <h6> {{notification.Sender}} has requested authorization to suggest products to your  property at {{notification.PendingAuthorization.Property.StreetAddress1}}, {{notification.PendingAuthorization.Property.StreetAddress2}}, {{notification.PendingAuthorization.Property.City}}, {{notification.PendingAuthorization.Property.State}}, {{notification.PendingAuthorization.Property.Zip}}</h6>
+    <br>
+    <h6>You can:</h6>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-5>
+          <button ion-button small (click)="checkAsOpened('fullAccess')"> Full Access</button>
+        </ion-col>
+        <ion-col col-7>
+          Grant <div style="display:inline;" class="requestor"></div> <b> Full Acess</b> to your entire property. (This means they can suggest products for any room in your home. They <b>CANNOT</b> see your existing assets!)
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-5>
+          <button ion-button small (click)="checkAsOpened('limitedAccess')"> Limited Access</button>
+        </ion-col>
+        <ion-col col-7>
+          Grant <div style="display:inline;" class="requestor"></div> <b> Limited Acess</b> to rooms/areas you specify. (This means they can suggest products for authorized rooms/areas in your home. They <b>CANNOT</b> see your existing assets.)
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-5>
+          <button ion-button small (click)="checkAsOpened('denyAccess')">Deny Access</button>
+        </ion-col>
+        <ion-col col-7>
+          Deny <div style="display:inline;" class="requestor"></div> access to your property.
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+
+        </ion-col>
+        <ion-col col-8>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

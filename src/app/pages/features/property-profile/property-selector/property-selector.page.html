@@ -1,0 +1,40 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important;">
+  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
+  <div class="registration-header">
+    <img src="assets/icon/Arrow - Left Square.svg" (click)="close()">
+    <span class="registration-title">
+      Property Manager
+    </span>
+  </div>
+</ion-header>
+<div class="container-wrapper">
+  <div class="formWrapper">
+    <div class="manager-content" *ngFor="let property of properties;" (click)="editProperty(property)">
+      <div class="manager-content-title">
+        <div>
+          <img src="assets/icon/Home.svg">
+        </div>
+        <ion-text>
+          {{property.Name}}
+        </ion-text>
+        <ion-text>
+          {{property.StreetAddress1}} <br />
+          {{property.City}}, {{property.State}}
+        </ion-text>
+      </div>
+    </div>
+    <div class="home-btn-wrapper">
+      <ion-button class="add-property-btn"
+                  *ngIf="isOwner"
+                  (click)="goToBuildYourGeneral()">
+        <img src="assets/icon/building-fill-white.svg" alt="">
+        Add New property
+      </ion-button>
+      <ion-button class="new-reality-btn"
+                  *ngIf="isRealtor">
+        <img src="assets/icon/person.svg" alt="">
+        New Realty Customer
+      </ion-button>
+    </div>
+  </div>
+</div>
