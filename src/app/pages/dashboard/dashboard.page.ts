@@ -81,8 +81,7 @@ export class DashboardPage extends BasePage {
 
   public roomView: string = 'default';
 
-  constructor(
-    public override navController: NavController,
+  constructor(public override navController: NavController,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public propertyService: PropertyProfilesService,
@@ -99,8 +98,7 @@ export class DashboardPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private activeRoute: ActivatedRoute,
     private ngzone: NgZone,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService) {
     super(
       navController,
       null,
@@ -126,11 +124,9 @@ export class DashboardPage extends BasePage {
   async ionViewDidEnter() {
     this.resetState();
 
-    if (
-      this.IsFirstLoadCompleted === undefined ||
-      this.IsFirstLoadCompleted === null ||
-      this.IsFirstLoadCompleted === false
-    ) {
+    if (this.IsFirstLoadCompleted === undefined
+      || this.IsFirstLoadCompleted === null
+      || this.IsFirstLoadCompleted === false) {
       this._loading = await this.loadingCtrl.create({
         message: 'loading properties...',
         cssClass: 'my-loading-class',

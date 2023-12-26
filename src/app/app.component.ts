@@ -179,14 +179,7 @@ export class AppComponent extends BasePage {
   }
 
   private setPropertyImage(userType: string, property: any) {
-    switch (userType) {
-      case 'Owner':
-        property.Image = '../assets/icon/person.svg';
-        break;
-      case 'Realtor':
-        property.Image = '../assets/icon/building-fill-white.svg';
-        break;
-    }
+    property.Image = `assets/icon/${userType.toLowerCase()}.svg`;
   }
 
   async showAlertToUserAfterUpdate(title, message) {

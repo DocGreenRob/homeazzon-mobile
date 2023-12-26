@@ -1,10 +1,11 @@
 import { Location } from "@angular/common";
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { LocalStorageService } from "@app/services/local-storage.service";
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
 import { MenuController, NavController, Platform } from "@ionic/angular";
+import { Storage } from "@ionic/storage";
 import { IAddressDto } from "../../../../models/dto/interfaces/IAddressDto";
-import { IPropertyDto } from "../../../../models/dto/interfaces/IPropertyDto";
 import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
 import { CommunicatorService } from "../../../../services/communicator/communicator.service";
 import { FeaturesService } from "../../../../services/features/features.service";
@@ -12,10 +13,6 @@ import { StaticDataProvider } from "../../../../services/static-data/static-data
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
-import { LocalStorageService } from "@app/services/local-storage.service";
-import { Storage } from "@ionic/storage";
-import { PropertyService } from "../../../../services/property/property.service";
-import { Constants } from "../../../../common/Constants";
 
 @Component({
   selector: "app-user-types-owner",
@@ -30,12 +27,13 @@ export class UserTypesOwnerPage extends BasePage {
   public city: string = "";
   public state: any = 0;
   public zip: string = "";
+  public isPublicProperty: boolean = false;
 
   private _isEditingProperty: boolean = false;
-  private _constants: Constants;
+  private _selectedProperty: any;
 
-  constructor(
-    public override navController: NavController,
+
+  constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
     public override platform: Platform,
@@ -47,11 +45,11 @@ export class UserTypesOwnerPage extends BasePage {
     private staticDataService: StaticDataProvider,
     private location: Location,
     public override storageService: LocalStorageService,
-    private storage: Storage,
-    private propertyService: PropertyService
-  ) {
+    private storage: Storage) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesOwnerPage");
+
+
 
     this.staticDataService.getStates().then(
       (x: Array<IStateDto>) => {
@@ -66,13 +64,24 @@ export class UserTypesOwnerPage extends BasePage {
     this._isEditingProperty = this.IsEditingProperty; // await this.storageService.get("IsEditingProperty");
 
     if (this._isEditingProperty) {
-      let p = this.SelectedProperty;
+      // TODO: Need to refactor the property to have the structure of IPropertyDto
+      /*
+      let p: IPropertyDto = this.SelectedProperty;
 
       this.streetAddress1 = p.Address.StreetAddress1;
       this.streetAddress2 = p.Address.StreetAddress2;
       this.city = p.Address.City;
       this.state = p.Address.State;
       this.zip = p.Address.Zip;
+      */
+      this._selectedProperty = this.SelectedProperty;
+
+      this.streetAddress1 = this._selectedProperty.StreetAddress1;
+      this.streetAddress2 = this._selectedProperty.StreetAddress2;
+      this.city = this._selectedProperty.City;
+      this.state = this._selectedProperty.State;
+      this.zip = this._selectedProperty.Zip;
+      this.isPublicProperty = this._selectedProperty.IsPublicProperty;
     }
   }
 
@@ -93,32 +102,28 @@ export class UserTypesOwnerPage extends BasePage {
     this.city = this.city.trim();
     this.zip = this.zip?.toString()?.trim() || "";
 
+    // TODO: Need to refactor, temp solution, blah blah
+    let a = this.SelectedProperty;
+    a.IsPublicProperty = this.isPublicProperty;
+    this.SelectedProperty = a;
+
     if (this.streetAddress1 == "" || this.city == "" || this.state == "" || this.zip == "") {
       this.uxNotifierService.presentSimpleAlert("All fields are required!", "");
     } else {
-      let customProperty: IPropertyDto = {} as IPropertyDto;
+      //let customProperty: IPropertyDto = {} as IPropertyDto;
+      let customProperty: any = {};
       let address: IAddressDto = {} as IAddressDto;
       address.StreetAddress1 = this.streetAddress1;
       address.StreetAddress2 = this.streetAddress2;
       address.City = this.city;
       address.State = this.state;
       address.Zip = this.zip;
+      customProperty.IsPublicProperty = this.isPublicProperty;
+
       customProperty.Address = address;
       this.storageService.set("CustomProperty", customProperty);
 
-      if (this._isEditingProperty) {
-        // save property address information
-        await this.propertyService.updateAddress(customProperty).then((x) => {
-          this.uxNotifierService.showToast("Address updated.", this._constants.ToastColorGood);
-          // go to dashboard
-          this.router.navigate(["dashboard"]);
-        }).catch((err) => {
-          this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
-        });
-      } else {
-        this.router.navigate(["property-profile-general-information"]);
-      }
-
+      this.router.navigate(["property-profile-general-information"]);
     }
   }
 
