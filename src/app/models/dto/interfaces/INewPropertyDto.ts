@@ -17,5 +17,6 @@ export interface INewPropertyDto {
   TotalStories: number;
   UserTypeId: number;
   Profiles: Array<IProfile>;
+  IsPublicProperty: boolean;
 }
 

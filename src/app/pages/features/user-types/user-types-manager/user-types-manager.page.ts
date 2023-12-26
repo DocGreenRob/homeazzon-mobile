@@ -76,7 +76,7 @@ export class UserTypesManagerPage extends BasePage {
 
     // does user already have this role assigned?
     let isUserTypeAssigned = user.Types.some((x) => x.Id === userTypeId);
-
+    this.NewSelectedUserTypeId = userTypeId;
 
     switch (selectedUserType.Name) {
       case this._constants.UserTypes.Appraiser:

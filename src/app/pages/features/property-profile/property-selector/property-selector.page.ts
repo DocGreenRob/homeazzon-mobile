@@ -7,6 +7,7 @@ import { NotificationService } from '../../../../services/notification/notificat
 import { UxNotifierService } from '../../../../services/uxNotifier/ux-notifier.service';
 import { BasePage } from '../../../base/base.page';
 import { IUserTypeDto } from "../../../../models/dto/interfaces/IUserTypeDto";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-property-selector',
@@ -26,13 +27,14 @@ export class PropertySelectorPage extends BasePage {
     private loadingController: LoadingController,
     private notificationService: NotificationService,
     public override uxNotifierService: UxNotifierService,
-    public override platform: Platform) {
+    public override platform: Platform,
+    public override router: Router,) {
     super(null,
       null,
       null,
       null,
       platform,
-      null,
+      router,
       uxNotifierService,
       null,
       null,
@@ -40,16 +42,15 @@ export class PropertySelectorPage extends BasePage {
       storageService);
 
     this._constants = new Constants();
-
-    let a = this.Properties;
-    this.properties = a;
-
-    let b = this.User;
-    this.isOwner = b.Types.some((x) => x.Name == 'Owner');
-    this.isRealtor = b.Types.some((x) => x.Name == 'Realtor');
   }
 
   override async ngOnInit() {
+    let a = this.Properties;
+    this.properties = a.filter((x) => x.UserTypeId === this.NewSelectedUserTypeId);
+
+    let b = this.User;
+    this.isOwner = b.Types.some((x) => x.Id === this.NewSelectedUserTypeId && x.Name === 'Owner');
+    this.isRealtor = b.Types.some((x) => x.Id === this.NewSelectedUserTypeId && x.Name === 'Realtor');
   }
 
   public close() {
