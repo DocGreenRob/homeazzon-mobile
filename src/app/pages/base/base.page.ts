@@ -425,13 +425,22 @@ export class BasePage implements OnInit {
     this.storageService.set('IsNewUserTypeSelected', value);
   }
 
-  // NewSelectedUserType
+  // NewSelectedUserTypeId
   get NewSelectedUserTypeId(): number {
     const user: any = this.storageService.get('NewSelectedUserTypeId');
     return user ? user : 0;
   }
   set NewSelectedUserTypeId(value: number) {
     this.storageService.set('NewSelectedUserTypeId', value);
+  }
+
+  // NewSelectedUserType
+  get NewSelectedUserType(): any {
+    const user: any = this.storageService.get('NewSelectedUserType');
+    return user ? user : 0;
+  }
+  set NewSelectedUserType(value: any) {
+    this.storageService.set('NewSelectedUserType', value);
   }
 
   // CompanyInformation

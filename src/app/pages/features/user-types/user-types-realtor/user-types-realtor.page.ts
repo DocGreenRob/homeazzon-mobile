@@ -2,7 +2,7 @@ import { Location } from "@angular/common";
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
-import { MenuController, NavController, Platform } from "@ionic/angular";
+import { LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
 import { ICompanyInformationDto } from "../../../../models/dto/interfaces/ICompanyInformationDto";
 import { IPropertyDto } from "../../../../models/dto/interfaces/IPropertyDto";
 import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
@@ -13,6 +13,9 @@ import { UserTypesService } from "../../../../services/user-types/user-types.ser
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
 import { LocalStorageService } from "@app/services/local-storage.service";
+import { CompanyInformationService } from "../../../../services/company-information/company-information.service";
+import { Constants } from "../../../../common/Constants";
+import { ICompanyTypeDto } from "../../../../models/dto/interfaces/ICompanyTypeDto";
 
 @Component({
   selector: "app-user-types-realtor",
@@ -31,9 +34,15 @@ export class UserTypesRealtorPage extends BasePage {
   city: string = "";
   state: any = 0;
   zip: string = "";
+  public isEditingProperty: boolean = false;
 
-  constructor(
-    public override navController: NavController,
+  private _isEditingProperty: boolean = false;
+  private _constants = new Constants();
+  private _loading: any;
+  private _selectedProperty: any;
+  private _userType: any;
+
+  constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
     public override platform: Platform,
@@ -44,26 +53,60 @@ export class UserTypesRealtorPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     private staticDataService: StaticDataProvider,
     private location: Location,
-    public override storageService: LocalStorageService
-  ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
+    public override storageService: LocalStorageService,
+    public companyInformationService: CompanyInformationService,
+    public loadingController: LoadingController) {
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesOwnerPage");
+    this._constants = new Constants();
 
     this.staticDataService.getStates().then(
       (x: Array<IStateDto>) => {
         this.states = x;
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
   override async ngOnInit() {
     console.log("ngOnInit UserTypesOwnerPage");
+
+    if (this.User.Types.some((x) => x.Name === 'Realtor')) {
+      this._isEditingProperty = true;
+    }
+    
+    this.isEditingProperty = this._isEditingProperty;
+
+    this._userType = this.UserTypes.filter(x => x.Name === 'Realtor')[0];
+
+    if (this._isEditingProperty) {
+      this._loading = await this.loadingController.create({
+        message: 'Getting Company Information...',
+        cssClass: 'my-loading-class',
+      });
+      await this._loading.present();
+
+      await this.companyInformationService.getCompanyInformationNyUserTypeAsync(this._userType.Id).then((x: ICompanyInformationDto) => {
+        this._loading.dismiss();
+
+        this.companyName = x.Name.trim();
+        this.website = x.Website ?? '';
+        this.email = x.Email ?? '';
+        this.businessPhone = x.Phone ?? ''
+        this.streetAddress1 = x.StreetAddress1.trim();
+        this.streetAddress2 = x.StreetAddress2.trim();
+        this.city = x.City.trim();
+        this.state = x.State;
+        this.zip = x.Zip?.toString()?.trim() || "";
+      }).catch((err) => {
+
+      });
+    }
   }
 
-  ionViewWillLoad() {}
+  ionViewWillLoad() { }
 
-  public continue() {
+  public async continue() {
     this.companyName = this.companyName.trim();
     this.website = this.website.trim();
     this.email = this.email.trim();
@@ -73,15 +116,13 @@ export class UserTypesRealtorPage extends BasePage {
     this.city = this.city.trim();
     this.zip = this.zip?.toString()?.trim() || "";
 
-    if (
-      this.companyName === "" ||
-      this.email === "" ||
-      this.businessPhone === "" ||
-      this.streetAddress1 === "" ||
-      this.city === "" ||
-      this.state === "" ||
-      this.zip === ""
-    ) {
+    if (this.companyName === ""
+      || this.email === ""
+      || this.businessPhone === ""
+      || this.streetAddress1 === ""
+      || this.city === ""
+      || this.state === ""
+      || this.zip === "") {
       let errors: Array<string> = new Array<string>();
 
       if (this.companyName === "") {
@@ -110,6 +151,7 @@ export class UserTypesRealtorPage extends BasePage {
     } else {
       let customProperty: IPropertyDto = {} as IPropertyDto;
       let realtor: ICompanyInformationDto = {} as ICompanyInformationDto;
+
       realtor.Name = this.companyName;
       realtor.Website = this.website;
       realtor.Email = this.email;
@@ -119,12 +161,41 @@ export class UserTypesRealtorPage extends BasePage {
       realtor.City = this.city;
       realtor.State = this.state;
       realtor.Zip = this.zip;
+      realtor.Type = {
+        Id: this._userType.Id,
+        Name: this._userType.Name
+      } as ICompanyTypeDto;
 
       this.CompanyInformation = realtor;
       this.CustomProperty = customProperty;
 
-      this.router.navigate(["property-profile-general-information"]);
+      if (this._isEditingProperty) {
+        await this.save(realtor);
+      } else {
+        this.router.navigate(["property-profile-general-information"]);
+      }
+
     }
+  }
+
+  public async save(realtor: ICompanyInformationDto) {
+    this._loading = await this.loadingController.create({
+      message: 'Updating Company Information...',
+      cssClass: 'my-loading-class',
+    });
+    await this._loading.present();
+
+    await this.companyInformationService.upsertCompanyInformationAsync(realtor).then((x) => {
+      this._loading.dismiss();
+      this.uxNotifierService.showToast("Company Information updated.", this._constants.ToastColorGood);
+      this.router.navigate(["dashboard"]);
+    }).catch((err) => {
+      this.uxNotifierService.showToast("Company Information not updated!", this._constants.ToastColorBad);
+    });
+  }
+
+  public async manageProperties() {
+    this.router.navigate(["property-selector"]);
   }
 
   public close() {

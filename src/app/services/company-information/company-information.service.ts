@@ -15,7 +15,11 @@ export class CompanyInformationService extends baseService {
     return this.post("/company-information", companyInformation).toPromise();
   }
 
-  public getCompanyInformationAsync(id: number) {
-    return this.get(`/company-information/${id}`).toPromise();
+  public getCompanyInformationAsync(companyInformationId: number) {
+    return this.get(`/company-information/${companyInformationId}`).toPromise();
+  }
+
+  public getCompanyInformationNyUserTypeAsync(userTypeId: number) {
+    return this.get(`/company-information/user-type/${userTypeId}`).toPromise();
   }
 }

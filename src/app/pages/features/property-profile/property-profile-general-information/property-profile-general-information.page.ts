@@ -17,6 +17,13 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   public property: IPropertyDto;
   public isDefault: boolean = false;
   public isEditingProperty: boolean = false;
+  public isOwner: boolean = false;
+  public isRealtor: boolean = false;
+  public title: string = 'Let’s start with some general information';
+  public isLinkWithCustomer: boolean = false;
+  public isExistingLinkWithCustomer: boolean = false;
+  public customerName: string = '';
+  public customerEmail: string = '';
 
   private _constants = new Constants();
   private _loading: any;
@@ -35,6 +42,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
     this.property = {} as IPropertyDto;
     this.property.SqFt = null;
   }
+
   override async ngOnInit() {
     console.log("ngOnInit PropertyProfileGeneralInformationPage");
     //this.AppInsights.trackPageView({ name: 'PropertyProfileGeneralInformationPage' });
@@ -49,6 +57,23 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       this.property.SqFt = this._selectedProperty.SqFt;
       this.property.TotalStories = this._selectedProperty.TotalStories;
       this.isDefault = this._selectedProperty.IsDefault;
+
+      switch (this.NewSelectedUserType.Name) {
+        case 'Owner':
+          this.title = 'Property general information';
+          this.isOwner = true;
+          break;
+        case 'Realtor':
+          this.title = 'Property general information';
+          this.isRealtor = true;
+          if (this._selectedProperty.Customer != null) {
+            this.isExistingLinkWithCustomer = true;
+            this.isLinkWithCustomer = true;
+            this.customerName = this._selectedProperty.Customer.Name;
+            this.customerEmail = this._selectedProperty.Customer.Email;
+          }
+          break;
+      }
     }
   }
 
@@ -97,7 +122,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       customProperty = {} as IPropertyDto;
     }
     */
-    
+
     let customProperty: any = this.CustomProperty;
 
     const { TotalStories, SqFt, Name } = this.property;
@@ -125,14 +150,34 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       });
       await this._loading.present();
 
-      await this.propertyService.updateAddress(p).then((x) => {
-        this._loading.dismiss();
+      await this.propertyService.updateAddress(p).then(async (x) => {
 
-        this.uxNotifierService.showToast("Address updated.", this._constants.ToastColorGood);
+        if (this.isLinkWithCustomer && !this.isExistingLinkWithCustomer) {
+          this.uxNotifierService.showToast('Customer address updated', this._constants.ToastColorGood);
 
-        this.SelectedProperty = null;
+          this._loading.dismiss();
+          this._loading = await this.loadingController.create({
+            message: 'Linking with Customer...',
+            cssClass: 'my-loading-class',
+          });
+          await this._loading.present();
 
-        this.router.navigate(["dashboard"]);
+          p.Customer = {
+            Name: this.customerName,
+            Email: this.customerEmail
+          };
+
+          await this.propertyService.updatePropertyCustomerInformationToMakeSuggestions(p).then((x) => {
+            this._loading.dismiss();
+            this.finish("Customer link succeeded! (Request pending)");
+          }).catch((err) => {
+            this.uxNotifierService.showToast("Customer link failed!", this._constants.ToastColorBad);
+          });
+        } else {
+          this._loading.dismiss();
+          this.finish("Address updated.");
+        }
+
       }).catch((err) => {
         this.uxNotifierService.showToast("Address was not updated!", this._constants.ToastColorBad);
       });
@@ -148,6 +193,18 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
 
       this.router.navigate(["property-profile-bedrooms"]);
     }
+  }
+
+  private finish(message: string) {
+    this.isExistingLinkWithCustomer = false;
+    this.isLinkWithCustomer = false;
+    this.isEditingProperty = false;
+
+    this.uxNotifierService.showToast(message, this._constants.ToastColorGood);
+
+    this.SelectedProperty = null;
+
+    this.router.navigate(["dashboard"]);
   }
 
   public close() {

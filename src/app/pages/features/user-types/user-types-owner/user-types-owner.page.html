@@ -3,7 +3,7 @@
     <span (click)="close()">
       <img src="/assets/icon/Arrow - Left Square.svg" alt="" />
     </span>
-    <span class="headerTitle"> Owner Registration </span>
+    <span class="headerTitle">{{title}}</span>
   </div>
 </ion-header>
 <div class="container-wrapper">
@@ -59,7 +59,7 @@
                    placeholder="Enter Zip"></ion-input>
       </div>
     </div>
-    <div class="fieldWrapper2">
+    <div class="fieldWrapper2" *ngIf="isOwner">
       <ion-label>
         <i style="font-size:.7em !important; color:#808080;">(enable to receive <u>Suggestions</u> from Friends/Businesses)</i>
       </ion-label>
