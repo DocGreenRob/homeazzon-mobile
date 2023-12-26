@@ -9,7 +9,7 @@
 <div class="container-wrapper">
   <div class="formWrapper">
     <div class="formTitle">
-      <ion-text>Let’s start with some general information</ion-text>
+      <ion-text>{{title}}</ion-text>
       <span>Build your Home</span>
     </div>
 
@@ -46,7 +46,7 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="isEditingProperty">
+    <ion-row *ngIf="isEditingProperty && isOwner">
       <div class="fieldWrapper2">
         <ion-label>
           <i style="font-size:.7em !important; color:#808080;">(to load first on the dashboard)</i>
@@ -55,6 +55,36 @@
           <ion-toggle [(ngModel)]="isDefault">Is Default</ion-toggle>
         </div>
       </div>
+    </ion-row>
+    <ion-row *ngIf="isEditingProperty && isRealtor">
+      <div class="fieldWrapper2">
+        <ion-label>
+          <i style="font-size:.7em !important; color:#808080;">(to request access to make <u>Suggestions</u>)</i>
+        </ion-label>
+        <div class="inputField2">
+          <ion-toggle [(ngModel)]="isLinkWithCustomer">Link with Customer</ion-toggle>
+        </div>
+      </div>
+      <ion-col size="12" class="ion-no-padding" *ngIf="isLinkWithCustomer || isExistingLinkWithCustomer">
+        <div class="fieldWrapper">
+          <ion-label>Customer Name</ion-label>
+          <div class="inputField">
+            <ion-input type="text"
+                       [(ngModel)]="customerName"
+                       placeholder="Enter name"></ion-input>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="ion-no-padding" *ngIf="isLinkWithCustomer || isExistingLinkWithCustomer">
+        <div class="fieldWrapper">
+          <ion-label>Customer Email</ion-label>
+          <div class="inputField">
+            <ion-input type="text"
+                       [(ngModel)]="customerEmail"
+                       placeholder="Enter name"></ion-input>
+          </div>
+        </div>
+      </ion-col>
     </ion-row>
     <div class="btnWrapper">
       <ion-button class="continuebtn" (click)="goToBedroomsPage()">

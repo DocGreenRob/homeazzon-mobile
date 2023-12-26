@@ -45,12 +45,19 @@ export class PropertySelectorPage extends BasePage {
   }
 
   override async ngOnInit() {
+    let userTypeForSelectedProperty = this.User.Types.filter((x) => x.Id === this.NewSelectedUserTypeId)[0];
     let a = this.Properties;
     this.properties = a.filter((x) => x.UserTypeId === this.NewSelectedUserTypeId);
-
+    this.properties.forEach((x) => {
+      x.Image = `assets/icon/${userTypeForSelectedProperty.Name.toLowerCase()}.svg`;
+    });
     let b = this.User;
     this.isOwner = b.Types.some((x) => x.Id === this.NewSelectedUserTypeId && x.Name === 'Owner');
     this.isRealtor = b.Types.some((x) => x.Id === this.NewSelectedUserTypeId && x.Name === 'Realtor');
+  }
+
+  private setPropertyImage(userType: string, property: any) {
+    property.Image = `assets/icon/${userType.toLowerCase()}.svg`;
   }
 
   public close() {
@@ -62,36 +69,48 @@ export class PropertySelectorPage extends BasePage {
     this.IsEditingProperty = true;
     let selectedPropertyUserType: IUserTypeDto = this.UserTypes.filter((x) => x.Id === property.UserTypeId)[0];
 
-    switch (selectedPropertyUserType.Name) {
-      case this._constants.UserTypes.Appraiser:
-        this.router.navigate(["dashboard"]);
-        break;
-      case this._constants.UserTypes.Architect:
-        break;
-      case this._constants.UserTypes.Bank:
-        break;
-      case this._constants.UserTypes.Developer:
-        this.router.navigate(["user-types-developer"]);
-        break;
-      case this._constants.UserTypes.Owner:
-        this.router.navigate(["user-types-owner"]);
-        break;
-      case this._constants.UserTypes.PrivateLabelUser:
-        break;
-      case this._constants.UserTypes.Realtor:
-        this.router.navigate(["user-types-realtor"]);
-        break;
-      case this._constants.UserTypes.Renter:
-        this.router.navigate(["user-types-renter"]);
-        break;
-      case this._constants.UserTypes.Tradesman:
-        this.router.navigate(["user-types-tradesman"]);
-        break;
-      case this._constants.UserTypes.Unassigned:
-        break;
-      case this._constants.UserTypes.Vendor:
-        this.router.navigate(["user-types-vendor"]);
-        break;
+    if (this.IsEditingProperty) {
+      this.NewSelectedUserType = selectedPropertyUserType;
+
+      // Using the Owner route because the user's intention
+      // here is only to update the address and property name
+      // so we will reuse this flow and set a flag knowing
+      // which patch we are traversing
+      this.router.navigate(["user-types-owner"]);
+
+    } else {
+      switch (selectedPropertyUserType.Name) {
+        case this._constants.UserTypes.Appraiser:
+          this.router.navigate(["dashboard"]);
+          break;
+        case this._constants.UserTypes.Architect:
+          break;
+        case this._constants.UserTypes.Bank:
+          break;
+        case this._constants.UserTypes.Developer:
+          this.router.navigate(["user-types-developer"]);
+          break;
+        case this._constants.UserTypes.Owner:
+          this.router.navigate(["user-types-owner"]);
+          break;
+        case this._constants.UserTypes.PrivateLabelUser:
+          break;
+        case this._constants.UserTypes.Realtor:
+          this.router.navigate(["user-types-realtor"]);
+          break;
+        case this._constants.UserTypes.Renter:
+          this.router.navigate(["user-types-renter"]);
+          break;
+        case this._constants.UserTypes.Tradesman:
+          this.router.navigate(["user-types-tradesman"]);
+          break;
+        case this._constants.UserTypes.Unassigned:
+          break;
+        case this._constants.UserTypes.Vendor:
+          this.router.navigate(["user-types-vendor"]);
+          break;
+      }
     }
+
   }
 }
