@@ -28,6 +28,8 @@ export class UserTypesOwnerPage extends BasePage {
   public state: any = 0;
   public zip: string = "";
   public isPublicProperty: boolean = false;
+  public title: string = 'Owner Registration';
+  public isOwner: boolean = false;
 
   private _isEditingProperty: boolean = false;
   private _selectedProperty: any;
@@ -49,14 +51,26 @@ export class UserTypesOwnerPage extends BasePage {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesOwnerPage");
 
-
-
     this.staticDataService.getStates().then(
       (x: Array<IStateDto>) => {
         this.states = x;
       },
       (err) => { }
     );
+
+    this.updateTitle();
+  }
+
+  private updateTitle() {
+    switch (this.NewSelectedUserType.Name) {
+      case 'Owner':
+        this.title = 'Update Property';
+        this.isOwner = true;
+        break;
+      case 'Realtor':
+        this.title = 'Update Property';
+        break;
+    }
   }
 
   override async ngOnInit() {

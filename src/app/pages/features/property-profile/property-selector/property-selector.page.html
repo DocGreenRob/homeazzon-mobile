@@ -12,7 +12,7 @@
     <div class="manager-content" *ngFor="let property of properties;" (click)="editProperty(property)">
       <div class="manager-content-title">
         <div>
-          <img src="assets/icon/Home.svg">
+          <img [src]="property.Image">
         </div>
         <ion-text>
           {{property.Name}}
