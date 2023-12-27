@@ -1,54 +1,36 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, NgZone } from '@angular/core';
+import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import {
-  Platform,
   AlertController,
   LoadingController,
   MenuController,
-  NavController,
+  Platform
 } from '@ionic/angular';
-import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
-import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
-import { HttpClient } from '@angular/common/http';
-// import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
-import { IDeterminePathDto } from './models/dto/interfaces/IDeterminePathDto';
-import { environment } from 'src/environments/environment';
+import { NavigationExtras, Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
-import { Router, NavigationExtras } from '@angular/router';
-import { BasePage } from './pages/base/base.page';
-import { CommunicatorService } from './services/communicator/communicator.service';
-import { IUserDto } from './models/dto/interfaces/IUserDto';
-import { AppStorageService } from './services/app-storage/app-storage.service';
 import { IPropertyDto } from './models/dto/interfaces/IPropertyDto';
-// import { ThemeableBrowserinAppBrowserOptionsinAppBrowserObject } from '@ionic-native/themeable-browser';
-// Import Auth0Cordova
-//var Auth0Cordova = require("@auth0/cordova");
-import { IAuthTokenDto } from './models/dto/interfaces/IAuthTokenDto';
-//import { JwtHelperService } from "@auth0/angular-jwt";
+import { BasePage } from './pages/base/base.page';
+import { AppStorageService } from './services/app-storage/app-storage.service';
+import { CommunicatorService } from './services/communicator/communicator.service';
+import { Subject } from 'rxjs';
 import { Constants } from 'src/app/common/Constants';
-import Axios from 'axios';
-import { IdTokenDto } from './models/dto/interfaces/IdTokenDto';
-import { ICompanyTypeDto } from './models/dto/interfaces/ICompanyTypeDto';
-import { CompanyTypesService } from './services/company-types/company-types.service';
-import { IUserTypeDto } from './models/dto/interfaces/IUserTypeDto';
-import * as qs from 'querystring';
 import { AccountService } from './services/account/account.service';
-import { filter, Subject, takeUntil } from 'rxjs';
 import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.service';
-//import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-//import { NavigationAuthenticationClient } from './services/navigationAuthenticationClient';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { LocalStorageService } from './services/local-storage.service';
-//import { EventMessage, EventType } from '@azure/msal-browser';
+import { UtilitiesService } from './services/utlities/utilities.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
+  public appVersion: string = '12.0.1';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 
-  // rootPage:any = SigninPage;
   public rootPage: any;
 
   //new
@@ -78,14 +60,14 @@ export class AppComponent extends BasePage {
     public override communicator: CommunicatorService,
     public menu: MenuController,
     private storageCtrl: AppStorageService,
-    public loadingCtrl: LoadingController,
+    public loadingController: LoadingController,
     public override router: Router,
     private ngzone: NgZone,
     private firebaseService: FirebaseAuthService,
     private iab: InAppBrowser,
     public override storageService: LocalStorageService,
-    private accountService: AccountService
-  ) {
+    private accountService: AccountService,
+    private utilityService: UtilitiesService) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
@@ -100,9 +82,38 @@ export class AppComponent extends BasePage {
     });
   }
 
+  compareAppVersions(version1: string, version2: string): number {
+    const splitV1 = version1.split('.').map(Number);
+    const splitV2 = version2.split('.').map(Number);
+
+    for (let i = 0; i < Math.max(splitV1.length, splitV2.length); i++) {
+      const num1 = splitV1[i] || 0;
+      const num2 = splitV2[i] || 0;
+
+      if (num1 > num2) return 1; // version1 is greater
+      if (num2 > num1) return -1; // version2 is greater
+    }
+    return 0; // versions are equal
+  }
+
   override async ngOnInit() {
     console.log('ngOnInit AppComponent');
     await this.storage.create();
+
+    await this.utilityService.getRequiredMinimumVersion().then(async (x: any) => {
+      const a: number = this.compareAppVersions(this.appVersion, x.RequiredMinimumVersion);
+
+      if (a < 0) {
+        this._loading = await this.loadingController.create({
+          message: 'New Version Available! Visit the App Store to get the latest version of the app.',
+          cssClass: 'my-loading-class',
+        });
+
+        await this._loading.present();
+      }
+    }).catch((err: any) => {
+      debugger;
+    });
 
     this.listenPropertiesLoadedEvent();
     this.listenLoginEvent();
