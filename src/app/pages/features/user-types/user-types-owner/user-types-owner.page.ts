@@ -118,7 +118,9 @@ export class UserTypesOwnerPage extends BasePage {
 
     // TODO: Need to refactor, temp solution, blah blah
     let a = this.SelectedProperty;
-    a.IsPublicProperty = this.isPublicProperty;
+    if (this._isEditingProperty) {
+      a.IsPublicProperty = this.isPublicProperty;
+    }
     this.SelectedProperty = a;
 
     if (this.streetAddress1 == "" || this.city == "" || this.state == "" || this.zip == "") {
