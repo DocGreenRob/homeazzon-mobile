@@ -1,7 +1,10 @@
 ion-header,
-ion-content,
 .adjusted-ion-row {
   width: 100% !important;
+}
+
+ion-content {
+  background: #F6F8FE;
 }
 
 .active {
@@ -143,9 +146,7 @@ ion-content,
 }
 
 .main-wrapper {
-  background: #F6F8FE;
   padding: 10px 24px 0;
-  height: 100vh;
   overflow-y: auto;
 
   ion-content {
