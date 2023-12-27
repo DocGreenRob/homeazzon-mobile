@@ -644,46 +644,74 @@ export class BasePage implements OnInit {
 
         const browser = this.inAppBrowser.create('https://www.google.com', '_blank', options);
 
-        browser.executeScript({
-          code: `
-          var button = document.createElement('button');
-          button.innerText = 'Custom Button';
-          button.style.position = 'fixed';
-          button.style.left = '20px';
-          button.style.bottom = '20px';
-          button.style.zIndex = '1000';
-          button.onclick = function() {
-            alert('button clicked'); window.postMessage({ type: 'bookmark' }, '*');
-          };
-          document.body.appendChild(button);
-        `
-        });
 
-        browser.executeScript({
-          code: `
-                var button = document.createElement('button');
-                button.innerText = 'Home';
-                button.onclick = function() { window.location.href ='https://www.google.com'; };
-                document.body.appendChild(button);
+        browser.on('loadstop').subscribe((x) => {
+  
+          browser.executeScript({
+            code: `
+                  var button = document.createElement('button');
+                  button.innerText = 'Home';
+                  button.style.cursor = 'pointer';
+                  button.style.color = "white";
+                  button.style.backgroundColor = "#2196F3";
+                  button.style.position = 'fixed';
+                  button.style.left = '20px';
+                  button.style.bottom = '20px';
+                  button.style.zIndex = '1000';
+                  button.style.borderRadius = "5px";
+                  button.style.border = "0px";
+                  button.style.width = '100px'; 
+                  button.style.height = '40px'; 
+                  button.style.fontSize = '14px';
+                  button.onclick = function() { window.location.href ='https://www.google.com'; };
+                  document.body.appendChild(button);
+                `
+          });
+  
+          browser.executeScript({
+            code: `
+                var button1 = document.createElement('button');
+                button1.innerText = 'Bookmark';
+                button1.style.cursor = 'pointer';
+                button1.style.color = "white";
+                button1.style.backgroundColor = "#155387"; 
+                button1.style.position = 'fixed';
+                button1.style.left = '130px'; 
+                button1.style.bottom = '20px';
+                button1.style.zIndex = '1000';
+                button1.style.borderRadius = "5px";
+                button1.style.border = "0px";
+                button1.style.width = '100px'; 
+                button1.style.height = '40px';
+                button1.style.fontSize = '14px';
+                button1.onclick = function() { webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify({ type: 'bookmark' })); };
+                document.body.appendChild(button1);
               `
-        });
+          });
+  
+          browser.executeScript({
+            code: `
+                  var button2 = document.createElement('button');
+                  button2.innerHTML = 'Browse';
+                  button2.style.cursor = 'pointer';
+                  button2.style.color = "white";
+                  button2.style.backgroundColor = "orange"; 
+                  button2.style.position = 'fixed';
+                  button2.style.left = '240px'; 
+                  button2.style.bottom = '20px';
+                  button2.style.zIndex = '1000';
+                  button2.style.borderRadius = "5px";
+                  button2.style.border = '0px',
+                  button2.style.width = '100px'; 
+                  button2.style.height = '40px';
+                 
+                  button2.style.fontSize = '14px';
+                  button2.onclick = function() { var url = prompt('Enter Url', 'https://www.');window.location.href=url; };
+                  document.body.appendChild(button2);
+                `
+          });
+  
 
-        browser.executeScript({
-          code: `
-              var button = document.createElement('button');
-              button.innerText = 'Bookmark';
-              button.onclick = function() { window.postMessage({ type: 'bookmark' }, '*'); };
-              document.body.appendChild(button);
-            `
-        });
-
-        browser.executeScript({
-          code: `
-                var button = document.createElement('button');
-                button.innerText = 'Browse';
-                button.onclick = function() { var url = prompt('Enter Url', 'https://www.');window.location.href=url; };
-                document.body.appendChild(button);
-              `
         });
 
         let defaultUrl: string = 'https://www.google.com';
@@ -700,15 +728,15 @@ export class BasePage implements OnInit {
         });
 
         browser.on('message').subscribe((x: any) => {
-          alert(JSON.stringify(x));
+          // alert(JSON.stringify(x));
 
           if (x.data.type === 'bookmark') {
             browser.close();
-            if (this.LineItem.Id !== undefined) {
+            if (this.LineItem?.Id !== undefined) {
               let activeItem: ActiveItem = new ActiveItem();
               let bookmark: IBookmarkDto = {} as IBookmarkDto;
 
-              bookmark.Url = x.url;
+              bookmark.Url = defaultUrl;
               activeItem.Bookmark = bookmark;
               activeItem.AssetInfo = {} as IAssetInfoDto;
 
@@ -725,7 +753,7 @@ export class BasePage implements OnInit {
               this.QueryParams = {
                 Image: null,
                 type: 'Bookmark',
-                Url: x.url,
+                Url: defaultUrl,
               };
               this.router.navigate(['item-add']);
             }
