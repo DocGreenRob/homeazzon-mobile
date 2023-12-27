@@ -108,17 +108,15 @@ export class UserTypesRealtorPage extends BasePage {
 
   public async continue() {
     this.companyName = this.companyName.trim();
-    this.website = this.website.trim();
-    this.email = this.email.trim();
-    this.businessPhone = this.businessPhone.trim();
+    //this.website = this.website.trim();
+    //this.email = this.email.trim();
+    //this.businessPhone = this.businessPhone.trim();
     this.streetAddress1 = this.streetAddress1.trim();
     this.streetAddress2 = this.streetAddress2.trim();
     this.city = this.city.trim();
     this.zip = this.zip?.toString()?.trim() || "";
 
     if (this.companyName === ""
-      || this.email === ""
-      || this.businessPhone === ""
       || this.streetAddress1 === ""
       || this.city === ""
       || this.state === ""
@@ -128,12 +126,12 @@ export class UserTypesRealtorPage extends BasePage {
       if (this.companyName === "") {
         errors.push("Company Name");
       }
-      if (this.email === "") {
-        errors.push("Email");
-      }
-      if (this.businessPhone === "") {
-        errors.push("Business Phone");
-      }
+      //if (this.email === "") {
+      //  errors.push("Email");
+      //}
+      //if (this.businessPhone === "") {
+      //  errors.push("Business Phone");
+      //}
       if (this.streetAddress1 === "") {
         errors.push("StreetAddress1");
       }
