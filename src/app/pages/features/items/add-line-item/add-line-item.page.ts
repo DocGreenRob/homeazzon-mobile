@@ -51,11 +51,11 @@ export class AddLineItemPage extends BasePage {
     public override storageService: LocalStorageService,
     public override inAppBrowser: InAppBrowser
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this.constants = new Constants();
   }
 
-  override ngOnInit() {}
+  override ngOnInit() { }
 
   ionViewDidEnter() {
     this.existingLineItems = this.Lineitems;
@@ -78,7 +78,7 @@ export class AddLineItemPage extends BasePage {
         this.allLineItems = lineItems;
         this.matchLineItems();
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -264,11 +264,12 @@ export class AddLineItemPage extends BasePage {
       if (item.length > 0) {
         itemExists = true;
       }
-      if (x.IsChecked && itemExists && x.Id != 0) {
+
+      if (x.IsChecked && x.Id != 0) {
         LineitemIds.push(x.Id);
       }
 
-      if (x.IsChecked && !itemExists && x.Id == 0) {
+      if (x.IsChecked && x.Id == 0) {
         newLineitemNames.push(x.Name);
       }
     }
