@@ -30,6 +30,10 @@ export class UtilitiesService extends baseService {
   }
 
   async sendEmail(emailDto: EmailDto): Promise<any> {
-    return this.get(`/util/sendEmail/${emailDto.From}/${emailDto.To}/${emailDto.Subject}/${emailDto.From}/${emailDto.Message}`).toPromise();
+    return this.get(`/utils/sendEmail/${emailDto.From}/${emailDto.To}/${emailDto.Subject}/${emailDto.From}/${emailDto.Message}`).toPromise();
+  }
+
+  async getRequiredMinimumVersion(): Promise<any> {
+    return this.get("/utils/required-minimum-version").toPromise();
   }
 }
