@@ -1,20 +1,24 @@
-.container-wrapper,ion-header{
+.container-wrapper,
+ion-header {
 	background: #F6F8FE;
 }
+
 //header with icon
 
-.header-title-with-icon{
+.header-title-with-icon {
 	padding: 24px 24px 24px 27px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	height: 66px;
 	background-color: #232B42;
-	.title-with-img{
+
+	.title-with-img {
 		display: flex;
 		align-items: center;
 		gap: 12px;
-		span{
+
+		span {
 			color: var(--additional-colors-white, #FEFEFE);
 			font-family: Plus Jakarta Sans;
 			font-size: 20px;
@@ -25,35 +29,41 @@
 			white-space: nowrap;
 		}
 	}
-	.header-icon{
+
+	.header-icon {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		span{
+
+		span {
 			color: var(--additional-colors-white, #FEFEFE);
 			text-align: right;
 			font-family: Plus Jakarta Sans;
 			font-size: 8px;
 			font-style: normal;
 			font-weight: 500;
-			line-height: 13.478px; 
+			line-height: 13.478px;
 			letter-spacing: 0.04px;
 		}
 	}
 }
-.tab-container{
+
+.tab-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 14px 24px;
-	app-segment-selector{
+
+	app-segment-selector {
 		width: 100%;
 	}
 }
-.authorize-content-container{
+
+.authorize-content-container {
 	padding: 10px 25px;
-	.stuff-items{
+
+	.stuff-items {
 		display: flex;
 		align-items: flex-start;
 		justify-content: space-between;
@@ -61,16 +71,18 @@
 		height: 43px;
 		border-bottom: 1px solid #E3E7EC;
 		margin-bottom: 15px;
-		ion-text{
+
+		ion-text {
 			color: #5681AA;
 			font-family: Plus Jakarta Sans;
 			font-size: 12px;
 			font-style: normal;
 			font-weight: 700;
-			line-height: 24px; 
+			line-height: 24px;
 			letter-spacing: 0.06px;
 		}
-		span{
+
+		span {
 			color: #232B42;
 			text-align: right;
 			font-family: Plus Jakarta Sans;
@@ -80,14 +92,17 @@
 			line-height: 24px;
 			letter-spacing: 0.06px;
 		}
-		.no-value{
+
+		.no-value {
 			color: #F00 !important;
 		}
 	}
 }
-.optional-item-btn{
-    padding: 0px 24px 24px;
-	ion-button{
+
+.optional-item-btn {
+	padding: 0px 24px 24px;
+
+	ion-button {
 		margin-left: auto;
 		display: flex;
 		width: 123px;
@@ -105,43 +120,49 @@
 		--border-radius: 0;
 		--background: none;
 		border: 1px solid #E3E7EC;
-		img{
+
+		img {
 			margin-right: 5px
 		}
 	}
 }
 
-.no-items-container{
-    padding: 0 25px 33px;
-    height: calc(100% - 110px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-	.no-item-content{
+.no-items-container {
+	padding: 0 25px 33px;
+	height: calc(100% - 110px);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.no-item-content {
 		display: flex;
 		align-items: center;
 		flex-direction: column;
 		gap: 24px;
-		.desc{
+
+		.desc {
 			color: rgba(29, 29, 47, 0.60);
 			text-align: center;
 			font-family: Plus Jakarta Sans;
 			font-size: 14px;
 			font-style: normal;
 			font-weight: 400;
-			line-height: 22px; 
+			line-height: 22px;
 			letter-spacing: 0.07px;
 			width: 85%;
 		}
 	}
 }
-.formWrapper{
-    padding: 0 24px 32px !important;
-    background-color: unset !important;
-	.btnWrapper{
+
+.formWrapper {
+	padding: 0 24px 32px !important;
+	background-color: unset !important;
+
+	.btnWrapper {
 		margin-top: 0 !important;
 		align-items: flex-end !important;
-		.add-line-item-btn{
+
+		.add-line-item-btn {
 			--border-radius: 10.019px !important;
 			--background: #FFF !important;
 			color: #526EA0 !important;
@@ -153,33 +174,36 @@
 			width: 177px !important;
 			height: 50.093px !important;
 			box-shadow: none !important;
-			img{
+
+			img {
 				margin-right: 6.65px;
 			}
 		}
 	}
 }
 
-.breadcrumb-main{
-    height: 38px;
-    padding: 12px 12px 12px 24px;
-    background: #2E3750;
-    margin-top: -1px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: #7F879D;
-    font-family: Plus Jakarta Sans;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 14px;
-    letter-spacing: 0.05px;
-	.bread-arrow-right{
+.breadcrumb-main {
+	height: 38px;
+	padding: 12px 12px 12px 24px;
+	background: #2E3750;
+	margin-top: -1px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	color: #7F879D;
+	font-family: Plus Jakarta Sans;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 14px;
+	letter-spacing: 0.05px;
+
+	.bread-arrow-right {
 		color: #669BBC;
 		font-size: 8px;
 	}
-	.current-page{
+
+	.current-page {
 		color: #F6F8FE;
 		font-weight: 700;
 	}

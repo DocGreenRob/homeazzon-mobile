@@ -22,27 +22,6 @@
 
 /* Optional CSS utils that can be commented out */
 
-/*@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
-@import "~@ionic/angular/css/core.css";*/
-
-// http://ionicframework.com/docs/theming/
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
 @import 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
 
 @font-face {
@@ -99,22 +78,32 @@
 }
 
 
-.scanner-ui { display: none; }
-.scanner-hide { visibility: visible; }
+.scanner-ui {
+  display: none;
+}
 
-.qrscanner { background-color: transparent; }
-.qrscanner .scanner-ui { display: block; }
-.qrscanner .scanner-hide { visibility: hidden; }
+.scanner-hide {
+  visibility: visible;
+}
+
+.qrscanner {
+  background-color: transparent;
+}
+
+.qrscanner .scanner-ui {
+  display: block;
+}
+
+.qrscanner .scanner-hide {
+  visibility: hidden;
+}
 
 
 body,
 ion-title,
 ion-card-title,
 p {
-  // font-size: 0.9rem !important;
   font-family: 'Silka-Medium' !important;
-  // letter-spacing: -0.04rem !important;
-  // line-height: 0.2em;
 }
 
 ion-title,
@@ -169,31 +158,13 @@ h6 {
   font-size: 1.4rem !important;
   letter-spacing: -0.03rem !important;
   color: var(--ion-color-dark) !important;
-  //letter-spacing: -2px;
 }
-
-.button-inner {
-  //margin: 0 14px;
-}
-
-ion-segment-button {
-  //text-transform: none !important;
-}
-
-// ion-button {
-// 	min-width: 5em;
-// 	font-size: 0.875em !important;
-// 	height: 3.3em !important;
-// 	min-height: 3.3em !important;
-// 	max-height: 3.3em !important;
-// }
 
 .button-md,
 .button-ios {
   font-family: 'Silka-Semi-Bold' !important;
   padding: 2.4rem 1.5rem !important;
   border-radius: 9999px !important;
-  //height: 3em !important;
   text-transform: none !important;
   font-size: 1.4rem !important;
 }
@@ -209,21 +180,8 @@ ion-segment-button {
 
 input::placeholder {
   color: var(--ion-color-grey) !important;
-  //  border: var(--ion-color-light-grey) 2px solid !important;
+
 }
-
-// input:hover {
-// 	border: var(--ion-color-grey) !important;
-// }
-
-// input:active {
-// 	border: var(--ion-color-dark) 2px solid !important;
-// }
-
-// .ng-valid.ng-touched {
-// 	border: var(--ion-color-dark) 2px solid !important;
-// 	color: var(--ion-color-dark) !important;
-// }
 
 .ng-invalid.ng-touched {
   border: var(--ion-color-danger) 2px solid !important;
@@ -234,9 +192,6 @@ input::placeholder {
   border: var(--ion-color-light-grey) 2px solid !important;
 }
 
-// input:focus {
-// 	border: var(--ion-color-dark) 2px solid !important;
-// }
 
 .invalid-input {
   border: var(--ion-color-danger) 2px solid !important;
@@ -310,12 +265,6 @@ ion-header {
   //line-height: 1em;
 }
 
-@media only screen and (max-width: 320px) {
-  .page-title {
-    //		font-size: 1.6rem !important;
-  }
-}
-
 //End Page Title
 .flush-top {
   margin-top: -1em;
@@ -344,19 +293,8 @@ ion-header {
   position: relative;
 }
 
-.left-down-icon {
-  //float:left !important;
-}
-
-.right-down-icon {
-  //float:right !important;
-  //margin-right: 7.5em !important;
-}
 
 .cancel-button {
-  //margin-top: 1.7em;
-  //font-size: 1.5rem !important;
-  // padding-left: 0;
   line-height: 2em;
   margin-left: 5px;
 }
@@ -367,27 +305,17 @@ ion-header {
   margin-right: 6px;
 }
 
-/***************************************/
-
 /* HEADER (end) */
-
-/***************************************/
-
-/***************************************/
 
 /* BODY */
 
-/***************************************/
-
 //dashboard icons
 .area-left-img {
-  //padding-top: 1.2rem;
   position: absolute;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   max-width: 80%;
-  /*filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);*/
   filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg) brightness(89%) contrast(107%);
   max-height: 60% !important;
 }
@@ -414,10 +342,6 @@ input {
 textarea {
   width: 100%;
 }
-
-// .mypad-green {
-// 	color: var(--ion-color-primary) !important;
-// }
 
 .mypad-red {
   color: var(--ion-color-danger) !important;
@@ -506,8 +430,6 @@ textarea {
   border-bottom: 2px solid var(--ion-color-light-grey);
   margin: 15px 0;
   width: 100%;
-  //margin-left: 1rem;
-  //margin-right: 2rem !important;
 }
 
 .hr2 {
@@ -516,7 +438,6 @@ textarea {
 }
 
 hr {
-  //border-width: 2px;
   border-color: var(--ion-color-light-grey);
 }
 
@@ -547,7 +468,6 @@ hr {
 }
 
 .use_default_green {
-  /*filter: invert(62%) sepia(13%) saturate(1626%) hue-rotate(72deg) brightness(97%) contrast(91%);*/
   filter: invert(89%) sepia(56%) saturate(4237%) hue-rotate(172deg) brightness(89%) contrast(107%);
 }
 
@@ -593,10 +513,6 @@ ion-loading.my-loading-class {
   background-color: var(--ion-color-primary);
 }
 
-// * {
-// 	font-family: Silka-Medium, Helvetica;
-// }
-
 .standard-mobile-modal {
   height: 70%;
   top: 10%;
@@ -617,15 +533,12 @@ ion-loading.my-loading-class {
   border-bottom: 2px solid var(--ion-color-light-grey) !important;
 }
 
-.segment-md .segment-button {
-  //opacity: 1;
-}
 
 // Remove drop shadows on Android
 .header-md::after,
-.tabs-md[tabsPlacement='top'] > .tabbar::after,
+.tabs-md[tabsPlacement='top']>.tabbar::after,
 .footer-md::before,
-.tabs-md[tabsPlacement='bottom'] > .tabbar::before {
+.tabs-md[tabsPlacement='bottom']>.tabbar::before {
   background-image: none;
 }
 
@@ -715,7 +628,6 @@ select::-ms-expand {
 .edit-profile-item {
   float: right !important;
   font-weight: bold;
-  //margin: -0.4em 0 -0.4em 0;
   background-color: transparent !important;
   padding: 0 !important;
   height: 2.4em;
@@ -1001,6 +913,7 @@ select::-ms-expand {
     }
   }
 }
+
 //buttons wrapper
 .btnWrapper {
   width: 100%;
@@ -1068,7 +981,8 @@ select::-ms-expand {
   background: #F6F8FE;
 }
 
-.large-modal, .add-new-folder-modal {
+.large-modal,
+.add-new-folder-modal {
   --max-width: 327px;
   --width: 100%;
   --max-height: 512px !important;
