@@ -361,6 +361,9 @@ iframe {
   height: 59px;
   background: #E8EEF4;
   padding: 10px 24px;
+  position: fixed;
+  bottom: 51px;
+  width: 100%;
 
   .footer-btn {
     display: flex;
