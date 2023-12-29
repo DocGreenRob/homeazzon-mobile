@@ -105,15 +105,22 @@ export class NotificationListPage extends BasePage {
     console.log('ionViewDidLoad AuthorizerPage');
   }
 
+  async ionViewWillEnter() {
+    await this.getNotifications();
+  }
+
   private async getNotifications() {
+    this.notifications = [];
+
     this._loading = await this.loadingController.create({
-      message: 'approving...',
+      message: 'Getting notifications...',
       cssClass: 'my-loading-class',
     });
     await this._loading.present();
 
-    this.notificationService.getUserNotifications(this.navParams.get('userID')).then((response) => {
+    this.notificationService.getUserNotifications().then((response) => {
       this._loading.dismiss();
+
       this.notifications = response;
       console.log(this.notifications);
 
@@ -141,7 +148,8 @@ export class NotificationListPage extends BasePage {
         // TODO: Fix the Sender - requires architectural modifications
         //sender = notification.Sender;
 
-        if (notification.PrivateLabelClone !== undefined && notification.PrivateLabelClone !== null) {
+        if (notification.PrivateLabelClone !== undefined
+          && notification.PrivateLabelClone !== null) {
 
           notification.callID = notification.PrivateLabelClone.Id;
           notification.theType = 'PrivateLabelClone';
@@ -154,7 +162,7 @@ export class NotificationListPage extends BasePage {
         //date = notification.Date;
         // subject = notification.Type;
 
-        if (notification.Suggestion !== null) {
+        if (notification.PrivateLabelClone !== undefined && notification.Suggestion !== null) {
 
           notification.callID = notification.Suggestion.Id;
           notification.theType = 'Suggestion';
@@ -181,68 +189,56 @@ export class NotificationListPage extends BasePage {
     console.log(notification);
 
     let id = 0;
-
+    //debugger;
     if (notification.Type == 'Invitation' && notification.theType == 'PendingAuthorization') {
       id = notification.callID;
       this.openASenderNotification(notification, id);
     }
-    else if (notification.PendingAuthorization != null && notification.DeniedAuthorizationRequest == null) {
-      const modal = this.modalController.create(
-        {
-          component: NotificationDetailsPage,
-          componentProps: notification
-        }
-      ).then((x) => {
-        debugger;
-      }).catch((err) => {
+    else if (notification.PendingAuthorization != null
+      && (notification.DeniedAuthorizationRequest == null || notification.DeniedAuthorizationRequest == undefined)) {
+      id = notification.PendingAuthorization.Id;
 
-      });
-
+      this.markNotificationEventAsOpened(id);
+      this.openASenderNotification(notification, id);
     } else {
-      console.log(notification);
+      
       if (notification.Suggestion != null) {
         id = notification.Suggestion.Id;
         //call the event opened api 
-        this.notificationEventOpened(id, notification)
+        this.markNotificationEventAsOpened(id);
       } else if (notification.PrivateLabelClone != null) {
 
         id = notification.PrivateLabelClone.Id;
         //call the event opened api 
-        this.notificationEventOpened(id, notification)
+        this.markNotificationEventAsOpened(id);
       } else if (notification.Type == 'LimitedAccessAreaAccessGranted' || notification.Type == 'LimitedAccessAreaAccessRemoved') {
 
         id = notification.ApprovedAuthorization.Id;
         //call the event opened api 
-        this.notificationEventOpened(id, notification)
+        this.markNotificationEventAsOpened(id);
       } else if (notification.Type == 'DeniedRequestAuthorization' && notification.theType == 'DeniedAuthorization') {
         id = notification.callID;
         this.deniedAuthorizationNotificationOpened(id, notification)
       } else if (notification.DeniedAuthorizationRequest = !null) {
         id = notification.callID;
         //call the event opened api 
-        this.notificationEventOpened(id, notification)
-
+        this.markNotificationEventAsOpened(id);
       }
       else {
         id = notification.ApprovedAuthorization.Id;
         //call the event opened api 
-        this.notificationEventOpened(id, notification)
+        this.markNotificationEventAsOpened(id);
       }
       console.log(id);
 
     }
   }
 
-  notificationEventOpened(id, notification) {
+  markNotificationEventAsOpened(id) {
     this.notificationService.checkApprovedOpened(id).then(() => {
-      //const modal = this.modalCtrl.create(
-      //  NotificationModalPage,
-      //  notification
-      //);
-      //modal.onDidDismiss(() => {
-      //  this.getNotifications();
-      //});
-      //modal.present();
+
+    }).catch((err) => {
+
     });
   }
 
