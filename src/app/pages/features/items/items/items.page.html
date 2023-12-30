@@ -91,7 +91,7 @@
 
             </ion-item>
             <div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0" slot="content">
-              <icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
+              <icon-list-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-list-grid>
             </div>
           </ion-accordion>
         </ion-accordion-group>

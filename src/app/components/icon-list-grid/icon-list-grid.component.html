@@ -1,0 +1,108 @@
+<ion-accordion-group [multiple]="true">
+  <div class="see-wrapper" *ngFor="let c of _grid.Lists; let ListIndex = index">
+    <span class="see-section" *ngIf="!c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
+      <img src="assets/icon/listView.png" width="20px" height="20px">
+    </span>
+    <span class="see-section" *ngIf="c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
+      <img src="assets/icon/gridView.png" width="20px" height="20px">
+    </span>
+
+    <!-- Toggle between grid and list view -->
+    <ng-template #listView>
+      <!-- List view template -->
+      <ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start">
+        <ion-item slot="header">
+          <ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
+        </ion-item>
+        <div *ngIf="c.Name != 'Google Web Links'" slot="content">
+          <div *ngFor="let i of c.Items; let index = index">
+            <div (click)="emit(i, c.Name)" class="item">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-thumbnail style="width: auto; height: 70px;">
+                      <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" [src]="i.IconPath" class="item-image">
+                      <img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')" [src]="i.ImagePath" class="item-image">
+                      <img *ngIf="i.IsTag" src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ftag.svg?alt=media&token=ab9fee51-2ffc-47f9-97d8-2be5ed9ccd9a" class="item-image">
+                      <img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')" class="item-image" [src]="dafaultImage">
+                    </ion-thumbnail>
+                  </ion-col>
+                  <ion-col ion-col="6" class="list-item-title">
+                    <ion-row>
+                      <span class="list-item-name">{{i.Name}}</span>
+                    </ion-row>
+                    <ion-row>
+                      <span class="list-item-desc">{{i.Name}}</span>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="c.Name == 'Google Web Links'" class="items-main">
+          <div *ngFor="let i of c.Items;" class="item">
+            <div (click)="emit(i, c.Name)">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-thumbnail>
+                      <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
+                      <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''" [src]="i.ImagePath" class="item-image">
+                      <img *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')" class="item-image" [src]="dafaultImage">
+                    </ion-thumbnail>
+                  </ion-col>
+                  <ion-col ion-col="8" class="list-item-title">
+                    <ion-row>
+                      <span class="list-item-name">{{i.Name}}</span>
+                    </ion-row>
+                    <ion-row>
+                      <span class="list-item-desc">{{i.Name}}</span>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </div>
+      </ion-accordion>
+    </ng-template>
+
+
+    <ng-template #gridView>
+      <!-- Grid view template -->
+      <ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start">
+        <ion-item slot="header">
+          <ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
+        </ion-item>
+        <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main">
+          <div *ngFor="let i of c.Items; let index = index">
+            <div (click)="emit(i, c.Name)" class="item">
+              <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" [src]="i.IconPath" class="item-image">
+              <img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')" [src]="i.ImagePath" class="item-image">
+              <img *ngIf="i.IsTag" src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ftag.svg?alt=media&token=ab9fee51-2ffc-47f9-97d8-2be5ed9ccd9a" class="item-image">
+              <img *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')" class="item-image" [src]="dafaultImage">
+              <span class="item-title">{{i.Name}}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="c.Name == 'Google Web Links'" class="items-main">
+          <div *ngFor="let i of c.Items;" class="item">
+            <div (click)="emit(i, c.Name)">
+              <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
+              <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''" [src]="i.ImagePath" class="item-image">
+              <img *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')" class="item-image" [src]="dafaultImage">
+              <span class="item-title">{{i.Name}}</span>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </ion-accordion>
+    </ng-template>
+
+    <!-- Use ng-container to render either grid or list view -->
+    <ng-container *ngIf="c.showAllItems; else gridView">
+      <ng-container *ngTemplateOutlet="listView"></ng-container>
+    </ng-container>
+  </div>
+</ion-accordion-group>
