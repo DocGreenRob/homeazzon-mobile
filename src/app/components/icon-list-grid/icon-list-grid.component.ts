@@ -3,6 +3,7 @@ import { IGrid } from 'src/app/models/dto/interfaces/IGrid';
 import { IGridListItem } from 'src/app/models/dto/interfaces/IGridListItem';
 import { IGridList } from 'src/app/models/dto/interfaces/IGridList';
 
+
 @Component({
 	selector: 'icon-list-grid',
 	templateUrl: './icon-list-grid.component.html',
@@ -10,6 +11,7 @@ import { IGridList } from 'src/app/models/dto/interfaces/IGridList';
 })
 export class IconListGridComponent implements OnInit {
 	showAllItems: boolean = false;
+	isListView: boolean = false;
 	@Input() _grid: IGrid | any = {} as IGrid;
 	@Output() _itemClickEventHandler: any = new EventEmitter();
 
@@ -19,16 +21,21 @@ export class IconListGridComponent implements OnInit {
 		console.log('Hello IconListGridComponent Component');
 	}
 
-	ngOnInit() {
-	}
+	ngOnInit() { }
 
 	public emit(item: IGridListItem, listName: string) {
 		let gridList: IGridList = { Items: [item], Name: listName };
 		this._itemClickEventHandler.emit(gridList);
-  }
+	}
 
-  public toggleSeeAllItemsInList(c: any) {
-    c.showAllItems = !c.showAllItems;
-  }
+	public toggleListAndGridView(event: Event, c: any) {
+		c.isListView = !c.isListView;
+
+		event.stopPropagation();
+	}
+
+	public toggleSeeAllItemsInList(c: any) {
+		c.showAllItems = !c.showAllItems;
+	}
 
 }

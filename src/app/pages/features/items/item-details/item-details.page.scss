@@ -361,9 +361,6 @@ iframe {
   height: 59px;
   background: #E8EEF4;
   padding: 10px 24px;
-  position: fixed;
-  bottom: 51px;
-  width: 100%;
 
   .footer-btn {
     display: flex;
@@ -472,7 +469,6 @@ iframe {
           font-size: 12px;
           font-style: normal;
           font-weight: 600;
-          // line-height: 100%;
           letter-spacing: -0.12px;
           display: flex;
           align-items: center;

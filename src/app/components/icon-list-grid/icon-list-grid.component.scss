@@ -1,3 +1,16 @@
+.sizedBox {
+    height: 100px;
+    width: 30px;
+}
+
+ion-item[slot="header"] {
+    border-bottom: 1px solid lightgrey;
+}
+
+ion-item {
+    --border-width: 0;
+    --border-color: transparent;
+}
 
 .header-content {
     display: flex;
@@ -7,7 +20,31 @@
 
 .toggle-icon {
     margin-right: 10px;
-   }
+}
+
+.items-main-list {
+    margin-top: 20px;
+
+    .item {
+        height: 91px;
+        justify-content: center;
+        gap: 10px;
+        object-fit: contain;
+
+        .item-image {
+            width: 100%;
+            height: 70px;
+            border-radius: 5px;
+            border: 1px solid #E3E7EC;
+            object-fit: contain;
+        }
+    }
+}
+
+ion-item.sized {
+    min-height: 10px;
+    max-height: 20px;
+}
 
 :host ::ng-deep {
     .item-main-wrapper {
@@ -19,8 +56,6 @@
             padding: 5px;
             --border-width: 0px;
             --inner-padding-end: 0;
-            min-height: 48px;
-            margin-bottom: 10px;
 
             .ion-accordion-toggle-icon {
                 color: #232C41;
@@ -47,7 +82,6 @@
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     background-color: unset;
-
 }
 
 .list-item-desc {
@@ -62,7 +96,6 @@
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     color: grey;
-
 }
 
 .see-section {
@@ -71,15 +104,30 @@
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
-    line-height: 13.664px;
     letter-spacing: 0.06px;
     display: flex;
     align-items: center;
     gap: 4px;
-    height: 48px;
+    position: absolute;
+    right: 45%;
+    z-index: 999;
+}
+
+.layout-section {
+    color: var(--hzn-text, #5681AA);
+    font-family: Plus Jakarta Sans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13.664px;
+    letter-spacing: 0.06px;
+    display: flex;
     position: absolute;
     right: 15px;
     z-index: 999;
+    align-items: end;
+    gap: 4px;
+    height: 36px;
 }
 
 .item-wrapper-heading {
@@ -89,7 +137,6 @@
     font-style: normal;
     font-weight: 700;
     line-height: 13.664px;
-    /* 113.863% */
     letter-spacing: 0.06px;
 
     span {
@@ -105,6 +152,7 @@
     row-gap: 16px;
     column-gap: 16px;
     padding-bottom: 10px;
+    margin-top: 20px;
 
     .item {
         width: 93px;
@@ -123,7 +171,6 @@
         }
 
         .list-item-title {
-            color: yellow;
             font-family: Plus Jakarta Sans;
             text-overflow: ellipsis;
             white-space: nowrap;

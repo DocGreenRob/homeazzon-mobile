@@ -262,7 +262,7 @@
 
       <div *ngIf="manageView == 'items'" class="wrap-items">
         <div class="icon-grid-container">
-          <icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)"></icon-grid>
+          <icon-list-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)"></icon-list-grid>
         </div>
         <div class="items-wrapper" *ngIf="!data?.Lists?.length">
           <div class="items-img-section">
