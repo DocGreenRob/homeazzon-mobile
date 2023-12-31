@@ -10,8 +10,8 @@ export class NotificationService extends baseService {
     super(http);
   }
 
-  async getUserNotifications(userID){
-    return this.get(`/notification/${userID}`).toPromise();
+  async getUserNotifications(){
+    return this.get(`/notification`).toPromise();
   }
 
   async checkAsOpened(notificationID){

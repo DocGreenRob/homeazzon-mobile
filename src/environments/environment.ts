@@ -28,8 +28,8 @@ export const environment = {
   //httpBase: "http://localhost:60662",
 
   // LOCAL - Kastrel
-  //httpBaseUrl: "https://localhost:5001/api",
-  //httpBase: "https://localhost:5001",
+  // httpBaseUrl: "https://localhost:5001/api",
+  // httpBase: "https://localhost:5001",
 
   azureInstrumentaionKey: 'dd255efa-1918-4580-b352-624da7efc886',
   firebaseConfig: {
