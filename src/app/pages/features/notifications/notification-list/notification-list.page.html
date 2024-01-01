@@ -12,37 +12,36 @@
 
     <span class="empty"></span>
   </div>
-  <!-- <div class="breadcrumb-main">
-    <img src="assets/icon/Home.svg" alt="">
-    <span class="bread-arrow-right">></span>
-    <span >Master bedroom</span>
-    <span class="bread-arrow-right">></span>
-    <span  class="current-page">Amazon Products</span>
-  </div> -->
+
 </ion-header>
-<div *ngIf="showDeleteDiv">
-  <button ion-button>Delete</button>
-  <button ion-button>Cancel</button>
-</div>
+<div class="noti-toast" *ngIf="deleteSuccess">
+ <span>Notification Removed</span> </div>
+
 <div class="container-wrapper">
-  <ion-list class="notifications-container">
-    <ion-item-sliding class="notifications-content"
-         *ngFor="let notification of notifications"
-         >     
-        <ion-item class="notification-item">
+    <div class="notifications-container">
+    <ion-item-sliding class="notifications-content" #item *ngFor="let notification of notifications" >  
+  
+        <ion-item>
+          <div class="notification-item">
             <div class="notification-details" (click)="viewFullNotification(notification)">
             <ion-text class="notification-date">{{notification.Date}}</ion-text>
             <ion-text class="sender">{{notification.Sender}}</ion-text> 
             <span [class.unread]="!notification.IsOpened" ></span>
             </div>
-          </ion-item>
             <div [class]="notification.IsOpened ? 'notification-type limited-access' : 'notification-type denied-case'">{{notification.Type}}</div>
+          </div>
+          </ion-item>
+          
             <ion-item-options [side]="right">
-              <button ion-button  (click)="deleteItem(notification)">
-                <ion-icon name="trash"></ion-icon>
-              </button>
+              <div class="delete-container">
+                <ion-text>Do you want to remove this notification?</ion-text>
+                <div class="delete-btns-wrapper">
+                <ion-button class="cancel" (click)="item.close()">Cancel</ion-button>
+                <ion-button class="del" (click)="confirmDeleteNotification(notification)">Remove</ion-button>
+              </div>
+              </div> 
             </ion-item-options>
           
     </ion-item-sliding>
-  </ion-list>
+  </div>
 </div>

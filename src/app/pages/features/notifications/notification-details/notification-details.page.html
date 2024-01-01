@@ -11,13 +11,6 @@
     </span>
     <span class="empty"></span>
   </div>
-  <!-- <div class="breadcrumb-main">
-    <img src="assets/icon/Home.svg" alt="">
-    <span class="bread-arrow-right">></span>
-    <span>Master bedroom</span>
-    <span class="bread-arrow-right">></span>
-    <span class="current-page">Amazon Products</span>
-  </div> -->
 </ion-header>
 <div class="container-wrapper">
   <div class="notification-wrapper">
@@ -36,7 +29,11 @@
       <br>
       <p>
         When {{ notification.PendingAuthorization.Property.Customer.Name }} makes a decision you will be
-        notified.<br>Enjoy!
+        notified.
+      </p>
+      <br>
+      <p>
+        Enjoy!
       </p>
     </div>
     <div class="noti-content" *ngIf="notification.Type == 'Invitation'">
@@ -55,107 +52,113 @@
       <br>
       <p>
         When {{ notification.PendingAuthorization.Property.Customer.Name}} makes a decision you will be notified.
-        <br>Enjoy!
+      </p>
+      <br>
+      <p>
+        Enjoy!
       </p>
 
     </div>
 
-    <div
+    <div class="noti-content"
       *ngIf="notification.Type == 'LimitedAccessAreaAccessGranted' || notification.Type == 'LimitedRequestAuthorizationApproved' ">
-      <h4>
+      <p class="bold">
         Access Notification
-      </h4>
+      </p>
       <hr>
-      <h5>
+      <p class="bold">
         Date
-      </h5>
-      <h6>
+      </p>
+      <p>
         {{ notification.Date }}
-      </h6>
+      </p>
       <hr>
 
-      <h6 [innerHTML]="notification.Message">
-      </h6>
+      <p [innerHTML]="notification.Message">
+      </p>
 
     </div>
-    <div *ngIf="notification.PrivateLabelClone != null  || notification.PrivateLabelClone != undefined">
-      <h4 *ngIf="notification.Type == 'Auto-Clone-Completed'">
+    <div class="noti-content" *ngIf="notification.PrivateLabelClone != null  || notification.PrivateLabelClone != undefined">
+      <p *ngIf="notification.Type == 'Auto-Clone-Completed'">
         User Clone Property
-      </h4>
-      <h4 *ngIf="notification.Type != 'Auto-Clone-Completed'">
+      </p>
+      <p *ngIf="notification.Type != 'Auto-Clone-Completed'">
         Access Notification
-      </h4>
+      </p>
       <hr>
-      <h5>
+      <p>
         Date
-      </h5>
-      <h6>
+      </p>
+      <p>
         {{notification.Date}}
 
-      </h6>
+      </p>
       <hr>
 
-      <h6 [innerHTML]="notification.PrivateLabelClone.Message">
-      </h6>
+      <p [innerHTML]="notification.PrivateLabelClone.Message">
+      </p>
 
     </div>
-    <div *ngIf="notification.Suggestion != null">
-      <h4>
+    <div class="noti-content" *ngIf="!notification.PrivateLabelClone && notification.Type == 'Auto-Clone-Completed'"></div>
+
+    <div class="noti-content" *ngIf="notification.Suggestion != null">
+      <p class="bold">
         Suggestion
-      </h4>
+      </p>
       <hr>
-      <h5>
+      <p class="bold">
         Date
-      </h5>
-      <h6>
+      </p>
+      <p>
         {{notification.Date}}
 
-      </h6>
+      </p>
       <hr>
 
-      <h6 [innerHTML]="notification.Suggestion.Message">
-      </h6>
+      <p [innerHTML]="notification.Suggestion.Message">
+      </p>
 
     </div>
-    <div *ngIf="notification.Type == 'LimitedAccessAreaAccessRemoved'">
-      <h4>
+    <div class="noti-content" *ngIf="notification.Type == 'LimitedAccessAreaAccessRemoved'">
+      <p class="bold">
         Access Notification
-      </h4>
+      </p>
       <hr>
-      <h5>
+      <p class="bold">
         Date
-      </h5>
-      <h6>
+      </p>
+      <p>
         {{notification.Date}}
-      </h6>
+      </p>
       <hr>
 
-      <h6 [innerHTML]="notification.Message">
-      </h6>
+      <p [innerHTML]="notification.Message">
+      </p>
 
     </div>
-    <div *ngIf="notification.Type == 'Denied Authorization Request' && notification.DeniedAuthorizationRequest">
-      <h4>
+    <div class="noti-content" *ngIf="notification.Type == 'Denied Authorization Request' && notification.DeniedAuthorizationRequest">
+      <p class="bold">
         Denied Authorization
-      </h4>
+      </p>
       <hr>
-      <h5>
-      </h5>
-      <h6>
+      <p>
+      </p>
+      <p>
         {{notification.Date}}
 
-      </h6>
+      </p>
       <hr>
 
-      <h6>
+      <p>
         You have been been denied authorization for {{notification.PendingAuthorization.Property.StreetAddress1}},
         {{notification.PendingAuthorization.Property.StreetAddress2}},
         {{notification.PendingAuthorization.Property.City}}, {{notification.PendingAuthorization.Property.State}},
         {{notification.PendingAuthorization.Property.Zip}} by
         {{notification.PendingAuthorization.Property.Customer.Name}}
-      </h6>
+      </p>
 
     </div>
+    <div class="noti-content" *ngIf="notification.Type == 'Denied Authorization Request' && !notification.DeniedAuthorizationRequest"></div>
     <!-- 
   <ion-grid>
     <ion-row>

@@ -74,14 +74,27 @@
 
 .notifications-container {
   padding: 25px 24px;
+  ion-item{
+    --inner-border-width: 0;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+  }
 }
 .notifications-content{
+  background: #FFF;
   padding: 13px 13px 15px 18px;
   border-radius: 16px;
-  background: #FFF;
   height: 103px;
   margin-bottom: 21px;
   overflow: hidden;
+  .del-btn{
+    background: #ffc3c3;
+    width: 24px;
+    ion-icon{
+      color: #f75c5c;
+      font-size: 18px;
+    }
+  }
 }
 .notification-details{
   display: flex;
@@ -95,8 +108,10 @@
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  gap: 11px;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
 }
 .notification-date {
       color: var(--SQL-Color-4, #788A9C);
@@ -151,32 +166,77 @@
   color:#F75C5C;
   background: #FFF1F1;
 }
-
-
-
-.breadcrumb-main {
-  height: 38px;
-  padding: 12px 12px 12px 24px;
-  background: #2E3750;
-  margin-top: -1px;
+.delete-container{
   display: flex;
   align-items: center;
-  gap: 4px;
-  color: #7F879D;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 16px;
+  height: 103px;
+  margin-bottom: 21px;
+  overflow: hidden;
+  background: #FFF1F1;
+  padding: 13px 15px 17px;
+  ion-text{
+    color: #F75C5C;
   font-family: Plus Jakarta Sans;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 14px;
-  letter-spacing: 0.05px;
-
-  .bread-arrow-right {
-    color: #669BBC;
-    font-size: 8px;
+  font-weight: 700;
+  line-height: 24px; 
+  letter-spacing: 0.06px;
   }
-
-  .current-page {
-    color: #F6F8FE;
+  .delete-btns-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    ion-button{
+    --border-radius: 8px;
+    font-family: Plus Jakarta Sans;
+    font-size: 12px;
+    font-style: normal;
     font-weight: 700;
+    line-height: 24px; 
+    letter-spacing: 0.06px;
+    border-radius: 8px;
+    margin: 0;
+    }
+    .cancel{
+      color:  #232C41;
+      --background: #FFF;
+      width: 137px;
+    }
+    .del{
+      --background: #F75C5C;
+      color: #FFF;
+      width: 151px;
+    }
+  }
+}
+.noti-toast{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: transparent;
+  position: absolute;
+  z-index: 999;
+  bottom: 32px;
+  span{
+    width: 157px;
+    height: 40px;
+    border-radius: 8px;
+    background: #FFF;
+    color: #232C41;
+    font-family: Plus Jakarta Sans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.06px;
+    text-align: center;
+    padding: 8px 14px;
   }
 }
