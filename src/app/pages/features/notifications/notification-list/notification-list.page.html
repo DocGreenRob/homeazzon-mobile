@@ -19,7 +19,7 @@
 
 <div class="container-wrapper">
     <div class="notifications-container">
-    <ion-item-sliding class="notifications-content" #item *ngFor="let notification of notifications" >  
+    <ion-item-sliding class="notifications-content" #item *ngFor="let notification of notifications; let index = index;" >  
   
         <ion-item>
           <div class="notification-item">
@@ -37,7 +37,7 @@
                 <ion-text>Do you want to remove this notification?</ion-text>
                 <div class="delete-btns-wrapper">
                 <ion-button class="cancel" (click)="item.close()">Cancel</ion-button>
-                <ion-button class="del" (click)="confirmDeleteNotification(notification)">Remove</ion-button>
+                <ion-button class="del" (click)="confirmDeleteNotification(notification, index)">Remove</ion-button>
               </div>
               </div> 
             </ion-item-options>

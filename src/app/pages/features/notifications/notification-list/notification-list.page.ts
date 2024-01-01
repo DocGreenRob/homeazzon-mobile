@@ -107,7 +107,7 @@ export class NotificationListPage extends BasePage {
   }
 
   async ionViewWillEnter() {
-    //await this.getNotifications();
+    await this.getNotifications();
   }
 
   private async getNotifications() {
@@ -264,14 +264,20 @@ export class NotificationListPage extends BasePage {
     //});
   }
 
-  confirmDeleteNotification(notification){
-    const index = this.notifications.findIndex((item)=> item.Sender == notification.Sender && item.Type === notification.Type);
-    if(index > -1){
+  confirmDeleteNotification(notification, index){
+    this.notificationService.deleteUserNotifications(notification.id).then(() => {
       this.notifications.splice(index, 1);
       this.deleteSuccess = !this.deleteSuccess;
       setTimeout(()=>{
         this.deleteSuccess = !this.deleteSuccess;
       },3000);
-    }
+    }).catch((err) => {
+      // TODO remove this code once API is ready
+      this.notifications.splice(index, 1);
+      this.deleteSuccess = !this.deleteSuccess;
+      setTimeout(()=>{
+        this.deleteSuccess = !this.deleteSuccess;
+      },3000);
+    });
   }
 }
