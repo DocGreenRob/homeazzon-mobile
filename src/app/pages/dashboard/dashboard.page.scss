@@ -4,6 +4,16 @@ ion-content,
   width: 100% !important;
 }
 
+ion-content {
+  background: #F6F8FE;
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .active {
   filter: invert(21%) sepia(100%) saturate(3443%) hue-rotate(104deg) brightness(95%) contrast(107%);
 }
