@@ -1,38 +1,39 @@
 <ion-header>
   <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
   <div class="header-title-with-icon">
+    <span class="header-icon">
+      <div class="cross-icon">
+        <img src="assets/icon/Arrow - Left Square.svg" (click)="close()" alt="">
+      </div>
+    </span>
     <span class="title-with-img">
       <span>Notifications</span>
     </span>
-    <span class="header-icon">
-      <div class="cross-icon">
-        <img src="assets/icon/Close Square.svg" (click)="close()" alt="">
-      </div>
-    </span>
+
+    <span class="empty"></span>
   </div>
+  <!-- <div class="breadcrumb-main">
+    <img src="assets/icon/Home.svg" alt="">
+    <span class="bread-arrow-right">></span>
+    <span >Master bedroom</span>
+    <span class="bread-arrow-right">></span>
+    <span  class="current-page">Amazon Products</span>
+  </div> -->
 </ion-header>
 <div class="container-wrapper">
   <div class="notifications-container">
-    <div class="notifications-header">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-3><h6 style="padding-left:2em;">Date</h6></ion-col>
-          <ion-col col-6><h6>Notification</h6></ion-col>
-          <ion-col col-3><h6 style="float:left">Sender</h6> </ion-col>
-        </ion-row>
-
-      </ion-grid>
-    </div>
     <div class="notifications-content"
          *ngFor="let notification of notifications"
-         (click)="viewFullNotification(notification)">
-      <ion-grid>
-        <ion-row [class.unread]="!notification.IsOpened" class="notification-item">
-            <ion-col col-3><p class="notification-date">{{notification.Date}}</p></ion-col>
-            <ion-col col-4><p class="notification-type">{{notification.Type}}</p></ion-col>
-            <ion-col col-4><p style="float:left" class="sender">{{notification.Sender}}</p> </ion-col>
-        </ion-row>
-      </ion-grid>
+         (click)="viewFullNotification(notification)">     
+        <div class="notification-item">
+            <div class="notification-details">
+            <ion-text class="notification-date">{{notification.Date}}</ion-text>
+            <ion-text class="sender">{{notification.Sender}}</ion-text> 
+            <span [class.unread]="!notification.IsOpened" ></span>
+            </div>
+            
+            <div [class]="notification.IsOpened ? 'notification-type limited-access' : 'notification-type denied-case'">{{notification.Type}}</div>
+        </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,51 @@
+.breadcrumb-main {
+    height: 38px;
+    padding: 12px 12px 12px 24px;
+    background: #2E3750;
+    margin-top: -1px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #7F879D;
+    font-family: Plus Jakarta Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0.05px;
+  
+    .bread-arrow-right {
+      color: #669BBC;
+      font-size: 8px;
+    }
+  
+    .current-page {
+      color: #F6F8FE;
+      font-weight: 700;
+    }
+  }
+  .container-wrapper{
+    background: #EBEEF5;
+    .notification-wrapper{
+        padding: 25px 31px 30px 24px;
+        .noti-content{
+            min-height: calc(100vh - 256px);
+            p{
+                color: #232C41;
+                font-family: Plus Jakarta Sans !important;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px; 
+                letter-spacing: 0.06px;
+                margin: 0;
+            }
+        }
+        .btnWrapper{
+            margin-top: 10px !important;
+            ion-button{
+                --border-radius: 8px !important;
+            }
+        }
+    }
+  }
