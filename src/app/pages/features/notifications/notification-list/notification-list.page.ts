@@ -20,6 +20,7 @@ export class NotificationListPage extends BasePage {
   private _loading: any;
   public notifications: any;
   public notification: any;
+  deleteSuccess: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
     private location: Location,
@@ -213,7 +214,7 @@ export class NotificationListPage extends BasePage {
         this.markNotificationEventAsOpened(id);
       } else if (notification.Type == 'LimitedAccessAreaAccessGranted' || notification.Type == 'LimitedAccessAreaAccessRemoved') {
 
-        id = notification.ApprovedAuthorization.Id;
+        id = notification?.ApprovedAuthorization?.Id;
         //call the event opened api 
         this.markNotificationEventAsOpened(id);
       } else if (notification.Type == 'DeniedRequestAuthorization' && notification.theType == 'DeniedAuthorization') {
@@ -261,5 +262,22 @@ export class NotificationListPage extends BasePage {
     //this.notificationService.checkAsOpened(id).then(() => {
     //  this.router.navigate(['notification-details']);
     //});
+  }
+
+  confirmDeleteNotification(notification, index){
+    this.notificationService.deleteUserNotifications(notification.id).then(() => {
+      this.notifications.splice(index, 1);
+      this.deleteSuccess = !this.deleteSuccess;
+      setTimeout(()=>{
+        this.deleteSuccess = !this.deleteSuccess;
+      },3000);
+    }).catch((err) => {
+      // TODO remove this code once API is ready
+      this.notifications.splice(index, 1);
+      this.deleteSuccess = !this.deleteSuccess;
+      setTimeout(()=>{
+        this.deleteSuccess = !this.deleteSuccess;
+      },3000);
+    });
   }
 }
