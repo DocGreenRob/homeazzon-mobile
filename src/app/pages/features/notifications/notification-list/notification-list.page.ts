@@ -20,6 +20,7 @@ export class NotificationListPage extends BasePage {
   private _loading: any;
   public notifications: any;
   public notification: any;
+  showDeleteDiv: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
     private location: Location,
@@ -106,7 +107,7 @@ export class NotificationListPage extends BasePage {
   }
 
   async ionViewWillEnter() {
-    await this.getNotifications();
+    //await this.getNotifications();
   }
 
   private async getNotifications() {
@@ -261,5 +262,12 @@ export class NotificationListPage extends BasePage {
     //this.notificationService.checkAsOpened(id).then(() => {
     //  this.router.navigate(['notification-details']);
     //});
+  }
+
+  deleteItem(notification){
+    this.showDeleteDiv = !this.showDeleteDiv;
+    setTimeout(()=>{
+      this.showDeleteDiv = !this.showDeleteDiv;
+    }, 3000)
   }
 }

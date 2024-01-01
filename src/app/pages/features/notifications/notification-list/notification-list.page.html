@@ -20,20 +20,29 @@
     <span  class="current-page">Amazon Products</span>
   </div> -->
 </ion-header>
+<div *ngIf="showDeleteDiv">
+  <button ion-button>Delete</button>
+  <button ion-button>Cancel</button>
+</div>
 <div class="container-wrapper">
-  <div class="notifications-container">
-    <div class="notifications-content"
+  <ion-list class="notifications-container">
+    <ion-item-sliding class="notifications-content"
          *ngFor="let notification of notifications"
-         (click)="viewFullNotification(notification)">     
-        <div class="notification-item">
-            <div class="notification-details">
+         >     
+        <ion-item class="notification-item">
+            <div class="notification-details" (click)="viewFullNotification(notification)">
             <ion-text class="notification-date">{{notification.Date}}</ion-text>
             <ion-text class="sender">{{notification.Sender}}</ion-text> 
             <span [class.unread]="!notification.IsOpened" ></span>
             </div>
-            
+          </ion-item>
             <div [class]="notification.IsOpened ? 'notification-type limited-access' : 'notification-type denied-case'">{{notification.Type}}</div>
-        </div>
-    </div>
-  </div>
+            <ion-item-options [side]="right">
+              <button ion-button  (click)="deleteItem(notification)">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-item-options>
+          
+    </ion-item-sliding>
+  </ion-list>
 </div>
