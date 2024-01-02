@@ -32,6 +32,7 @@
     "@awesome-cordova-plugins/splash-screen": "^6.4.0",
     "@awesome-cordova-plugins/status-bar": "^6.4.0",
     "@azure/msal-angular": "^3.0.2",
+    "@byteowls/capacitor-oauth2": "^5.0.0",
     "@capacitor-community/barcode-scanner": "^4.0.1",
     "@capacitor/android": "5.3.0",
     "@capacitor/app": "^5.0.6",
