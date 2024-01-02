@@ -1,18 +1,31 @@
-ion-item,
-.item-ios,
-.item-md {
-	padding: 0 !important;
-	background-color: var(--ion-color-white-background) !important;
+.main-view{
+	height: 184px;
+    border-radius: 8px;
+    border: 1px solid #E3E7EC;
+    background: #fff;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 12px;
+	padding: 4px;
 }
-
 .main-view img {
-	max-width: 100%;
-	min-width: 100%;
-	max-height: 14em !important;
-	text-align: center !important;
+	width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
-.mypad-grey {
-	line-height: 2em !important;
-	margin-left: 1em;
+.text-area{
+	height: unset !important;
+	ion-textarea{
+		height: 152px;
+	}
+}
+.formWrapper{
+	min-height: calc(100% - 93px);
+	padding-bottom: 37px !important;
+}
+.btnWrapper{
+	margin-top: 0px !important;
+    padding: 0 24px;
+    margin-bottom: 37px;
 }
