@@ -11,14 +11,12 @@
   <div class="formWrapper">
     <div class="manager-content" *ngFor="let property of properties;" (click)="editProperty(property)">
       <div class="manager-content-title">
-        <div>
+        <div class="manager-content-img">
           <img [src]="property.Image">
         </div>
         <ion-text>
           {{property.Name}}
-        </ion-text>
-        <ion-text>
-          {{property.StreetAddress1}} <br />
+          {{property.StreetAddress1}} 
           {{property.City}}, {{property.State}}
         </ion-text>
       </div>

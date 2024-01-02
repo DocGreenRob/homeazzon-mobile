@@ -1,15 +1,37 @@
 .formWrapper{
-	height: 100%;
+    min-height: calc(100% - 127px);
+	padding-bottom: 37px !important;
 	ion-col{
 		padding: 0;
 	}
 }
 .btnWrapper{
-	margin-top: 195px !important;
+	padding: 0 24px 71px;
+    margin-top: 0px !important;
 	
 }
 .ng-invalid.ng-touched {
 	border: none!important;
 	color: #9CA4AB !important;
 }
-
+.roleWrapper {
+	.toggleWrapper{
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		
+		ion-label{
+			color: var(--additional-colors-black, #111);
+		font-feature-settings: 'clig' off, 'liga' off;
+		font-family: Poppins;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 24px;
+		letter-spacing: 0.12px;
+		}
+		ion-toggle{
+			--track-background-checked: #526EA0;
+		}
+	}
+}
