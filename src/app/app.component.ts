@@ -69,7 +69,8 @@ export class AppComponent extends BasePage {
     public override storageService: LocalStorageService,
     private accountService: AccountService,
     private utilityService: UtilitiesService,
-    private azureAuthService: AzureAuthService) {
+    private azureAuthService: AzureAuthService,
+    private ngZone: NgZone) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
@@ -162,7 +163,9 @@ export class AppComponent extends BasePage {
         }).catch((e) => { });
       }
 
-      this.router.navigate(['login-success']);
+      this.ngZone.run(() => {
+        this.router.navigate(['login-success']);
+      });
     });
   }
 
