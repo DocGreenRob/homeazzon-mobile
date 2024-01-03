@@ -20,6 +20,7 @@ export class NotificationListPage extends BasePage {
   private _loading: any;
   public notifications: any;
   public notification: any;
+  public isNotifications: boolean = false;
   deleteSuccess: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
@@ -123,7 +124,10 @@ export class NotificationListPage extends BasePage {
       this._loading.dismiss();
 
       this.notifications = response;
-      console.log(this.notifications);
+
+      if (this.notifications.length > 0) {
+        this.isNotifications = true;
+      }
 
       for (let notification of this.notifications) {
 

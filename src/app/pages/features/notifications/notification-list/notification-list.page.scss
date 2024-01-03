@@ -240,3 +240,26 @@
     padding: 8px 14px;
   }
 }
+.nothing-notice{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+	.desc{
+		color: rgba(29, 29, 47, 0.60);
+		text-align: center;
+		font-family: Plus Jakarta Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 22px; 
+		letter-spacing: 0.07px;
+		width: 85%;
+	}
+
+	.desc-title {
+	 font-weight: 600;
+	}
+}
