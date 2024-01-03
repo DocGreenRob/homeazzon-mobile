@@ -15,33 +15,46 @@
 
 </ion-header>
 <div class="noti-toast" *ngIf="deleteSuccess">
- <span>Notification Removed</span> </div>
+  <span>Notification Removed</span>
+</div>
 
 <div class="container-wrapper">
-    <div class="notifications-container">
-    <ion-item-sliding class="notifications-content" #item *ngFor="let notification of notifications; let index = index;" >  
-  
-        <ion-item>
-          <div class="notification-item">
-            <div class="notification-details" (click)="viewFullNotification(notification)">
+  <div class="notifications-container">
+    <ion-item-sliding class="notifications-content" #item
+                      *ngFor="let notification of notifications; let index = index;">
+
+      <ion-item>
+        <div class="notification-item">
+          <div class="notification-details" (click)="viewFullNotification(notification)">
             <ion-text class="notification-date">{{notification.Date}}</ion-text>
-            <ion-text class="sender">{{notification.Sender}}</ion-text> 
-            <span [class.unread]="!notification.IsOpened" ></span>
-            </div>
-            <div [class]="notification.IsOpened ? 'notification-type limited-access' : 'notification-type denied-case'">{{notification.Type}}</div>
+            <ion-text class="sender">{{notification.Sender}}</ion-text>
+            <span [class.unread]="!notification.IsOpened"></span>
           </div>
-          </ion-item>
-          
-            <ion-item-options [side]="right">
-              <div class="delete-container">
-                <ion-text>Do you want to remove this notification?</ion-text>
-                <div class="delete-btns-wrapper">
-                <ion-button class="cancel" (click)="item.close()">Cancel</ion-button>
-                <ion-button class="del" (click)="confirmDeleteNotification(notification, index)">Remove</ion-button>
-              </div>
-              </div> 
-            </ion-item-options>
-          
+          <div [class]="notification.IsOpened ? 'notification-type limited-access' : 'notification-type denied-case'">{{notification.Type}}</div>
+        </div>
+      </ion-item>
+
+      <ion-item-options [side]="right">
+        <div class="delete-container">
+          <ion-text>Do you want to remove this notification?</ion-text>
+          <div class="delete-btns-wrapper">
+            <ion-button class="cancel" (click)="item.close()">Cancel</ion-button>
+            <ion-button class="del" (click)="confirmDeleteNotification(notification, index)">Remove</ion-button>
+          </div>
+        </div>
+      </ion-item-options>
+
     </ion-item-sliding>
+  </div>
+  <div *ngIf="!isNotifications">
+    <div class="nothing-notice">
+      <span>
+        <img src="assets/imgs/no-content backup.png" alt="">
+      </span>
+      <span class="desc">
+        <div class="desc-title">There's nothing here yet.</div>
+        <span>There's nothing here yet. Connect w/some friends or some businesses to start getting suggestions! <br /><br /> <i style="font-size:small !important;">Simplify life with "Suggestions"</i></span>
+      </span>
+    </div>
   </div>
 </div>
