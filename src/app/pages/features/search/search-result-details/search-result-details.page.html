@@ -41,9 +41,14 @@
     <div class="close-modal">
       <img src="assets/icon/Close Square.svg" (click)="close()" alt="" />
     </div>
+    <div class="modal-result-img">
+      <span class="img-container">
+        <img [src]="result?.Image ? result.Image : 'assets/icon/Link.svg'" />
+      </span>
+    </div>
     <div class="modal-content">
       <span class="title"> {{result?.Title}} </span>
-      <span class="description"> {{result?.Description}} </span>
+      <span class="description">{{result?.Description}} </span>
     </div>
   </div>
 

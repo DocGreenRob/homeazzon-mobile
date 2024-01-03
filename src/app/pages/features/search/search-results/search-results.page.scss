@@ -21,9 +21,17 @@
 			width: 90px;
 			height: 90px;
 			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			img{
-			
+				width: 100%;
+				height: 100%;
 				object-fit: contain;
+			}
+			.no-image{
+				width: 24px !important;
+				height: 24px !important;
 			}
 		}
 		.amamzon-thumbnail{

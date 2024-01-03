@@ -194,5 +194,31 @@ ion-item.sized {
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 1;
         }
+        .web-title{
+            height: 10px !important;
+            margin-top: 10px;
+        }
     }
+}
+.web-image{
+    width: 100%;
+    height: 90px;
+    border-radius: 5px;
+    border: 1px solid #E3E7EC;
+    background: #F3F9FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .no-img{
+        width: 24px !important;
+        height: 24px !important;
+    }
+}
+.web-layout-img{
+    width: 90px !important;
 }
