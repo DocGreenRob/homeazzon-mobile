@@ -20,16 +20,24 @@ export class AzureAuthService {
           redirectUrl: environment.redirectUrl
         },
         android: {
-            redirectUrl: environment.redirectUrl // See Azure Portal -> Authentication -> Android Configuration "Redirect URI"
+            responseType: "id_token",
+            redirectUrl: `msauth://com.homeazzon.homeazzon/VzSiQcXRmi2kyjzcA%2BmYLEtbGVs%3D`, // See Azure Portal -> Authentication -> Android Configuration "Redirect URI"
+            handleResultOnNewIntent: true,
+      handleResultOnActivityResult: false,
         },
         ios: {
+            responseType: "id_token",
             pkceEnabled: true, // workaround for bug #111
-            redirectUrl: "msauth.com.homeazzon.homeazzon://redirect"
+            redirectUrl: "msauth.com.homeazzon.homeazzon://auth"
         }
     };
   }
 
   login() {
     return OAuth2Client.authenticate(this.getAzureB2cOAuth2Options());
+  }
+
+  logout() {
+    return OAuth2Client.logout(this.getAzureB2cOAuth2Options());
   }
 }
