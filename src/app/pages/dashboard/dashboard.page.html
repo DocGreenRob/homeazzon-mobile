@@ -1,285 +1,286 @@
 <div style="height:2em;" *ngIf="platform.is('ios')"></div>
 <primary-menu class="top-icon-bar" type="logoMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()">
 </primary-menu>
-<div class="main-wrapper">
-  <app-segment-selector [segments]="views" [initView]="{value: manageView}"
-                        (selectedSegment)="handleSegmentClick($event)">
-  </app-segment-selector>
-  <div>
-    <!--<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>-->
+<ion-content>
+  <div class="main-wrapper">
+    <app-segment-selector [segments]="views" [initView]="{value: manageView}"
+                          (selectedSegment)="handleSegmentClick($event)">
+    </app-segment-selector>
     <div>
-      <!-- Rooms -->
-      <div *ngIf="manageView == 'rooms'" class="wrap-rooms">
-        <div *ngIf="roomView == 'default'" class="inner-wrap">
-          <!--Bedrooms Overview -->
-          <div class="area-list" (click)="toogleViews('bedroom')">
-            <ion-row class="">
-              <ion-col size="3">
-                <div class="wrap-img">
-                  <img src="assets/icon/bed-svgrepo-com 1.svg">
-                </div>
-              </ion-col>
-              <ion-col size="7">
-                <h2 class="area-header">{{activePropertyBedrooms.length}} <span>Bedrooms</span></h2>
-                <p class="area-header-sqft" *ngIf="totalBedroomsSqFt > 0">{{totalBedroomsSqFt}} sq ft</p>
-                <p class="area-header-sqft" *ngIf="totalBedroomsSqFt == 0">
-                  {{totalBedroomsSqFt}} sq ft
-                </p>
-              </ion-col>
-              <ion-col size="2">
-                <div class="wrap-toggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
-                       class="chevron" *ngIf="!bedroomToggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda" *ngIf="bedroomToggle">
-                </div>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div class="hr" *ngIf="!bedroomToggle"> </div>
-          <!--Bedrooms List -->
-          <div *ngIf="bedroomToggle" class="room-list">
-            <div *ngFor="let profileItem of activePropertyBedrooms; let bedroomIndex = index;"
-                 class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}">
-              <div class="profile-items-list">
-                <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                          (click)="showLineItems(profileItem)">
-                  {{profileItem.Name}}
-                </ion-text>
-                <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
-                  {{profileItem.SqFt}} Sq Ft
-                </span>
-              </div>
-              <div class="hr" *ngIf="bedroomIndex < activePropertyBedrooms.length - 1"> </div>
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <div>
+        <!-- Rooms -->
+        <div *ngIf="manageView == 'rooms'" class="wrap-rooms">
+          <div *ngIf="roomView == 'default'" class="inner-wrap">
+            <!--Bedrooms Overview -->
+            <div class="area-list" (click)="toogleViews('bedroom')">
+              <ion-row class="">
+                <ion-col size="3">
+                  <div class="wrap-img">
+                    <img src="assets/icon/bed-svgrepo-com 1.svg">
+                  </div>
+                </ion-col>
+                <ion-col size="7">
+                  <h2 class="area-header">{{activePropertyBedrooms.length}} <span>Bedrooms</span></h2>
+                  <p class="area-header-sqft" *ngIf="totalBedroomsSqFt > 0">{{totalBedroomsSqFt}} sq ft</p>
+                  <p class="area-header-sqft" *ngIf="totalBedroomsSqFt == 0">
+                    {{totalBedroomsSqFt}} sq ft
+                  </p>
+                </ion-col>
+                <ion-col size="2">
+                  <div class="wrap-toggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+                         class="chevron" *ngIf="!bedroomToggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda" *ngIf="bedroomToggle">
+                  </div>
+                </ion-col>
+              </ion-row>
             </div>
-            <br>
-            <button clear ion-button (click)="editProfileItems('bedroom', 'interior')"
-                    class="rename-btn">
-              <img src="assets/icon/Edit Square.svg" alt="">
-
-              <span>
-                Rename Rooms
-              </span>
-            </button>
-            <br>
-            <br>
-          </div>
-          <div class="hr" *ngIf="bedroomToggle"> </div>
-          <!--Bathroom Overview -->
-          <div class="area-list" (click)="toogleViews('bathroom')">
-            <ion-row>
-              <ion-col size="3">
-                <div class="wrap-img">
-                  <img src="assets/icon/bathroom-svgrepo-com 1.svg">
+            <div class="hr" *ngIf="!bedroomToggle"> </div>
+            <!--Bedrooms List -->
+            <div *ngIf="bedroomToggle" class="room-list">
+              <div *ngFor="let profileItem of activePropertyBedrooms; let bedroomIndex = index;"
+                   class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}">
+                <div class="profile-items-list">
+                  <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+                            (click)="showLineItems(profileItem)">
+                    {{profileItem.Name}}
+                  </ion-text>
+                  <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+                    {{profileItem.SqFt}} Sq Ft
+                  </span>
                 </div>
-              </ion-col>
-              <ion-col size="7">
-                <h2 class="area-header">{{activePropertyBathrooms.length}} <span>Bathrooms</span></h2>
-                <p class="area-header-sqft" *ngIf="totalBathroomsSqFt > 0">{{totalBathroomsSqFt}} sq ft</p>
-                <p class="area-header-sqft" *ngIf="totalBathroomsSqFt == 0">
-                  {{totalBathroomsSqFt}} sq ft
-                </p>
-              </ion-col>
-              <ion-col size="2">
-                <div class="wrap-toggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
-                       *ngIf="!bathroomToggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
-                       *ngIf="bathroomToggle">
-                </div>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div class="hr" *ngIf="!bathroomToggle"> </div>
-          <!--Bathroom List -->
-          <div *ngIf="bathroomToggle" class="room-list">
-            <div *ngFor="let profileItem of activePropertyBathrooms; let bathroomIndex = index;">
-
-              <div class="profile-items-list">
-                <ion-text class="DASHBOARD-PROFILE-ITEM-BATHROOMS-{{bathroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                          (click)="showLineItems(profileItem)">
-                  {{profileItem.Name}}
-                </ion-text>
-                <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
-                  {{profileItem.SqFt}} Sq Ft
-                </span>
+                <div class="hr" *ngIf="bedroomIndex < activePropertyBedrooms.length - 1"> </div>
               </div>
-              <div class="hr" *ngIf="bathroomIndex < activePropertyBathrooms.length - 1"> </div>
-            </div>
-            <br>
-            <button clear ion-button (click)="editProfileItems('bathroom', 'interior')"
-                    class="rename-btn">
-              <img src="assets/icon/Edit Square.svg" alt="">
+              <br>
+              <button clear ion-button (click)="editProfileItems('bedroom', 'interior')"
+                      class="rename-btn">
+                <img src="assets/icon/Edit Square.svg" alt="">
 
-              <span>
-                Rename Rooms
-              </span>
-
-            </button>
-            <br>
-            <br>
-          </div>
-          <div class="hr" *ngIf="bathroomToggle"> </div>
-          <!--Common Overview -->
-          <div class="area-list" (click)="toogleViews('commonArea')">
-            <ion-row>
-              <ion-col size="3">
-                <div class="wrap-img">
-                  <img src="assets/icon/Group.svg">
-                </div>
-              </ion-col>
-              <ion-col size="7">
-                <h2 class="area-header">{{activePropertyInteriorAreas.length}} <span>Common</span> </h2>
-                <p class="area-header-sqft" *ngIf="totalCommonAreasSqFt > 0">
-                  {{totalCommonAreasSqFt}} sq ft
-                </p>
-                <p class="area-header-sqft" *ngIf="totalCommonAreasSqFt == 0">
-                  {{totalCommonAreasSqFt}} sq ft
-                </p>
-              </ion-col>
-              <ion-col size="2">
-                <div class="wrap-toggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
-                       *ngIf="!commonAreaToggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
-                       *ngIf="commonAreaToggle">
-                </div>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div class="hr" *ngIf="!commonAreaToggle"> </div>
-          <!--Common List -->
-          <div *ngIf="commonAreaToggle" class="room-list">
-            <div *ngFor="let profileItem of activePropertyInteriorAreas; let commonIndex = index;">
-
-              <div class="profile-items-list">
-                <ion-text class="DASHBOARD-PROFILE-ITEM-INTERIOR-AREAS-{{commonIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                          (click)="showLineItems(profileItem)">
-                  {{profileItem.Name}}
-                </ion-text>
-                <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
-                  {{profileItem.SqFt}} Sq Ft
+                <span>
+                  Rename Rooms
                 </span>
-              </div>
-              <div class="hr" *ngIf="commonIndex < activePropertyInteriorAreas.length - 1"> </div>
+              </button>
+              <br>
+              <br>
             </div>
-            <br>
-            <button clear ion-button (click)="editProfileItems('commonarea', 'interior')"
-                    class="rename-btn">
-              <img src="assets/icon/Edit Square.svg" alt="">
+            <div class="hr" *ngIf="bedroomToggle"> </div>
+            <!--Bathroom Overview -->
+            <div class="area-list" (click)="toogleViews('bathroom')">
+              <ion-row>
+                <ion-col size="3">
+                  <div class="wrap-img">
+                    <img src="assets/icon/bathroom-svgrepo-com 1.svg">
+                  </div>
+                </ion-col>
+                <ion-col size="7">
+                  <h2 class="area-header">{{activePropertyBathrooms.length}} <span>Bathrooms</span></h2>
+                  <p class="area-header-sqft" *ngIf="totalBathroomsSqFt > 0">{{totalBathroomsSqFt}} sq ft</p>
+                  <p class="area-header-sqft" *ngIf="totalBathroomsSqFt == 0">
+                    {{totalBathroomsSqFt}} sq ft
+                  </p>
+                </ion-col>
+                <ion-col size="2">
+                  <div class="wrap-toggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+                         *ngIf="!bathroomToggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+                         *ngIf="bathroomToggle">
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="hr" *ngIf="!bathroomToggle"> </div>
+            <!--Bathroom List -->
+            <div *ngIf="bathroomToggle" class="room-list">
+              <div *ngFor="let profileItem of activePropertyBathrooms; let bathroomIndex = index;">
 
-              <span>Rename Areas</span>
-            </button>
-            <br>
-            <br>
-          </div>
-          <div class="hr" *ngIf="commonAreaToggle"> </div>
-          <div class="total-sq">
-            <h2>
-              Total: {{
+                <div class="profile-items-list">
+                  <ion-text class="DASHBOARD-PROFILE-ITEM-BATHROOMS-{{bathroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+                            (click)="showLineItems(profileItem)">
+                    {{profileItem.Name}}
+                  </ion-text>
+                  <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+                    {{profileItem.SqFt}} Sq Ft
+                  </span>
+                </div>
+                <div class="hr" *ngIf="bathroomIndex < activePropertyBathrooms.length - 1"> </div>
+              </div>
+              <br>
+              <button clear ion-button (click)="editProfileItems('bathroom', 'interior')"
+                      class="rename-btn">
+                <img src="assets/icon/Edit Square.svg" alt="">
+
+                <span>
+                  Rename Rooms
+                </span>
+
+              </button>
+              <br>
+              <br>
+            </div>
+            <div class="hr" *ngIf="bathroomToggle"> </div>
+            <!--Common Overview -->
+            <div class="area-list" (click)="toogleViews('commonArea')">
+              <ion-row>
+                <ion-col size="3">
+                  <div class="wrap-img">
+                    <img src="assets/icon/Group.svg">
+                  </div>
+                </ion-col>
+                <ion-col size="7">
+                  <h2 class="area-header">{{activePropertyInteriorAreas.length}} <span>Common</span> </h2>
+                  <p class="area-header-sqft" *ngIf="totalCommonAreasSqFt > 0">
+                    {{totalCommonAreasSqFt}} sq ft
+                  </p>
+                  <p class="area-header-sqft" *ngIf="totalCommonAreasSqFt == 0">
+                    {{totalCommonAreasSqFt}} sq ft
+                  </p>
+                </ion-col>
+                <ion-col size="2">
+                  <div class="wrap-toggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+                         *ngIf="!commonAreaToggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+                         *ngIf="commonAreaToggle">
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="hr" *ngIf="!commonAreaToggle"> </div>
+            <!--Common List -->
+            <div *ngIf="commonAreaToggle" class="room-list">
+              <div *ngFor="let profileItem of activePropertyInteriorAreas; let commonIndex = index;">
+
+                <div class="profile-items-list">
+                  <ion-text class="DASHBOARD-PROFILE-ITEM-INTERIOR-AREAS-{{commonIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+                            (click)="showLineItems(profileItem)">
+                    {{profileItem.Name}}
+                  </ion-text>
+                  <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+                    {{profileItem.SqFt}} Sq Ft
+                  </span>
+                </div>
+                <div class="hr" *ngIf="commonIndex < activePropertyInteriorAreas.length - 1"> </div>
+              </div>
+              <br>
+              <button clear ion-button (click)="editProfileItems('commonarea', 'interior')"
+                      class="rename-btn">
+                <img src="assets/icon/Edit Square.svg" alt="">
+
+                <span>Rename Areas</span>
+              </button>
+              <br>
+              <br>
+            </div>
+            <div class="hr" *ngIf="commonAreaToggle"> </div>
+            <div class="total-sq">
+              <h2>
+                Total: {{
 						totalBedroomsSqFt + totalBathroomsSqFt + totalCommonAreasSqFt
-              }} sq ft
-            </h2>
-          </div>
-        </div>
-        <ng-container *ngIf="roomView == 'suite16Categories'">
-          <div class="caption" (click)="roomView = 'default'"
-               style="text-align: center !important;padding: .5em !important;color: red !important;">
-            {{ProfileItem.Name}}&nbsp;&nbsp;&nbsp;(go back)
-          </div>
-          <icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)">
-          </icon-grid>
-        </ng-container>
-      </div>
-      <!-- Exteriors -->
-      <div *ngIf="manageView == 'exteriors'" class="wrap-exteriors">
-        <div class="inner-wrap">
-          <!--Exterior Overview -->
-          <div class="area-list" (click)="toogleViews('exterior')">
-            <ion-row>
-              <ion-col size="3">
-                <div class="wrap-img">
-                  <img src="assets/icon/bed-svgrepo-com 1.svg">
-                </div>
-              </ion-col>
-              <ion-col size="7">
-                <h2 class="area-header">{{activePropertyExteriorAreas.length}} <span>Exterior</span> </h2>
-                <p class="area-header-sqft" *ngIf="totalExteriorAreasSqFt > 0">
-                  {{totalExteriorAreasSqFt}} sq ft
-                </p>
-                <p class="area-header-sqft" *ngIf="totalExteriorAreasSqFt == 0">
-                  {{totalExteriorAreasSqFt}} sq ft
-                </p>
-              </ion-col>
-              <ion-col size="2">
-                <div class="wrap-toggle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
-                       class="chevron" *ngIf="!exteriorAreaToogle">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
-                       class="chevron" *ngIf="exteriorAreaToogle">
-                </div>
-              </ion-col>
-            </ion-row>
-          </div>
-          <div class="hr" *ngIf="!exteriorAreaToogle"> </div>
-          <!--Exterior List -->
-          <div *ngIf="exteriorAreaToogle" class="room-list" style="margin-bottom: 3rem;">
-            <div *ngFor="let profileItem of activePropertyExteriorAreas; let exteriorIndex = index;">
-
-              <div class="profile-items-list">
-                <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{exteriorIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                          (click)="showLineItems(profileItem)">
-                  {{profileItem.Name}}
-                </ion-text>
-                <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
-                  {{profileItem.SqFt}} Sq Ft
-                </span>
-              </div>
-
-              <div class="hr" *ngIf="exteriorIndex < activePropertyExteriorAreas.length - 1"> </div>
+                }} sq ft
+              </h2>
             </div>
-            <br style="clear: both !important;">
-            <br style="clear: both !important;">
-            <button clear ion-button (click)="editProfileItems('exterior', 'exterior')" class="rename-btn">
-              <img src="assets/icon/Edit Square.svg" alt="">
-              <span>Rename Areas</span>
-            </button>
-            <br>
-            <br>
           </div>
-          <div class="total-sq">
-            <h2>Total: {{totalExteriorAreasSqFt}} sq ft</h2>
-          </div>
-          <div class="container-add-btn">
-            <ion-button class="add-btn" (click)="addExterior()">
-              <img src="assets/icon/plus-icon.svg">
-              Add an Exterior
-            </ion-button>
-          </div>
+          <ng-container *ngIf="roomView == 'suite16Categories'">
+            <div class="caption" (click)="roomView = 'default'"
+                 style="text-align: center !important;padding: .5em !important;color: red !important;">
+              {{ProfileItem.Name}}&nbsp;&nbsp;&nbsp;(go back)
+            </div>
+            <icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)">
+            </icon-grid>
+          </ng-container>
         </div>
-      </div>
+        <!-- Exteriors -->
+        <div *ngIf="manageView == 'exteriors'" class="wrap-exteriors">
+          <div class="inner-wrap">
+            <!--Exterior Overview -->
+            <div class="area-list" (click)="toogleViews('exterior')">
+              <ion-row>
+                <ion-col size="3">
+                  <div class="wrap-img">
+                    <img src="assets/icon/bed-svgrepo-com 1.svg">
+                  </div>
+                </ion-col>
+                <ion-col size="7">
+                  <h2 class="area-header">{{activePropertyExteriorAreas.length}} <span>Exterior</span> </h2>
+                  <p class="area-header-sqft" *ngIf="totalExteriorAreasSqFt > 0">
+                    {{totalExteriorAreasSqFt}} sq ft
+                  </p>
+                  <p class="area-header-sqft" *ngIf="totalExteriorAreasSqFt == 0">
+                    {{totalExteriorAreasSqFt}} sq ft
+                  </p>
+                </ion-col>
+                <ion-col size="2">
+                  <div class="wrap-toggle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-down.svg?alt=media&token=80b6d061-a719-4918-bf05-0349eb804852"
+                         class="chevron" *ngIf="!exteriorAreaToogle">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-up.svg?alt=media&token=c5d83c21-e082-458f-9cb0-f6dad8d2fbda"
+                         class="chevron" *ngIf="exteriorAreaToogle">
+                  </div>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="hr" *ngIf="!exteriorAreaToogle"> </div>
+            <!--Exterior List -->
+            <div *ngIf="exteriorAreaToogle" class="room-list" style="margin-bottom: 3rem;">
+              <div *ngFor="let profileItem of activePropertyExteriorAreas; let exteriorIndex = index;">
 
-      <div *ngIf="manageView == 'items'" class="wrap-items">
-        <div class="icon-grid-container">
-          <icon-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)"></icon-grid>
-        </div>
-        <div class="items-wrapper" *ngIf="!data?.Lists?.length">
-          <div class="items-img-section">
-            <img src="assets/icon/no content backup.svg" alt="no-img">
-            <ion-text>No Items at the moment coming soon</ion-text>
+                <div class="profile-items-list">
+                  <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{exteriorIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
+                            (click)="showLineItems(profileItem)">
+                    {{profileItem.Name}}
+                  </ion-text>
+                  <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
+                    {{profileItem.SqFt}} Sq Ft
+                  </span>
+                </div>
+
+                <div class="hr" *ngIf="exteriorIndex < activePropertyExteriorAreas.length - 1"> </div>
+              </div>
+              <br style="clear: both !important;">
+              <br style="clear: both !important;">
+              <button clear ion-button (click)="editProfileItems('exterior', 'exterior')" class="rename-btn">
+                <img src="assets/icon/Edit Square.svg" alt="">
+                <span>Rename Areas</span>
+              </button>
+              <br>
+              <br>
+            </div>
+            <div class="total-sq">
+              <h2>Total: {{totalExteriorAreasSqFt}} sq ft</h2>
+            </div>
+            <div class="container-add-btn">
+              <ion-button class="add-btn" (click)="addExterior()">
+                <img src="assets/icon/plus-icon.svg">
+                Add an Exterior
+              </ion-button>
+            </div>
           </div>
         </div>
-        <!--<div class="container-add-btn">
-          <ion-button class="add-btn" (click)="addItem()">
-            <img src="assets/icon/plus-icon.svg">
-            Add an Item
-          </ion-button>
-        </div>-->
+
+        <div *ngIf="manageView == 'items'" class="wrap-items">
+          <div class="icon-grid-container">
+            <icon-list-grid [_grid]="data" (_itemClickEventHandler)="suite16CategoryClickEventHandler($event)"></icon-list-grid>
+          </div>
+          <div class="items-wrapper" *ngIf="!data?.Lists?.length">
+            <div class="items-img-section">
+              <img src="assets/icon/no content backup.svg" alt="no-img">
+              <ion-text>No Items at the moment coming soon</ion-text>
+            </div>
+          </div>
+          <!--<div class="container-add-btn">
+            <ion-button class="add-btn" (click)="addItem()">
+              <img src="assets/icon/plus-icon.svg">
+              Add an Item
+            </ion-button>
+          </div>-->
+        </div>
       </div>
     </div>
   </div>
-</div>
-
+</ion-content>
 <tab-menu [_isHomeActive]="false" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
           (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>

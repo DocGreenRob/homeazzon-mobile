@@ -59,19 +59,22 @@
                    placeholder="Enter Zip"></ion-input>
       </div>
     </div>
-    <div class="fieldWrapper2" *ngIf="isOwner">
+    <div class="fieldWrapper" *ngIf="isOwner">
       <ion-label>
-        <i style="font-size:.7em !important; color:#808080;">(enable to receive <u>Suggestions</u> from Friends/Businesses)</i>
+        <i>(enable to receive <u>Suggestions</u> from Friends/Businesses)</i>
       </ion-label>
-      <div class="inputField2">
-        <ion-toggle [(ngModel)]="isPublicProperty">Is Public Property</ion-toggle>
+      <div class="roleWrapper">
+        <div class="toggleWrapper">
+          <ion-label>Is Public Property</ion-label>
+          <ion-toggle [(ngModel)]="isPublicProperty"></ion-toggle>
+        </div>
       </div>
     </div>
-    <div class="btnWrapper">
-      <ion-button class="continuebtn" (click)="continue()">
-        Continue
-      </ion-button>
-      <ion-button class="cancelbtn" (click)="close()">Cancel</ion-button>
-    </div>
+  </div>
+  <div class="btnWrapper">
+    <ion-button class="continuebtn" (click)="continue()">
+      Continue
+    </ion-button>
+    <ion-button class="cancelbtn" (click)="close()">Cancel</ion-button>
   </div>
 </div>

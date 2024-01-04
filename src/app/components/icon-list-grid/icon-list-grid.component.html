@@ -1,0 +1,175 @@
+<ion-accordion-group [multiple]="true">
+  <div class="see-wrapper" *ngFor="let c of _grid?.Lists; let ListIndex = index">
+
+    <!-- Toggle between grid and list view -->
+    <ng-template #listView>
+      <!-- List view template -->
+
+      <ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg"
+        toggleIconSlot="start">
+        <ion-item slot="header">
+          <ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
+          <ion-button slot="end" fill="clear" (click)="toggleListAndGridView($event,c)">
+            <div *ngIf="c.isListView">
+              <img src="assets/icon/gridView.png" width="20px" height="20px">
+            </div>
+            <div *ngIf="!c.isListView">
+              <img src="assets/icon/listView.png" width="20px" height="20px">
+            </div>
+          </ion-button>
+        </ion-item>
+        <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main-list">
+          <div *ngFor="let i of c.Items; let index = index">
+            <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-thumbnail style="object-fit: cover; width: 100%; height: 70%;">
+                      <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" [src]="i.IconPath"
+                        class="item-image">
+                      <img
+                        *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')"
+                        [src]="i.ImagePath" class="item-image">
+                      <img *ngIf="i.IsTag"
+                        src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ftag.svg?alt=media&token=ab9fee51-2ffc-47f9-97d8-2be5ed9ccd9a"
+                        class="item-image">
+                      <img
+                        *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')"
+                        class="item-image" [src]="dafaultImage">
+                    </ion-thumbnail>
+                  </ion-col>
+                  <ion-col ion-col="6" class="list-item-title">
+                    <ion-row>
+                      <span class="list-item-name">{{i.Name}}</span>
+                    </ion-row>
+                    <ion-row>
+                      <span class="list-item-desc">{{i.Name}}</span>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main-list">
+          <div *ngFor="let i of c.Items; let index = index;" >
+            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3" class="item">
+              <ion-grid>
+                <ion-row>
+                  <!-- <ion-col size="4">
+                    <ion-thumbnail class="web-image" style="height: 70px;">
+                      <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
+                      <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''"
+                        [src]="i.ImagePath" class="item-image">
+                      <img
+                        *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')"
+                        class="no-img" src="assets/icon/Link.svg">
+                    </ion-thumbnail>
+                  </ion-col> -->
+                  <ion-col ion-col="12" class="list-item-title">
+                    <ion-row>
+                      <span class="list-item-name">{{i.Name}}</span>
+                    </ion-row>
+                    <ion-row>
+                      <span class="list-item-desc">{{i.Name}}</span>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </div>
+        <ion-item slot="content" *ngIf="c?.Items.length > 3">
+          <div class="see-section-wrapper" style="text-align: center;">
+            <span class="see-section" *ngIf="!c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
+              See all
+              <img src="assets/icon/chevron-down-circle.svg">
+            </span>
+            <span class="see-section" *ngIf="c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
+              See less
+              <img src="assets/icon/chevron-up-circle.svg">
+            </span>
+          </div>
+        </ion-item>
+        <ion-item slot="content" *ngIf="c?.Items.length <= 3" class="sized">
+          <div class="see-section-wrapper">
+          </div>
+        </ion-item>
+      </ion-accordion>
+    </ng-template>
+
+
+    <ng-template #gridView>
+      <!-- Grid view template -->
+      <ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg"
+        toggleIconSlot="start">
+        <ion-item slot="header">
+          <ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
+          <ion-button slot="end" fill="clear" (click)="toggleListAndGridView($event,c)">
+            <div *ngIf="c.isListView">
+              <img src="assets/icon/gridView.png" width="20px" height="20px">
+            </div>
+            <div *ngIf="!c.isListView">
+              <img src="assets/icon/listView.png" width="20px" height="20px">
+            </div>
+          </ion-button>
+        </ion-item>
+        <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main ">
+          <div *ngFor="let i of c.Items; let index = index">
+            <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
+              <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" [src]="i.IconPath" class="item-image">
+              <img
+                *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')"
+                [src]="i.ImagePath" class="item-image">
+              <img *ngIf="i.IsTag"
+                src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fregular%2Ftag.svg?alt=media&token=ab9fee51-2ffc-47f9-97d8-2be5ed9ccd9a"
+                class="item-image">
+              <img
+                *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')"
+                class="item-image" [src]="dafaultImage">
+              <span class="item-title">{{i.Name}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main web-items-main">
+          <div *ngFor="let i of c.Items; let index = index;" class="item">
+            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3">
+             <div class="web-image">
+              <!-- <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
+              <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''"
+                [src]="i.ImagePath" class="item-image">
+              <img *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')"
+                class="no-img" src="assets/icon/Link.svg"> -->
+                <span class="list-item-desc web-link-desc">{{i.Name}}</span>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <ion-item slot="content" *ngIf="c?.Items.length > 3" style="border-style: none;">
+          <div class="see-section-wrapper" style="text-align: center; border-style: none;">
+            <span class="see-section" style="border-style: none;" *ngIf="!c.showAllItems"
+              (click)="toggleSeeAllItemsInList(c)">
+              See all
+              <img src="assets/icon/chevron-down-circle.svg">
+            </span>
+            <span class="see-section" *ngIf="c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
+              See less
+              <img src="assets/icon/chevron-up-circle.svg">
+            </span>
+          </div>
+        </ion-item>
+        <ion-item slot="content" *ngIf="c?.Items.length <= 3" class="sized">
+          <div class="see-section-wrapper">
+          </div>
+        </ion-item>
+      </ion-accordion>
+    </ng-template>
+
+    <!-- Use ng-container to render either grid or list view -->
+    <ng-container *ngIf="c.isListView; else gridView">
+      <ng-container *ngTemplateOutlet="listView"></ng-container>
+    </ng-container>
+  </div>
+</ion-accordion-group>

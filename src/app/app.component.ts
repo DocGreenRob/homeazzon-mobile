@@ -28,7 +28,7 @@ import { AzureAuthService } from './services/azure-auth/azure-auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.0.5';
+  public appVersion: string = '12.0.6';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 
@@ -195,7 +195,35 @@ export class AppComponent extends BasePage {
   }
 
   private setPropertyImage(userType: string, property: any) {
-    property.Image = `assets/icon/${userType.toLowerCase()}.svg`;
+    
+    var imageName: string = '';
+
+    if (userType.toLowerCase().indexOf('tradesman') > -1) {
+      imageName = 'tradesman';
+    }
+    if (userType.toLowerCase().indexOf('owner') > -1) {
+      imageName = 'owner';
+    }
+    if (userType.toLowerCase().indexOf('developer') > -1) {
+      imageName = 'developer';
+    }
+    if (userType.toLowerCase().indexOf('appraiser') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('architect') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('bank') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('realtor') > -1) {
+      imageName = 'realtor';
+    }
+    if (userType.toLowerCase().indexOf('vendor') > -1) {
+      imageName = 'vendor';
+    }
+
+    property.Image = `assets/icon/${imageName}.svg`;
   }
 
   async showAlertToUserAfterUpdate(title, message) {

@@ -169,13 +169,13 @@ export class CreateMetattachPage extends BasePage {
       this.LastSavedItem.Type === "Google Shopping" ||
       this.LastSavedItem.Type === "Upc"
     ) {
-      metattachData.AttachmentAssetInfoId = this.AssetIndex.AssetInfoId;
+      metattachData.AttachmentAssetInfoId = this.AssetIndex?.AssetInfoId;
     }
 
-    metattachData.MetaType = this.LastSavedItem.Type;
-    metattachData.TypeId = this.AssetIndex.Id;
+    metattachData.MetaType = this.LastSavedItem?.Type;
+    metattachData.TypeId = this.AssetIndex?.Id;
 
-    metattachData.ParentAssetInfoId = this.ActiveItem.AssetInfo.Id;
+    metattachData.ParentAssetInfoId = this.ActiveItem.AssetInfo?.Id;
 
     this.metattachService.saveMetattach(metattachData).then(
       async (x) => {

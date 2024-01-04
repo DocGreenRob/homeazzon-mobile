@@ -1,0 +1,33 @@
+.container-wrapper {
+  background: #EBEEF5;
+
+  .notification-wrapper {
+    padding: 25px 31px 30px 24px;
+
+    .noti-content {
+      min-height: calc(100vh - 219px);
+
+      p {
+        color: #232C41;
+        font-family: Plus Jakarta Sans !important;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.06px;
+        margin: 0;
+      }
+      .bold{
+        font-weight: bold;
+      }
+    }
+
+    .btnWrapper {
+      margin-top: 10px !important;
+
+      ion-button {
+        --border-radius: 8px !important;
+      }
+    }
+  }
+}

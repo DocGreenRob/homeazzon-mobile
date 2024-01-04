@@ -91,7 +91,7 @@
 
             </ion-item>
             <div *ngIf="data?.Lists.length !== 0 && data?.Lists[0].Items.length !== 0" slot="content">
-              <icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-grid>
+              <icon-list-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"></icon-list-grid>
             </div>
           </ion-accordion>
         </ion-accordion-group>
@@ -102,16 +102,10 @@
           <span>
             <img src="assets/imgs/no-content backup.png" alt="">
           </span>
-          <ion-text>
-            <!--Incorporate either an item already in your possession or conduct an online search to add one.-->
-            <h3>There's nothing here yet.</h3>
-            <span>You need to add items into this list!</span>
-            <br /><br />
-            <p class="nothing-notice-description">
-              You can also use the input buttons below to start adding
-              items.
-            </p>
-          </ion-text>
+          <span class="desc">
+            <div class="desc-title">There's nothing here yet.</div>
+            <span>There's nothing here yet. You need to add items into this list, you can also use the input buttons below to start adding items.</span>
+          </span>
         </div>
       </div>
     </ng-container>

@@ -1,6 +1,28 @@
 .formWrapper{
-    padding-bottom: 71px !important;
-    .btnWrapper{
-        margin-top: 87px !important;
-    }
+    min-height: calc(100% - 192px);
+}
+.btnWrapper{
+    padding: 0 24px 71px;
+    margin-top: 0px !important;
+}
+.roleWrapper {
+	.toggleWrapper{
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		
+		ion-label{
+			color: var(--additional-colors-black, #111);
+		font-feature-settings: 'clig' off, 'liga' off;
+		font-family: Poppins;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 24px;
+		letter-spacing: 0.12px;
+		}
+		ion-toggle{
+			--track-background-checked: #526EA0;
+		}
+	}
 }

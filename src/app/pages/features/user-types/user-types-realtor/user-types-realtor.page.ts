@@ -57,7 +57,7 @@ export class UserTypesRealtorPage extends BasePage {
     public companyInformationService: CompanyInformationService,
     public loadingController: LoadingController) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
-    console.log("ionViewDidLoad UserTypesOwnerPage");
+    console.log("ionViewDidLoad UserTypesRealtorPage");
     this._constants = new Constants();
 
     this.staticDataService.getStates().then(
@@ -69,15 +69,15 @@ export class UserTypesRealtorPage extends BasePage {
   }
 
   override async ngOnInit() {
-    console.log("ngOnInit UserTypesOwnerPage");
+    console.log("ngOnInit UserTypesRealtorPage");
 
-    if (this.User.Types.some((x) => x.Name === 'Realtor')) {
+    if (this.User.Types.some((x) => x.Name.toLowerCase().indexOf('realtor') > -1)) {
       this._isEditingProperty = true;
     }
     
     this.isEditingProperty = this._isEditingProperty;
 
-    this._userType = this.UserTypes.filter(x => x.Name === 'Realtor')[0];
+    this._userType = this.UserTypes.filter(x => x.Name.toLowerCase().indexOf('realtor') > -1)[0];
 
     if (this._isEditingProperty) {
       this._loading = await this.loadingController.create({
