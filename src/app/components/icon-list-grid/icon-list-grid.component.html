@@ -51,22 +51,22 @@
             </div>
           </div>
         </div>
-        <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main">
-          <div *ngFor="let i of c.Items; let index = index;" class="item">
-            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3">
+        <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main-list">
+          <div *ngFor="let i of c.Items; let index = index;" >
+            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3" class="item">
               <ion-grid>
                 <ion-row>
-                  <ion-col size="4">
-                    <ion-thumbnail style="width: 100px; height: 70px;">
+                  <!-- <ion-col size="4">
+                    <ion-thumbnail class="web-image" style="height: 70px;">
                       <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
                       <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''"
                         [src]="i.ImagePath" class="item-image">
                       <img
                         *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')"
-                        class="item-image" [src]="dafaultImage">
+                        class="no-img" src="assets/icon/Link.svg">
                     </ion-thumbnail>
-                  </ion-col>
-                  <ion-col ion-col="6" class="list-item-title">
+                  </ion-col> -->
+                  <ion-col ion-col="12" class="list-item-title">
                     <ion-row>
                       <span class="list-item-name">{{i.Name}}</span>
                     </ion-row>
@@ -114,7 +114,7 @@
             </div>
           </ion-button>
         </ion-item>
-        <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main">
+        <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main ">
           <div *ngFor="let i of c.Items; let index = index">
             <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
               <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" [src]="i.IconPath" class="item-image">
@@ -132,16 +132,18 @@
           </div>
         </div>
 
-        <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main">
+        <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main web-items-main">
           <div *ngFor="let i of c.Items; let index = index;" class="item">
             <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3">
-              <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
+             <div class="web-image">
+              <!-- <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
               <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''"
                 [src]="i.ImagePath" class="item-image">
               <img *ngIf="(i.IconPath == null || i.IconPath == '') && (i.ImagePath == null || i.ImagePath == '')"
-                class="item-image" [src]="dafaultImage">
-              <span class="item-title">{{i.Name}}</span>
-              <hr />
+                class="no-img" src="assets/icon/Link.svg"> -->
+                <span class="list-item-desc web-link-desc">{{i.Name}}</span>
+              </div>
+             
             </div>
           </div>
         </div>
