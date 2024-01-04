@@ -196,28 +196,25 @@ ion-item.sized {
         }
         .web-title{
             height: 10px !important;
-            margin-top: 10px;
         }
+    }
+}
+.web-items-main{
+    column-gap: 14px !important;
+    .web-link-desc{
+        margin-bottom: 0px !important;
+        -webkit-line-clamp: 5 !important;
+        max-height: unset !important;
     }
 }
 .web-image{
     width: 100%;
     height: 90px;
     border-radius: 5px;
-    border: 1px solid #E3E7EC;
-    background: #F3F9FF;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-    .no-img{
-        width: 24px !important;
-        height: 24px !important;
-    }
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
 }
 .web-layout-img{
     width: 90px !important;
