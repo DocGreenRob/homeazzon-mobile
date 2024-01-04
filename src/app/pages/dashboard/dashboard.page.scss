@@ -37,36 +37,40 @@ ion-content {
     }
   }
 }
-.room-list{
-  .profile-items-list{
+
+.room-list {
+  .profile-items-list {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px 0 19px;
     border-bottom: 1px solid #E3E7EC;
     margin: 0 18px;
-    ion-text{
+
+    ion-text {
       color: #5681AA;
       font-family: Plus Jakarta Sans;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
-      line-height: 24px; /* 200% */
+      line-height: 24px;
       letter-spacing: 0.06px;
       text-transform: capitalize;
     }
-    span{
+
+    span {
       color: #F00;
       text-align: right;
       font-family: Plus Jakarta Sans;
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
-      line-height: 24px; /* 200% */
+      line-height: 24px;
       letter-spacing: 0.06px;
     }
   }
 }
+
 .listUnset {
   color: red;
   font-size: larger;
@@ -119,7 +123,8 @@ ion-content {
 .edit-text {
   color: black;
 }
-.rename-btn{
+
+.rename-btn {
   display: flex;
   width: 134px;
   height: 31px;
@@ -131,17 +136,19 @@ ion-content {
   margin-top: 28px;
   float: right;
   margin-right: 18px;
-  img{
+
+  img {
     margin-right: 5px;
   }
-  span{
+
+  span {
     color: #111;
     text-align: center;
     font-family: Plus Jakarta Sans;
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 20px; 
+    line-height: 20px;
     letter-spacing: 0.05px;
     white-space: nowrap;
   }
@@ -273,17 +280,19 @@ ion-content {
       }
     }
   }
+
   .container-add-btn {
-  margin-top: 284px;
-  width: 100%;
-    .add-btn{
+    margin-top: 284px;
+    width: 100%;
+
+    .add-btn {
       display: flex;
       justify-content: center;
       align-items: center;
       flex: 1 0 0;
       height: 56px;
       border: 1px solid #E3E7EC;
-      --background: #FFF; 
+      --background: #FFF;
       width: 100%;
       color: #5681AA;
       text-align: center;
@@ -291,69 +300,80 @@ ion-content {
       font-size: 16px;
       font-style: normal;
       font-weight: 600;
-      line-height: 24px; 
+      line-height: 24px;
       letter-spacing: 0.08px;
       margin: 0;
-      img{
+
+      img {
         margin-right: 7px;
       }
     }
   }
-    .wrap-items{
+
+  .wrap-items {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    height: 100%;
+
+    .items-wrapper {
       display: flex;
       align-items: center;
-      justify-content: end;
+      justify-content: flex-end;
       flex-direction: column;
-      height: 100%;
-      .items-wrapper{
+      width: 100%;
+      margin-top: 85px;
+
+      .items-img-section {
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: center;
         flex-direction: column;
-        width: 100%;
-        margin-top: 85px;
-        .items-img-section{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-          width: 180px;
-          ion-text{
-            color: rgba(29, 29, 47, 0.60);
-            text-align: center;
-            font-family: Plus Jakarta Sans;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 22px; 
-            letter-spacing: 0.07px;
-          }
+        width: 180px;
+
+        ion-text {
+          color: rgba(29, 29, 47, 0.60);
+          text-align: center;
+          font-family: Plus Jakarta Sans;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 22px;
+          letter-spacing: 0.07px;
         }
       }
     }
+  }
 }
-::ng-deep{
-  .wrap-items{
+
+::ng-deep {
+  .wrap-items {
     display: flex;
     align-items: center;
     justify-content: space-between !important;
     flex-direction: column;
     min-height: calc(100vh - 233px) !important;
-    .icon-grid-container{
+
+    .icon-grid-container {
       width: 100%;
-      icon-grid{
+
+      icon-grid {
         width: 100%;
-        ion-accordion-group{
-          .item-main-wrapper{
+
+        ion-accordion-group {
+          .item-main-wrapper {
             margin-top: 35px !important;
           }
-          .see-wrapper{
+
+          .see-wrapper {
             position: relative;
           }
         }
       }
     }
-    .container-add-btn{
+
+    .container-add-btn {
       margin-top: 40px !important;
       padding-bottom: 41px !important;
     }

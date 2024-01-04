@@ -27,8 +27,6 @@ ion-content {
 }
 
 .item-image {
-	//text-align: center;
-	//float: center;
 	width: 4rem;
 	height: 4rem;
 	color: var(--ionic-color-primary);
@@ -58,7 +56,6 @@ ion-content {
 }
 
 .choose-btn {
-	//background-color: map-get($colors, light);
 	color: var(--ionic-color-white-background);
 	font-weight: bolder;
 	float: right;

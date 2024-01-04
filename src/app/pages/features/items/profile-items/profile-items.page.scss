@@ -122,7 +122,6 @@ page-profile-items {
 		margin-left: 2rem;
 		margin-bottom: 0;
 		margin-right: 2rem;
-		//max-height: 58px !important;
 		min-height: 58px !important;
 	}
 
@@ -149,21 +148,6 @@ page-profile-items {
 
 	img {
 		filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(167deg) brightness(105%) contrast(100%) !important;
-	}
-
-	.profile-item-row {
-		.col {
-			//display: flex;
-			//align-items: center;
-		}
-	}
-
-	.profile-item-content-sq-ft {
-		//margin:0;
-	}
-
-	.profile-item-content-sq-ft {
-		//flex-direction: end;
 	}
 
 	.hr {
