@@ -1,6 +1,7 @@
-.container-wrapper{
+.container-wrapper {
   background-color: #fff !important;
 }
+
 .roleHeader {
   display: flex;
   align-items: center;
@@ -20,6 +21,7 @@
     margin: 0 auto;
   }
 }
+
 .roleWrapper {
   padding: 43px 24px;
 
@@ -31,6 +33,7 @@
     border: 1px solid #e3e7ec;
     background: #f6f8fe;
     margin-bottom: 15px;
+
     &:hover {
       border: 1px solid #526ea0;
     }
@@ -51,5 +54,35 @@
       line-height: 24px;
       letter-spacing: 0.08px;
     }
+  }
+
+  /* For available options */
+  .available {
+    background-color: #e8f4e9 !important; /* A light green background */
+    border-left: 5px solid #4CAF50 !important; /* A green border on the left */
+    color: #333 !important; /* Darker text color for better readability */
+  }
+  /* For unavailable options */
+  .unavailable {
+    opacity: 0.5 !important; /* Half transparent */
+    color: #999 !important; /* Lighter text color */
+  }
+
+  .unavailable::after {
+    content: " - Coming Soon" !important;
+    font-style: italic !important;
+    color: #888 !important;
+  }
+
+  .coming-soon{
+      display: block;
+      margin-bottom: 20px;
+      color: #999999;
+      font-style: italic;
+  }
+
+  ion-checkbox[disabled]{
+      opacity: 0.5;
+      display: none;
   }
 }
