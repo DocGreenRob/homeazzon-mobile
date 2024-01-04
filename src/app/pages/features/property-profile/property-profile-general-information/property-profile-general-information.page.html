@@ -47,22 +47,28 @@
       </ion-col>
     </ion-row>
     <ion-row *ngIf="isEditingProperty && isOwner">
-      <div class="fieldWrapper2">
+      <div class="fieldWrapper">
         <ion-label>
-          <i style="font-size:.7em !important; color:#808080;">(to load first on the dashboard)</i>
+          <i>(to load first on the dashboard)</i>
         </ion-label>
-        <div class="inputField2">
-          <ion-toggle [(ngModel)]="isDefault">Is Default</ion-toggle>
+        <div class="roleWrapper">
+          <div class="toggleWrapper">
+            <ion-label>Is Default</ion-label>
+            <ion-toggle [(ngModel)]="isDefault"></ion-toggle>
+        </div>
         </div>
       </div>
     </ion-row>
     <ion-row *ngIf="isEditingProperty && isRealtor">
-      <div class="fieldWrapper2">
+      <div class="fieldWrapper">
         <ion-label>
-          <i style="font-size:.7em !important; color:#808080;">(to request access to make <u>Suggestions</u>)</i>
+          <i>(to request access to make <u>Suggestions</u>)</i>
         </ion-label>
-        <div class="inputField2">
-          <ion-toggle [(ngModel)]="isLinkWithCustomer">Link with Customer</ion-toggle>
+        <div class="roleWrapper">
+          <div class="toggleWrapper">
+            <ion-label>Link with Customer</ion-label>
+          <ion-toggle [(ngModel)]="isLinkWithCustomer"></ion-toggle>
+        </div>
         </div>
       </div>
       <ion-col size="12" class="ion-no-padding" *ngIf="isLinkWithCustomer || isExistingLinkWithCustomer">
@@ -86,10 +92,10 @@
         </div>
       </ion-col>
     </ion-row>
-    <div class="btnWrapper">
-      <ion-button class="continuebtn" (click)="goToBedroomsPage()">
-        Continue
-      </ion-button>
-    </div>
+  </div>
+  <div class="btnWrapper">
+    <ion-button class="continuebtn" (click)="goToBedroomsPage()">
+      Continue
+    </ion-button>
   </div>
 </div>

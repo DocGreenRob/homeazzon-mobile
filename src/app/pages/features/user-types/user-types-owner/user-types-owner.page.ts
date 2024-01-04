@@ -13,6 +13,7 @@ import { StaticDataProvider } from "../../../../services/static-data/static-data
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
+import { Constants } from "../../../../common/Constants";
 
 @Component({
   selector: "app-user-types-owner",
@@ -33,6 +34,7 @@ export class UserTypesOwnerPage extends BasePage {
 
   private _isEditingProperty: boolean = false;
   private _selectedProperty: any;
+  private _constants: Constants;
 
 
   constructor(public override navController: NavController,
@@ -51,6 +53,8 @@ export class UserTypesOwnerPage extends BasePage {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesOwnerPage");
 
+    this._constants = new Constants();
+
     this.staticDataService.getStates().then(
       (x: Array<IStateDto>) => {
         this.states = x;
@@ -62,7 +66,9 @@ export class UserTypesOwnerPage extends BasePage {
   }
 
   private updateTitle() {
-    switch (this.NewSelectedUserType.Name) {
+    const userName = this.getUserName(this.NewSelectedUserType.Name);
+
+    switch (userName) {
       case 'Owner':
         this.title = 'Update Property';
         this.isOwner = true;
@@ -145,5 +151,33 @@ export class UserTypesOwnerPage extends BasePage {
 
   public close() {
     this.location.back();
+  }
+
+  private getUserName(userName: string) {
+    if (userName.toLowerCase().indexOf('tradesman') > -1) {
+      return this._constants.UserTypes.Tradesman;
+    }
+    if (userName.toLowerCase().indexOf('owner') > -1) {
+      return this._constants.UserTypes.Owner;
+    }
+    if (userName.toLowerCase().indexOf('developer') > -1) {
+      return this._constants.UserTypes.Developer;
+    }
+    if (userName.toLowerCase().indexOf('appraiser') > -1) {
+      return this._constants.UserTypes.Appraiser;
+    }
+    if (userName.toLowerCase().indexOf('architect') > -1) {
+      return this._constants.UserTypes.Architect;
+    }
+    if (userName.toLowerCase().indexOf('bank') > -1) {
+      return this._constants.UserTypes.Bank;
+    }
+    if (userName.toLowerCase().indexOf('realtor') > -1) {
+      return this._constants.UserTypes.Realtor;
+    }
+    if (userName.toLowerCase().indexOf('vendor') > -1) {
+      return this._constants.UserTypes.Vendor;
+    }
+    throw new Error('User type not found');
   }
 }

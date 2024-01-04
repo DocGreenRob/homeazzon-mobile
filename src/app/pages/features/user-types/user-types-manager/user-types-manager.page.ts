@@ -34,7 +34,7 @@ export class UserTypesManagerPage extends BasePage {
     public override inAppBrowser: InAppBrowser,
     public override storageService: LocalStorageService
   ) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser,storageService);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
 
     this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned);
@@ -51,7 +51,7 @@ export class UserTypesManagerPage extends BasePage {
     }
   }
 
-  override ngOnInit() {}
+  override ngOnInit() { }
 
   public close() {
     this.router.navigate(["dashboard"]);
@@ -78,7 +78,9 @@ export class UserTypesManagerPage extends BasePage {
     let isUserTypeAssigned = user.Types.some((x) => x.Id === userTypeId);
     this.NewSelectedUserTypeId = userTypeId;
 
-    switch (selectedUserType.Name) {
+    const userName = this.getUserName(selectedUserType.Name);
+
+    switch (userName) {
       case this._constants.UserTypes.Appraiser:
         this.router.navigate(["dashboard"]);
         break;
@@ -115,7 +117,62 @@ export class UserTypesManagerPage extends BasePage {
     }
   }
 
-  getImagePath(name: string) {
-    return `assets/icon/${name.toLowerCase()}.svg`;
+  getImagePath(userType: string) {
+    var imageName: string = '';
+
+    if (userType.toLowerCase().indexOf('tradesman') > -1) {
+      imageName = 'tradesman';
+    }
+    if (userType.toLowerCase().indexOf('owner') > -1) {
+      imageName = 'owner';
+    }
+    if (userType.toLowerCase().indexOf('developer') > -1) {
+      imageName = 'developer';
+    }
+    if (userType.toLowerCase().indexOf('appraiser') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('architect') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('bank') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('realtor') > -1) {
+      imageName = 'realtor';
+    }
+    if (userType.toLowerCase().indexOf('vendor') > -1) {
+      imageName = 'vendor';
+    }
+
+    return `assets/icon/${imageName}.svg`;
+  }
+
+  getUserName(userName: string) {
+    if (userName.toLowerCase().indexOf('tradesman') > -1) {
+      return this._constants.UserTypes.Tradesman;
+    }
+    if (userName.toLowerCase().indexOf('owner') > -1) {
+      return this._constants.UserTypes.Owner;
+    }
+    if (userName.toLowerCase().indexOf('developer') > -1) {
+      return this._constants.UserTypes.Developer;
+    }
+    if (userName.toLowerCase().indexOf('appraiser') > -1) {
+      return this._constants.UserTypes.Appraiser;
+    }
+    if (userName.toLowerCase().indexOf('architect') > -1) {
+      return this._constants.UserTypes.Architect;
+    }
+    if (userName.toLowerCase().indexOf('bank') > -1) {
+      return this._constants.UserTypes.Bank;
+    }
+    if (userName.toLowerCase().indexOf('realtor') > -1) {
+      return this._constants.UserTypes.Realtor;
+    }
+    if (userName.toLowerCase().indexOf('vendor') > -1) {
+      return this._constants.UserTypes.Vendor;
+    }
+    throw new Error('User type not found');
   }
 }

@@ -53,6 +53,7 @@ export class ItemsPage extends BasePage {
   private _tupleDictionary: Dictionary;
   private _digiDocGridListsTags: IGridList;
   private _isListView: boolean = false;
+  isListView: boolean = false;
 
   views: Array<SegmentItem> = [
     {

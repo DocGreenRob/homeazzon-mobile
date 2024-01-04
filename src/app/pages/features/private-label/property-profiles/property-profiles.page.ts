@@ -59,9 +59,9 @@ export class PropertyProfilesPage extends BasePage {
     let _ = this.User;
     if (this.User?.Types) {
       this.User.Types.map((x) => {
-        if (x.Name === "Owner") {
+        if (x.Name.toLowerCase().indexOf('owner') > -1) {
           this.isOwner = true;
-        } else if (x.Name === "Realtor") {
+        } else if (x.Name.toLowerCase().indexOf('realtor') > -1) {
           this.isRealtor = true;
         }
       });

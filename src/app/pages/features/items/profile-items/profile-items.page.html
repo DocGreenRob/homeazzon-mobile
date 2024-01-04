@@ -128,12 +128,16 @@
   <div class="no-items-container" *ngIf="!lineitems?.length">
     <div class="no-item-content">
       <img src="assets/imgs/no-content backup.png" alt="">
-      <span class="desc">
+      <span class="desc" *ngIf="manageProfileItemsView !== 'wishlist'">
         No items are currently present. Establish a folder and incorporate either an item already in your possession or conduct an online search to add one.
       </span>
+      <span class="desc" *ngIf="manageProfileItemsView === 'wishlist'">
+        <div class="desc-title">There's nothing here yet.</div>
+        <span>There's nothing here yet. You need to add items into this list, you can also use the input buttons below to start adding items.</span>
+      </span>
     </div>
-
   </div>
+
   <div class="formWrapper">
     <div class="btnWrapper">
       <ion-button class="add-line-item-btn" (click)="addLineItems()">

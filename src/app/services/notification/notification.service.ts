@@ -29,4 +29,8 @@ export class NotificationService extends baseService {
   async deniedAuthorizationEventOpened(notificationID) {
     return this.get(`/authorization/denyAccessNotificationOpened/${notificationID}`).toPromise();
   }
+
+  async deleteUserNotifications(id: number) {
+    return this.delete(`/notification/${id}`).toPromise();
+  }
 }

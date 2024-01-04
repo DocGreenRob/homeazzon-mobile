@@ -34,6 +34,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { UserTypesService } from '../../../../services/user-types/user-types.service';
 import jwt_decode from 'jwt-decode';
 import { LocalStorageService } from '@app/services/local-storage.service';
+import { AzureAuthService } from '@app/services/azure-auth/azure-auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -73,7 +74,8 @@ export class SignInPage extends BasePage {
     public override userTypesService: UserTypesService,
     public override uxNotifierService: UxNotifierService,
     private firebaseAuthService: FirebaseAuthService,
-    public override storageService: LocalStorageService
+    public override storageService: LocalStorageService,
+    private azureAuthService: AzureAuthService
   ) {
     super(
       navController,
@@ -128,9 +130,25 @@ export class SignInPage extends BasePage {
   }
 
   async signInAzure() {
-    const url = environment.azureB2CUrl;
+    // const url = environment.azureB2CUrl;
 
-    this.iab.create(url, '_system', {});
+    // this.iab.create(url, '_system', {});
+    const response = await this.azureAuthService.login();
+    const tokenId = response?.authorization_response?.id_token;
+    if(tokenId) {
+      const decodedToken = jwt_decode(tokenId);
+      console.log(decodedToken);
+  
+      const userInfo = {
+        displayName: decodedToken['name'],
+        email: decodedToken['emails'][0],
+        emailVerified: true,
+        photoUrl: '',
+        uid: decodedToken['oid'],
+      };
+      console.log('Msal lgoin toekn ');  
+      this.firebaseAuthService.setUser(userInfo, 'microsoft', tokenId, '');
+    }
   }
 
   initializeApp() {

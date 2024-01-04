@@ -71,7 +71,7 @@ export class UserTypesSelectorPage extends BasePage {
         this.userTypesAnynomousType[i].IsSubscribed = false;
       }
 
-      if (this.userTypesAnynomousType[i].Name != 'Owner' || this.userTypesAnynomousType[i].Name != 'Realtor') {
+      if (this.userTypesAnynomousType[i].Name.toLowerCase().indexOf('owner') < 0 || this.userTypesAnynomousType[i].Name.toLowerCase().indexOf('realtor')) {
         this.userTypesAnynomousType[i].IsDisabled = true;
       }
     }
@@ -84,8 +84,11 @@ export class UserTypesSelectorPage extends BasePage {
 
     this.IsNewUserTypeSelected = true;
     this.NewSelectedUserTypeId = selectedUserType.Id;
+    this.NewSelectedUserType = selectedUserType;
 
-    switch (selectedUserType.Name) {
+    const userTypeName = this.getUserName(selectedUserType.Name);
+    
+    switch (userTypeName) {
       case this._constants.UserTypes.Appraiser:
         alert('Not available yet! Subscription required.');
         //this.router.navigate(["dashboard"]);
@@ -123,5 +126,75 @@ export class UserTypesSelectorPage extends BasePage {
         //this.router.navigate(["user-types-vendor"]);
         break;
     }
+  }
+
+  public getCssClass(userType: string) {
+    const userTypeName = this.getUserName(userType);
+    
+    switch (userTypeName) {
+      case this._constants.UserTypes.Appraiser:
+      case this._constants.UserTypes.Architect:
+      case this._constants.UserTypes.Bank:
+      case this._constants.UserTypes.Developer:
+      case this._constants.UserTypes.Tradesman:
+      case this._constants.UserTypes.Vendor:
+      case this._constants.UserTypes.PrivateLabelUser:
+        return 'unavailable coming-soon';
+      case this._constants.UserTypes.Owner:
+      case this._constants.UserTypes.Realtor:
+      case this._constants.UserTypes.Renter:
+        return 'available';
+    }
+
+    return 'error';
+  }
+
+  public isUserTypeEnabled(userType: string) {
+    const userTypeName = this.getUserName(userType);
+
+    switch (userTypeName) {
+      case this._constants.UserTypes.Appraiser:
+      case this._constants.UserTypes.Architect:
+      case this._constants.UserTypes.Bank:
+      case this._constants.UserTypes.Developer:
+      case this._constants.UserTypes.Tradesman:
+      case this._constants.UserTypes.Vendor:
+      case this._constants.UserTypes.PrivateLabelUser:
+        return false;
+      case this._constants.UserTypes.Owner:
+      case this._constants.UserTypes.Realtor:
+      case this._constants.UserTypes.Renter:
+        return true;
+    }
+
+    return false;
+  }
+
+  private getUserName(userName: string) {
+    if (userName.toLowerCase().indexOf('tradesman') > -1) {
+      return this._constants.UserTypes.Tradesman;
+    }
+    if (userName.toLowerCase().indexOf('owner') > -1) {
+      return this._constants.UserTypes.Owner;
+    }
+    if (userName.toLowerCase().indexOf('developer') > -1) {
+      return this._constants.UserTypes.Developer;
+    }
+    if (userName.toLowerCase().indexOf('appraiser') > -1) {
+      return this._constants.UserTypes.Appraiser;
+    }
+    if (userName.toLowerCase().indexOf('architect') > -1) {
+      return this._constants.UserTypes.Architect;
+    }
+    if (userName.toLowerCase().indexOf('bank') > -1) {
+      return this._constants.UserTypes.Bank;
+    }
+    if (userName.toLowerCase().indexOf('realtor') > -1) {
+      return this._constants.UserTypes.Realtor;
+    }
+    if (userName.toLowerCase().indexOf('vendor') > -1) {
+      return this._constants.UserTypes.Vendor;
+    }
+    throw new Error('User type not found');
   }
 }

@@ -42,7 +42,7 @@ export class ProfileItemsPage extends BasePage {
   loading: any;
   image: any;
   detEditing: boolean = false;
-  constants: Constants;
+  _constants: Constants;
 
   public manageProfileItemsView: any = 'digiDoc';
   public data: IGrid;
@@ -66,42 +66,38 @@ export class ProfileItemsPage extends BasePage {
     },
   ];
 
-  constructor(
-    public override navController: NavController,
-    private propertyService: PropertyProfilesService,
-    private loadingCtrl: LoadingController,
-    public override uxNotifierService: UxNotifierService,
-    public override communicator: CommunicatorService,
-    public override menuController: MenuController,
-    public lineItemService: LineitemService,
-    private modalCtrl: ModalController,
-    public override platform: Platform,
-    public override router: Router,
-    public override featuresService: FeaturesService,
-    public alertCtrl: AlertController,
-    public override userTypesService: UserTypesService,
-    public profileItemImageService: ProfileItemImageService,
-    public editCategoriesPage: EditCategoriesPage,
-    public override inAppBrowser: InAppBrowser,
-    public override storageService: LocalStorageService
-  ) {
-    super(
-      navController,
-      null,
-      communicator,
-      menuController,
-      platform,
-      router,
-      uxNotifierService,
-      userTypesService,
-      featuresService,
-      inAppBrowser,
-      storageService
-    );
-    this.constants = new Constants();
+  constructor(public override navController: NavController,
+              private propertyService: PropertyProfilesService,
+              private loadingCtrl: LoadingController,
+              public override uxNotifierService: UxNotifierService,
+              public override communicator: CommunicatorService,
+              public override menuController: MenuController,
+              public lineItemService: LineitemService,
+              private modalCtrl: ModalController,
+              public override platform: Platform,
+              public override router: Router,
+              public override featuresService: FeaturesService,
+              public alertCtrl: AlertController,
+              public override userTypesService: UserTypesService,
+              public profileItemImageService: ProfileItemImageService,
+              public editCategoriesPage: EditCategoriesPage,
+              public override inAppBrowser: InAppBrowser,
+              public override storageService: LocalStorageService) {
+    super(navController,
+          null,
+          communicator,
+          menuController,
+          platform,
+          router,
+          uxNotifierService,
+          userTypesService,
+          featuresService,
+          inAppBrowser,
+          storageService);
+    this._constants = new Constants();
   }
 
-  override async ngOnInit() {}
+  override async ngOnInit() { }
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter ProfileItemsPage');
@@ -164,8 +160,10 @@ export class ProfileItemsPage extends BasePage {
 
     //let a: Array<LineitemDto> = this.ProfileItemLineItems;
     // 12.19.19...rag...this will change to get => /api/profileItem/{profileItemId}/lineitems?userType={userTypeId}
+    const shortUserTypeName: string = this.getShortUserTypeName(userType);
+
     await this.propertyService
-      .getProfileItems(this.ProfileItem.Id, userType)
+      .getProfileItems(this.ProfileItem.Id, shortUserTypeName)
       .then(
         async (response: any) => {
           let profileItem: IProfileItemDto = this.ProfileItem;
@@ -188,7 +186,7 @@ export class ProfileItemsPage extends BasePage {
                 ////let lotDetailsModal = await this.modalCtrl.create(ListModalPage, { lineitems: x })
                 ////lotDetailsModal.present();
               },
-              (err) => {}
+              (err) => { }
             );
           } else {
             response.Area.LineItems.forEach((x) => {
@@ -546,11 +544,39 @@ export class ProfileItemsPage extends BasePage {
           this.ProfileItemImages = x;
           this.router.navigate(['items']);
         },
-        (err) => {}
+        (err) => { }
       );
   }
 
   addLineItems() {
     this.router.navigate(['add-line-item']);
+  }
+
+  private getShortUserTypeName(userTypeName: string) {
+    if (userTypeName.toLowerCase().indexOf('tradesman') > -1) {
+      return this._constants.UserTypes.Tradesman;
+    }
+    if (userTypeName.toLowerCase().indexOf('owner') > -1) {
+      return this._constants.UserTypes.Owner;
+    }
+    if (userTypeName.toLowerCase().indexOf('developer') > -1) {
+      return this._constants.UserTypes.Developer;
+    }
+    if (userTypeName.toLowerCase().indexOf('appraiser') > -1) {
+      return this._constants.UserTypes.Appraiser;
+    }
+    if (userTypeName.toLowerCase().indexOf('architect') > -1) {
+      return this._constants.UserTypes.Architect;
+    }
+    if (userTypeName.toLowerCase().indexOf('bank') > -1) {
+      return this._constants.UserTypes.Bank;
+    }
+    if (userTypeName.toLowerCase().indexOf('realtor') > -1) {
+      return this._constants.UserTypes.Realtor;
+    }
+    if (userTypeName.toLowerCase().indexOf('vendor') > -1) {
+      return this._constants.UserTypes.Vendor;
+    }
+    throw new Error('User type not found');
   }
 }
