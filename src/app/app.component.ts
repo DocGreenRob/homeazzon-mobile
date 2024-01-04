@@ -21,6 +21,7 @@ import { FirebaseAuthService } from './services/FirebaseAuth/firebase-auth.servi
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { LocalStorageService } from './services/local-storage.service';
 import { UtilitiesService } from './services/utlities/utilities.service';
+import { AzureAuthService } from './services/azure-auth/azure-auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -67,7 +68,9 @@ export class AppComponent extends BasePage {
     private iab: InAppBrowser,
     public override storageService: LocalStorageService,
     private accountService: AccountService,
-    private utilityService: UtilitiesService) {
+    private utilityService: UtilitiesService,
+    private azureAuthService: AzureAuthService,
+    private ngZone: NgZone) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
@@ -160,7 +163,9 @@ export class AppComponent extends BasePage {
         }).catch((e) => { });
       }
 
-      this.router.navigate(['login-success']);
+      this.ngZone.run(() => {
+        this.router.navigate(['login-success']);
+      });
     });
   }
 
@@ -255,7 +260,14 @@ export class AppComponent extends BasePage {
             text: 'Ok',
             cssClass: 'signout',
             handler: () => {
-              this.firebaseService.logOut();
+              // this.firebaseService.logOut();
+              this.azureAuthService.logout().then(() => {
+                this.storageService.clear();
+                this.storage.clear();
+                window.dispatchEvent(new CustomEvent('user:loggedOut'));
+                this.router.navigate(['sign-in']);
+                return true;
+              });
             },
           },
         ],

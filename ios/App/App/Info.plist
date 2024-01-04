@@ -24,6 +24,16 @@
 	<string>Camera will be used for Picture taking of products</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- msauth.BUNDLE_ID -->
+				<string>msauth.com.homeazzon.homeazzon</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera will be used to scan the barcodes and Picture taking of products</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
