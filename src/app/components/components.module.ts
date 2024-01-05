@@ -11,6 +11,7 @@ import { SegmentSelectorComponent } from './segment-selector/segment-selector.co
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { NumberInputComponent } from './number-input/number-input.component';
 import { FormsModule } from '@angular/forms';
+import { IconListGridComponent } from './icon-list-grid/icon-list-grid.component';
 
 
 @NgModule({
@@ -24,9 +25,11 @@ import { FormsModule } from '@angular/forms';
 		DocumentViewerComponent,
 		NumberInputComponent,
 		TagsFilterComponent,
+		IconListGridComponent
 	],
 	imports: [CommonModule, IonicModule, FormsModule],
 	exports: [
+		IconListGridComponent ,
 		NavigationSubMenuComponent,
 		PrimaryMenuComponent,
 		TabMenuComponent,

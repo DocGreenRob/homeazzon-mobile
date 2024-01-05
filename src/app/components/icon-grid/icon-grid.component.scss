@@ -73,6 +73,17 @@
             border-radius: 5px;
             border: 1px solid #E3E7EC;
         }
+        .list-item-title{
+            color: var(--hzn-description-text, #53677A);
+            font-family: Plus Jakarta Sans;
+            height: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
         .item-title{
             color: var(--hzn-description-text, #53677A);
             font-family: Plus Jakarta Sans;

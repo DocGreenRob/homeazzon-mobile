@@ -1,38 +1,60 @@
 <ion-header>
   <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
   <div class="header-title-with-icon">
+    <span class="header-icon">
+      <div class="cross-icon">
+        <img src="assets/icon/Arrow - Left Square.svg" (click)="close()" alt="">
+      </div>
+    </span>
     <span class="title-with-img">
       <span>Notifications</span>
     </span>
-    <span class="header-icon">
-      <div class="cross-icon">
-        <img src="assets/icon/Close Square.svg" (click)="close()" alt="">
-      </div>
-    </span>
+
+    <span class="empty"></span>
   </div>
+
 </ion-header>
+<div class="noti-toast" *ngIf="deleteSuccess">
+  <span>Notification Removed</span>
+</div>
+
 <div class="container-wrapper">
   <div class="notifications-container">
-    <div class="notifications-header">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-3><h6 style="padding-left:2em;">Date</h6></ion-col>
-          <ion-col col-6><h6>Notification</h6></ion-col>
-          <ion-col col-3><h6 style="float:left">Sender</h6> </ion-col>
-        </ion-row>
+    <ion-item-sliding class="notifications-content" #item
+                      *ngFor="let notification of notifications; let index = index;">
 
-      </ion-grid>
-    </div>
-    <div class="notifications-content"
-         *ngFor="let notification of notifications"
-         (click)="viewFullNotification(notification)">
-      <ion-grid>
-        <ion-row [class.unread]="!notification.IsOpened" class="notification-item">
-            <ion-col col-3><p class="notification-date">{{notification.Date}}</p></ion-col>
-            <ion-col col-4><p class="notification-type">{{notification.Type}}</p></ion-col>
-            <ion-col col-4><p style="float:left" class="sender">{{notification.Sender}}</p> </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-item>
+        <div class="notification-item">
+          <div class="notification-details" (click)="viewFullNotification(notification)">
+            <ion-text class="notification-date">{{notification.Date}}</ion-text>
+            <ion-text class="sender">{{notification.Sender}}</ion-text>
+            <span [class.unread]="!notification.IsOpened"></span>
+          </div>
+          <div [class]="notification.IsOpened ? 'notification-type limited-access' : 'notification-type denied-case'">{{notification.Type}}</div>
+        </div>
+      </ion-item>
+
+      <ion-item-options [side]="right">
+        <div class="delete-container">
+          <ion-text>Do you want to remove this notification?</ion-text>
+          <div class="delete-btns-wrapper">
+            <ion-button class="cancel" (click)="item.close()">Cancel</ion-button>
+            <ion-button class="del" (click)="confirmDeleteNotification(notification, index)">Remove</ion-button>
+          </div>
+        </div>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </div>
+  <div *ngIf="!isNotifications">
+    <div class="nothing-notice">
+      <span>
+        <img src="assets/imgs/no-content backup.png" alt="">
+      </span>
+      <span class="desc">
+        <div class="desc-title">There's nothing here yet.</div>
+        <span>There's nothing here yet. Connect w/some friends or some businesses to start getting suggestions! <br /><br /> <i style="font-size:small !important;">Simplify life with "Suggestions"</i></span>
+      </span>
     </div>
   </div>
 </div>

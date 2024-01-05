@@ -23,10 +23,17 @@
 			width: 168.094px;
 			height: 168.094px;
 			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			img{
 				width: 100%;
 				height: 100%;
 				object-fit: contain;
+			}
+			.no-img{
+				width: 24px !important;
+				height: 24px !important;
 			}
 		}
 	}

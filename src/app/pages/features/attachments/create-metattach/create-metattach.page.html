@@ -1,31 +1,37 @@
 <ion-header>
-    <save-sub-menu title="Attachments" (_saveClickEventHandler)="save()" [isShowSave]="true"></save-sub-menu>
+    <save-sub-menu title="Attachments" [isShowSave]="false"></save-sub-menu>
 </ion-header>
-<ion-content class="ion-padding">
-    <ng-container>
-        <div class="spacer-halfRem"></div>
-        <div class="main-view">
+<div class="container-wrapper">
+    <div class="formWrapper">
+        <div class="main-view" *ngIf="image">
             <img src="{{image}}" />
         </div>
-        <div class="spacer-oneRem"></div>
-        <div class="mypad-grey">What Type?</div>
-        <ion-item class="no-left-padding" lines="none">
-            <ion-select id="metattachTypes" [(ngModel)]="metattachTypeId" interface="action-sheet">
-                <ion-select-option *ngFor="let type of metattachTypes" [value]="type.Id">
-                    {{type.Name}}
-                </ion-select-option>
-            </ion-select>
-        </ion-item>
-        <div class="spacer-oneRem"></div>
-        <div class="mypad-grey">Title</div>
-        <ion-item lines="none">
-            <input type="text" class="input-text text-input-regular" [(ngModel)]="title" placeholder="Add a title..." [disabled]="isDisabled" />
-        </ion-item>
-        <div class="spacer-oneRem"></div>
-        <div class="mypad-grey">Description / Notes</div>
-        <ion-item lines="none">
-            <textarea class="input-text text-input-regular text-area-regular" [(ngModel)]="notes" style="max-height: 8em !important; width:100% !important; max-width:100% !important; padding: .25em; border-radius: 1em !important;" placeholder="Notes..." [disabled]="isDisabled"></textarea>
-        </ion-item>
-        <div class="spacer-oneRem"></div>
-    </ng-container>
-</ion-content>
+        <div class="fieldWrapper">
+            <ion-label>What Type?</ion-label>
+            <div class="inputField">
+                <ion-select id="metattachTypes" [(ngModel)]="metattachTypeId" interface="action-sheet">
+                    <ion-select-option *ngFor="let type of metattachTypes" [value]="type.Id">
+                        {{type.Name}}
+                    </ion-select-option>
+                </ion-select>
+                <img class="iconSelect"
+                src="assets/icon/Icon - Next.svg" />
+            </div>
+        </div>
+        <div class="fieldWrapper">
+        <ion-label>Title</ion-label>
+        <div class="inputField">
+            <ion-input type="text" [(ngModel)]="title" placeholder="Add a title..." [disabled]="isDisabled" ></ion-input>
+        </div>
+         </div>
+        <div class="fieldWrapper">
+        <ion-label>Description / Notes</ion-label>
+        <div class="inputField text-area">
+            <ion-textarea  [(ngModel)]="notes"  placeholder="Notes..." [disabled]="isDisabled"></ion-textarea>
+        </div>
+        </div>
+    </div>
+    <div class="btnWrapper">
+        <ion-button class="continuebtn" (click)="save()">Save</ion-button>
+    </div>
+</div>

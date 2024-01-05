@@ -46,11 +46,11 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   override async ngOnInit() {
     console.log("ngOnInit PropertyProfileGeneralInformationPage");
     //this.AppInsights.trackPageView({ name: 'PropertyProfileGeneralInformationPage' });
-    
+
   }
 
   override async ionViewDidLoad() {
-    
+
   }
 
   async ionViewWillEnter() {
@@ -70,23 +70,23 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       this.property.TotalStories = this._selectedProperty.TotalStories;
       this.isDefault = this._selectedProperty.IsDefault;
 
-      switch (this.NewSelectedUserType.Name) {
-        case 'Owner':
-          this.title = 'Property general information';
-          this.isOwner = true;
-          break;
-        case 'Realtor':
-          this.title = 'Property general information';
-          this.isRealtor = true;
-
-          if (this._selectedProperty.Customer != null) {
-            this.isExistingLinkWithCustomer = true;
-            this.isLinkWithCustomer = true;
-            this.customerName = this._selectedProperty.Customer.Name;
-            this.customerEmail = this._selectedProperty.Customer.Email;
-          }
-          break;
+      if (this.NewSelectedUserType.Name.toLowerCase().indexOf('owner') > -1) {
+        this.title = 'Property general information';
+        this.isOwner = true;
       }
+
+      if (this.NewSelectedUserType.Name.toLowerCase().indexOf('realtor') > -1) {
+        this.title = 'Property general information';
+        this.isRealtor = true;
+
+        if (this._selectedProperty.Customer != null) {
+          this.isExistingLinkWithCustomer = true;
+          this.isLinkWithCustomer = true;
+          this.customerName = this._selectedProperty.Customer.Name;
+          this.customerEmail = this._selectedProperty.Customer.Email;
+        }
+      }
+
     }
   }
 
@@ -163,8 +163,8 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
 
       await this.propertyService.updateAddress(p).then(async (x) => {
 
-        if (1 === 1) {
-          //if (this.isLinkWithCustomer && !this.isExistingLinkWithCustomer) {
+        // if (1 === 1) {
+        if (this.isLinkWithCustomer && !this.isExistingLinkWithCustomer) {
           this.uxNotifierService.showToast('Customer address updated', this._constants.ToastColorGood);
 
           this._loading.dismiss();
@@ -178,7 +178,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
             Name: this.customerName,
             Email: this.customerEmail
           };
-          
+
           await this.propertyService.updatePropertyCustomerInformationToMakeSuggestions(p).then((x) => {
             this._loading.dismiss();
             this.finish("Customer link succeeded! (Request pending)");

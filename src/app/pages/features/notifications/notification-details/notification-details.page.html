@@ -1,146 +1,176 @@
 <ion-header>
   <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
   <div class="header-title-with-icon">
+    <span class="header-icon">
+      <div class="cross-icon">
+        <img src="assets/icon/Arrow - Left Square.svg" (click)="close()" alt="">
+      </div>
+    </span>
     <span class="title-with-img">
       <span>Notifications</span>
     </span>
-    <span class="header-icon">
-      <div class="cross-icon">
-        <img src="assets/icon/Close Square.svg" (click)="close()" alt="">
-      </div>
-    </span>
+    <span class="empty"></span>
   </div>
 </ion-header>
-<ion-content padding>
-  <div *ngIf="notification.Type == 'Request Authorization'">
-    <h6>
-      On {{notification.Date}} you requested access to {{ notification.PendingAuthorization.Property.Customer.Name}}'s property located at {{notification.PendingAuthorization.Property.StreetAddress1}}, {{notification.PendingAuthorization.Property.City}},{{notification.PendingAuthorization.Property.State}} and the status  is pending
+<div class="container-wrapper">
+  <div class="notification-wrapper">
+    <div class="noti-content" *ngIf="notification.Type == 'Request Authorization'">
+      <p>
+        On {{notification.Date}} you requested access to {{ notification.PendingAuthorization.Property.Customer.Name}}'s
+        property located at {{notification.PendingAuthorization.Property.StreetAddress1}},
+        {{notification.PendingAuthorization.Property.City}},{{notification.PendingAuthorization.Property.State}} and the
+        status is pending
 
-    </h6>
-    <h6>
-      You can suggest products to the property clone that has been created for you during the pending status
-    </h6>
-    <h6>
-      When {{ notification.PendingAuthorization.Property.Customer.Name }} makes a decision you will be notified.Enjoy!
-    </h6>
-  </div>
-  <div *ngIf="notification.Type == 'Invitation'">
-    <h6>
-      On {{ notification.PendingAuthorization.Date }} you invited {{ notification.PendingAuthorization.Property.Customer.Name}} located at {{notification.PendingAuthorization.Property.StreetAddress1}}, {{notification.PendingAuthorization.Property.City}},{{notification.PendingAuthorization.Property.State}} and the status  is pending
+      </p>
+      <br>
+      <p>
+        You can suggest products to the property clone that has been created for you during the pending status
+      </p>
+      <br>
+      <p>
+        When {{ notification.PendingAuthorization.Property.Customer.Name }} makes a decision you will be
+        notified.
+      </p>
+      <br>
+      <p>
+       Enjoy!
+      </p>
+    </div>
+    <div class="noti-content" *ngIf="notification.Type == 'Invitation'">
+      <p>
+        On {{ notification.PendingAuthorization.Date }} you invited {{
+        notification.PendingAuthorization.Property.Customer.Name}} located at
+        {{notification.PendingAuthorization.Property.StreetAddress1}},
+        {{notification.PendingAuthorization.Property.City}},{{notification.PendingAuthorization.Property.State}} and the
+        status is pending
+      </p>
+      <br>
+      <p>
+        You can suggest products to the property clone that has been created for you until the invitation is accepted.
+      </p>
+      <br>
+      <p>
+        When {{ notification.PendingAuthorization.Property.Customer.Name}} makes a decision you will be notified.
+      </p>
+      <br>
+      <p>
+        Enjoy!
+      </p>
 
-    </h6>
-    <h6>
-      You can suggest products to the property clone that has been created for you  until the invitation is accepted
-    </h6>
-    <h6>
-      When {{ notification.PendingAuthorization.Property.Customer.Name}} makes a decision you will be notified.Enjoy!
-    </h6>
-  </div>
+    </div>
 
-  <div *ngIf="notification.Type == 'LimitedAccessAreaAccessGranted' || notification.Type == 'LimitedRequestAuthorizationApproved' ">
-    <h4>
-      Access Notification
-    </h4>
-    <hr>
-    <h5>
-      Date
-    </h5>
-    <h6>
-      {{ notification.Date }}
-    </h6>
-    <hr>
+    <div class="noti-content"
+      *ngIf="notification.Type == 'LimitedAccessAreaAccessGranted' || notification.Type == 'LimitedRequestAuthorizationApproved' ">
+      <p class="bold">
+        Access Notification
+      </p>
+      <hr>
+      <p class="bold">
+        Date
+      </p>
+      <p>
+        {{ notification.Date }}
+      </p>
+      <hr>
 
-    <h6 [innerHTML]="notification.Message">
-    </h6>
+      <p [innerHTML]="notification.Message">
+      </p>
 
-  </div>
-  <div *ngIf="notification.PrivateLabelClone != null  || notification.PrivateLabelClone != undefined">
-    <h4 *ngIf="notification.Type == 'Auto-Clone-Completed'">
-      User Clone Property
-    </h4>
-    <h4 *ngIf="notification.Type != 'Auto-Clone-Completed'">
-      Access Notification
-    </h4>
-    <hr>
-    <h5>
-      Date
-    </h5>
-    <h6>
-      {{notification.Date}}
+    </div>
+    <div class="noti-content" *ngIf="notification.PrivateLabelClone != null  || notification.PrivateLabelClone != undefined">
+      <p *ngIf="notification.Type == 'Auto-Clone-Completed'">
+        User Clone Property
+      </p>
+      <p *ngIf="notification.Type != 'Auto-Clone-Completed'">
+        Access Notification
+      </p>
+      <hr>
+      <p>
+        Date
+      </p>
+      <p>
+        {{notification.Date}}
 
-    </h6>
-    <hr>
+      </p>
+      <hr>
 
-    <h6 [innerHTML]="notification.PrivateLabelClone.Message">
-    </h6>
+      <p [innerHTML]="notification.PrivateLabelClone.Message">
+      </p>
 
-  </div>
-  <div *ngIf="notification.Suggestion != null">
-    <h4>
-      Suggestion
-    </h4>
-    <hr>
-    <h5>
-      Date
-    </h5>
-    <h6>
-      {{notification.Date}}
+    </div>
+    <div class="noti-content" *ngIf="!notification.PrivateLabelClone && notification.Type == 'Auto-Clone-Completed'"></div>
 
-    </h6>
-    <hr>
+    <div class="noti-content" *ngIf="notification.Suggestion != null">
+      <p class="bold">
+        Suggestion
+      </p>
+      <hr>
+      <p class="bold">
+        Date
+      </p>
+      <p>
+        {{notification.Date}}
 
-    <h6 [innerHTML]="notification.Suggestion.Message">
-    </h6>
+      </p>
+      <hr>
 
-  </div>
-  <div *ngIf="notification.Type == 'LimitedAccessAreaAccessRemoved'">
-    <h4>
-      Access Notification
-    </h4>
-    <hr>
-    <h5>
-      Date
-    </h5>
-    <h6>
-      {{notification.Date}}
-    </h6>
-    <hr>
+      <p [innerHTML]="notification.Suggestion.Message">
+      </p>
 
-    <h6 [innerHTML]="notification.Message">
-    </h6>
+    </div>
+    <div class="noti-content" *ngIf="notification.Type == 'LimitedAccessAreaAccessRemoved'">
+      <p class="bold">
+        Access Notification
+      </p>
+      <hr>
+      <p class="bold">
+        Date
+      </p>
+      <p>
+        {{notification.Date}}
+      </p>
+      <hr>
 
-  </div>
-  <div *ngIf="notification.Type == 'Denied Authorization Request' && notification.DeniedAuthorizationRequest">
-    <h4>
-      Denied Authorization
-    </h4>
-    <hr>
-    <h5>
-    </h5>
-    <h6>
-      {{notification.Date}}
+      <p [innerHTML]="notification.Message">
+      </p>
 
-    </h6>
-    <hr>
+    </div>
+    <div class="noti-content" *ngIf="notification.Type == 'Denied Authorization Request' && notification.DeniedAuthorizationRequest">
+      <p class="bold">
+        Denied Authorization
+      </p>
+      <hr>
+      <p>
+      </p>
+      <p>
+        {{notification.Date}}
 
-    <h6>
-      You have been been denied authorization for {{notification.PendingAuthorization.Property.StreetAddress1}}, {{notification.PendingAuthorization.Property.StreetAddress2}},
-      {{notification.PendingAuthorization.Property.City}}, {{notification.PendingAuthorization.Property.State}}, {{notification.PendingAuthorization.Property.Zip}} by {{notification.PendingAuthorization.Property.Customer.Name}}
-    </h6>
+      </p>
+      <hr>
 
-  </div>
+      <p>
+        You have been been denied authorization for {{notification.PendingAuthorization.Property.StreetAddress1}},
+        {{notification.PendingAuthorization.Property.StreetAddress2}},
+        {{notification.PendingAuthorization.Property.City}}, {{notification.PendingAuthorization.Property.State}},
+        {{notification.PendingAuthorization.Property.Zip}} by
+        {{notification.PendingAuthorization.Property.Customer.Name}}
+      </p>
 
+    </div>
+    <div class="noti-content" *ngIf="notification.Type == 'Denied Authorization Request' && !notification.DeniedAuthorizationRequest"></div>
+    <!-- 
   <ion-grid>
     <ion-row>
       <ion-col col-2>
 
-      </ion-col>
-      <ion-col>
-        <button ion-button color="primary" block (click)="close()"> Ok</button>
-      </ion-col>
-      <ion-col col-2>
+      </ion-col> -->
+    <div class="btnWrapper">
+      <ion-button class="continuebtn" (click)="close()"> Ok</ion-button>
+    </div>
+    <!-- <ion-col col-2>
 
       </ion-col>
     </ion-row>
-  </ion-grid>
-</ion-content>
+  </ion-grid> -->
+  </div>
+</div>
