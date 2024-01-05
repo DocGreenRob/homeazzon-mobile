@@ -180,6 +180,9 @@ ion-menu{
 			--background-focused:  #FEFEFE;
 			--background-hover:  #FEFEFE;
 		}
+		@media only screen and (max-width: 400px) {
+				margin-top: 150px;
+	}
 	}
 	.design-btn{
 		width: 90%;
