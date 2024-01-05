@@ -28,7 +28,7 @@ import { AzureAuthService } from './services/azure-auth/azure-auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.1.0';
+  public appVersion: string = '12.1.1';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 

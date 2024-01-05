@@ -23,8 +23,7 @@ export class UserTypesSelectorPage extends BasePage {
   private _constants: Constants;
   public profileItemImages: Array<ProfileItemImageDto>;
 
-  constructor(
-    public override navController: NavController,
+  constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
     public override platform: Platform,
@@ -33,8 +32,7 @@ export class UserTypesSelectorPage extends BasePage {
     public override userTypesService: UserTypesService,
     public override inAppBrowser: InAppBrowser,
     public override featuresService: FeaturesService,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
   }
@@ -87,7 +85,7 @@ export class UserTypesSelectorPage extends BasePage {
     this.NewSelectedUserType = selectedUserType;
 
     const userTypeName = this.getUserName(selectedUserType.Name);
-    
+
     switch (userTypeName) {
       case this._constants.UserTypes.Appraiser:
         alert('Not available yet! Subscription required.');
@@ -130,7 +128,7 @@ export class UserTypesSelectorPage extends BasePage {
 
   public getCssClass(userType: string) {
     const userTypeName = this.getUserName(userType);
-    
+
     switch (userTypeName) {
       case this._constants.UserTypes.Appraiser:
       case this._constants.UserTypes.Architect:
