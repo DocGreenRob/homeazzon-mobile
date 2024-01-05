@@ -11,7 +11,7 @@
 <div class="container-wrapper">
 	<ng-container *ngIf="view!='send-email'">
 		<div *ngIf="!doesContactExist" class="add-contact-container">
-			<div class="inner-wrapper">
+			<div class="inner-wrapper wrapper-height">
 				<span>There's nothing here yet.</span>
 				<span>Add a new contact now!</span>
 			</div>
@@ -22,11 +22,10 @@
 				<ion-button class="continuebtn" *ngIf="view == 'read-only'" (click)="showEditView()">			
 						Edit	
 				</ion-button>
+
 			</div>
-
-
 		</div>
-		<div class="formWrapper" *ngIf="view == 'add-edit'">
+		<div class="formWrapper wrapper-height" *ngIf="view == 'add-edit'">
 			<div class="fieldWrapper">
 				<ion-label>Current Contacts</ion-label>
 				<div class="inputField">
@@ -130,13 +129,12 @@
 				</h1>
 			</ion-col>
 		</ion-row>
-
-		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'add-edit'">
+		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'add-edit'" > 
 			<ion-button class="continuebtn"  (click)="saveContactInformation()">				
 					Save
 			</ion-button>
-			
 		</div>
+
 	</ng-container>
 	<ng-container *ngIf="view=='send-email'">
 		<div class="formWrapper send-mail-wrapper">
