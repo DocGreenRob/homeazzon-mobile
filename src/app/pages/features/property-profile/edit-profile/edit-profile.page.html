@@ -12,9 +12,9 @@
                 <ion-text>Sq. Ft</ion-text>
           </div>
         <ion-row class="fieldWrapper" *ngFor="let profileItem of activeRooms">
-            <ion-col size="1" *ngIf="(User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == false) || User.IsPrivateLabelUser == false" (click)="deleteProfileItem(profileItem.Id)">
-                <!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fminus-circle.svg?alt=media&token=4920f8f8-add3-4d71-8f6d-4deba12d58bb" style="color: red !important; max-height: 4.5em !important; margin-top: 1em !important;"
-                /> -->
+            <ion-col size="1"
+                     *ngIf="(User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == false) || User.IsPrivateLabelUser == false"
+                     (click)="deleteProfileItem(profileItem.Id)">
                 <img src="assets/icon/Delete.svg">
       </ion-col>
       <ion-col size="7">

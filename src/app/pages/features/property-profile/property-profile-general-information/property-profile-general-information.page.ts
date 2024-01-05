@@ -60,7 +60,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   async start() {
     this._selectedProperty = this.SelectedProperty;
 
-    this.isEditingProperty = this.IsEditingProperty; // await this.storageService.get("IsEditingProperty");
+    this.isEditingProperty = this.IsEditingProperty ?? false; // await this.storageService.get("IsEditingProperty");
 
     if (this.isEditingProperty) {
       this._selectedProperty = this.SelectedProperty;

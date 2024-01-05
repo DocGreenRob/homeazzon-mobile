@@ -28,6 +28,7 @@ export class PropertyProfilesService extends baseService {
   }
 
   async deleteLineItem(profileItemId: number, userTypes: Array<IUserTypeDto>) {
+    
     var result = this.delete(`/profileItem/${profileItemId}`).toPromise();
 
     userTypes.forEach(async (x) => {

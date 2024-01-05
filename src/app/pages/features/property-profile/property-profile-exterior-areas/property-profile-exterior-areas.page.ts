@@ -197,8 +197,10 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     customProperty.User.Types = new Array<IUserTypeDto>();
     customProperty.UserTypeId = this.NewSelectedUserTypeId;
 
+    //debugger;
     // determine if need to save Company Information
-    let _ = this.UserTypes.filter(x => x.Name != this.constants.UserTypes.Unassigned && x.Name != this.constants.UserTypes.Owner);
+    let _ = this.UserTypes.filter(x => x.Name.toLowerCase().indexOf(this.constants.UserTypes.Unassigned.toLowerCase()) < 0
+                                    && x.Name.toLowerCase().indexOf(this.constants.UserTypes.Owner.toLowerCase()) < 0);
 
     if (_.some(x => x.Id === this.NewSelectedUserTypeId)) {
       // figure out which type to do custom stuff???
