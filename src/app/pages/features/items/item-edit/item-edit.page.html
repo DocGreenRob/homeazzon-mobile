@@ -228,5 +228,11 @@
             </div>
         </div>
         </div>
+        <ion-action-sheet
+          [isOpen]="isActionSheetOpen"
+          [header]="actionSheetMessage"
+          [buttons]="actionSheetButtons"
+          (didDismiss)="setActionSheet(false)"
+        ></ion-action-sheet>
     </ng-container>
 <!-- </ion-content> -->

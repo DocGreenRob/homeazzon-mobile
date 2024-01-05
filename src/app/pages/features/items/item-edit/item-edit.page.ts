@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 // import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 // import { Camera, CameraOptions } from "@awesome-cordova-plugins/camera/ngx";
-import { Camera, PermissionStatus } from "@capacitor/camera";
+// import { Camera, PermissionStatus } from "@capacitor/camera";
 // import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
 import { FilePicker, PickFilesOptions, PickFilesResult } from '@capawesome/capacitor-file-picker';
 import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
@@ -50,6 +50,29 @@ export class ItemEditPage extends BasePage {
   public isDisplayReady: boolean = false;
   public _bookmark: string = "";
   public showImage: boolean = false;
+  isActionSheetOpen = false;
+  actionSheetMessage!: string;
+  public actionSheetButtons = [
+    {
+      text: 'Settings',
+      icon: 'settings-outline',
+      handler: () => {
+        BarcodeScanner.openAppSettings();
+      },
+      data: {
+        action: 'share'
+      }
+    },
+    {
+      text: 'Cancel',
+      icon: 'close-outline',
+      cssClass: 'danger',
+      role: 'cancel',
+      data: {
+        action: 'cancel'
+      }
+    }
+  ];
 
   constructor(
     public override navController: NavController,
@@ -216,7 +239,7 @@ export class ItemEditPage extends BasePage {
     //     this.TempActiveItem.QrCode = qrCode;
     //   }
     // } else {
-      BarcodeScanner.checkPermission()
+      BarcodeScanner.checkPermission({ force: true })
       .then((status) => {
         // if (status.neverAsked) {
         //   Camera.requestPermissions()
@@ -300,10 +323,15 @@ export class ItemEditPage extends BasePage {
               this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this._constants.ToastColorBad);
             });
         } else {
-          this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
+          // this.uxNotifierService.showToast("barcode/qr code scanning permission denied", this._constants.ToastColorBad);
+          this.actionSheetMessage = "Please grant access to your camera before using this feature.";
+          this.isActionSheetOpen = true;
         }
       }) 
       // }
+  }
+  setActionSheet(open: boolean): void {
+   this.isActionSheetOpen = open;
   }
 
   public override async launchFileExplorer() {
