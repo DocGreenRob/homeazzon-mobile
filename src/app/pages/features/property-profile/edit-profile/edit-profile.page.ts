@@ -251,8 +251,10 @@ export class EditProfilePage extends BasePage {
   }
 
   async upsertProfileItems(array: Array<any>) {
+    const p = this.ActiveProperty;
+
     await this.propertyProfile
-      .postProfile(array, this.ProfileItem.Id, this.UserTypes)
+      .postProfile(array, p.Id, this.UserTypes)
       .then(
         () => {
           this.success();

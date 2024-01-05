@@ -81,7 +81,7 @@ export class UserTypesOwnerPage extends BasePage {
 
   override async ngOnInit() {
     console.log("ngOnInit UserTypesOwnerPage");
-    this._isEditingProperty = this.IsEditingProperty; // await this.storageService.get("IsEditingProperty");
+    this._isEditingProperty = this.IsEditingProperty ?? false; // await this.storageService.get("IsEditingProperty");
 
     if (this._isEditingProperty) {
       // TODO: Need to refactor the property to have the structure of IPropertyDto

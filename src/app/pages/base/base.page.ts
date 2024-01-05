@@ -643,8 +643,8 @@ export class BasePage implements OnInit {
           toolbarcolor: '#c36d23',
           navigationbuttoncolor: '#000000',
           closebuttoncolor: '#000000',
-          hidenavigationbuttons: 'no',
-          hideurlbar: 'no', // Assuming you want the URL bar to be visible
+          hidenavigationbuttons: 'yes',
+          hideurlbar: 'yes', // Assuming you want the URL bar to be visible
           fullscreen: 'yes', // To use the full screen
           clearcache: 'yes',
           cleardata: 'yes',

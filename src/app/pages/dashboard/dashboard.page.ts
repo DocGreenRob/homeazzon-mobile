@@ -234,8 +234,6 @@ export class DashboardPage extends BasePage {
 
       await this.getAreaTypes().then(
         (x) => {
-          console.log('got common areas abhid horh', this.commonAreas);
-
           this.menuController.enable(true, 'propertyMenu');
 
           this.getSelectedProperty();

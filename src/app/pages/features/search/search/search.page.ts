@@ -8,6 +8,7 @@ import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.servi
 import { PropertyProfilesService } from "src/app/services/property-profile/property-profiles.service";
 import { Router, NavigationExtras } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
+import { Constants } from "../../../../common/Constants";
 
 @Component({
   selector: "app-search",
@@ -19,6 +20,7 @@ export class SearchPage extends BasePage {
   private _loading: any = null;
   private _originalProfileItem: IProfileItemDto = this.ProfileItem;
   private _originalLineItem: ILineitemDto = this.LineItem;
+  private _constants: Constants;
 
   // Public
   public profileItems: Array<IListItem> = [];
@@ -41,6 +43,7 @@ export class SearchPage extends BasePage {
     public override storageService: LocalStorageService
   ) {
     super(navController, null, null, null, platform, router, uxNotifierService, null, null, null, storageService);
+    this._constants = new Constants();
 
     if (this.selectedProfileItem.Id !== undefined) {
       this.selectedProfileItem = {
@@ -131,6 +134,7 @@ export class SearchPage extends BasePage {
       this.uxNotifierService.presentSimpleAlert("Please select a search source!", "Error");
       return;
     }
+
     let keywords: string = this.keywords;
     let navExtras: NavigationExtras = {
       queryParams: {
@@ -149,37 +153,71 @@ export class SearchPage extends BasePage {
       });
       await this._loading.present();
 
-      await this.propertyService
-        .getProfileItems(this.selectedProfileItem.Id, this.User.Types[0].Name)
-        .then(
-          async (response: any) => {
-            if (response && response != undefined) {
-              response.Area.LineItems.map((x) => {
-                this.lineitems.push({ Id: x.Id, Name: x.Name });
-              });
-            } else {
-              this.uxNotifierService.presentSimpleAlert("Something went wrong. Please return and try this page again...", "Error");
-            }
+      // TODO: This should be the usertype from the selected property
+      const userTypeShortName = this.getUserName(this.User.Types[0].Name);
 
-            this._loading.dismiss();
-          },
-          (err) => {
-            // debugger;
-            if (err.status === 401) {
-              this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
-              this.router.navigate(["sign-in"]);
+        await this.propertyService
+          .getProfileItems(this.selectedProfileItem.Id, userTypeShortName)
+          .then(
+            async (response: any) => {
+              if (response && response != undefined) {
+                
+                this.lineitems = [];
+
+                response.Area.LineItems.map((x) => {
+                  this.lineitems.push({ Id: x.Id, Name: x.Name });
+                });
+              } else {
+                this.uxNotifierService.presentSimpleAlert("Something went wrong. Please return and try this page again...", "Error");
+              }
+
+              this._loading.dismiss();
+            },
+            (err) => {
+              // debugger;
+              if (err.status === 401) {
+                this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
+                this.router.navigate(["sign-in"]);
+              }
             }
-          }
-        )
-        .catch((error) => {
-          console.log(error);
-        });
+          )
+          .catch((error) => {
+            console.log(error);
+          });
     } else {
     }
   }
 
   // sort
-  compareFn(i1: IListItem, i2: IListItem): boolean {
+  public compareFn(i1: IListItem, i2: IListItem): boolean {
     return i1 && i2 ? i1.Id === i2.Id : i1 === i2;
+  }
+
+  private getUserName(userName: string) {
+    if (userName.toLowerCase().indexOf('tradesman') > -1) {
+      return this._constants.UserTypes.Tradesman;
+    }
+    if (userName.toLowerCase().indexOf('owner') > -1) {
+      return this._constants.UserTypes.Owner;
+    }
+    if (userName.toLowerCase().indexOf('developer') > -1) {
+      return this._constants.UserTypes.Developer;
+    }
+    if (userName.toLowerCase().indexOf('appraiser') > -1) {
+      return this._constants.UserTypes.Appraiser;
+    }
+    if (userName.toLowerCase().indexOf('architect') > -1) {
+      return this._constants.UserTypes.Architect;
+    }
+    if (userName.toLowerCase().indexOf('bank') > -1) {
+      return this._constants.UserTypes.Bank;
+    }
+    if (userName.toLowerCase().indexOf('realtor') > -1) {
+      return this._constants.UserTypes.Realtor;
+    }
+    if (userName.toLowerCase().indexOf('vendor') > -1) {
+      return this._constants.UserTypes.Vendor;
+    }
+    throw new Error('User type not found');
   }
 }
