@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { LoadingController, NavController, Platform } from "@ionic/angular";
+import { LoadingController, ModalController, NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { AssetIndexDto } from "src/app/models/dto/interfaces/AssetIndexDto";
 import { IActiveItem } from "src/app/models/dto/interfaces/IActiveItem";
@@ -15,6 +15,7 @@ import { PropertyProfilesService } from "src/app/services/property-profile/prope
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { ActiveItem } from "../../../../models/ActiveItem";
+import { ImageviewComponent } from "../imageview/imageview.component";
 
 @Component({
   selector: "app-item-add",
@@ -53,7 +54,8 @@ export class ItemAddPage extends BasePage {
     private loadingController: LoadingController,
     public searchService: SearchService,
     public override uxNotifierService: UxNotifierService,
-    public override router: Router
+    public override router: Router,
+    private modalController: ModalController
   ) {
     super(navCtrl, null, null, null, platform, null, null, null, null);
 
@@ -84,6 +86,15 @@ export class ItemAddPage extends BasePage {
 
   public close() {
     this.navCtrl.pop();
+  }
+  async openImageModal() {
+    const modal = await this.modalController.create({
+      component: ImageviewComponent,
+      componentProps: {
+        imageSrc: this.image,
+      },
+    });
+    return await modal.present();
   }
 
   public async selectProfileItemLineItems() {

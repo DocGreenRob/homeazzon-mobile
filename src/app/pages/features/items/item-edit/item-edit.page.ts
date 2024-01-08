@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { BarcodeScanner } from "@awesome-cordova-plugins/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@awesome-cordova-plugins/camera/ngx";
 import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
-import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
+import { AlertController, LoadingController, MenuController, ModalController, NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { ActiveItem } from "src/app/models/ActiveItem";
 import { AssetInfoDto } from "src/app/models/dto/AssetInfoDto";
@@ -26,6 +26,7 @@ import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.servi
 import { IBookmarkDto } from "../../../../models/dto/interfaces/IBookmarkDto";
 import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
+import { ImageviewComponent } from "../imageview/imageview.component";
 
 @Component({
   selector: "app-item-edit",
@@ -65,7 +66,8 @@ export class ItemEditPage extends BasePage {
     public alertCtrl: AlertController,
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
-    public override router: Router
+    public override router: Router,
+    private modalController: ModalController
   ) {
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null);
     this._constants = new Constants();
@@ -275,7 +277,16 @@ export class ItemEditPage extends BasePage {
         });
     }
   }
-
+  async openImageModal() {
+    const modal = await this.modalController.create({
+      component: ImageviewComponent,
+      componentProps: {
+        imageSrc: this.TempActiveItem?.Image,
+      },
+    });
+    return await modal.present();
+  }
+  
   public override async launchFileExplorer() {
     let accept: ChooserOptions = {
       mimeTypes:

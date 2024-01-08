@@ -19,7 +19,7 @@
     <div class="formWrapper">
       <!-- <div class="spacer-halfRem"></div> -->
       <div class="main-view">
-        <img src="{{image}}" *ngIf="hasImage" />
+        <img src="{{image}}" (click)="openImageModal()" *ngIf="hasImage" />
         <!-- Show the URL for Google Web searches -->
         <div *ngIf="!hasImage && !isBookmark">
           {{SelectedSearchResultDetail.Link}}

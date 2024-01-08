@@ -26,7 +26,7 @@
             <div *ngIf="_type != 'Bookmark'" class="upload-main">
                 <!-- <label for="img-upload"> -->
                     <div [class]="showImage ? 'upload-main-img' : 'upload-content'">
-                             <img [src]="TempActiveItem?.Image" imageViewer> 
+                             <img [src]="TempActiveItem?.Image" (click)="openImageModal()" imageViewer> 
                         <div class="upload-icons">
                             <img src="assets/icon/paperclip.svg">
                             <span class="upload-text">Upload Image</span>
