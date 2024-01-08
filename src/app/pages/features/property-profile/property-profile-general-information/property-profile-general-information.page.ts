@@ -149,11 +149,13 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       p.TotalStories = TotalStories;
       p.IsDefault = this.isDefault;
       p.Address = {};
+      p.City = customProperty.Address.City;
       p.Address.StreetAddress1 = customProperty.Address.StreetAddress1;
       p.Address.StreetAddress2 = customProperty.Address.StreetAddress2;
       p.Address.City = customProperty.Address.City;
       p.Address.State = customProperty.Address.State;
       p.Address.Zip = customProperty.Address.Zip;
+      p.Address.Country = customProperty.Address.country;
 
       this._loading = await this.loadingController.create({
         message: 'Updating Address...',
