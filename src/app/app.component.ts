@@ -22,6 +22,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { LocalStorageService } from './services/local-storage.service';
 import { UtilitiesService } from './services/utlities/utilities.service';
 import { AzureAuthService } from './services/azure-auth/azure-auth.service';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -297,5 +298,10 @@ export class AppComponent extends BasePage {
     await this.communicator.sendSelectedProperty(p);
     this.storageService.delete('Lineitems');
     this.menu.close('propertyMenu');
+  }
+  async stopScan(): Promise<void> {
+    await BarcodeScanner.stopScan();
+    document.body.classList.remove("qrscanner"); 
+    BarcodeScanner.prepare();
   }
 }
