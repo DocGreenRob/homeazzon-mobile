@@ -149,7 +149,6 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       p.TotalStories = TotalStories;
       p.IsDefault = this.isDefault;
       p.Address = {};
-      p.City = customProperty.Address.City;
       p.Address.StreetAddress1 = customProperty.Address.StreetAddress1;
       p.Address.StreetAddress2 = customProperty.Address.StreetAddress2;
       p.Address.City = customProperty.Address.City;
