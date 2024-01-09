@@ -1,6 +1,7 @@
 import { Component, Input, NgModule, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular'; 
+import { PinchZoomModule } from "@mtnair/ngx-pinch-zoom";
 
 @Component({
   selector: 'app-item-image-modal',
@@ -19,6 +20,7 @@ export class ImageviewComponent  implements OnInit {
 }
 @NgModule({
   declarations: [ImageviewComponent],
-  imports: [IonicModule], // Add IonicModule to the imports array
+  imports: [IonicModule,
+    PinchZoomModule], // Add IonicModule to the imports array
 })
 export class ItemImageModalModule {}
