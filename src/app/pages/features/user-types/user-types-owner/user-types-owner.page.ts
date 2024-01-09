@@ -14,6 +14,7 @@ import { UserTypesService } from "../../../../services/user-types/user-types.ser
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
 import { Constants } from "../../../../common/Constants";
+import { Country, State, City }  from 'country-state-city';
 
 @Component({
   selector: "app-user-types-owner",
@@ -21,8 +22,9 @@ import { Constants } from "../../../../common/Constants";
   styleUrls: ["./user-types-owner.page.scss"],
 })
 export class UserTypesOwnerPage extends BasePage {
-  public states: Array<IStateDto>;
+  public states: Array<any>;
   public selected: boolean = true;
+  public country: string = "";
   public streetAddress1: string = "";
   public streetAddress2: string = "";
   public city: string = "";
@@ -31,6 +33,8 @@ export class UserTypesOwnerPage extends BasePage {
   public isPublicProperty: boolean = false;
   public title: string = 'Owner Registration';
   public isOwner: boolean = false;
+  public cities: any[] = [];
+  public countries = Country.getAllCountries();
 
   private _isEditingProperty: boolean = false;
   private _selectedProperty: any;
@@ -140,6 +144,7 @@ export class UserTypesOwnerPage extends BasePage {
       address.City = this.city;
       address.State = this.state;
       address.Zip = this.zip;
+      address.country = this.country;
       customProperty.IsPublicProperty = this.isPublicProperty;
 
       customProperty.Address = address;
@@ -179,5 +184,14 @@ export class UserTypesOwnerPage extends BasePage {
       return this._constants.UserTypes.Vendor;
     }
     throw new Error('User type not found');
+  }
+
+  onCountryChange(event: any){
+    const states = State.getStatesOfCountry(event.target.value);
+    this.states = states.map((state)=> ({Name: state.name, Abbv: state.isoCode}));
+  }
+
+  onStateChange(event){
+    this.cities = City.getCitiesOfState(this.country, this.state);
   }
 }
