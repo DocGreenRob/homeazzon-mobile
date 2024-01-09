@@ -111,18 +111,20 @@ ion-menu{
 		min-height: calc(100vh - 389px);
 		height: auto;
 		margin-top: -5px;
+		margin-bottom: 50px; 
 
 		.home-list{
 			display: inline-flex;
-			padding: 12px 0px 12px 16px;
+			padding: 12px 16px;
 			align-items: center;
 			gap: 16px;
 			border: 1px solid #E3E7EC;
 			background: #F6F8FE;
 			width: 100%;
+			overflow: hidden;
 			span{
 				color: var(--additional-colors-black, #111);
-				text-align: right;
+				text-align: left;
 				font-family: Plus Jakarta Sans;
 				font-size: 16px;
 				font-style: normal;
@@ -130,6 +132,9 @@ ion-menu{
 				line-height: 24px;
 				letter-spacing: 0.08px;
 				white-space: nowrap;
+				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 	}
@@ -183,7 +188,12 @@ ion-menu{
 	}
 	.design-btn{
 		width: 100%;
-		margin-top: 82px;
+		margin-top: 0;
+		position: fixed;
+		bottom: -1px;
+		padding: 15px 28px 15px 26px;
+		background: white;
+		right: 0;
 		ion-button{
 			display: flex;
 			justify-content: center;
