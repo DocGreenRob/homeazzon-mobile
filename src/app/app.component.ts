@@ -302,6 +302,8 @@ export class AppComponent extends BasePage {
   async stopScan(): Promise<void> {
     await BarcodeScanner.stopScan();
     document.body.classList.remove("qrscanner"); 
-    BarcodeScanner.prepare();
+    // BarcodeScanner.prepare();
+    this.router.navigate(['dashboard']);
+    // this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this.constants.ToastColorBad);
   }
 }
