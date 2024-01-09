@@ -65,19 +65,12 @@
   /* For unavailable options */
   .unavailable {
     opacity: 0.5 !important; /* Half transparent */
-    color: #999 !important; /* Lighter text color */
-  }
-
-  .unavailable::after {
-    content: " - Coming Soon" !important;
-    font-style: italic !important;
-    color: #888 !important;
   }
 
   .coming-soon{
       display: block;
       margin-bottom: 20px;
-      color: #999999;
+      color: #111;
       font-style: italic;
   }
 
