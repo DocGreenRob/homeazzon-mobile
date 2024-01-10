@@ -156,58 +156,52 @@ ion-menu{
 			}
 		}
 	}
-	.logout{
-		width: 100%;
-		margin-top: 300px;
-		padding-bottom: 20px;
-		ion-button{
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border: 1px solid #526EA0;
-			--background:  #FEFEFE;
-			--border-radius: 0;
-			height: 60px;
-			color:  #526EA0;
-			font-family: Plus Jakarta Sans;
-			font-size: 16px;
-			font-style: normal;
-			font-weight: 500;
-			line-height: 24px; 
-			letter-spacing: 0.08px;
-			--background-hover:  #FEFEFE;
-			--background-activated:  #FEFEFE;
-			--background-focused:  #FEFEFE;
-			--background-hover:  #FEFEFE;
-		}
-		@media only screen and (max-width: 400px) {
-				margin-top: 150px;
+
+}
+.logout{
+	width: 100%;
+	ion-button{
+		display: flex;
+		margin: 20px;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid #526EA0;
+		--background:  #FEFEFE;
+		--border-radius: 0;
+		height: 60px;
+		color:  #526EA0;
+		font-family: Plus Jakarta Sans;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 24px; 
+		letter-spacing: 0.08px;
+		--background-hover:  #FEFEFE;
+		--background-activated:  #FEFEFE;
+		--background-focused:  #FEFEFE;
+		--background-hover:  #FEFEFE;
 	}
-	}
-	.design-btn{
-		width: 90%;
-		margin-top: 82px;
-		position: fixed;
-		bottom: 50px;
-		ion-button{
-			white-space: normal;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			--background: #526EA0;
-			--border-radius: 0;
-			color: #FFF;
-			font-family: Plus Jakarta Sans;
-			font-size: 14px;
-			font-style: normal;
-			font-weight: 600;
-			line-height: 24px;
-			letter-spacing: 0.07px;
-			margin: 0;
-			height: 60px;
-			--background-activated:#526EA0;
-			--background-focused:#526EA0;
-			--background-hover: #526EA0;
-		}
+}
+.design-btn{
+	width: 100%;
+	ion-button{
+		white-space: normal;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		--background: #526EA0;
+		--border-radius: 0;
+		color: #FFF;
+		font-family: Plus Jakarta Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 24px;
+		letter-spacing: 0.07px;
+		margin: 20px;
+		height: 60px;
+		--background-activated:#526EA0;
+		--background-focused:#526EA0;
+		--background-hover: #526EA0;
 	}
 }
