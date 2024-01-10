@@ -257,7 +257,7 @@ export class ItemEditPage extends BasePage {
         this.TempActiveItem.QrCode = qrCode;
       }
     } else {
-      BarcodeScanner.checkPermission().then((status) => {
+      BarcodeScanner.checkPermission(({ force: true })).then((status) => {
         if (status.neverAsked && Capacitor.isNativePlatform()) {
           Camera.requestPermissions()
             .then((permission: PermissionStatus) => {
