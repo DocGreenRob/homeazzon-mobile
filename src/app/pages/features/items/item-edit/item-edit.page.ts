@@ -8,7 +8,7 @@ import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner
 import { Camera, CameraResultType, CameraSource, PermissionStatus, Photo } from "@capacitor/camera";
 // import { Chooser, ChooserOptions } from "@awesome-cordova-plugins/chooser/ngx";
 import { FilePicker, PickFilesOptions, PickFilesResult } from '@capawesome/capacitor-file-picker';
-import { AlertController, LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
+import { AlertController, LoadingController, MenuController, ModalController, NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { ActiveItem } from "src/app/models/ActiveItem";
 import { AssetInfoDto } from "src/app/models/dto/AssetInfoDto";
@@ -31,6 +31,7 @@ import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
 import { Capacitor } from "@capacitor/core";
 import { LocalStorageService } from "@app/services/local-storage.service";
+import { ImageviewComponent } from "../imageview/imageview.component";
 
 @Component({
   selector: "app-item-edit",
@@ -71,7 +72,8 @@ export class ItemEditPage extends BasePage {
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
     public override router: Router,
-    public override storageService: LocalStorageService
+    public override storageService: LocalStorageService,
+    private modalController: ModalController
   ) {
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
@@ -255,7 +257,7 @@ export class ItemEditPage extends BasePage {
         this.TempActiveItem.QrCode = qrCode;
       }
     } else {
-      BarcodeScanner.checkPermission().then((status) => {
+      BarcodeScanner.checkPermission(({ force: true })).then((status) => {
         if (status.neverAsked && Capacitor.isNativePlatform()) {
           Camera.requestPermissions()
             .then((permission: PermissionStatus) => {
@@ -343,7 +345,16 @@ export class ItemEditPage extends BasePage {
       })
     }
   }
-
+  async openImageModal() {
+    const modal = await this.modalController.create({
+      component: ImageviewComponent,
+      componentProps: {
+        imageSrc: this.TempActiveItem?.Image,
+      },
+    });
+    return await modal.present();
+  }
+  
   public override async launchFileExplorer() {
     const accept: PickFilesOptions = {
       types: ["application/msword",
