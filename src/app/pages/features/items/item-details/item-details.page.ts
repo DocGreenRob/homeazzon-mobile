@@ -35,6 +35,7 @@ import { CommunicatorService } from "./../../../../services/communicator/communi
 import { MetattachService } from "./../../../../services/metattach/metattach.service";
 import { ITagDto } from "../../../../models/dto/interfaces/ITagDto";
 import { LocalStorageService } from "@app/services/local-storage.service";
+import { ImageviewComponent } from "../imageview/imageview.component";
 
 @Component({
   selector: "app-item-details",
@@ -804,6 +805,17 @@ export class ItemDetailsPage extends BasePage {
       this.storageService.delete("ActiveItem");
       this.router.navigate(["items"]);
     }
+  }
+
+  async openImageModal(path: string) {
+    console.log('open image modal');
+    const modal = await this.modalCtrl.create({
+      component: ImageviewComponent,
+      componentProps: {
+        imageSrc: path,
+      },
+    });
+    return await modal.present();
   }
 
   viewProfileLineItems() {
