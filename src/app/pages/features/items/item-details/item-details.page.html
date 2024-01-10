@@ -60,23 +60,22 @@ IsMetattachment == true ?
         <div *ngIf="ActiveItem.Type != 'Bookmarks'" class="img-container">
           <!--TODO: needs to be dynamic-->
           <div *ngIf="IsMetattachment" class="image">
-            <pinch-zoom class="pinch-img">
+            <!-- <pinch-zoom class="pinch-img"> -->
               <img style="object-fit: cover !important; width:100% !important; height:auto !important;"
-                   src="{{ ActiveAttachmentItem?.Image}}" />
-            </pinch-zoom>
+                   src="{{ ActiveAttachmentItem?.Image}}"  (click)="openImageModal(ActiveAttachmentItem?.Image)" />
+            <!--  -->
           </div>
           <div *ngIf="!IsMetattachment" class="image">
             <ng-container *ngIf="ActiveItem.Type == 'Amazon Products' || ActiveItem.Type == 'Google Shopping Products'">
-              <pinch-zoom>
+              
                 <img style="object-fit: cover !important; width:100% !important; height:auto !important;"
-                     [src]="ActiveItem?.Image" />
-              </pinch-zoom>
+                     [src]="ActiveItem?.Image" (click)="openImageModal(ActiveItem?.Image)" />
             </ng-container>
             <ng-container *ngIf="ActiveItem.IsProfileItemImage || (ActiveItem.Type === 'DigiDoc' || ActiveItem.Type === 'Pics & Files' && imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType)) || ActiveItem.Type == 'Google Shopping Products'">
-              <pinch-zoom class="pinch-img">
+              
                 <img style="object-fit: cover !important; width:100% !important; height:auto !important;"
-                     [src]="ActiveItem?.Image" />
-              </pinch-zoom>
+                     [src]="ActiveItem?.Image" (click)="openImageModal(ActiveItem?.Image)" />
+              
             </ng-container>
             <ng-container *ngIf="(!ActiveItem.IsProfileItemImage && (ActiveItem.Type == 'DigiDoc' || ActiveItem.Type == 'Pics & Files') && !imageFileTypes.list.includes(ActiveItem.DigiDoc.ContentType))">
               <document-viewer [docUrl]="ActiveItem?.Image"
@@ -425,10 +424,10 @@ IsMetattachment ?
     <div style="padding-left:1em !important; padding-right:1em !important;" *ngIf="ActiveItem?.Type == 'Qr Codes' || ActiveAttachmentItem?.Type == 'Qr Codes'
 					   || ActiveItem?.Type == 'Bookmark' || ActiveAttachmentItem?.Type == 'Bookmark'">
       <div class="main-view" (click)="browse()">
-        <pinch-zoom>
+        
           <img *ngIf="ActiveItem?.Type == 'Qr Code' || ActiveAttachmentItem?.Type == 'Qr Code'"
                src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fqrcode.svg?alt=media&token=d2f01c14-b5b7-4248-b666-0fcd6584c0a6" />
-        </pinch-zoom>
+        
       </div>
       <div class="spacer-oneRem"></div>
       <h3 *ngIf="ActiveItem?.Type != 'Bookmark'" style="color:blue !important;">Link:</h3>

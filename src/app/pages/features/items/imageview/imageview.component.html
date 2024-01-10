@@ -1,0 +1,9 @@
+<!-- item-image-modal.component.html -->
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()"> <ion-icon slot="icon-only" name="close" color="light"></ion-icon> </ion-button>
+      </ion-buttons>
+  <ion-content class="ion-padding">
+    <pinch-zoom class="pinch-img">
+    <img [src]="imageSrc" alt="Item Image" class="full-image">
+  </pinch-zoom>
+  </ion-content>
