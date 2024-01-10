@@ -17,7 +17,7 @@
       <ion-col size="12" *ngFor="let bedroom of bedRooms">
         <div class="fieldWrapper">
           <ion-label>{{bedroom.Name}}</ion-label>
-          <app-number-input [(value)]="bedroom.Quantity" (click)="clearIfZero(bedroom)"></app-number-input>
+          <app-number-input [(value)]="bedroom.Quantity"></app-number-input>
         </div>
       </ion-col>
     </ion-row>
