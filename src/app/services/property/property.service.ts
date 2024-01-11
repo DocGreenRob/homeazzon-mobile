@@ -14,6 +14,11 @@ export class PropertyService extends baseService {
   async updateAddress(property: IPropertyDto) {
     return this.post(`/property/address`, property).toPromise();
   }
+  // getProfileItems(profileId: number, userType: string): Observable<any> {
+  //   // Implementation of the service method
+  //   // Make sure you return an Observable
+  //   return this.http.get<any>(`your-api-endpoint/${profileId}/${userType}`);
+  // }
 
   /*
   * This method is used to update the property address information to make suggestions

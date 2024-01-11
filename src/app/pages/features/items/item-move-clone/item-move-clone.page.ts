@@ -41,6 +41,7 @@ export class ItemMoveClonePage extends BasePage {
   public actionText: string = "";
   public assetInfo: any;
   public action: any;
+  public profileItemsLog :any ;
 
   constructor(
     public override navController: NavController,
@@ -70,7 +71,18 @@ export class ItemMoveClonePage extends BasePage {
   override ngOnInit() {
     this.activeRoute.queryParams.subscribe((params) => {
       this.action = params["action"];
+      
     });
+    
+
+    // this.propertyService.getProfileItems(selectedProfileID, userType)
+    // .then((profileItems: any) => {
+    //   this.profileItems = profileItems;
+    //   // Rest of your existing code to manipulate the data
+    // });
+
+     
+ 
   }
 
   ionViewDidEnter() {
@@ -136,6 +148,37 @@ export class ItemMoveClonePage extends BasePage {
     }
   }
 
+  getUserShortName(userType: string) {
+    var imageName: string = '';
+
+    if (userType.toLowerCase().indexOf('tradesman') > -1) {
+      imageName = 'tradesman';
+    }
+    if (userType.toLowerCase().indexOf('owner') > -1) {
+      imageName = 'owner';
+    }
+    if (userType.toLowerCase().indexOf('developer') > -1) {
+      imageName = 'developer';
+    }
+    if (userType.toLowerCase().indexOf('appraiser') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('architect') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('bank') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('realtor') > -1) {
+      imageName = 'realtor';
+    }
+    if (userType.toLowerCase().indexOf('vendor') > -1) {
+      imageName = 'vendor';
+    }
+
+    return imageName;
+  }
+
   public async profileItemPanelNextClick() {
     let selectedProfileID = [];
     for (let p of this.selectedProperties) {
@@ -158,13 +201,13 @@ export class ItemMoveClonePage extends BasePage {
       cssClass: "my-loading-class",
     });
     this.loading.present();
-
-    await this.propertyService
-      .getProfileItemsByIds(selectedProfileID, this.User.Types[0].Name)
-      .then((profileItems: any) => {
+    const userType = this.getUserShortName(this.User.Types[0].Name);
+    await this.propertyService.getProfileItems(selectedProfileID, userType)
+      .then(
+        (profileItems: any) => {
         console.log("ProfileItems = ", profileItems);
-
-        for (let p of this.selectedProperties) {
+     
+       for (let p of this.selectedProperties) {
           for (let propertyProfileItem of p.ProfileItems) {
             for (let resultProfileItem of profileItems) {
               if (resultProfileItem.Id === propertyProfileItem.Id) {
@@ -186,6 +229,7 @@ export class ItemMoveClonePage extends BasePage {
         console.log(error);
         this.loading.dismiss();
       });
+
   }
 
   public async propertyPanelNextClick() {
@@ -368,4 +412,5 @@ export class ItemMoveClonePage extends BasePage {
       }
     }
   }
+ 
 }

@@ -555,4 +555,5 @@ export class ItemAddPage extends BasePage {
     this.IsWishlist = false;
     this.IsSuggest = false;
   }
+
 }

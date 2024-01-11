@@ -31,6 +31,9 @@ import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
 import { Capacitor } from "@capacitor/core";
 import { LocalStorageService } from "@app/services/local-storage.service";
+// import { NavController } from "@ionic/angular";
+
+
 
 @Component({
   selector: "app-item-edit",
@@ -71,13 +74,15 @@ export class ItemEditPage extends BasePage {
     private profileItemImageService: ProfileItemImageService,
     private location: Location,
     public override router: Router,
-    public override storageService: LocalStorageService
+    public override storageService: LocalStorageService,
+    
   ) {
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
   }
 
   override ngOnInit() { }
+
 
   public async ionViewDidEnter() {
     console.log("ionViewDidEnter ItemEditPage");
@@ -1057,4 +1062,9 @@ export class ItemEditPage extends BasePage {
   override selectInput(event) {
     event.target.select();
   }
+  profileItemPanelNextClick() {
+    this.router.navigate(['/items/item-edit']);
+  }
+  
+
 }
