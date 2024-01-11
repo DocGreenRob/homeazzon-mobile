@@ -1,17 +1,100 @@
 .formWrapper{
-	min-height: calc(100vh - 249px);
-}
-.formTitle{
-	align-items: flex-start !important;
-    padding-left: 11px;
-	ion-text{
-		white-space: nowrap;
+	min-height: calc(100vh - 156px);
+	padding: 23px 24px 30px;
+	.set-property-title{
+		text-align: left;
+		margin-bottom: 22px;
+		ion-text{
+			color: var(--Grayscale-Grayscale-70, #78828A);
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 22px;
+			letter-spacing: 0.07px;
+		}
 	}
+	.property-wrapper{
+		div:nth-last-child(2) .property-content{
+			border-bottom: 0;
+		}
+		.custom-room-wrapper{
+			color: #78828A;
+			font-family: Plus Jakarta Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 22px;
+			letter-spacing: 0.07px;
+			margin-top: 20px;
+			display: block;
+			margin-bottom: 5px;
+		}
+	.property-content{
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		height: 46px;
+		border-bottom: 1px solid #E3E7EC;
+		margin-bottom: 10px;
+		ion-label{
+			color: #232B42;
+			font-family: Plus Jakarta Sans;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 24px;
+			letter-spacing: 0.08px;
+		}
+		.counter-wrapper{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 17px;
+			.counter-value{
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				background: #D1D8DD;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				span{
+					color: #232B42;
+					text-align: center;
+					font-family: Plus Jakarta Sans;
+					font-size: 16px;
+					font-style: normal;
+					font-weight: 700;
+					line-height: normal;
+				}
+			}
+			.greater-value{
+				background: #232B42 !important;
+				span{
+					color: #fff !important;
+				}
+			}
+		}
+
+	}
+
+	.add-custom-wrapper{
+		padding: 0 !important;
+		margin-top: 20px !important;
+		ion-button.custom-room-btn{
+			border: 1px solid #232B42 !important;
+			--background: #F6F8FE !important;
+			color: #232B42 !important;
+		}
+	}
+}
 }
 
 .btnWrapper{
 	margin-top: 0px !important;
     gap: 13px !important;
-    padding: 0px 24px 54px;
+    padding: 0px 24px 30px;
 }
 
