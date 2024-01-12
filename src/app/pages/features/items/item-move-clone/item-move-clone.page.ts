@@ -42,6 +42,7 @@ export class ItemMoveClonePage extends BasePage {
   public assetInfo: any;
   public action: any;
   public profileItemsLog :any ;
+ public profileItemsData: any;
 
   constructor(
     public override navController: NavController,
@@ -71,8 +72,12 @@ export class ItemMoveClonePage extends BasePage {
   override ngOnInit() {
     this.activeRoute.queryParams.subscribe((params) => {
       this.action = params["action"];
+      // this.updateProfileItems();
       
     });
+  
+  
+  
     
 
     // this.propertyService.getProfileItems(selectedProfileID, userType)
@@ -207,7 +212,21 @@ export class ItemMoveClonePage extends BasePage {
         (profileItems: any) => {
         console.log("ProfileItems = ", profileItems);
      
-       for (let p of this.selectedProperties) {
+      //  for (let p of this.selectedProperties) {
+      //     for (let propertyProfileItem of p.ProfileItems) {
+      //       for (let resultProfileItem of profileItems) {
+      //         if (resultProfileItem.Id === propertyProfileItem.Id) {
+      //           propertyProfileItem.LineItems = resultProfileItem.Area.LineItems;
+      //           propertyProfileItem.selected = false;
+      //           for (let lineItem of propertyProfileItem.LineItems) {
+      //             lineItem.selected = false;
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+
+        for (let p of this.selectedProperties) {
           for (let propertyProfileItem of p.ProfileItems) {
             for (let resultProfileItem of profileItems) {
               if (resultProfileItem.Id === propertyProfileItem.Id) {
@@ -215,6 +234,7 @@ export class ItemMoveClonePage extends BasePage {
                 propertyProfileItem.selected = false;
                 for (let lineItem of propertyProfileItem.LineItems) {
                   lineItem.selected = false;
+                  this.profileItemsData = this.selectedProperties
                 }
               }
             }
