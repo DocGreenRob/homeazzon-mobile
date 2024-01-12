@@ -27,7 +27,7 @@
     <div class="fieldWrapper">
       <ion-label>Country</ion-label>
       <div class="inputField">
-        <ion-select [(ngModel)]="country" placeholder="Select Country" (ionChange)="onCountryChange($event)">
+        <ion-select [(ngModel)]="country" placeholder="Select Country" (ionChange)="onCountryChange()">
           <ion-select-option [value]="0">Select Country</ion-select-option>
           <ion-select-option [value]="country.isoCode" *ngFor="let country of countries; let i = index">
             {{country.name}}
@@ -40,11 +40,10 @@
       <div class="fieldWrapper">
         <ion-label>State</ion-label>
         <div class="inputField">
-          <ion-select [(ngModel)]="state" (ionChange)="onStateChange($event)" placeholder="Select State">
+          <ion-select [(ngModel)]="state" (ionChange)="onStateChange()" placeholder="Select State">
             <ion-select-option [value]="0">Select State</ion-select-option>
-            <ion-select-option [value]="state.Abbv"
-                               *ngFor="let state of states; let i = index">
-              {{state.Name}}
+            <ion-select-option [value]="state.isoCode" *ngFor="let state of states; let i = index">
+              {{state.name}}
             </ion-select-option>
           </ion-select>
           <img class="iconSelect"

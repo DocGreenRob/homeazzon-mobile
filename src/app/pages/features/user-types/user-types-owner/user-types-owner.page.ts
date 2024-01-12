@@ -6,10 +6,8 @@ import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
 import { MenuController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { IAddressDto } from "../../../../models/dto/interfaces/IAddressDto";
-import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
 import { CommunicatorService } from "../../../../services/communicator/communicator.service";
 import { FeaturesService } from "../../../../services/features/features.service";
-import { StaticDataProvider } from "../../../../services/static-data/static-data";
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
@@ -50,7 +48,6 @@ export class UserTypesOwnerPage extends BasePage {
     public override userTypesService: UserTypesService,
     public override featuresService: FeaturesService,
     public override inAppBrowser: InAppBrowser,
-    private staticDataService: StaticDataProvider,
     private location: Location,
     public override storageService: LocalStorageService,
     private storage: Storage) {
@@ -58,13 +55,6 @@ export class UserTypesOwnerPage extends BasePage {
     console.log("ionViewDidLoad UserTypesOwnerPage");
 
     this._constants = new Constants();
-
-    this.staticDataService.getStates().then(
-      (x: Array<IStateDto>) => {
-        this.states = x;
-      },
-      (err) => { }
-    );
 
     this.updateTitle();
   }
@@ -102,10 +92,14 @@ export class UserTypesOwnerPage extends BasePage {
 
       this.streetAddress1 = this._selectedProperty.StreetAddress1;
       this.streetAddress2 = this._selectedProperty.StreetAddress2;
+      this.country = this._selectedProperty.Country;
       this.city = this._selectedProperty.City;
       this.state = this._selectedProperty.State;
       this.zip = this._selectedProperty.Zip;
       this.isPublicProperty = this._selectedProperty.IsPublicProperty;
+
+      this.onCountryChange();
+      this.onStateChange();
     }
   }
 
@@ -186,12 +180,11 @@ export class UserTypesOwnerPage extends BasePage {
     throw new Error('User type not found');
   }
 
-  onCountryChange(event: any){
-    const states = State.getStatesOfCountry(event.target.value);
-    this.states = states.map((state)=> ({Name: state.name, Abbv: state.isoCode}));
+  onCountryChange(){
+    this.states = State.getStatesOfCountry(this.country);
   }
 
-  onStateChange(event){
+  onStateChange(){
     this.cities = City.getCitiesOfState(this.country, this.state);
   }
 }
