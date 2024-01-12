@@ -19,10 +19,12 @@ export class NumberInputComponent implements OnInit {
   }
 
   changeValue(type: string = '') {
-    if (type === 'increment') {
+    if (type === 'increment' && this.value < 100) {
       this.value++;
-    } else if (type === 'decrement') {
+    } else if (type === 'decrement' && this.value > 0) {
       this.value--;
+    } else if (type === 'decrement') {
+      this.value = 0;
     }
 
     this.valueChange.emit(this.value);

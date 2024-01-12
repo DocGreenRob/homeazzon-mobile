@@ -51,8 +51,9 @@
     <div class="fieldWrapper">
       <ion-label>Zip</ion-label>
       <div class="inputField">
-        <ion-input inputmode="numeric"
-                   type="number"
+        <ion-input
+                   type="text" 
+                   inputmode="numeric"
                    maxlength="5"
                    (keyup.enter)="continue()"
                    [(ngModel)]="zip"

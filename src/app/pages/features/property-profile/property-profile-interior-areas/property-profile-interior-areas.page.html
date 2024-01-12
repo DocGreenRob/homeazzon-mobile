@@ -17,7 +17,6 @@
         <span class="custom-room-wrapper" *ngIf="interior.customRoom">{{interior.customRoom}}</span>
         <div class="property-content">
           <ion-label>{{interior.Name}}</ion-label>
-          <!-- <app-number-input [(value)]="interior.Quantity" (click)="clearIfZero(interior)"></app-number-input> -->
           <div class="counter-wrapper">
             <span class="counter-icons" ><img src="assets/icon/minus-square.svg" (click)="changeValue('decrement', interior)"></span>
             <span [class]="interior.Quantity === 0 ? 'counter-value' : 'counter-value greater-value'">
