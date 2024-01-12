@@ -17,8 +17,8 @@
     <div class="spacer-oneRem" *ngIf="CurrentView == 'Room'"></div>
 
     <div class="fieldWrapper" *ngIf="CurrentView == 'Room'">
-      <ion-label *ngIf="CurrentView == 'Room'">What room?</ion-label>
-      <div class="inputField" *ngIf="CurrentView == 'Room'">
+      <ion-label>What room?</ion-label>
+      <div class="inputField">
         <ion-select [(ngModel)]="selectedProfileItem"
                     [compareWith]="compareFn"
                     (ionChange)="getLineitems()"
