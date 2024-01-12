@@ -1062,9 +1062,7 @@ export class ItemEditPage extends BasePage {
   override selectInput(event) {
     event.target.select();
   }
-  profileItemPanelNextClick() {
-    this.router.navigate(['/items/item-edit']);
-  }
+
   
 
 }
