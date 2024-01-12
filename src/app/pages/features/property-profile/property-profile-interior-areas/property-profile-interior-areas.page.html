@@ -19,11 +19,11 @@
           <ion-label>{{interior.Name}}</ion-label>
           <!-- <app-number-input [(value)]="interior.Quantity" (click)="clearIfZero(interior)"></app-number-input> -->
           <div class="counter-wrapper">
-            <span ><img src="assets/icon/minus-square.svg" (click)="changeValue('decrement', interior)"></span>
+            <span class="counter-icons" ><img src="assets/icon/minus-square.svg" (click)="changeValue('decrement', interior)"></span>
             <span [class]="interior.Quantity === 0 ? 'counter-value' : 'counter-value greater-value'">
               <span>{{interior.Quantity}}</span>
             </span>
-            <span ><img src="assets/icon/Plus-square.svg" (click)="changeValue('increment', interior)"></span>            
+            <span class="counter-icons"><img src="assets/icon/Plus-square.svg" (click)="changeValue('increment', interior)"></span>            
           </div>
         </div>
       </div>
