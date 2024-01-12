@@ -6,14 +6,13 @@ import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
 import { MenuController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { IAddressDto } from "../../../../models/dto/interfaces/IAddressDto";
-import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
 import { CommunicatorService } from "../../../../services/communicator/communicator.service";
 import { FeaturesService } from "../../../../services/features/features.service";
-import { StaticDataProvider } from "../../../../services/static-data/static-data";
 import { UserTypesService } from "../../../../services/user-types/user-types.service";
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
 import { Constants } from "../../../../common/Constants";
+import { Country, State, City }  from 'country-state-city';
 
 @Component({
   selector: "app-user-types-owner",
@@ -21,8 +20,9 @@ import { Constants } from "../../../../common/Constants";
   styleUrls: ["./user-types-owner.page.scss"],
 })
 export class UserTypesOwnerPage extends BasePage {
-  public states: Array<IStateDto>;
+  public states: Array<any>;
   public selected: boolean = true;
+  public country: string = "";
   public streetAddress1: string = "";
   public streetAddress2: string = "";
   public city: string = "";
@@ -31,6 +31,8 @@ export class UserTypesOwnerPage extends BasePage {
   public isPublicProperty: boolean = false;
   public title: string = 'Owner Registration';
   public isOwner: boolean = false;
+  public cities: any[] = [];
+  public countries = Country.getAllCountries();
 
   private _isEditingProperty: boolean = false;
   private _selectedProperty: any;
@@ -46,7 +48,6 @@ export class UserTypesOwnerPage extends BasePage {
     public override userTypesService: UserTypesService,
     public override featuresService: FeaturesService,
     public override inAppBrowser: InAppBrowser,
-    private staticDataService: StaticDataProvider,
     private location: Location,
     public override storageService: LocalStorageService,
     private storage: Storage) {
@@ -54,13 +55,6 @@ export class UserTypesOwnerPage extends BasePage {
     console.log("ionViewDidLoad UserTypesOwnerPage");
 
     this._constants = new Constants();
-
-    this.staticDataService.getStates().then(
-      (x: Array<IStateDto>) => {
-        this.states = x;
-      },
-      (err) => { }
-    );
 
     this.updateTitle();
   }
@@ -98,10 +92,14 @@ export class UserTypesOwnerPage extends BasePage {
 
       this.streetAddress1 = this._selectedProperty.StreetAddress1;
       this.streetAddress2 = this._selectedProperty.StreetAddress2;
+      this.country = this._selectedProperty.Country;
       this.city = this._selectedProperty.City;
       this.state = this._selectedProperty.State;
       this.zip = this._selectedProperty.Zip;
       this.isPublicProperty = this._selectedProperty.IsPublicProperty;
+
+      this.onCountryChange();
+      this.onStateChange();
     }
   }
 
@@ -140,6 +138,7 @@ export class UserTypesOwnerPage extends BasePage {
       address.City = this.city;
       address.State = this.state;
       address.Zip = this.zip;
+      address.country = this.country;
       customProperty.IsPublicProperty = this.isPublicProperty;
 
       customProperty.Address = address;
@@ -179,5 +178,13 @@ export class UserTypesOwnerPage extends BasePage {
       return this._constants.UserTypes.Vendor;
     }
     throw new Error('User type not found');
+  }
+
+  onCountryChange(){
+    this.states = State.getStatesOfCountry(this.country);
+  }
+
+  onStateChange(){
+    this.cities = City.getCitiesOfState(this.country, this.state);
   }
 }
