@@ -5,19 +5,20 @@
 	}
 }
 .formWrapper{
-	height: 100%;
+	min-height: calc(100% - 92px);
 	padding: 32px 24px 36px !important;
 	.fieldWrapper{
 		margin-bottom: 32px !important;
 	}
-	.btnWrapper{
-		margin-top: 178px !important;
-		.search-btn{
-			--background: #00C566;;
-			color: var(--additional-colors-white, #FFF);
-			--background-activated: #00C566;
-			--background-focused: #00C566;
-			--background-hover: #00C566;
-		}
+}
+.btnWrapper{
+	margin-top: 0px !important;
+	padding: 0 24px 36px;
+	.search-btn{
+		--background: #00C566;;
+		color: var(--additional-colors-white, #FFF);
+		--background-activated: #00C566;
+		--background-focused: #00C566;
+		--background-hover: #00C566;
 	}
 }
