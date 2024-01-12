@@ -9,10 +9,13 @@
     <div *ngFor="let userType of userTypesAnynomousType; let i = index;"
          [ngClass]="getCssClass(userType.Name)"
          (click)="chooseRole(userType.Id)">
+      
+      <label [ngClass]="getCssClass(userType.Name)" *ngIf="i == 2"> - Coming Soon</label>
       <div class="roles">
         <ion-checkbox *ngIf="isUserTypeEnabled(userType.Name)"></ion-checkbox>
         <ion-text>{{userType.Name}}</ion-text>
       </div>
+      
     </div>
   </div>
 </div>

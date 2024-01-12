@@ -111,18 +111,20 @@ ion-menu{
 		min-height: calc(100vh - 389px);
 		height: auto;
 		margin-top: -5px;
+		margin-bottom: 50px; 
 
 		.home-list{
 			display: inline-flex;
-			padding: 12px 0px 12px 16px;
+			padding: 12px 16px;
 			align-items: center;
 			gap: 16px;
 			border: 1px solid #E3E7EC;
 			background: #F6F8FE;
 			width: 100%;
+			overflow: hidden;
 			span{
 				color: var(--additional-colors-black, #111);
-				text-align: right;
+				text-align: left;
 				font-family: Plus Jakarta Sans;
 				font-size: 16px;
 				font-style: normal;
@@ -130,6 +132,9 @@ ion-menu{
 				line-height: 24px;
 				letter-spacing: 0.08px;
 				white-space: nowrap;
+				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 	}
@@ -137,9 +142,10 @@ ion-menu{
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		justify-content: center;
+		justify-content: flex-start;
 		gap: 32px;
 		width: 100%;
+		height: 100%;
 		.list{
 			display: flex;
 			align-items: center;
@@ -158,7 +164,6 @@ ion-menu{
 	}
 	.logout{
 		width: 100%;
-		margin-top: 300px;
 		padding-bottom: 20px;
 		ion-button{
 			display: flex;
@@ -182,12 +187,14 @@ ion-menu{
 		}
 	}
 	.design-btn{
-		width: 90%;
-		margin-top: 82px;
+		width: 100%;
+		margin-top: 0;
 		position: fixed;
-		bottom: 50px;
+		bottom: -1px;
+		padding: 15px 28px 15px 26px;
+		background: white;
+		right: 0;
 		ion-button{
-			white-space: normal;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -208,3 +215,60 @@ ion-menu{
 		}
 	}
 }
+.left-sidebar{
+	height: 100vh;
+}
+.container {
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	overflow: hidden;
+	position: fixed;
+	display: flex;
+	z-index: -1;
+  }
+  
+  .square {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+	transition: 0.3s;
+  }
+  
+  .square:after {
+	content: '';
+	top: 0;
+	display: block;
+	padding-bottom: 100%;
+  }
+  
+  .square>div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+  }
+  
+  .surround-cover {
+	box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.5);
+  }
+  
+  .barcode-scanner--area--container {
+	width: 80%;
+	max-width: min(500px, 80vh);
+	margin: auto;
+  }
+  
+  .barcode-scanner--area--outer {
+	display: flex;
+	border-radius: 1em;
+  }
+  
+  .barcode-scanner--area--inner {
+	width: 100%;
+	border: 2px solid #fff;
+	box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 0.5),
+		inset 0px 0px 2px 1px rgb(0 0 0 / 0.5);
+	border-radius: 1rem;
+  }
