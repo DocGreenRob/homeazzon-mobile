@@ -286,4 +286,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   goBack() {
 		this.navController.back();
 	}
+  showExterior(){
+    this.isSkipExteriorAreas=!this.isSkipExteriorAreas;
+  }
 }

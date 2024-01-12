@@ -226,10 +226,4 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   goBack() {
     this.navController.back();
   }
-
-  public clearIfZero(item) {
-    if (item.TotalStories == undefined || item.TotalStories == null || item.TotalStories == 0) {
-      item.TotalStories = '';
-    }
-  }
 }
