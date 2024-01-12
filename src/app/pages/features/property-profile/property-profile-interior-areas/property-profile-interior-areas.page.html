@@ -9,21 +9,31 @@
 
 <div class="container-wrapper" #content>
   <div class="formWrapper">
-    <div class="formTitle">
-      <ion-text>What about common areas?</ion-text>
+    <div class="set-property-title">
+      <ion-text>Set your property</ion-text>
     </div>
+    <div class="property-wrapper">
       <div *ngFor="let interior of interiors">
-        <div class="fieldWrapper">
+        <span class="custom-room-wrapper" *ngIf="interior.customRoom">{{interior.customRoom}}</span>
+        <div class="property-content">
           <ion-label>{{interior.Name}}</ion-label>
-          <app-number-input [(value)]="interior.Quantity"></app-number-input>
+          <div class="counter-wrapper">
+            <span class="counter-icons" ><img src="assets/icon/minus-square.svg" (click)="changeValue('decrement', interior)"></span>
+            <span [class]="interior.Quantity === 0 ? 'counter-value' : 'counter-value greater-value'">
+              <span>{{interior.Quantity}}</span>
+            </span>
+            <span class="counter-icons"><img src="assets/icon/Plus-square.svg" (click)="changeValue('increment', interior)"></span>            
+          </div>
         </div>
       </div>
+      <div class="btnWrapper add-custom-wrapper">
+        <ion-button class="custom-room-btn" (click)="addRoom()">       
+        Add Custom Room
+      </ion-button>
+      </div>
+    </div>
   </div>
 	<div class="btnWrapper">
-		  <ion-button class="addRoombtn" (click)="addRoom()">
-			<img src="assets/icon/addbtn.svg" alt="">	
-			Add a room
-		</ion-button>
 		<ion-button class="continuebtn" (click)="continue()">
 		  Continue</ion-button
 		>
