@@ -42,7 +42,6 @@ export class ItemMoveClonePage extends BasePage {
   public assetInfo: any;
   public action: any;
   public profileItemsLog :any ;
- public profileItemsData: any;
 
   constructor(
     public override navController: NavController,
