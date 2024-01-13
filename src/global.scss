@@ -106,7 +106,9 @@
 .qrscanner .scanner-ui { display: block; }
 .qrscanner .scanner-hide { visibility: hidden; }
 
-
+body{
+  background: #F6F8FE;
+}
 body,
 ion-title,
 ion-card-title,

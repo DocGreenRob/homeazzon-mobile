@@ -35,6 +35,8 @@ import { LocalStorageService } from '@app/services/local-storage.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage extends BasePage {
+  private _constants = new Constants();
+
   // const
   public data: IGrid;
   public manageView: string = 'rooms';
@@ -57,8 +59,6 @@ export class DashboardPage extends BasePage {
   commonAreas: Array<any> = new Array();
   bedRoomAreas: Array<any> = new Array();
   bathroomAreas: Array<any> = new Array();
-
-  private _constants: Constants;
 
   activePropertyBedrooms: Array<any> = new Array();
   activePropertyBathrooms: Array<any> = new Array();
