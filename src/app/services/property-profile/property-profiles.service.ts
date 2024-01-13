@@ -178,7 +178,7 @@ export class PropertyProfilesService extends baseService {
 	  This method is for Get Property by ID
 	  */
   async getPropertyById(propertyId) {
-    return await this.get("/property" + propertyId).toPromise();
+    return await this.get("/property" +"/"+ propertyId).toPromise();
   }
 
   async getPropertiesById(propertyIds) {

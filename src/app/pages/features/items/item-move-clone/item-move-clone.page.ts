@@ -285,9 +285,9 @@ export class ItemMoveClonePage extends BasePage {
       cssClass: "my-loading-class",
     });
     this.loading.present();
-
+    const userType = this.getUserShortName(this.User.Types[0].Name);
     await this.propertyService
-      .getProfileItems(this.selectedProfileItemID, this.User.Types[0].Name)
+      .getProfileItems(this.selectedProfileItemID, userType)
       .then((response: any) => {
         console.log("getProfileItems", response);
         this.isShowLineItem = true;
