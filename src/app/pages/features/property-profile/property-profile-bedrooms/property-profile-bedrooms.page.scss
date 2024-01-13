@@ -1,6 +1,8 @@
 .formWrapper{
-	height: 100% !important;
-	.btnWrapper{
-		margin-top: 314px !important;
-	}
+	min-height: calc(100% - 127px);
+    padding-bottom: 37px !important;
+}
+.btnWrapper{
+	padding: 0 24px 71px;
+    margin-top: 0px !important;
 }

@@ -13,8 +13,7 @@
 		</div>
 		<div class="roleWrapper">
 			<div class="toggleWrapper">
-				<ion-label>Skip</ion-label>
-				<ion-toggle [(ngModel)]="isSkipExteriorAreas"></ion-toggle>
+				<ion-label (click)="showExterior()">Skip</ion-label>
 			</div>
 
 			<div *ngIf="!isSkipExteriorAreas" >

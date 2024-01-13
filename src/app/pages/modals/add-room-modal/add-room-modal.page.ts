@@ -17,6 +17,7 @@ export class AddRoomModalPage implements OnInit {
 	constants: Constants = new Constants();
 	areaType: string;
 	uiType: string;
+	addNewRoom: boolean = false;
 
 	constructor(public navCtrl: NavController,
 		public navParams: NavParams,
@@ -29,6 +30,7 @@ export class AddRoomModalPage implements OnInit {
 		console.log(this.navParams.data);
 		this.areas = this.navParams.get("areas");
 		this.areaType = this.navParams.get("areaTypeName");
+		this.addNewRoom = this.navParams.get("addNewRoom");
 
 		if (this.navParams.get("UiType")) {
 			this.uiType = this.navParams.get("UiType");
