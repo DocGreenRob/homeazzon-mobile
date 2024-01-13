@@ -70,6 +70,7 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
 
   showEditView() {
     this.view = "add-edit";
+    this.doesContactExist = true;
   }
 
   // TODO: I modified the logic thinking it was broke, also there were some missing stored procs in API Manager

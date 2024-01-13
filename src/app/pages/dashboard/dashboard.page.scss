@@ -155,7 +155,6 @@ ion-content {
 .main-wrapper {
   background: #F6F8FE;
   padding: 10px 24px 0;
-  height: 100vh;
   overflow-y: auto;
 
   ion-content {
@@ -163,7 +162,7 @@ ion-content {
   }
 
   :is(.wrap-rooms, .wrap-exteriors) {
-    margin-top: 35px;
+    margin-top: 16px;
 
     .inner-wrap {
       display: flex;
@@ -338,7 +337,7 @@ ion-content {
     align-items: center;
     justify-content: space-between !important;
     flex-direction: column;
-    min-height: calc(100vh - 233px) !important;
+    min-height: calc(100vh - 245px) !important;
     .icon-grid-container{
       width: 100%;
       icon-grid{
