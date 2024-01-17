@@ -60,6 +60,8 @@ export class DashboardPage extends BasePage {
   bedRoomAreas: Array<any> = new Array();
   bathroomAreas: Array<any> = new Array();
 
+  //private _constants: Constants;
+
   activePropertyBedrooms: Array<any> = new Array();
   activePropertyBathrooms: Array<any> = new Array();
   activePropertyInteriorAreas: Array<any> = new Array();
@@ -67,6 +69,7 @@ export class DashboardPage extends BasePage {
 
   private _selectedPropertySubscription: any;
   private _loading: any;
+  //private _constants: any;
 
   // publics
   totalBedroomsSqFt: number = 0;

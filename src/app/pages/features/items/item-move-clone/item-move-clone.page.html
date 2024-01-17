@@ -10,19 +10,16 @@
 		<span class="title-with-img">
 			<span *ngIf="!isHideSegments">{{actionText}} - {{ActiveItem?.Name}}</span>
 		</span>
-		<!-- <ion-col size="3"> -->
 			<div class="header-icon">
 				<img src="assets/icon/building-fill.svg"  (click)="openMenu()">
 				<span  (click)="openMenu()">{{ActiveProperty?.Name}}</span>
 			</div>
-		<!-- </ion-col> -->
 	</div>
 </ion-header>
 
 
 <div class="container-wrapper">
 	<ng-container>
-		<!-- <div class="spacer-halfRem"></div> -->
 		<div *ngIf="action==_constants.Actions.move">
 
 			<div class="formWrapper select-main-wrapper">
@@ -78,8 +75,8 @@
 				<div class="toggleWrapper">
 					
 					<!-- <ion-col size="3"> -->
-						
-						<ion-toggle  name="SelectAll"  (ionChange)="onSelectAllToggle($event)"></ion-toggle>
+						<ion-label>Select All</ion-label>
+						<ion-toggle  name="SelectAll" (ionChange)="onSelectAllToggle($event)"></ion-toggle>
 					<!-- </ion-col> -->
 				</div>
 				<div class="roles" *ngFor="let property of properties">
@@ -107,14 +104,10 @@
 						<ion-label>{{property.Name}}</ion-label>
 						<ion-toggle  name="SelectAll" [(ngModel)]="property.selected" (ionChange)="onPropertySelectAllToggle(propertyIndex)"></ion-toggle>	
 					</div>
-						<div class="roles" *ngFor="let profileItem of property.ProfileItems">
-							<!-- <ion-col size="2"> -->
-								<ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Id}}" [(ngModel)]="profileItem.selected"></ion-checkbox>
-							<!-- </ion-col> -->
-							<!-- <ion-col size="10"> -->
-								<ion-text>{{profileItem.Name}}</ion-text>
-							<!-- </ion-col> -->
-							</div>
+						<div class="roles" *ngFor="let profileItem of property.Profiles">
+							<ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Area.Id}}" [(ngModel)]="profileItem.selected"></ion-checkbox>
+							<ion-text>{{profileItem.Area.Name}}</ion-text>
+						</div>
 					
 				</div>
 				<div class="btnWrapper">
@@ -122,55 +115,42 @@
 					</ion-col> -->
 					<!-- <ion-col size="3"> -->
 						<ion-button class="continuebtn" (click)="profileItemPanelNextClick()">
+							<!-- <a routerLink="/items/item-edit">Next</a> -->
 							Next
+
 						</ion-button>
+						
 					<!-- </ion-col> -->
 				</div>
 			</div>
+			<div *ngIf="isShowLineItem">
+				<div *ngFor="let property of selectedProperties;let propertyIndex = index">
+					<h4>{{property.Name}}</h4>
+					<div class="roleWrapper" *ngFor="let profileItem of property.Profiles;let profileItemIndex = index">
+						<div class="toggleWrapper">
+							<ion-label>{{profileItem.Area.Name}}</ion-label>
+							<ion-toggle  name="SelectAll" [(ngModel)]="profileItem.selected" (ionChange)="onProfileItemSelectAllToggle(propertyIndex, profileItemIndex)"></ion-toggle>	
+						</div>
+						<div class="roles" *ngFor="let lineItem of profileItem.LineItems">
+							<ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Area.Id+ '_' + lineItem.Id}}" [(ngModel)]="lineItem.selected"></ion-checkbox>
+							<ion-text>{{lineItem.Name}}</ion-text>
+						</div>
+					</div>
+				</div>
+				<div class="btnWrapper">
+					<ion-button color="secondary" block (click)="save()">
+						{{buttonText}}
+					</ion-button>
+				</div>
+			</div>
 		</div>
-
-			<ion-card *ngIf="isShowLineItem">
-				<ion-row *ngFor="let property of selectedProperties;let propertyIndex = index">
-					<ion-col size="12">
-						<ion-row>
-							<ion-col size="12">
-								<h4>{{property.Name}}</h4>
-							</ion-col>
-						</ion-row>
-						<ion-row *ngFor="let profileItem of property.ProfileItems;let profileItemIndex = index">
-							<ion-col size="1" >
-							</ion-col>
-							<ion-col size="11" >
-								<ion-row>
-									<ion-col size="12">
-										<p>{{profileItem.Name}}
-										<ion-toggle  name="SelectAll" color="tertiary" [(ngModel)]="profileItem.selected" (ionChange)="onProfileItemSelectAllToggle(propertyIndex,profileItemIndex)"></ion-toggle>
-										</p>
-									</ion-col>
-								</ion-row>
-								<ion-row *ngFor="let lineItem of profileItem.LineItems">
-									<ion-col size="1">
-										&nbsp;
-									</ion-col>
-									<ion-col size="1">
-										<ion-checkbox id="{{'s_'+ property.Id + '_' + profileItem.Id + '_' + lineItem.Id}}" [(ngModel)]="lineItem.selected"></ion-checkbox>
-									</ion-col>
-									<ion-col size="10">
-										<p>{{lineItem.Name}}</p>
-									</ion-col>
-								</ion-row>
-							</ion-col>
-						</ion-row>
-					</ion-col>
-				</ion-row>
-				<ion-row no-padding>
-					<ion-col size="9">
-					</ion-col>
-					<ion-col size="3">
-						<ion-button color="secondary" block (click)="save()"> {{buttonText}}</ion-button>
-					</ion-col>
-				</ion-row>
-			</ion-card>
 		</div>
 	</ng-container>
 </div>
+
+
+  
+
+
+  
+  

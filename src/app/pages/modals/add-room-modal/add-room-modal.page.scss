@@ -18,3 +18,62 @@
         --background-activated:#232B42;
     }
 }
+
+.add-new-room-wrapper{
+    .formWrapper{
+        width: 100%;
+        padding: 20px 20px 23px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 30px;
+        background:#fff !important;
+        .fieldWrapper{
+            margin-bottom: 0px !important;
+            .inputField{
+                background: #F6F8FE !important;
+                ion-input{
+                    color: #232B42 !important;
+                    --placeholder-opacity: 0.6 !important;
+                }
+            }
+            .field-border{
+                border: 1px solid #232B42;  
+            }
+        }
+        .modal-header{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ion-text{
+                color: #232B42;
+                font-family: Plus Jakarta Sans;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 17.522px;
+                letter-spacing: 0.1px;
+            }
+        }
+        .modal-btns{
+            padding: 0 !important;
+            gap: 10px !important;
+            ion-button.modal-cancel-btn{
+                border: 2px solid  #5681AA;
+                --background: #fff;
+                color: #5681AA !important;
+            }
+            ion-button.disabled-btn{
+                --background: #E2E8ED;
+                color: #788A9C;
+            }
+            ion-button.modal-add-btn{
+                --background: #00C566;;
+                color: #fff;
+            }
+            
+        }
+    }
+}
+

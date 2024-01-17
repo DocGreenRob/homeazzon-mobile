@@ -5,4 +5,5 @@
 	City: string;
 	State: string;
 	Zip: string;
+	country?: string;
 }

@@ -31,7 +31,10 @@ import { ILineitemDto } from "../../../../models/dto/interfaces/ILineItemDto";
 import { IProfileItemDto } from "../../../../models/dto/interfaces/IProfileItemDto";
 import { Capacitor } from "@capacitor/core";
 import { LocalStorageService } from "@app/services/local-storage.service";
+// import { NavController } from "@ionic/angular";
 import { ImageviewComponent } from "../imageview/imageview.component";
+
+
 
 @Component({
   selector: "app-item-edit",
@@ -80,6 +83,7 @@ export class ItemEditPage extends BasePage {
   }
 
   override ngOnInit() { }
+
 
   public async ionViewDidEnter() {
     console.log("ionViewDidEnter ItemEditPage");
@@ -1068,4 +1072,7 @@ export class ItemEditPage extends BasePage {
   override selectInput(event) {
     event.target.select();
   }
+
+  
+
 }

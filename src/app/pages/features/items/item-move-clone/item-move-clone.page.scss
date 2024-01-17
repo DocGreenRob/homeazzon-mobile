@@ -13,6 +13,17 @@
 	}
 }
 
+h4{
+	color: var(--additional-colors-black, #111);
+	font-feature-settings: 'clig' off, 'liga' off;
+	font-family: Poppins;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 28px;
+	letter-spacing: 0.15px;
+}
+
 .roleWrapper {
 
 	.toggleWrapper{
