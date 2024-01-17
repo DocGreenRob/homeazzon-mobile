@@ -36,7 +36,6 @@ import { LocalStorageService } from '@app/services/local-storage.service';
 })
 export class DashboardPage extends BasePage {
   private _constants = new Constants();
-  showHeader:boolean = true;
 
   // const
   public data: IGrid;
@@ -127,8 +126,6 @@ export class DashboardPage extends BasePage {
 
   async ionViewDidEnter() {
     this.resetState();
-    this.showHeader = false;
-
     if (this.IsFirstLoadCompleted === undefined
       || this.IsFirstLoadCompleted === null
       || this.IsFirstLoadCompleted === false) {
@@ -143,7 +140,6 @@ export class DashboardPage extends BasePage {
           await this.start();
           this.closeLoader();
         } catch (error) {
-          console.log('abid');
           this.AppInsights.trackEvent({
             name: 'LoadingProperties-Error',
             properties: [
@@ -161,7 +157,6 @@ export class DashboardPage extends BasePage {
 
       this.IsFirstLoadCompleted = true;
     } else {
-      this.showHeader = true;
       this.refreshPropertiesAsync();
     }
 
@@ -312,7 +307,6 @@ export class DashboardPage extends BasePage {
       complete: () => {
         if (this.IsFirstLoadCompleted !== true) {
           if (this._loading != undefined) {
-            this.showHeader = true;
             this._loading.dismiss();
           }
         }
@@ -617,7 +611,6 @@ export class DashboardPage extends BasePage {
       const allProps = forkJoin([userProperties]);
       allProps.subscribe({
         complete: () => {
-          this.showHeader = true;
           this.closeLoader()
         }
       });
