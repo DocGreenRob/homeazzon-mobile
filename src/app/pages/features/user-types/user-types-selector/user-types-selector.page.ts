@@ -126,27 +126,6 @@ export class UserTypesSelectorPage extends BasePage {
     }
   }
 
-  public getCssClass(userType: string) {
-    const userTypeName = this.getUserName(userType);
-
-    switch (userTypeName) {
-      case this._constants.UserTypes.Appraiser:
-      case this._constants.UserTypes.Architect:
-      case this._constants.UserTypes.Bank:
-      case this._constants.UserTypes.Developer:
-      case this._constants.UserTypes.Tradesman:
-      case this._constants.UserTypes.Vendor:
-      case this._constants.UserTypes.PrivateLabelUser:
-        return 'unavailable coming-soon';
-      case this._constants.UserTypes.Owner:
-      case this._constants.UserTypes.Realtor:
-      case this._constants.UserTypes.Renter:
-        return 'available';
-    }
-
-    return 'error';
-  }
-
   public isUserTypeEnabled(userType: string) {
     const userTypeName = this.getUserName(userType);
 
@@ -194,5 +173,36 @@ export class UserTypesSelectorPage extends BasePage {
       return this._constants.UserTypes.Vendor;
     }
     throw new Error('User type not found');
+  }
+
+  getImagePath(userType: string) {
+    var imageName: string = '';
+
+    if (userType.toLowerCase().indexOf('tradesman') > -1) {
+      imageName = 'tradesman';
+    }
+    if (userType.toLowerCase().indexOf('owner') > -1) {
+      imageName = 'owner';
+    }
+    if (userType.toLowerCase().indexOf('developer') > -1) {
+      imageName = 'developer';
+    }
+    if (userType.toLowerCase().indexOf('appraiser') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('architect') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('bank') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('realtor') > -1) {
+      imageName = 'realtor';
+    }
+    if (userType.toLowerCase().indexOf('vendor') > -1) {
+      imageName = 'vendor';
+    }
+
+    return `assets/icon/${imageName}.svg`;
   }
 }

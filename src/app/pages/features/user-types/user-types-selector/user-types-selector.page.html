@@ -1,18 +1,25 @@
 <ion-header>
-  <div class="roleHeader">
-    <span class="Role-title"> Choose a role </span>
+  <div class="header">
+    <span class="headerTitle"> Choose a role </span>
   </div>
 </ion-header>
 
 <div class="container-wrapper">
-  <div class="roleWrapper">
+  <div class="formWrapper">
     <div *ngFor="let userType of userTypesAnynomousType; let i = index;"
-         [ngClass]="getCssClass(userType.Name)"
-         (click)="chooseRole(userType.Id)">
-      <div class="roles">
-        <ion-checkbox *ngIf="isUserTypeEnabled(userType.Name)"></ion-checkbox>
-        <ion-text>{{userType.Name}}</ion-text>
+         (click)="chooseRole(userType.Id)"
+         [ngClass]="i > 1 ? 'disabled-content' : ''">
+      
+      <label class="coming-soon" *ngIf="i == 2"> - Coming Soon</label>
+      <div class="roles-content">
+        <div class="roles-content-title">
+					<span class="roles-img" >
+						<img [src]="getImagePath(userType.Name)">
+          </span>
+					<ion-text>{{userType.Name}}</ion-text>
+				</div>        
       </div>
+      
     </div>
   </div>
 </div>

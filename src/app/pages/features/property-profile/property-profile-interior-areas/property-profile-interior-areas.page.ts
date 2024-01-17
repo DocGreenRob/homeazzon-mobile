@@ -31,6 +31,7 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
   state: any;
   zip: any;
   constants: Constants;
+  customText: string = 'Your Custom Rooms';
   public isPrivateLabelBuildYourOwn: boolean;
   @ViewChild("content") private content: any;
 
@@ -114,15 +115,16 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
   async addRoom() {
     let addRoomModal = await this.modalController.create({
       component: AddRoomModalPage,
-      componentProps: { areas: this.interiors, areaTypeName: "Common Areas", UiType: "customHouse" },
-      cssClass: "small-modal",
+      componentProps: { areas: this.interiors, areaTypeName: "Common Areas", UiType: "customHouse", addNewRoom: true },
+      cssClass: "add-common-area-modal",
     });
     await addRoomModal.present();
     await addRoomModal.onDidDismiss().then((data: any) => {
       if (data != null && data != undefined) {
-        this.interiors.push({ Id: 0, Name: data.data.Name, Quantity: 1, SqFt: data.data.sqFt });
+        this.interiors.push({ Id: 0, Name: data.data.Name, Quantity: 1, SqFt: data.data.sqFt, customRoom: this.customText });
 
         setTimeout(() => {
+          this.customText = '';
           this.scrollToBottom();
         }, 1000);
       }
@@ -150,9 +152,13 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
     this.navController.back();
   }
 
-  public clearIfZero(item) {
-    if (item.Quantity == undefined || item.Quantity == null || item.Quantity == 0) {
-      item.Quantity = '';
-    }
+  changeValue(type: string = '', value) {
+    if (type === 'increment' && value.Quantity < 100) {
+      value.Quantity++;
+    } else if (type === 'decrement' && value.Quantity > 0) {
+      value.Quantity--;
+    } else if (type === 'decrement') {
+      value.Quantity = 0;
+    };
   }
 }

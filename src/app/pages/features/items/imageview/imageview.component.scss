@@ -1,0 +1,28 @@
+// item-image-modal.component.scss
+
+ion-buttons {
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+  }
+  
+  .full-image {
+    display: block;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%; /* Adjust as needed */
+    max-height: 100vh; /* Adjust as needed */
+  }
+  
+  ion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+
+  
