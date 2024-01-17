@@ -10,21 +10,21 @@
 <div class="container-wrapper">
   <div class="formWrapper">
     <div class="formTitle">
-      <ion-text>Good work! now lets set up your bedrooms.</ion-text>
+      <ion-text>Good work! Now lets set up your bedrooms.</ion-text>
     </div>
 
     <ion-row class="underLine">
       <ion-col size="12" *ngFor="let bedroom of bedRooms">
         <div class="fieldWrapper">
           <ion-label>{{bedroom.Name}}</ion-label>
-          <app-number-input [(value)]="bedroom.Quantity" (click)="clearIfZero(bedroom)"></app-number-input>
+          <app-number-input [(value)]="bedroom.Quantity"></app-number-input>
         </div>
       </ion-col>
     </ion-row>
-    <div class="btnWrapper">
-      <ion-button class="continuebtn" (click)="continue()">
-        Continue</ion-button
-      >
-    </div>
+  </div>
+  <div class="btnWrapper">
+    <ion-button class="continuebtn" (click)="continue()">
+      Continue</ion-button
+    >
   </div>
 </div>
