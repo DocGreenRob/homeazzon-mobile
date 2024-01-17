@@ -67,6 +67,7 @@ export class DashboardPage extends BasePage {
 
   private _selectedPropertySubscription: any;
   private _loading: any;
+  private _constants: any;
 
   // publics
   totalBedroomsSqFt: number = 0;

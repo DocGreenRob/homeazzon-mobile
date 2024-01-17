@@ -41,6 +41,7 @@ export class ItemMoveClonePage extends BasePage {
   public actionText: string = "";
   public assetInfo: any;
   public action: any;
+  public profileItemsLog :any ;
 
   constructor(
     public override navController: NavController,
@@ -70,7 +71,22 @@ export class ItemMoveClonePage extends BasePage {
   override ngOnInit() {
     this.activeRoute.queryParams.subscribe((params) => {
       this.action = params["action"];
+      // this.updateProfileItems();
+      
     });
+  
+  
+  
+    
+
+    // this.propertyService.getProfileItems(selectedProfileID, userType)
+    // .then((profileItems: any) => {
+    //   this.profileItems = profileItems;
+    //   // Rest of your existing code to manipulate the data
+    // });
+
+     
+ 
   }
 
   ionViewDidEnter() {
@@ -136,19 +152,50 @@ export class ItemMoveClonePage extends BasePage {
     }
   }
 
+  getUserShortName(userType: string) {
+    var imageName: string = '';
+
+    if (userType.toLowerCase().indexOf('tradesman') > -1) {
+      imageName = 'tradesman';
+    }
+    if (userType.toLowerCase().indexOf('owner') > -1) {
+      imageName = 'owner';
+    }
+    if (userType.toLowerCase().indexOf('developer') > -1) {
+      imageName = 'developer';
+    }
+    if (userType.toLowerCase().indexOf('appraiser') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('architect') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('bank') > -1) {
+      imageName = 'architect';
+    }
+    if (userType.toLowerCase().indexOf('realtor') > -1) {
+      imageName = 'realtor';
+    }
+    if (userType.toLowerCase().indexOf('vendor') > -1) {
+      imageName = 'vendor';
+    }
+
+    return imageName;
+  }
+
   public async profileItemPanelNextClick() {
-    let selectedProfileID = [];
+    let selectedProfileIDs = [];
     for (let p of this.selectedProperties) {
       //Remove non selected profiles.
-      var filtered = p.ProfileItems.filter(function (value, index, arr) {
+      var filtered = p.Profiles.filter(function (value, index, arr) {
         return value.selected;
       });
-      p.ProfileItems = filtered;
+      p.Profiles = filtered;
 
       //Array of selected PRofileItemIds
-      for (let prof of p.ProfileItems) {
+      for (let prof of p.Profiles) {
         if (prof.selected) {
-          selectedProfileID.push(prof.Id);
+          selectedProfileIDs.push(prof.Id);
         }
       }
     }
@@ -158,23 +205,25 @@ export class ItemMoveClonePage extends BasePage {
       cssClass: "my-loading-class",
     });
     this.loading.present();
-
-    await this.propertyService
-      .getProfileItemsByIds(selectedProfileID, this.User.Types[0].Name)
-      .then((profileItems: any) => {
-        console.log("ProfileItems = ", profileItems);
-
-        for (let p of this.selectedProperties) {
-          for (let propertyProfileItem of p.ProfileItems) {
-            for (let resultProfileItem of profileItems) {
-              if (resultProfileItem.Id === propertyProfileItem.Id) {
-                propertyProfileItem.LineItems = resultProfileItem.Area.LineItems;
+    const userType = this.getUserShortName(this.User.Types[0].Name);
+    for(let profileID of selectedProfileIDs) {
+      await this.propertyService.getProfileItems(profileID, userType)
+      .then(
+        (profileItem: any) => {
+        console.log("ProfileItems = ", profileItem);
+        console.log("selectedProperties = ", this.selectedProperties);
+     
+       for (let p of this.selectedProperties) {
+          for (let propertyProfileItem of p.Profiles) {
+            // for (let resultProfileItem of profileItem) {
+              if (profileItem.Id === propertyProfileItem.Id) {
+                propertyProfileItem.LineItems = profileItem.Area.LineItems;
                 propertyProfileItem.selected = false;
                 for (let lineItem of propertyProfileItem.LineItems) {
                   lineItem.selected = false;
                 }
               }
-            }
+            // }
           }
         }
 
@@ -186,6 +235,8 @@ export class ItemMoveClonePage extends BasePage {
         console.log(error);
         this.loading.dismiss();
       });
+    }
+
   }
 
   public async propertyPanelNextClick() {
@@ -207,34 +258,17 @@ export class ItemMoveClonePage extends BasePage {
       .getPropertiesById(selectedPropertyIDs)
       .then((properties: any) => {
         console.log("SeletedProperties = ", properties);
-        //this.selectedPropertyUserTypeID = property.UserTypeId;
-        //this.profileItems = [];
-        //for (let Profiles of property.Profiles) {
-        //    for (let profileItem of Profiles.ProfileItems) {
-        //        this.profileItems.push(profileItem);
-        //    }
-        //}
-        this.selectedProperties = [];
-        //this.selectedProperties = properties;
-
         for (let property of properties) {
-          let prop: any = {};
-          prop.Id = property.Id;
-          prop.Name = property.Name;
-          prop.ProfileItems = [];
+          this.selectedPropertyUserTypeID = property.UserTypeId;
+          this.profileItems = [];
           for (let Profiles of property.Profiles) {
             for (let profileItem of Profiles.ProfileItems) {
-              let item: any = {};
-              item.Id = profileItem.Id;
-              item.Name = profileItem.Name;
-              //item.LineItems =profileItem.Area.LineItems;
-              item.selected = false;
-
-              prop.ProfileItems.push(item);
+                this.profileItems.push(profileItem);
             }
           }
-          this.selectedProperties.push(prop);
         }
+        this.selectedProperties = [];
+        this.selectedProperties = properties;
 
         this.loading.dismiss();
         this.isShowArea = true;
@@ -251,9 +285,9 @@ export class ItemMoveClonePage extends BasePage {
       cssClass: "my-loading-class",
     });
     this.loading.present();
-
+    const userType = this.getUserShortName(this.User.Types[0].Name);
     await this.propertyService
-      .getProfileItems(this.selectedProfileItemID, this.User.Types[0].Name)
+      .getProfileItems(this.selectedProfileItemID, userType)
       .then((response: any) => {
         console.log("getProfileItems", response);
         this.isShowLineItem = true;
@@ -284,7 +318,7 @@ export class ItemMoveClonePage extends BasePage {
           IsProxy: false,
           ProfileItems: new Array(),
         };
-        for (let profileItem of p.ProfileItems) {
+        for (let profileItem of p.Profiles) {
           let cloneProfileItemDto: CloneProfileItemDto = {
             ProfileItemId: profileItem.Id,
             LineItems: new Array(),
@@ -348,7 +382,7 @@ export class ItemMoveClonePage extends BasePage {
   public onPropertySelectAllToggle(index) {
     for (let [propIndex, p] of this.selectedProperties.entries()) {
       if (propIndex == index) {
-        for (let profileItem of p.ProfileItems) {
+        for (let profileItem of p.Profiles) {
           profileItem.selected = p.selected;
         }
       }
@@ -358,7 +392,7 @@ export class ItemMoveClonePage extends BasePage {
   public onProfileItemSelectAllToggle(propertyIndex, profileItemIndex) {
     for (let [propIndex, p] of this.selectedProperties.entries()) {
       if (propIndex == propertyIndex) {
-        for (let [profileIndex, profileItem] of p.ProfileItems.entries()) {
+        for (let [profileIndex, profileItem] of p.Profiles.entries()) {
           if (profileIndex == profileItemIndex) {
             for (let lineItem of profileItem.LineItems) {
               lineItem.selected = profileItem.selected;
@@ -368,4 +402,5 @@ export class ItemMoveClonePage extends BasePage {
       }
     }
   }
+ 
 }
