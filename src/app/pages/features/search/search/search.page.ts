@@ -176,6 +176,8 @@ export class SearchPage extends BasePage {
                 response.Area.LineItems.map((x) => {
                   this.lineitems.push({ Id: x.Id, Name: x.Name });
                 });
+
+              this.sortCategories();
               } else {
                 this.uxNotifierService.presentSimpleAlert("Something went wrong. Please return and try this page again...", "Error");
               }
@@ -194,6 +196,15 @@ export class SearchPage extends BasePage {
             console.log(error);
           });
     }
+  }
+
+  sortCategories(){
+    this.lineitems = [...new Map(this.lineitems.map(item => [item.Name, item])).values()];
+    this.lineitems.sort((a: any, b: any) => {
+      if (a.Name < b.Name) return -1;
+      if ( a.Name > b.Name) return 1;
+     return 0;
+    });
   }
 
   // sort
