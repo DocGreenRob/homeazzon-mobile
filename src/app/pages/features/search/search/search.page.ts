@@ -83,6 +83,12 @@ export class SearchPage extends BasePage {
   }
   override async ngOnInit() {
     console.log("ngOnInit SearchPage");
+    if(this.CurrentView !== 'Room'){
+      this.profileItems.forEach((item: any)=>{
+        this.selectedProfileItem = item;
+        this.getLineitems();
+      });
+    }
     //this.AppInsights.trackPageView({ name: 'SearchPage' });
   }
 
@@ -147,11 +153,13 @@ export class SearchPage extends BasePage {
 
   public async getLineitems() {
     if (this.selectedProfileItem) {
-      this._loading = await this.loadingController.create({
-        message: "getting lineitems...",
-        cssClass: "my-loading-class",
-      });
-      await this._loading.present();
+      if(this.CurrentView == 'Room'){
+        this._loading = await this.loadingController.create({
+          message: "getting lineitems...",
+          cssClass: "my-loading-class",
+        });
+        await this._loading.present();
+      };
 
       // TODO: This should be the usertype from the selected property
       const userTypeShortName = this.getUserName(this.User.Types[0].Name);
@@ -162,16 +170,19 @@ export class SearchPage extends BasePage {
             async (response: any) => {
               if (response && response != undefined) {
                 
-                this.lineitems = [];
-
+                if(this.CurrentView == 'Room'){
+                  this.lineitems = [];
+                }
                 response.Area.LineItems.map((x) => {
                   this.lineitems.push({ Id: x.Id, Name: x.Name });
                 });
+
+              this.sortCategories();
               } else {
                 this.uxNotifierService.presentSimpleAlert("Something went wrong. Please return and try this page again...", "Error");
               }
 
-              this._loading.dismiss();
+              this._loading?.dismiss();
             },
             (err) => {
               // debugger;
@@ -184,8 +195,16 @@ export class SearchPage extends BasePage {
           .catch((error) => {
             console.log(error);
           });
-    } else {
     }
+  }
+
+  sortCategories(){
+    this.lineitems = [...new Map(this.lineitems.map(item => [item.Name, item])).values()];
+    this.lineitems.sort((a: any, b: any) => {
+      if (a.Name < b.Name) return -1;
+      if ( a.Name > b.Name) return 1;
+     return 0;
+    });
   }
 
   // sort
