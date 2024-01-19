@@ -16,6 +16,7 @@ import { LocalStorageService } from "@app/services/local-storage.service";
 import { CompanyInformationService } from "../../../../services/company-information/company-information.service";
 import { Constants } from "../../../../common/Constants";
 import { ICompanyTypeDto } from "../../../../models/dto/interfaces/ICompanyTypeDto";
+import { Country, State, City }  from 'country-state-city';
 
 @Component({
   selector: "app-user-types-realtor",
@@ -23,7 +24,7 @@ import { ICompanyTypeDto } from "../../../../models/dto/interfaces/ICompanyTypeD
   styleUrls: ["./user-types-realtor.page.scss"],
 })
 export class UserTypesRealtorPage extends BasePage {
-  public states: Array<IStateDto>;
+  public states: Array<any>;
   selected: boolean = true;
   companyName: string = "";
   website: string = "";
@@ -34,6 +35,9 @@ export class UserTypesRealtorPage extends BasePage {
   city: string = "";
   state: any = 0;
   zip: string = "";
+  public country: string = "";
+  public cities: any[] = [];
+  public countries = Country.getAllCountries();
   public isEditingProperty: boolean = false;
 
   private _isEditingProperty: boolean = false;
@@ -59,13 +63,6 @@ export class UserTypesRealtorPage extends BasePage {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesRealtorPage");
     this._constants = new Constants();
-
-    this.staticDataService.getStates().then(
-      (x: Array<IStateDto>) => {
-        this.states = x;
-      },
-      (err) => { }
-    );
   }
 
   override async ngOnInit() {
@@ -97,7 +94,11 @@ export class UserTypesRealtorPage extends BasePage {
         this.streetAddress2 = x.StreetAddress2.trim();
         this.city = x.City.trim();
         this.state = x.State;
+        this.country = x.country;
         this.zip = x.Zip?.toString()?.trim() || "";
+
+        this.onCountryChange();
+        this.onStateChange();
       }).catch((err) => {
 
       });
@@ -156,6 +157,7 @@ export class UserTypesRealtorPage extends BasePage {
       realtor.Phone = this.businessPhone;
       realtor.StreetAddress1 = this.streetAddress1;
       realtor.StreetAddress2 = this.streetAddress2;
+      realtor.country = this.country;
       realtor.City = this.city;
       realtor.State = this.state;
       realtor.Zip = this.zip;
@@ -198,5 +200,13 @@ export class UserTypesRealtorPage extends BasePage {
 
   public close() {
     this.location.back();
+  }
+
+  onCountryChange(){
+    this.states = State.getStatesOfCountry(this.country);
+  }
+
+  onStateChange(){
+    this.cities = City.getCitiesOfState(this.country, this.state);
   }
 }
