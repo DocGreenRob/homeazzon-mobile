@@ -1,6 +1,6 @@
 <div style="height:2em;" *ngIf="platform.is('ios')"></div>
 <ion-app class="scanner-hide">
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane when="xl" contentId="main-content">
     <!-- Side Menu (top-left) -->
     <ion-menu contentId="main-content" type="overlay" side="start" menuId="mainMenu">
       <!-- <div style="height:2em;" *ngIf="platform.is('ios')"></div> -->
@@ -29,11 +29,10 @@
               <span>{{p.title}}</span>
             </div>
           </div>
-
+          <div class="logout" (click)="openPage({ url: 'logout' })">
+            <ion-button>Log Out</ion-button>
+          </div>
         </div>
-      </div>
-      <div class="logout" (click)="openPage({ url: 'logout' })">
-        <ion-button>Log Out</ion-button>
       </div>
     </ion-menu>
     <!-- Property Menu (top-right) -->
@@ -68,11 +67,10 @@
               <span> {{p.Name}}</span>
             </div>
           </div>
-
+          <div class="design-btn">
+            <ion-button (click)="designHome()">Add New Home</ion-button>
+          </div>
         </div>
-      </div>
-      <div class="design-btn">
-        <ion-button (click)="designHome()">Design/ Choose a new home</ion-button>
       </div>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

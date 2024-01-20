@@ -126,7 +126,6 @@ export class DashboardPage extends BasePage {
 
   async ionViewDidEnter() {
     this.resetState();
-
     if (this.IsFirstLoadCompleted === undefined
       || this.IsFirstLoadCompleted === null
       || this.IsFirstLoadCompleted === false) {
@@ -141,7 +140,6 @@ export class DashboardPage extends BasePage {
           await this.start();
           this.closeLoader();
         } catch (error) {
-          console.log('abid');
           this.AppInsights.trackEvent({
             name: 'LoadingProperties-Error',
             properties: [

@@ -12,4 +12,5 @@ export interface ICompanyInformationDto {
   State: string;
   Zip: string;
   Type: ICompanyTypeDto;
+  country: string;
 }
