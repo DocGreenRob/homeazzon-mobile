@@ -287,7 +287,7 @@ IsMetattachment ?
       </div>
       <br style="clear:both" />
       <!-- Row 3 -->
-      <div class="other-specifications-wrapper">
+      <div class="other-specifications-wrapper" *ngIf="hasOtherSpecifications">
         <ion-label class="other-specifications-label">Other Specifications:</ion-label>
         <div class="fields">
           <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Manufacturer != undefined
