@@ -1,12 +1,18 @@
 <ion-header>
 	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-		<div class="header-items">
-				<ion-button (click)="cancel()">
-					Cancel
-				</ion-button>
-				<span>{{this.ActiveItem.Name}}</span>
+	<div class="header-title-with-icon">
+		<span>
+			<img src="/assets/icon/Arrow - Left Square.svg" (click)="cancel()" />
+		</span>
+		<span class="title-with-img">
+			<span>{{this.ActiveItem.Name}}</span>
+		</span>
+		<div class="header-icon">
 		</div>
+	</div>
 </ion-header>
+
+
 
 <div class="container-wrapper">
 	<ng-container *ngIf="view!='send-email'">
@@ -19,8 +25,8 @@
 				<ion-button class="addRoombtn" (click)="showContactForm()">
 					Add +
 				</ion-button>
-				<ion-button class="continuebtn" *ngIf="view == 'read-only'" (click)="showEditView()">			
-						Edit	
+				<ion-button class="continuebtn" *ngIf="view == 'read-only'" (click)="showEditView()">
+					Edit
 				</ion-button>
 
 			</div>
@@ -29,7 +35,8 @@
 			<div class="fieldWrapper">
 				<ion-label>Current Contacts</ion-label>
 				<div class="inputField">
-					<ion-select [(ngModel)]="contactInformationId" required (ngModelChange)="onContactInformationChanged()">
+					<ion-select [(ngModel)]="contactInformationId" required
+						(ngModelChange)="onContactInformationChanged()">
 						<ion-select-option *ngFor="let contact of contacts" [value]="contact.Id">
 							{{contact.Name}}
 						</ion-select-option>
@@ -69,77 +76,84 @@
 				</div>
 			</div>
 		</div>
-		<div *ngIf="view == 'read-only' && doesContactExist">
+		<div *ngIf="view == 'read-only' && doesContactExist" style="padding: 20px;">
 			<ion-row>
 				<ion-col size="12">
-					<h1 class="mypad-green">
+					<ion-label class="grey-color">Name</ion-label>
+					<div class="non-bold-text-title">
 						{{contactInformation?.Name}}
-					</h1>
+					</div>
 				</ion-col>
 			</ion-row>
 			<ion-row *ngIf="contactInformation?.Phone !== undefined">
 				<ion-col size="12">
-					<h4>
+					<ion-label class="grey-color">Phone</ion-label>
+					<div class="non-bold-text">
 						{{contactInformation?.Phone}}
-					</h4>
+					</div>
 				</ion-col>
 			</ion-row>
 			<ion-row *ngIf="contactInformation?.Email !== undefined">
 				<ion-col size="12">
-					<h4>
+					<ion-label class="grey-color">Email</ion-label>
+					<div class="non-bold-text">
 						{{contactInformation?.Email}}
-					</h4>
+					</div>
 				</ion-col>
 			</ion-row>
-			<ion-row>
+			<ion-row *ngIf="contactInformation?.Website">
 				<ion-col size="12">
-					<h4>
+					<ion-label class="grey-color">Website</ion-label>
+					<div class="non-bold-text">
 						{{contactInformation?.Website}}
-					</h4>
+					</div>
 				</ion-col>
 			</ion-row>
-			<ion-row>
+			<ion-row *ngIf="contactInformation?.Notes">
 				<ion-col size="12">
-					<h5>
+					<ion-label class="grey-color">About</ion-label>
+					<div>
 						{{contactInformation?.Notes}}
-					</h5>
+					</div>
 				</ion-col>
 			</ion-row>
 		</div>
-		<ion-row *ngIf="doesContactExist">
-			<ion-col size="4">
+		<ion-row *ngIf="doesContactExist" style="padding: 20px;">
+			<ion-col size="3.5"
+				style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px; margin-right: 10px;">
 				<h1 class="mypad-green">
-					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fsms.svg?alt=media&token=0e0b78d9-5645-4b81-b60e-e0110848b0c3"
-						 class="left-icon" (click)="text()"
-						 style="margin-top: .5em !important; height: 1em !important;" />
+					<img src="assets/imgs/sms1.png" style="width: 0.8em !important; height: 0.8em !important;"
+						(click)="text()" />
 				</h1>
 			</ion-col>
-			<ion-col size="4">
+
+			<ion-col size="3.5"
+				style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px;">
 				<h1 class="mypad-green">
-					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fmobile-alt.svg?alt=media&token=508fc96e-55dd-4f9f-bb56-2b7ce156f745"
-						 class="left-icon" (click)="call()"
-						 style="margin-top: .5em !important; height: 1em !important;" />
+					<img src="assets/imgs/phone1.png" style="width: 0.8em !important; height: 0.8em !important;"
+						(click)="call()" />
 				</h1>
 			</ion-col>
-			<ion-col size="4">
+
+			<ion-col size="3.5"
+				style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px; margin-left: 10px;">
 				<h1 class="mypad-green">
-					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fmail-bulk.svg?alt=media&token=5c5e573d-78b2-42fe-9b30-6691b149d894"
-						 class="left-icon" (click)="email()"
-						 style="margin-top: .5em !important; height: 1em !important;" />
+					<img src="assets/imgs/email1.png" style="width: 0.8em !important; height: 0.8em !important;"
+						(click)="email()" />
 				</h1>
 			</ion-col>
 		</ion-row>
-		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'add-edit'" > 
-			<ion-button class="continuebtn"  (click)="saveContactInformation()">				
-					Save
+		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'add-edit'">
+			<ion-button class="continuebtn" (click)="saveContactInformation()">
+				Save
 			</ion-button>
 		</div>
 
 	</ng-container>
 	<ng-container *ngIf="view=='send-email'">
 		<div class="formWrapper send-mail-wrapper">
-		<form [formGroup]="sendEmailForm">
-			<!-- <ion-row> -->
+			<form [formGroup]="sendEmailForm">
+
 				<div class="fieldWrapper">
 					<ion-label>From</ion-label>
 					<div class="inputField">
@@ -168,14 +182,15 @@
 					</div>
 					<p class="ion-text-danger" *ngIf="Message.touched && Message.invalid">Required field</p>
 				</div>
-			<!-- </ion-row> -->
-		</form>
-	</div>
-	<div class="btnWrapper save-btn-wrapper"  *ngIf="view == 'send-email'">
-		<ion-button class="continuebtn" (click)="sendEmail()">
+			</form>
+		</div>
+		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'send-email'">
+			<ion-button class="continuebtn" (click)="sendEmail()">
 				Send
-		</ion-button>
-		
-	</div>
+			</ion-button>
+
+		</div>
 	</ng-container>
 </div>
+<tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
+	(barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>

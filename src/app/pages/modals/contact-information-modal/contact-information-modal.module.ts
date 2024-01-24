@@ -5,16 +5,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ContactInformationModalPageRoutingModule } from './contact-information-modal-routing.module';
-
 import { ContactInformationModalPage } from './contact-information-modal.page';
-
+import { ComponentsModule } from "../../../components/components.module";
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
 		ReactiveFormsModule,
-		ContactInformationModalPageRoutingModule
+		ContactInformationModalPageRoutingModule,
+		ComponentsModule
 	],
 	declarations: [ContactInformationModalPage]
 })
