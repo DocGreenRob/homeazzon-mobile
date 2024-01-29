@@ -292,7 +292,8 @@ const routes: Routes = [
   {
     path: 'master-bedroom-categories',
     loadChildren: () => import('./pages/features/category/master-bedroom-category/master-bedroom-category.module').then(m => m.MasterBedroomCategoryPageModule)
-  },  {
+  },
+  {
     path: 'authorize',
     loadChildren: () => import('./pages/features/suggestions/authorize/authorize.module').then( m => m.AuthorizePageModule)
   },
@@ -307,6 +308,10 @@ const routes: Routes = [
   {
     path: 'property-selector',
     loadChildren: () => import('./pages/features/property-profile/property-selector/property-selector.module').then( m => m.PropertySelectorPageModule)
+  },
+  {
+    path: 'shortlist',
+    loadChildren: () => import('./pages/features/shortlist/shortlist.module').then( m => m.ShortlistsModule)
   },
 
 ];
