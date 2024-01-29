@@ -801,6 +801,7 @@ export class BasePage implements OnInit {
   }
 
   selectInput(event) {
+    debugger;
     event.target.select();
   }
 

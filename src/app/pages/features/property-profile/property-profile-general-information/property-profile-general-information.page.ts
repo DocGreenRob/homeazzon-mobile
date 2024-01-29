@@ -208,6 +208,11 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
     }
   }
 
+  public selectInput2(event) {
+    debugger;
+    event.target.select();
+  }
+
   private finish(message: string) {
     this.isExistingLinkWithCustomer = false;
     this.isLinkWithCustomer = false;
