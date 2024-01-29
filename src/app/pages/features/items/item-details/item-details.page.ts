@@ -457,14 +457,17 @@ export class ItemDetailsPage extends BasePage {
 
     let a = this.ActiveItem;
 
-
-    if (a.AssetInfo.Manufacturer !== undefined && a.AssetInfo.Manufacturer !== null && a.AssetInfo.Manufacturer !== ""
-      || a.AssetInfo.Make !== undefined && a.AssetInfo.Make !== null && a.AssetInfo.Make !== ""
-      || a.AssetInfo.Model !== undefined && a.AssetInfo.Model !== null && a.AssetInfo.Model !== ""
-      || a.AssetInfo.SerialNumber !== undefined && a.AssetInfo.SerialNumber !== null && a.AssetInfo.SerialNumber !== ""
-      || a.AssetInfo.Size !== undefined && a.AssetInfo.Size !== null && a.AssetInfo.Size !== "") {
-      this.hasOtherSpecifications = true;
+    if (a.AssetInfo !== undefined && a.AssetInfo !== null) {
+      if (a.AssetInfo.Manufacturer !== undefined && a.AssetInfo.Manufacturer !== null && a.AssetInfo.Manufacturer !== ""
+        || a.AssetInfo.Make !== undefined && a.AssetInfo.Make !== null && a.AssetInfo.Make !== ""
+        || a.AssetInfo.Model !== undefined && a.AssetInfo.Model !== null && a.AssetInfo.Model !== ""
+        || a.AssetInfo.SerialNumber !== undefined && a.AssetInfo.SerialNumber !== null && a.AssetInfo.SerialNumber !== ""
+        || a.AssetInfo.Size !== undefined && a.AssetInfo.Size !== null && a.AssetInfo.Size !== "") {
+        this.hasOtherSpecifications = true;
+      }
     }
+
+
     /* Get assigned tags context*/
     this.artifactIndexService.getArtifactIndexTag(this.ActiveItem.Id).then((result: Array<ITagContextDto>) => {
       this.selectedTagItems = this.createTagsModel(result);
