@@ -1,20 +1,11 @@
 <ion-header>
-  <!-- <div style="border-bottom:2px solid whitesmoke !important;"> -->
-  <!--<primary-menu [type]="itemMenu"
-          [subTitle]="LineItem.Name"
-          [title]="ProfileItem?.Name"
-          [propertyName]="ActiveProperty?.Name"
-          [isViewLoaded]="isViewLoaded"
-          (_openMenuClickHandler)="openMenu()"></primary-menu>-->
   <div class="header-title-with-icon">
     <span>
-      <!-- <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee"
-        class="left-icon" (click)="close()" /> -->
       <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" (click)="close()">
     </span>
     <span class="title-with-img">
-      <span *ngIf="!isHideSegments">{{LineItem.Name}}</span>
-      <span *ngIf="isHideSegments">{{ProfileItem.Name}}</span>
+      <span *ngIf="!isHideSegments">{{LineItem.Name | slice:0:30}}</span>
+      <span *ngIf="isHideSegments">{{ProfileItem.Name | slice:0:30}}</span>
     </span>
     <!-- <ion-col size="3"> -->
     <div class="header-icon">
