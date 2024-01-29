@@ -1,40 +1,40 @@
-  <ion-header>
-    <div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
-      <div class="header-items">
-              <span>{{profileName}}</span>
-              <ion-button class="cancel-btn" (click)="close()">Cancel</ion-button>
-          </div>
+<ion-header>
+  <div class="header-items">
+    <span>{{profileName}}</span>
+    <ion-button class="cancel-btn" (click)="close()">Cancel</ion-button>
+  </div>
 </ion-header>
 <div class="container-wrapper">
-    <div class="formWrapper">
-        <div class="formTitle">
-                <ion-text>Name</ion-text>
-                <ion-text>Sq. Ft</ion-text>
-          </div>
-        <ion-row class="fieldWrapper" *ngFor="let profileItem of activeRooms">
-            <ion-col size="1"
-                     *ngIf="(User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == false) || User.IsPrivateLabelUser == false"
-                     (click)="deleteProfileItem(profileItem.Id)">
-                <img src="assets/icon/Delete.svg">
+  <div class="formWrapper">
+    <div class="formTitle">
+      <ion-text>Name</ion-text>
+      <ion-text>Sq. Ft</ion-text>
+    </div>
+    <ion-row class="fieldWrapper" *ngFor="let profileItem of activeRooms">
+      <ion-col size="1"
+               *ngIf="(User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == false) || User.IsPrivateLabelUser == false"
+               (click)="deleteProfileItem(profileItem.Id)">
+        <img src="assets/icon/Delete.svg">
       </ion-col>
       <ion-col size="7">
         <div class="inputField">
-                
+
           <ion-input [(ngModel)]="profileItem.Name" type="text" (focus)="selectInput($event)"></ion-input>
         </div>
       </ion-col>
-         <ion-col size="4">
-          <div class="inputField">
-            <ion-input [(ngModel)]="profileItem.SqFt" inputmode="numeric" type="number" (focus)="selectInput($event)"></ion-input>
-          </div>
-         </ion-col>
-            
-        </ion-row>
-      </div>
- 
+      <ion-col size="4">
+        <div class="inputField">
+          <ion-input [(ngModel)]="profileItem.SqFt" inputmode="numeric" type="number" (focus)="selectInput($event)"></ion-input>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </div>
+
   <div class="btnWrapper">
-            <ion-button (click)="addRoom()" class="addRoombtn" *ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
-              <img src="assets/icon/addicon.svg" alt="">
-              Add a room</ion-button>
-          <ion-button class="continuebtn" (click)="save()">Save</ion-button>
+    <ion-button (click)="addRoom()" class="addRoombtn" *ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
+      <img src="assets/icon/addicon.svg" alt="">
+      Add a room
+    </ion-button>
+    <ion-button class="continuebtn" (click)="save()">Save</ion-button>
   </div>

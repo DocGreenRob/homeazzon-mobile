@@ -889,7 +889,7 @@ export class ItemsPage extends BasePage {
       this.router.navigate(["profile-items"]);
     } else {
       this.LineItem = {} as ILineitemDto;
-      this.location.back();
+      this.router.navigate(["dashboard"]);
     }
   }
 
