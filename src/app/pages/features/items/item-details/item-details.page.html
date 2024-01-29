@@ -1,7 +1,5 @@
 <ion-header>
   <!--<primary-menu type="titleMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()" [title]="LineItem?.Name"></primary-menu>-->
-  <div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-
   <div class="header-title-with-icon">
     <span>
       <img src="/assets/icon/Arrow - Left Square.svg"
@@ -287,7 +285,7 @@ IsMetattachment ?
       </div>
       <br style="clear:both" />
       <!-- Row 3 -->
-      <div class="other-specifications-wrapper">
+      <div class="other-specifications-wrapper" *ngIf="hasOtherSpecifications">
         <ion-label class="other-specifications-label">Other Specifications:</ion-label>
         <div class="fields">
           <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Manufacturer != undefined

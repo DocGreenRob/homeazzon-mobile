@@ -1,7 +1,4 @@
 <ion-header>
-	<!--<primary-menu type="titleMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()" [title]="LineItem?.Name"></primary-menu>-->
-	<div class="top-ios-space" *ngIf="platform.is('ios')"></div>
-
 	<div class="header-title-with-icon">
 		<span>
 			<img src="/assets/icon/Arrow - Left Square.svg"
@@ -16,8 +13,6 @@
 			</div>
 	</div>
 </ion-header>
-
-
 <div class="container-wrapper">
 	<ng-container>
 		<div *ngIf="action==_constants.Actions.move">
