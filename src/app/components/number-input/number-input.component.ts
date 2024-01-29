@@ -10,7 +10,7 @@ export class NumberInputComponent implements OnInit {
   @Input() value: number = 0;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     if (!this.value) {
@@ -19,7 +19,7 @@ export class NumberInputComponent implements OnInit {
   }
 
   changeValue(type: string = '') {
-    if (type === 'increment' && this.value < 100) {
+    if (type === 'increment' && this.value < 100000) {
       this.value++;
     } else if (type === 'decrement' && this.value > 0) {
       this.value--;

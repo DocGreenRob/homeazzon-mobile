@@ -178,8 +178,6 @@ export class SearchPage extends BasePage {
                 });
 
               this.sortCategories();
-              } else {
-                this.uxNotifierService.presentSimpleAlert("Something went wrong. Please return and try this page again...", "Error");
               }
 
               this._loading?.dismiss();

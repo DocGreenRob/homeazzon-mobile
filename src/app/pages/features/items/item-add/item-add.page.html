@@ -1,7 +1,4 @@
 <ion-header>
-  <div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
-  <!-- <ion-toolbar color="white-background"> -->
-  <!-- <ion-row class="top-row"> -->
   <div [class]="view == 'SelectLineItems' ? 'header-items title-gap' : 'header-items'">
     <img src="assets/icon/Arrow - Left Square.svg" *ngIf="view == 'SelectLineItems'" (click)="back()">
     <span>

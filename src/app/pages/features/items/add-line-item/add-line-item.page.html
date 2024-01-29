@@ -1,41 +1,41 @@
 <ion-header>
-	<div class="top-ios-space" *ngIf="usersPlatform=='ios'"></div>
-		<div class="registration-header">
-					<img src="assets/icon/Close-Square-white.svg"  (click)="close()">
-			<div class="registration-title-wrapper">
-				<span class="registration-title">{{profileItem.Name}} Things</span>
-			</div>
-		</div>
+  <div class="registration-header">
+    <img src="assets/icon/Close-Square-white.svg" (click)="close()">
+    <div class="registration-title-wrapper">
+      <span class="registration-title">{{profileItem.Name}} Things</span>
+    </div>
+  </div>
 </ion-header>
 <div class="container-wrapper" #content>
-	<div class="formWrapper">
-		<div class="roleWrapper" *ngIf="uiType != 'customHouse'">
-				<div class="roles" *ngFor="let lineitem of allLineItems; let i=index">
-					<ion-checkbox [(ngModel)]="lineitem.IsChecked" mode="md"></ion-checkbox>
-					<ion-text [ngClass]="{'mypad-green': lineitem.IsChecked}" class="input-label">{{lineitem.Name}}
-					</ion-text>
-					<ion-buttons slot="end" *ngIf="lineitem.IsUserDefined">
-						<ion-button (click)="editLineItem(lineitem)">
-							<ion-badge color="warning">Edit</ion-badge>
-						</ion-button>
-						<ion-button (click)="deleteLineItem(lineitem)">
-							<ion-badge color="danger">
-								delete
-								<ion-icon slot="end" name="trash-outline" color="danger"></ion-icon>
-							</ion-badge>
-						</ion-button>
-					</ion-buttons>
-				</div>
-			</div>
-					<div class="btnWrapper">
-			<ion-button (click)="addLineItem()" class="addRoombtn"
-				*ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
-				<img src="../../../../../assets/icon/plus-icon.svg" alt="">
-				Add List Item
-		</ion-button>
-		<ion-button class="save-btn" (click)="saveLineItems()">
-			Save
-		</ion-button>
-		</div>
-	</div>
+  <div class="formWrapper">
+    <div class="roleWrapper" *ngIf="uiType != 'customHouse'">
+      <div class="roles" *ngFor="let lineitem of allLineItems; let i=index">
+        <ion-checkbox [(ngModel)]="lineitem.IsChecked" mode="md"></ion-checkbox>
+        <ion-text [ngClass]="{'mypad-green': lineitem.IsChecked}" class="input-label">
+          {{lineitem.Name}}
+        </ion-text>
+        <ion-buttons slot="end" *ngIf="lineitem.IsUserDefined">
+          <ion-button (click)="editLineItem(lineitem)">
+            <ion-badge color="warning">Edit</ion-badge>
+          </ion-button>
+          <ion-button (click)="deleteLineItem(lineitem)">
+            <ion-badge color="danger">
+              delete
+              <ion-icon slot="end" name="trash-outline" color="danger"></ion-icon>
+            </ion-badge>
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </div>
+    <div class="btnWrapper">
+      <ion-button (click)="addLineItem()" class="addRoombtn"
+                  *ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
+        <img src="../../../../../assets/icon/plus-icon.svg" alt="">
+        Add List Item
+      </ion-button>
+      <ion-button class="save-btn" (click)="saveLineItems()">
+        Save
+      </ion-button>
+    </div>
+  </div>
 </div>

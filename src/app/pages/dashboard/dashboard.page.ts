@@ -319,7 +319,7 @@ export class DashboardPage extends BasePage {
     await this.getInteriorAreas().then(
       (x) => {
         let bedRoomAreas = sessionStorage.getItem('bedroomAreas');
-        let commonAreas = null; //sessionStorage.getItem('commonAreas');
+        let commonAreas = sessionStorage.getItem('commonAreas');
         let bathroomAreas = sessionStorage.getItem('bathroomAreas');
 
         if (!bedRoomAreas) {
@@ -344,8 +344,6 @@ export class DashboardPage extends BasePage {
     this.propertyService
       .getAreaTypes('interior')
       .then((response: any) => {
-        console.log('abid are  interiorye typescs');
-        console.log(response);
         this.commonAreas = response;
         sessionStorage.setItem('commonAreas', JSON.stringify(this.commonAreas));
       })
