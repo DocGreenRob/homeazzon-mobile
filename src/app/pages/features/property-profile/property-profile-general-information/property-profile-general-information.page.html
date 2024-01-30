@@ -37,11 +37,7 @@
         <div class="fieldWrapper">
           <ion-label>Square Footage</ion-label>
           <div class="inputField">
-            <ion-input type="text"
-                       placeholder="0 Sq Ft"
-                       [(ngModel)]="property.SqFt"
-                       required
-                       (focus)="selectInput($event)"></ion-input>
+            <app-number-input [(value)]="property.SqFt"></app-number-input>
           </div>
         </div>
       </ion-col>

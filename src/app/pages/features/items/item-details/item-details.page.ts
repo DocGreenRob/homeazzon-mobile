@@ -50,6 +50,7 @@ export class ItemDetailsPage extends BasePage {
   public videoUrl: SafeResourceUrl;
   public imageFileTypes = ImageFileTypes;
   public docFileTypes = DocumentFileTypes;
+  public hasOtherSpecifications: boolean = false;
   _sanitizedUrl: any;
 
   /*For Tags Feature*/
@@ -454,13 +455,26 @@ export class ItemDetailsPage extends BasePage {
         break;
     }
 
+    let a = this.ActiveItem;
+
+    if (a.AssetInfo !== undefined && a.AssetInfo !== null) {
+      if (a.AssetInfo.Manufacturer !== undefined && a.AssetInfo.Manufacturer !== null && a.AssetInfo.Manufacturer !== ""
+        || a.AssetInfo.Make !== undefined && a.AssetInfo.Make !== null && a.AssetInfo.Make !== ""
+        || a.AssetInfo.Model !== undefined && a.AssetInfo.Model !== null && a.AssetInfo.Model !== ""
+        || a.AssetInfo.SerialNumber !== undefined && a.AssetInfo.SerialNumber !== null && a.AssetInfo.SerialNumber !== ""
+        || a.AssetInfo.Size !== undefined && a.AssetInfo.Size !== null && a.AssetInfo.Size !== "") {
+        this.hasOtherSpecifications = true;
+      }
+    }
+
+
     /* Get assigned tags context*/
     this.artifactIndexService.getArtifactIndexTag(this.ActiveItem.Id).then((result: Array<ITagContextDto>) => {
       this.selectedTagItems = this.createTagsModel(result);
     });
   }
 
-  public handleResult() {}
+  public handleResult() { }
 
   public edit() {
     this.router.navigate(["item-edit"]);
@@ -739,7 +753,7 @@ export class ItemDetailsPage extends BasePage {
           }
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   }
 
   public viewOrEditAttachment() {
@@ -775,7 +789,7 @@ export class ItemDetailsPage extends BasePage {
     // delete the attachment
     if (this.IsMetattachment) {
       await this.attachmentService.deleteAttachment(this.ActiveAttachment.Id).then(
-        (x) => {},
+        (x) => { },
         (err) => {
           this.uxNotifierService.showToast("Attachment was not deleted!", this._constants.ToastColorBad);
         }
@@ -839,19 +853,19 @@ export class ItemDetailsPage extends BasePage {
     artifactIndexTagDto.ArtifactIndexId = this.ActiveItem.Id;
 
     // if data.value is a string
-		if(typeof(data.value) === "string"){
-			// this is a new tag so add it to the DB first, 
-			// then we will have the TagContextId to save it properly
-			let _:ITagDto = {} as ITagDto;
-			_.Name = data.value;
-			await this.tagService.createTag(_).then((x) => {
-				artifactIndexTagDto.TagContextId = x;
-			}).catch((err) => {
+    if (typeof (data.value) === "string") {
+      // this is a new tag so add it to the DB first, 
+      // then we will have the TagContextId to save it properly
+      let _: ITagDto = {} as ITagDto;
+      _.Name = data.value;
+      await this.tagService.createTag(_).then((x) => {
+        artifactIndexTagDto.TagContextId = x;
+      }).catch((err) => {
 
-			});
-		}else{
-			artifactIndexTagDto.TagContextId = data.value;
-		}
+      });
+    } else {
+      artifactIndexTagDto.TagContextId = data.value;
+    }
 
     this.artifactIndexService.insertArtifactIndexTag(artifactIndexTagDto).then(
       (x: any) => {

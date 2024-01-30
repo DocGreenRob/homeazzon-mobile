@@ -99,7 +99,7 @@ export class ItemEditPage extends BasePage {
     } else {
       this.TempActiveItem = this.ActiveAttachmentItem;
     }
-    debugger;
+    
     if (this._isFromItemAddPage) {
       console.log(this._isFromItemAddPage, "abid")
       console.log("abid you hit it with atahir")
@@ -349,7 +349,8 @@ export class ItemEditPage extends BasePage {
       })
     }
   }
-  async openImageModal() {
+
+  public async openImageModal() {
     const modal = await this.modalController.create({
       component: ImageviewComponent,
       componentProps: {
@@ -358,7 +359,7 @@ export class ItemEditPage extends BasePage {
     });
     return await modal.present();
   }
-  
+
   public override async launchFileExplorer() {
     const accept: PickFilesOptions = {
       types: ["application/msword",
@@ -1072,7 +1073,5 @@ export class ItemEditPage extends BasePage {
   override selectInput(event) {
     event.target.select();
   }
-
-  
 
 }

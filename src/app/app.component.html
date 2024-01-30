@@ -1,13 +1,10 @@
-<div style="height:2em;" *ngIf="platform.is('ios')"></div>
 <ion-app class="scanner-hide">
   <ion-split-pane when="xl" contentId="main-content">
     <!-- Side Menu (top-left) -->
     <ion-menu contentId="main-content" type="overlay" side="start" menuId="mainMenu">
-      <!-- <div style="height:2em;" *ngIf="platform.is('ios')"></div> -->
       <div style="font-size:.6em; text-align:center; padding-top:1em;">
         <i>v {{ appVersion }}</i>
       </div>
-      <div style="height:2em;" *ngIf="platform.is('ios')"></div>
       <div class="main-wrapper" style="overflow:hidden !important;">
         <div class="sidebar-wrapper left-sidebar">
           <div class="profile-info">

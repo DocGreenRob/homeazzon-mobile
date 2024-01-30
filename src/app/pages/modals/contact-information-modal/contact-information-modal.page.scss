@@ -5,6 +5,17 @@
 	height: 50%;
 	border-radius: 20px;
 }
+.non-bold-text {
+    font-size: 25px !important;
+	margin-bottom: 10px;
+}
+
+.non-bold-text-title {
+	color: #2d303e;
+    font-size: 28px !important;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
 
 h3 {
 	font-size: larger !important;
@@ -14,6 +25,11 @@ h3 {
 
 .input-label {
 	margin-left: 1em;
+}
+
+.grey-color {
+    color: grey;
+	margin-top: 5px;
 }
 
 form.ng-invalid.ng-touched {
