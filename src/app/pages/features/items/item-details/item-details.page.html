@@ -288,36 +288,46 @@ IsMetattachment ?
       <div class="other-specifications-wrapper" *ngIf="hasOtherSpecifications">
         <ion-label class="other-specifications-label">Other Specifications:</ion-label>
         <div class="fields">
-          <div *ngIf="ActiveItem?.AssetInfo?.Manufacturer?.length || ActiveAttachmentItem?.AssetInfo?.Manufacturer?.length"
-           class="item-field">
+          <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Manufacturer != undefined
+					  && ActiveItem?.AssetInfo?.Manufacturer != ''))
+					  || (ActiveAttachmentItem?.AssetInfo?.Manufacturer != undefined
+					  && ActiveAttachmentItem?.AssetInfo?.Manufacturer != '')" class="item-field">
             <ion-label>Manufacturer:</ion-label>
             <span class="item-field">
               {{IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Manufacturer : ActiveItem?.AssetInfo?.Manufacturer}}
             </span>
           </div>
-          <div *ngIf="ActiveItem?.AssetInfo?.Make?.length || ActiveAttachmentItem?.AssetInfo?.Make?.length"
-             class="item-field">
+          <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Make != undefined
+					  && ActiveItem?.AssetInfo?.Make != ''))
+					  || (ActiveAttachmentItem?.AssetInfo?.Make != undefined
+					  && ActiveAttachmentItem?.AssetInfo?.Make != '')" class="item-field">
             <ion-label>Make:</ion-label>
             <span class="item-field">
               {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Make : ActiveItem?.AssetInfo?.Make }}
             </span>
           </div>
-          <div *ngIf="ActiveItem?.AssetInfo?.Model?.length || ActiveAttachmentItem?.AssetInfo?.Model?.length"
-             class="item-field">
+          <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Model != undefined
+					  && ActiveItem?.AssetInfo?.Model != ''))
+					  || (ActiveAttachmentItem?.AssetInfo?.Model != undefined
+					  && ActiveAttachmentItem?.AssetInfo?.Model != '')" class="item-field">
             <ion-label>Model:</ion-label>
             <span class="item-field">
               {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Model : ActiveItem?.AssetInfo?.Model }}
             </span>
           </div>
-          <div *ngIf="ActiveItem?.AssetInfo?.SerialNumber?.length || ActiveAttachmentItem?.AssetInfo?.SerialNumber?.length"
-             class="item-field">
+          <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.SerialNumber != undefined
+					   && ActiveItem?.AssetInfo?.SerialNumber != ''))
+					  || (ActiveAttachmentItem?.AssetInfo?.SerialNumber != undefined
+					  && ActiveAttachmentItem?.AssetInfo?.SerialNumber != '')" class="item-field">
             <ion-label>Serial Number:</ion-label>
             <span class="item-field">
               {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.SerialNumber : ActiveItem?.AssetInfo?.SerialNumber }}
             </span>
           </div>
-          <div *ngIf="ActiveItem?.AssetInfo?.Size?.length || ActiveAttachmentItem?.AssetInfo?.Size?.length"
-            class="item-field">
+          <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Size != undefined
+					  && ActiveItem?.AssetInfo?.Size != ''))
+					  || (ActiveAttachmentItem?.AssetInfo?.Size != undefined
+					  && ActiveAttachmentItem?.AssetInfo?.Size != '')" class="item-field">
             <ion-label>Size:</ion-label>
             <span class="item-field">
               {{ IsMetattachment ? ActiveAttachmentItem?.AssetInfo?.Size : ActiveItem?.AssetInfo?.Size }}
@@ -327,8 +337,10 @@ IsMetattachment ?
       </div>
       <br style="clear:both" />
       <!-- Notes -->
-      <div *ngIf="ActiveItem?.AssetInfo?.Notes?.length || ActiveAttachmentItem?.AssetInfo?.Notes?.length" 
-         class="description-wrapper">
+      <div *ngIf="(!IsMetattachment && (ActiveItem?.AssetInfo?.Notes != undefined
+				&& ActiveItem?.AssetInfo?.Notes != ''))
+				|| (ActiveAttachmentItem?.AssetInfo?.Notes != undefined
+				&& ActiveAttachmentItem?.AssetInfo?.Notes != '')" class="description-wrapper">
         <ion-label class="desc-label">Notes:</ion-label>
         <div class="desc-field">
           <span>
@@ -355,8 +367,9 @@ IsMetattachment ?
       </h2>
       <div class="spacer-oneRem"></div>
       <!-- Description goes here -->
-      <div *ngIf="ActiveItem?.YouTubeVideo?.VideoDescription?.length || ActiveAttachmentItem?.YouTubeVideo?.VideoDescription?.length" 
-       class="description-wrapper" style="margin-right: 1em;margin-left: 1em;">
+      <div *ngIf="ActiveItem?.YouTubeVideo?.VideoDescription != undefined
+					&& ActiveItem?.YouTubeVideo?.VideoDescription != ''" class="description-wrapper"
+           style="margin-right: 1em;margin-left: 1em;">
         <b class="mypad-black">Description:</b>&nbsp;
         <h6>
           {{ IsMetattachment ? ActiveAttachmentItem?.YouTubeVideo?.VideoDescription : ActiveItem?.YouTubeVideo?.VideoDescription }}
@@ -375,8 +388,10 @@ IsMetattachment ?
     <div style="padding-left:1em !important; padding-right:1em !important;"
          *ngIf="ActiveItem?.Type == 'Google Web Links' || ActiveAttachmentItem?.Type == 'Google Web Links'">
       <!-- Link goes here -->
-      <div *ngIf="ActiveItem?.GoogleLink?.Link?.length || ActiveAttachmentItem?.GoogleLink?.Link?.length"
-        class="item-field" (click)="browse()">
+      <div *ngIf="(ActiveItem?.GoogleLink?.Link != undefined
+					&& ActiveItem?.GoogleLink?.Link != '')
+				    || (ActiveAttachmentItem?.GoogleLink?.Link != undefined
+					&& ActiveAttachmentItem?.GoogleLink?.Link != '')" class="item-field" (click)="browse()">
         <h3>Link:</h3>
         <p style="color:blue !important; line-height: 1em !important;">
           {{ IsMetattachment ? ActiveAttachmentItem?.GoogleLink?.Link : ActiveItem?.GoogleLink?.Link }}
@@ -384,8 +399,10 @@ IsMetattachment ?
       </div>
       <div class="spacer-oneRem"></div>
       <!-- Description goes here -->
-      <div *ngIf="ActiveItem?.GoogleLink?.Description?.length || ActiveAttachmentItem?.GoogleLink?.Description?.length"
-         class="description-wrapper">
+      <div *ngIf="(ActiveItem?.GoogleLink?.Description != undefined
+					&& ActiveItem?.GoogleLink?.Description != '')
+				    || (ActiveAttachmentItem?.GoogleLink?.Description != undefined
+					&& ActiveAttachmentItem?.GoogleLink?.Description != '')" class="description-wrapper">
         <h3 class="mypad-black">Description:</h3>
         <p style="line-height:normal !important;">
           {{ IsMetattachment ? ActiveAttachmentItem?.GoogleLink?.Description : ActiveItem?.GoogleLink?.Description }}
