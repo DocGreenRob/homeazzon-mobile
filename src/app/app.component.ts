@@ -136,12 +136,12 @@ export class AppComponent extends BasePage {
         title: 'Notifications',
         url: 'notification-list',
       },
-      // {
-      //   image:
-      //     '../assets/icon/question.svg',
-      //   title: 'Help',
-      //   url: 'help',
-      // },
+      {
+        image:
+          '../assets/icon/question.svg',
+        title: 'Help',
+        url: 'help',
+      },
       // {
       //   image:
       //     '../assets/icon/Setting.svg',
