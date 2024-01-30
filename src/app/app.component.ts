@@ -142,12 +142,12 @@ export class AppComponent extends BasePage {
         title: 'Help',
         url: 'help',
       },
-      {
-        image:
-          '../assets/icon/Setting.svg',
-        title: 'Settings',
-        url: 'settings',
-      },
+      // {
+      //   image:
+      //     '../assets/icon/Setting.svg',
+      //   title: 'Settings',
+      //   url: 'settings',
+      // },
     ];
   }
 
