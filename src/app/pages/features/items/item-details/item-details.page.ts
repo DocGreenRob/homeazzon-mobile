@@ -118,6 +118,11 @@ export class ItemDetailsPage extends BasePage {
     }
     let focusType: string = "";
 
+    console.log("this.ActiveAttachmentItem:",this.ActiveAttachmentItem)
+    console.log("this.ActiveItem:",this.ActiveItem)
+    console.log("this.IsMetattachment:",this.IsMetattachment)
+
+
     if (!this.IsMetattachment) {
       focusType = this.ActiveItem.Type;
     } else {
@@ -249,6 +254,8 @@ export class ItemDetailsPage extends BasePage {
               activeAttachmentItem.AssetInfo = x.AssetInfo;
               activeAttachmentItem.AssetInfo.Description = x.Description;
               this.ActiveAttachmentItem = activeAttachmentItem;
+
+              console.log("ActiveAttachmentItem:",this.ActiveAttachmentItem)
             }
 
             this._loading.dismiss();
@@ -379,6 +386,10 @@ export class ItemDetailsPage extends BasePage {
             }
 
             this._loading.dismiss();
+
+            console.log("this.ActiveAttachmentItem:",this.ActiveAttachmentItem)
+            console.log("this.ActiveItem:",this.ActiveItem)
+            console.log("this.IsMetattachment:",this.IsMetattachment)
           },
           (err) => {
             if (err.status == 401) {
@@ -453,6 +464,9 @@ export class ItemDetailsPage extends BasePage {
           }
         );
         break;
+
+
+
     }
 
     let a = this.ActiveItem;
@@ -730,6 +744,7 @@ export class ItemDetailsPage extends BasePage {
           break;
       }
     }
+
   }
 
   public attachments() {
