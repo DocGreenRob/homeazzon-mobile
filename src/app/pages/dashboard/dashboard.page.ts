@@ -641,9 +641,7 @@ export class DashboardPage extends BasePage {
   private closeLoader() {
     console.log('closeLoader()');
     if (this._loading != undefined) {
-      console.log('_loading.dismiss() before');
       this._loading.dismiss();
-      console.log('_loading.dismiss() after');
     }
   }
 

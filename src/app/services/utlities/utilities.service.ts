@@ -36,4 +36,8 @@ export class UtilitiesService extends baseService {
   async getRequiredMinimumVersion(): Promise<any> {
     return this.get("/utils/required-minimum-version").toPromise();
   }
+
+  async deleteAccount(): Promise<any> {
+    return this.get("/utils/delete-user-account").toPromise();
+  }
 }
