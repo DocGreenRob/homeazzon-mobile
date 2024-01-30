@@ -340,11 +340,26 @@ ion-content {
     min-height: calc(100vh - 245px) !important;
     .icon-grid-container{
       width: 100%;
-      icon-grid{
+      icon-list-grid{
         width: 100%;
         ion-accordion-group{
           .item-main-wrapper{
             margin-top: 35px !important;
+            .items-main{
+              .item{
+                height:90px !important;
+                align-items: center;
+                .item-image{
+                  width: 40%;
+                  height: 50px;
+                   border: 0px !important;
+                }
+                .item-title{
+                  color: #526ea0 !important;
+                  text-align: center;
+                }
+              }
+            }
           }
           .see-wrapper{
             position: relative;
