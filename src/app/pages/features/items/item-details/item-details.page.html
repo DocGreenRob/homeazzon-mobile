@@ -370,8 +370,8 @@ IsMetattachment ?
       <div *ngIf="ActiveItem?.YouTubeVideo?.VideoDescription != undefined
 					&& ActiveItem?.YouTubeVideo?.VideoDescription != ''" class="description-wrapper"
            style="margin-right: 1em;margin-left: 1em;">
-        <b class="mypad-black">Description:</b>&nbsp;
-        <h6>
+        <b class="mypad-black">Description:</b>
+        <h6 class="description">
           {{ IsMetattachment ? ActiveAttachmentItem?.YouTubeVideo?.VideoDescription : ActiveItem?.YouTubeVideo?.VideoDescription }}
         </h6>
       </div>

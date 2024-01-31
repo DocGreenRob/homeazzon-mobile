@@ -33,7 +33,7 @@ ion-item {
 
         .item-image {
             width: 80%;
-            height: 50px;
+            height: 60px;
             border-radius: 5px;
             object-fit: fill;
         }
@@ -184,13 +184,18 @@ ion-item.sized {
             font-size: 10px;
             font-style: normal;
             font-weight: 600;
-            line-height: 12px;
+            line-height: 14px;
             letter-spacing: 0.05px;
             text-align: left;
             width: 80px;
             height: 30px;
             text-overflow: ellipsis;
             overflow: hidden;
+            // white-space: nowrap;
+            -webkit-line-clamp: 2;
+             display: -webkit-box;
+            -webkit-box-orient: vertical;
+             word-wrap: break-word;
         }
         .web-title{
             height: 10px !important;
@@ -216,4 +221,8 @@ ion-item.sized {
 }
 .web-layout-img{
     width: 90px !important;
+}
+
+.listview-grid {
+    border-bottom: 1px solid #E3E7EC;
 }
