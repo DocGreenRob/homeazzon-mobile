@@ -579,10 +579,10 @@ export class BasePage implements OnInit {
 
   // Bookmark
   public bookmark() {
-    console.log('bookmark()');
+
     //this.AppInsights.trackTrace({ message: 'bookmark()' });
     this.storageService.delete('ActiveAttachment');
-    console.log(this.router.url);
+
     this.QueryParams = {
       type: 'file',
     };
@@ -655,7 +655,7 @@ export class BasePage implements OnInit {
 
 
         browser.on('loadstop').subscribe((x) => {
-  
+
           browser.executeScript({
             code: `
                   var button = document.createElement('button');
@@ -676,7 +676,7 @@ export class BasePage implements OnInit {
                   document.body.appendChild(button);
                 `
           });
-  
+
           browser.executeScript({
             code: `
                 var button1 = document.createElement('button');
@@ -697,7 +697,7 @@ export class BasePage implements OnInit {
                 document.body.appendChild(button1);
               `
           });
-  
+
           browser.executeScript({
             code: `
                   var button2 = document.createElement('button');
@@ -719,7 +719,7 @@ export class BasePage implements OnInit {
                   document.body.appendChild(button2);
                 `
           });
-  
+
 
         });
 
