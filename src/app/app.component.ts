@@ -29,7 +29,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.6.0';
+  public appVersion: string = '12.6.1';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 
@@ -142,12 +142,12 @@ export class AppComponent extends BasePage {
         title: 'Help',
         url: 'help',
       },
-      {
-        image:
-          '../assets/icon/Setting.svg',
-        title: 'Settings',
-        url: 'settings',
-      },
+      // {
+      //   image:
+      //     '../assets/icon/Setting.svg',
+      //   title: 'Settings',
+      //   url: 'settings',
+      // },
     ];
   }
 
@@ -196,7 +196,7 @@ export class AppComponent extends BasePage {
   }
 
   private setPropertyImage(userType: string, property: any) {
-    
+
     var imageName: string = '';
 
     if (userType.toLowerCase().indexOf('tradesman') > -1) {
@@ -301,7 +301,7 @@ export class AppComponent extends BasePage {
   }
   async stopScan(): Promise<void> {
     await BarcodeScanner.stopScan();
-    document.body.classList.remove("qrscanner"); 
+    document.body.classList.remove("qrscanner");
     // BarcodeScanner.prepare();
     this.router.navigate(['dashboard']);
     // this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this.constants.ToastColorBad);
