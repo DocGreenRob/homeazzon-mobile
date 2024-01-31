@@ -385,7 +385,7 @@ iframe {
 .item-fields-wrapper {
   display: flex;
   align-items: center;
-  height: 64px;
+  max-height: 64px;
   gap: 13px;
   margin-top: 16px;
 
