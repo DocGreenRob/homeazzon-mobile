@@ -36,6 +36,7 @@ import { LocalStorageService } from '@app/services/local-storage.service';
 })
 export class DashboardPage extends BasePage {
   private _constants = new Constants();
+  public isIos: boolean = false;
 
   // const
   public data: IGrid;
@@ -118,6 +119,8 @@ export class DashboardPage extends BasePage {
     this._constants = new Constants();
 
     this.IsFirstLoadCompleted = false;
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
