@@ -26,6 +26,9 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
   public contactInformation: IContactInformationDto = {} as IContactInformationDto;
   public contacts: Array<any>;
 
+  public hasPhone: boolean = false;
+  public hasEmail: boolean = false;
+
   public contactInformationId: number;
 
   public sendEmailForm = new FormGroup({
@@ -59,6 +62,7 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     } else {
       this.doesContactExist = true;
       this.contactInformationId = this.contactInformation.Id;
+      this.determineIfHasPhoneAndOrEmail();
     }
 
     this.getAllContacts();
@@ -108,12 +112,22 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     const contact = this.contacts.filter((x) => x.Id == this.contactInformationId);
     if (contact.length > 0) {
       this.contactInformation = contact[0];
+      this.determineIfHasPhoneAndOrEmail();
     }
   }
 
   showContactForm() {
     this.doesContactExist = true;
     this.view = "add-edit";
+  }
+
+  private determineIfHasPhoneAndOrEmail() {
+    if (this.contactInformation.Phone != undefined && this.contactInformation.Phone != null && this.contactInformation.Phone.length > 0) {
+      this.hasPhone = true;
+    }
+    if (this.contactInformation.Email != undefined && this.contactInformation.Email != null && this.contactInformation.Email.length > 0) {
+      this.hasEmail = true;
+    }
   }
 
   text() {
