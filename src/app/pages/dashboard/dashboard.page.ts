@@ -1030,6 +1030,7 @@ export class DashboardPage extends BasePage {
     suite16Category.Id = gridList.Items[0].Id;
     suite16Category.Name = gridList.Items[0].Name;
     suite16Category.ImageUrl = gridList.Items[0].IconPath;
+
     this.Suite16Category = suite16Category;
 
     this.router.navigate(['line-items']);
