@@ -1,5 +1,5 @@
 <ion-header>
-  <div class="header-title-with-icon">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'padding-top': '3.7em'}">
     <span>
       <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" (click)="close()">
     </span>
@@ -115,6 +115,10 @@
   </div> -->
 </div>
 <!-- </ion-content> -->
-<tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
-          (cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}" 
+          (homeEvent)="goHome()"
+          (fileExplorerEvent)="launchFileExplorer()"
+          (cameraEvent)="launchCamera()"
+          (barcodeEvent)="launchBarcode()"
+          (bookmarkEvent)="bookmark()"
           (searchEvent)="search()"></tab-menu>
