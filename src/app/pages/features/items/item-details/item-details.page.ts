@@ -36,6 +36,7 @@ import { MetattachService } from "./../../../../services/metattach/metattach.ser
 import { ITagDto } from "../../../../models/dto/interfaces/ITagDto";
 import { LocalStorageService } from "@app/services/local-storage.service";
 import { ImageviewComponent } from "../imageview/imageview.component";
+import { Exception } from "@microsoft/applicationinsights-web";
 
 @Component({
   selector: "app-item-details",
@@ -736,23 +737,65 @@ export class ItemDetailsPage extends BasePage {
     this.router.navigate(["attachments"]);
   }
 
+  private determineArtifactType(): string {
+    let a = this.ActiveItem;
+
+    if (a.DigiDoc !== undefined && a.DigiDoc !== null && a.DigiDoc.Id > 0) {
+      return 'digidoc';
+    }
+
+    if (a.Amazon !== undefined && a.Amazon !== null && a.Amazon.Id > 0) {
+      return 'amazon';
+    }
+
+    if (a.GoogleProduct !== undefined && a.GoogleProduct !== null && a.GoogleProduct.Id > 0) {
+      return 'googleproduct';
+    }
+
+    if (a.GoogleLink !== undefined && a.GoogleLink !== null && a.GoogleLink.Id > 0) {
+      return 'google';
+    }
+
+    if (a.YouTubeVideo !== undefined && a.YouTubeVideo !== null && a.YouTubeVideo.Id > 0) {
+      return 'youtube'; 
+    }
+
+
+    if (a.QrCode !== undefined && a.QrCode !== null && a.QrCode.Id > 0) {
+      return 'qrcode';
+    }
+
+    if (a.Bookmark !== undefined && a.Bookmark !== null && a.Bookmark.Id > 0) {
+      return 'bookmark';
+    }
+
+    // Upc
+    if (a.Product !== undefined && a.Product !== null && a.Product.Id > 0) {
+      return 'product';
+    }
+
+    throw new Error('Artifact type not found');
+  }
+
   public async maintenance() {
+    const artifactType = this.determineArtifactType();
+
     // get contact information
-    await this.contactInformationService
-      .getArtifactContactInformationAsync("digidoc", this.ActiveItem.Id)
-      .then(async (x: IContactInformationDto) => {
-        let contactInformationModal = await this.modalCtrl.create({
-          component: ContactInformationModalPage,
-          componentProps: { x: x },
-          cssClass: "small-modal",
-        });
-        await contactInformationModal.present();
-        await contactInformationModal.onDidDismiss().then((data: any) => {
-          if (data.data != null && data.data != undefined) {
-            console.log("data", data);
-          }
-        });
-      })
+    await this.contactInformationService.getArtifactContactInformationAsync(artifactType, this.ActiveItem.Id).then(async (x: IContactInformationDto) => {
+
+      let contactInformationModal = await this.modalCtrl.create({
+        component: ContactInformationModalPage,
+        componentProps: { x: x },
+        cssClass: "small-modal",
+      });
+
+      await contactInformationModal.present();
+      await contactInformationModal.onDidDismiss().then((data: any) => {
+        if (data.data != null && data.data != undefined) {
+          console.log("data", data);
+        }
+      });
+    })
       .catch((e) => { });
   }
 
