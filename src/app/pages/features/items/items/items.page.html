@@ -1,5 +1,5 @@
-<ion-header>
-  <div class="header-title-with-icon" [ngStyle]="isIos && {'padding-top': '3.7em'}">
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span>
       <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" (click)="close()">
     </span>
@@ -29,6 +29,7 @@
       <h5 class="asset-list">Suggestions</h5>
     </ion-segment-button>
   </ion-segment> -->
+  <!-- Breadcrumbs -->
   <ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
     <div class="breadcrumb-main" *ngIf="ProfileItem.Id !== undefined">
       <img src="assets/icon/Home.svg" alt="">
@@ -40,16 +41,8 @@
       <span class="current-page">{{LineItem?.Name}}</span>
     </div>
     <div class="breadcrumb-main" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
-    <!-- <br style="clear:both !important;" />
-    <br style="clear:both !important;" /> -->
   </ng-container>
-  <div class="tab-container">
-    <app-segment-selector [segments]="views"
-                          [initView]="{value: manageView}"
-                          *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
-                          (selectedSegment)="segmentChanged($event)">
-    </app-segment-selector>
-  </div>
+
   <div *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
     <ion-segment [(ngModel)]="dynamicManageView" mode="md" style="border: none !important;" class="asset-lists">
       <ion-segment-button *ngFor="let a of LineItem.View.ViewSegments" (click)="dynamicTabClickHandler(a.Id)"
@@ -63,6 +56,14 @@
 </ion-header>
 <!-- <ion-content> -->
 <div class="container-wrapper">
+  <div class="tab-container">
+    <app-segment-selector [segments]="views"
+                          [initView]="{value: manageView}"
+                          *ngIf="ProfileItemImages === undefined || ProfileItemImages === null || ProfileItemImages.length === 0"
+                          (selectedSegment)="segmentChanged($event)"
+                          style="background-color: #fff;">
+    </app-segment-selector>
+  </div>
   <div class="item-wrapper">
 
     <ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
@@ -75,7 +76,7 @@
           </span>
         </div>
         <ion-accordion-group [value]="['first']" [ngClass]="data?.Lists?.length > 0 ? 'main-accordion' : 'hide'">
-            <ion-accordion toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start" class="main-accordion-content" value="first">
+          <ion-accordion toggleIcon="assets/icon/chevron-down-circle.svg" toggleIconSlot="start" class="main-accordion-content" value="first">
             <ion-item slot="header" class="main-accordion-item">
               <ion-label class="main-accordian-label" *ngIf="data?.Lists?.length > 0">Collapse all</ion-label>
 
@@ -115,7 +116,7 @@
   </div> -->
 </div>
 <!-- </ion-content> -->
-<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}" 
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
           (homeEvent)="goHome()"
           (fileExplorerEvent)="launchFileExplorer()"
           (cameraEvent)="launchCamera()"
