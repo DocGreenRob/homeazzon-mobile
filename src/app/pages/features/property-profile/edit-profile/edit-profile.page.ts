@@ -48,9 +48,9 @@ export class EditProfilePage extends BasePage {
   isPrivateLabelerUser: boolean = false;
 
   public roomType: string = "";
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     private propertyProfile: PropertyProfilesService,
     private loadingProvider: UtilitiesService,
     private loadingCtrl: LoadingController,
@@ -62,10 +62,10 @@ export class EditProfilePage extends BasePage {
     private activeRoute: ActivatedRoute,
     public override menuController: MenuController,
     private alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService) {
     super(navCtrl, null, null, menuController, platform, router, toast, null, null, null, storageService);
     this.constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

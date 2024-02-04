@@ -48,6 +48,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   labellotsprofiles: any;
   public isPrivateLabelBuildYourOwn: boolean;
   public isSkipExteriorAreas: boolean = false;
+  public isIos: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -68,6 +69,8 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   ) {
     super(navCtrl, null, null, null, platform, router, toast, null, null,null,storageService);
     this.constants = new Constants();
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

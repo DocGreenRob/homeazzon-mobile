@@ -1,5 +1,5 @@
-<ion-header>
-  <div class="header-items">
+<ion-header style="background-color: #232B42;">
+  <div class="header-items" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span>{{profileName}}</span>
     <ion-button class="cancel-btn" (click)="close()">Cancel</ion-button>
   </div>

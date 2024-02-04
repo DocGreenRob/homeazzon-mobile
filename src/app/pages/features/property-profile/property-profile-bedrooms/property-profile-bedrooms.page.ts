@@ -30,19 +30,19 @@ export class PropertyProfileBedroomsPage extends BasePage {
   zip: any;
   constants: Constants;
   public isPrivateLabelBuildYourOwn: boolean = false;
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
-    private toast: UxNotifierService,
-    private loading: UtilitiesService,
-    public override platform: Platform,
-    public override router: Router,
-    private activeRoute: ActivatedRoute,
-    private prePreConstruction: PropertyProfilesService,
-    public override storageService: LocalStorageService
-  ) {
-    super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
+  constructor(public navCtrl: NavController,
+              private toast: UxNotifierService,
+              private loading: UtilitiesService,
+              public override platform: Platform,
+              public override router: Router,
+              private activeRoute: ActivatedRoute,
+              private prePreConstruction: PropertyProfilesService,
+              public override storageService: LocalStorageService) {
+    super(navCtrl, null, null, null, platform, router, null, null, null, null, storageService);
     this.constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

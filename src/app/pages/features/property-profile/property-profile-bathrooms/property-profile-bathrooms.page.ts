@@ -30,6 +30,7 @@ export class PropertyProfileBathroomsPage extends BasePage {
   zip: any;
   public isPrivateLabelBuildYourOwn: boolean;
   constants: Constants;
+  public isIos: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -43,6 +44,7 @@ export class PropertyProfileBathroomsPage extends BasePage {
   ) {
     super(navCtrl, null, null, null, null, router, toast, null, null,null,storageService);
     this.constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
