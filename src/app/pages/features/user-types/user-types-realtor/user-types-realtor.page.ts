@@ -39,6 +39,7 @@ export class UserTypesRealtorPage extends BasePage {
   public cities: any[] = [];
   public countries = Country.getAllCountries();
   public isEditingProperty: boolean = false;
+  public isIos: boolean = false;
 
   private _isEditingProperty: boolean = false;
   private _constants = new Constants();
@@ -63,6 +64,7 @@ export class UserTypesRealtorPage extends BasePage {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesRealtorPage");
     this._constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

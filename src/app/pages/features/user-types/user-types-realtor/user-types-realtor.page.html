@@ -1,11 +1,12 @@
-<ion-header>
-  <div class="registration-header">
-    <img src="assets/icon/arrow-left-square.svg" (click)="close()">
-    <div class="registration-title-wrapper">
-      <img src="assets/icon/realtor.svg">
-      <span class="registration-title">
-        Realtor Registration
-      </span>
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span (click)="close()">
+      <img src="assets/icon/arrow-left-square.svg" />
+    </span>
+    <span class="title-with-img">
+      <span>Realtor Registration</span>
+    </span>
+    <div class="header-icon">
     </div>
   </div>
 </ion-header>
