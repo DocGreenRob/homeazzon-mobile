@@ -55,6 +55,7 @@ export class ItemEditPage extends BasePage {
   public isDisplayReady: boolean = false;
   public _bookmark: string = "";
   public showImage: boolean = false;
+  public isIos: boolean = false;
 
   constructor(
     public override navController: NavController,
@@ -80,6 +81,7 @@ export class ItemEditPage extends BasePage {
   ) {
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() { }

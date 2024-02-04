@@ -1,8 +1,12 @@
-<ion-header>
-  <div class="registration-header">
-    <img src="assets/icon/Close-Square-white.svg" (click)="close()">
-    <div class="registration-title-wrapper">
-      <span class="registration-title">{{profileItem.Name}} Things</span>
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span (click)="close()">
+      <img src="assets/icon/Close-Square-white.svg" />
+    </span>
+    <span class="title-with-img">
+      <span>{{profileItem.Name}} Things</span>
+    </span>
+    <div class="header-icon">
     </div>
   </div>
 </ion-header>
@@ -30,7 +34,7 @@
     <div class="btnWrapper">
       <ion-button (click)="addLineItem()" class="addRoombtn"
                   *ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
-        <img src="../../../../../assets/icon/plus-icon.svg" alt="">
+        <img src="assets/icon/plus-icon.svg" alt="">
         Add List Item
       </ion-button>
       <ion-button class="save-btn" (click)="saveLineItems()">

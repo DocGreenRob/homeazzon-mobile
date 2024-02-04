@@ -1,5 +1,5 @@
 <ion-footer>
-	<div class="footer_content">
+	<div class="footer_content" style="background-color: #232B42;">
 		<!-- Home -->
 		<div class="sub_footer_content">
 			<!-- Inactive (home) -->
@@ -59,7 +59,7 @@
 				[ngClass]="{'active_footer_icon': _isHomeActive ,  'tab-icon': !_isHomeActive}" *ngIf="_isEnabled">
 		</div>
 		<!-- Share -->
-		<div class="sub_footer_content" (click)="share()">
+		<div class="sub_footer_content" (click)="share()" *ngIf="isShareActive">
 			<!-- Inactive (search) -->
 			<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fshare-alt.svg?alt=media&token=1638e8ef-9505-47cf-be0b-0fd17679eda3"
 				[ngClass]="{'active_footer_icon': _isHomeActive ,  'tab-icon': !_isHomeActive}" *ngIf="!_isEnabled">

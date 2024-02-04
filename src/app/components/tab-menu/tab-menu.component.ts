@@ -7,6 +7,8 @@ import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 })
 export class TabMenuComponent implements OnInit {
 
+  public isShareActive: boolean = false;
+
 	@Input() _isMetattach: boolean = false;
 	@Input() _isHomeActive: boolean = true;
 	@Input() _isEnabled: boolean = false;

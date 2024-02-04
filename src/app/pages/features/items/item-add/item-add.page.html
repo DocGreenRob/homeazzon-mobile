@@ -1,6 +1,6 @@
-<ion-header>
-  <div [class]="view == 'SelectLineItems' ? 'header-items title-gap' : 'header-items'">
-    <img src="assets/icon/Arrow - Left Square.svg" *ngIf="view == 'SelectLineItems'" (click)="back()">
+<ion-header style="background-color: #232B42;">
+  <div [class]="view == 'SelectLineItems' ? 'header-items title-gap' : 'header-items'" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <img src="assets/icon/arrow-left-square.svg" *ngIf="view == 'SelectLineItems'" (click)="back()">
     <span>
       {{pageTitle}}
     </span>

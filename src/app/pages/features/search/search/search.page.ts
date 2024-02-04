@@ -32,6 +32,7 @@ export class SearchPage extends BasePage {
   public searchSource: string = "";
   public disableProfileItems: boolean = false;
   public disableLineItems: boolean = false;
+  public isIos: boolean = false;
 
   constructor(
     public override navController: NavController,
@@ -80,6 +81,8 @@ export class SearchPage extends BasePage {
       this.disableProfileItems = true;
       this.disableLineItems = true;
     }
+
+    this.isIos = this.platform.is('ios');
   }
   override async ngOnInit() {
     console.log("ngOnInit SearchPage");
@@ -91,6 +94,8 @@ export class SearchPage extends BasePage {
     }
     //this.AppInsights.trackPageView({ name: 'SearchPage' });
   }
+
+  // every time the page loads, do this
 
   public goBack() {
     this.navController.back();

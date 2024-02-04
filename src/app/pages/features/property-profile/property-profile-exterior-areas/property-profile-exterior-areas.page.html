@@ -1,7 +1,7 @@
-<ion-header>
-	<div class="header">
+<ion-header style="background-color: #232B42;">
+	<div class="header" [ngStyle]="isIos && {'margin-top': '1.4em'}">
 	  <span (click)="goBack()">
-		<img src="/assets/icon/Arrow - Left Square.svg" alt="" />
+		<img src="/assets/icon/arrow-left-square.svg" alt="" />
 	  </span>
 	  <span class="headerTitle backtitle" (click)="goBack()"> Back </span>
 	</div>

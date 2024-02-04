@@ -1,195 +1,212 @@
-<ion-header>
-	<div class="header-title-with-icon">
-		<span>
-			<img src="/assets/icon/Arrow - Left Square.svg" (click)="cancel()" />
-		</span>
-		<span class="title-with-img">
-			<span>{{this.ActiveItem.Name}}</span>
-		</span>
-		<div class="header-icon">
-		</div>
-	</div>
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span>
+      <img src="/assets/icon/arrow-left-square.svg" (click)="cancel()" />
+    </span>
+    <span class="title-with-img">
+      <span>{{this.ActiveItem.Name | slice:0:30}}</span>
+    </span>
+    <div class="header-icon">
+    </div>
+  </div>
 </ion-header>
-
-
-
 <div class="container-wrapper">
-	<ng-container *ngIf="view!='send-email'">
-		<div *ngIf="!doesContactExist" class="add-contact-container">
-			<div class="inner-wrapper wrapper-height">
-				<span>There's nothing here yet.</span>
-				<span>Add a new contact now!</span>
-			</div>
-			<div class="btnWrapper">
-				<ion-button class="addRoombtn" (click)="showContactForm()">
-					Add +
-				</ion-button>
-				<ion-button class="continuebtn" *ngIf="view == 'read-only'" (click)="showEditView()">
-					Edit
-				</ion-button>
+  <ng-container *ngIf="view!='send-email'">
+    <div *ngIf="!doesContactExist" class="add-contact-container">
+      <div class="inner-wrapper wrapper-height">
+        <span>There's nothing here yet.</span>
+        <span>Add a new contact now!</span>
+      </div>
+      <div class="btnWrapper">
+        <ion-button class="addRoombtn" (click)="showContactForm()">
+          Add +
+        </ion-button>
+        <ion-button class="continuebtn" *ngIf="view == 'read-only'" (click)="showEditView()">
+          Edit
+        </ion-button>
 
-			</div>
-		</div>
-		<div class="formWrapper wrapper-height" *ngIf="view == 'add-edit'">
-			<div class="fieldWrapper">
-				<ion-label>Current Contacts</ion-label>
-				<div class="inputField">
-					<ion-select [(ngModel)]="contactInformationId" required
-						(ngModelChange)="onContactInformationChanged()">
-						<ion-select-option *ngFor="let contact of contacts" [value]="contact.Id">
-							{{contact.Name}}
-						</ion-select-option>
-					</ion-select>
-					<img class="iconSelect" src="assets/icon/Icon - Next.svg" />
-				</div>
-			</div>
+      </div>
+    </div>
+    <div class="formWrapper wrapper-height" *ngIf="view == 'add-edit'">
+      <div class="fieldWrapper">
+        <ion-label>Current Contacts</ion-label>
+        <div class="inputField">
+          <ion-select [(ngModel)]="contactInformationId" required
+                      (ngModelChange)="onContactInformationChanged()">
+            <ion-select-option *ngFor="let contact of contacts" [value]="contact.Id">
+              {{contact.Name}}
+            </ion-select-option>
+          </ion-select>
+          <img class="iconSelect" src="assets/icon/Icon - Next.svg" />
+        </div>
+      </div>
 
-			<div class="fieldWrapper">
-				<ion-label>Person/Business Name:</ion-label>
-				<div class="inputField">
-					<ion-input [(ngModel)]="contactInformation.Name" required type="text"></ion-input>
-				</div>
-			</div>
-			<div class="fieldWrapper">
-				<ion-label>Phone:</ion-label>
-				<div class="inputField">
-					<ion-input [(ngModel)]="contactInformation.Phone" required type="tel"></ion-input>
-				</div>
-			</div>
-			<div class="fieldWrapper">
-				<ion-label>Email:</ion-label>
-				<div class="inputField">
-					<ion-input [(ngModel)]="contactInformation.Email" type="email"></ion-input>
-				</div>
-			</div>
-			<div class="fieldWrapper">
-				<ion-label>Website:</ion-label>
-				<div class="inputField">
-					<ion-input [(ngModel)]="contactInformation.Website" type="url"></ion-input>
-				</div>
-			</div>
-			<div class="fieldWrapper">
-				<ion-label>Notes:</ion-label>
-				<div class="inputField">
-					<ion-input [(ngModel)]="contactInformation.Notes" type="text"></ion-input>
-				</div>
-			</div>
-		</div>
-		<div *ngIf="view == 'read-only' && doesContactExist" style="padding: 20px;">
-			<ion-row>
-				<ion-col size="12">
-					<ion-label class="grey-color">Name</ion-label>
-					<div class="non-bold-text-title">
-						{{contactInformation?.Name}}
-					</div>
-				</ion-col>
-			</ion-row>
-			<ion-row *ngIf="contactInformation?.Phone !== undefined">
-				<ion-col size="12">
-					<ion-label class="grey-color">Phone</ion-label>
-					<div class="non-bold-text">
-						{{contactInformation?.Phone}}
-					</div>
-				</ion-col>
-			</ion-row>
-			<ion-row *ngIf="contactInformation?.Email !== undefined">
-				<ion-col size="12">
-					<ion-label class="grey-color">Email</ion-label>
-					<div class="non-bold-text">
-						{{contactInformation?.Email}}
-					</div>
-				</ion-col>
-			</ion-row>
-			<ion-row *ngIf="contactInformation?.Website">
-				<ion-col size="12">
-					<ion-label class="grey-color">Website</ion-label>
-					<div class="non-bold-text">
-						{{contactInformation?.Website}}
-					</div>
-				</ion-col>
-			</ion-row>
-			<ion-row *ngIf="contactInformation?.Notes">
-				<ion-col size="12">
-					<ion-label class="grey-color">About</ion-label>
-					<div>
-						{{contactInformation?.Notes}}
-					</div>
-				</ion-col>
-			</ion-row>
-		</div>
-		<ion-row *ngIf="doesContactExist" style="padding: 20px;">
-			<ion-col size="3.5"
-				style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px; margin-right: 10px;">
-				<h1 class="mypad-green">
-					<img src="assets/imgs/sms1.png" style="width: 0.8em !important; height: 0.8em !important;"
-						(click)="text()" />
-				</h1>
-			</ion-col>
+      <div class="fieldWrapper">
+        <ion-label>Person/Business Name:</ion-label>
+        <div class="inputField">
+          <ion-input [(ngModel)]="contactInformation.Name" required type="text"></ion-input>
+        </div>
+      </div>
+      <div class="fieldWrapper">
+        <ion-label>Phone:</ion-label>
+        <div class="inputField">
+          <ion-input [(ngModel)]="contactInformation.Phone" required type="tel"></ion-input>
+        </div>
+      </div>
+      <div class="fieldWrapper">
+        <ion-label>Email:</ion-label>
+        <div class="inputField">
+          <ion-input [(ngModel)]="contactInformation.Email" type="email"></ion-input>
+        </div>
+      </div>
+      <div class="fieldWrapper">
+        <ion-label>Website:</ion-label>
+        <div class="inputField">
+          <ion-input [(ngModel)]="contactInformation.Website" type="url"></ion-input>
+        </div>
+      </div>
+      <div class="fieldWrapper">
+        <ion-label>Notes:</ion-label>
+        <div class="inputField">
+          <ion-input [(ngModel)]="contactInformation.Notes" type="text"></ion-input>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="view == 'read-only' && doesContactExist" style="padding: 20px;">
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="grey-color">Name</ion-label>
+          <div class="non-bold-text-title">
+            {{contactInformation?.Name}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="hasPhone">
+        <ion-col size="12">
+          <ion-label class="grey-color">Phone</ion-label>
+          <div class="non-bold-text">
+            {{contactInformation?.Phone}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="hasEmail">
+        <ion-col size="12">
+          <ion-label class="grey-color">Email</ion-label>
+          <div class="non-bold-text">
+            {{contactInformation?.Email}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="contactInformation?.Website !== undefined && contactInformation?.Website !== null && contactInformation?.Website.length > 0">
+        <ion-col size="12">
+          <ion-label class="grey-color">Website</ion-label>
+          <div class="non-bold-text">
+            {{contactInformation?.Website}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="contactInformation?.Notes !== undefined && contactInformation?.Notes !== null && contactInformation?.Notes.length > 0">
+        <ion-col size="12">
+          <ion-label class="grey-color">Notes</ion-label>
+          <div>
+            {{contactInformation?.Notes}}
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row *ngIf="doesContactExist" style="padding: 20px;">
+      <ion-col size="3.5"
+               style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px; margin-right: 10px;">
+        <h1 class="mypad-green">
+          <img [ngClass]="!hasPhone ? 'disabled-icon' : ''"
+               src="assets/icon/sms1.png"
+               style="width: 0.8em !important; height: 0.8em !important;"
+               (click)="text()" />
+        </h1>
+      </ion-col>
 
-			<ion-col size="3.5"
-				style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px;">
-				<h1 class="mypad-green">
-					<img src="assets/imgs/phone1.png" style="width: 0.8em !important; height: 0.8em !important;"
-						(click)="call()" />
-				</h1>
-			</ion-col>
+      <ion-col size="3.5"
+               style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px;">
+        <h1 class="mypad-green">
+          <img [ngClass]="!hasPhone ? 'disabled-icon' : ''"
+               src="assets/icon/phone1.png"
+               style="width: 0.8em !important; height: 0.8em !important;"
+               (click)="call()" />
+        </h1>
+      </ion-col>
 
-			<ion-col size="3.5"
-				style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px; margin-left: 10px;">
-				<h1 class="mypad-green">
-					<img src="assets/imgs/email1.png" style="width: 0.8em !important; height: 0.8em !important;"
-						(click)="email()" />
-				</h1>
-			</ion-col>
-		</ion-row>
-		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'add-edit'">
-			<ion-button class="continuebtn" (click)="saveContactInformation()">
-				Save
-			</ion-button>
-		</div>
+      <ion-col size="3.5"
+               style="height: 95px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: 20px; padding: 15px; margin-left: 10px;">
+        <h1 class="mypad-green">
+          <img [ngClass]="!hasEmail ? 'disabled-icon' : ''"
+               src="assets/icon/email1.png"
+               style="width: 0.8em !important; height: 0.8em !important;"
+               (click)="email()" />
+        </h1>
+      </ion-col>
+    </ion-row>
+    <div class="btnWrapper save-btn-wrapper">
+      <ion-button class="continuebtn"
+                  *ngIf="view == 'add-edit'"
+                  (click)="saveContactInformation()">
+        Save
+      </ion-button>
 
-	</ng-container>
-	<ng-container *ngIf="view=='send-email'">
-		<div class="formWrapper send-mail-wrapper">
-			<form [formGroup]="sendEmailForm">
+      <ion-button class="continuebtn2"
+                  *ngIf="doesContactExist && view != 'add-edit'"
+                  (click)="view = 'add-edit'">
+        Edit
+      </ion-button>
+    </div>
 
-				<div class="fieldWrapper">
-					<ion-label>From</ion-label>
-					<div class="inputField">
-						<ion-input formControlName="From" type="email"></ion-input>
-					</div>
-					<p class="ion-text-danger" *ngIf="From.touched && From.invalid">Required field</p>
-				</div>
-				<div class="fieldWrapper">
-					<ion-label>To</ion-label>
-					<div class="inputField">
-						<ion-input formControlName="To" type="email"></ion-input>
-					</div>
-					<p class="ion-text-danger" *ngIf="To.touched && To.invalid">Required field</p>
-				</div>
-				<div class="fieldWrapper">
-					<ion-label>Subject</ion-label>
-					<div class="inputField">
-						<ion-input type="text" formControlName="Subject"></ion-input>
-					</div>
-					<p class="ion-text-danger" *ngIf="Subject.touched && Subject.invalid">Required field</p>
-				</div>
-				<div class="fieldWrapper">
-					<ion-label>Message</ion-label>
-					<div class="inputField">
-						<ion-textarea type="text" formControlName="Message"></ion-textarea>
-					</div>
-					<p class="ion-text-danger" *ngIf="Message.touched && Message.invalid">Required field</p>
-				</div>
-			</form>
-		</div>
-		<div class="btnWrapper save-btn-wrapper" *ngIf="view == 'send-email'">
-			<ion-button class="continuebtn" (click)="sendEmail()">
-				Send
-			</ion-button>
+  </ng-container>
+  <!-- Email Form -->
+  <ng-container *ngIf="view=='send-email'">
+    <div class="formWrapper send-mail-wrapper">
+      <form [formGroup]="sendEmailForm">
 
-		</div>
-	</ng-container>
+        <div class="fieldWrapper">
+          <ion-label>From</ion-label>
+          <div class="inputField">
+            <ion-input formControlName="From" type="email"></ion-input>
+          </div>
+          <p class="ion-text-danger" *ngIf="From.touched && From.invalid">Required field</p>
+        </div>
+        <div class="fieldWrapper">
+          <ion-label>To</ion-label>
+          <div class="inputField">
+            <ion-input formControlName="To" type="email"></ion-input>
+          </div>
+          <p class="ion-text-danger" *ngIf="To.touched && To.invalid">Required field</p>
+        </div>
+        <div class="fieldWrapper">
+          <ion-label>Subject</ion-label>
+          <div class="inputField">
+            <ion-input type="text" formControlName="Subject"></ion-input>
+          </div>
+          <p class="ion-text-danger" *ngIf="Subject.touched && Subject.invalid">Required field</p>
+        </div>
+        <div class="fieldWrapper">
+          <ion-label>Message</ion-label>
+          <div class="inputField">
+            <ion-textarea type="text" formControlName="Message"></ion-textarea>
+          </div>
+          <p class="ion-text-danger" *ngIf="Message.touched && Message.invalid">Required field</p>
+        </div>
+      </form>
+    </div>
+    <div class="btnWrapper save-btn-wrapper" *ngIf="view == 'send-email'">
+      <ion-button class="continuebtn" (click)="sendEmail()">
+        Send
+      </ion-button>
+
+    </div>
+  </ng-container>
 </div>
-<tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
-	(barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em', 'background-color': '#232B42'}"
+          (homeEvent)="goHome()"
+          (fileExplorerEvent)="launchFileExplorer()"
+          (cameraEvent)="launchCamera()"
+          (barcodeEvent)="launchBarcode()"
+          (bookmarkEvent)="bookmark()"
+          (searchEvent)="search()"></tab-menu>

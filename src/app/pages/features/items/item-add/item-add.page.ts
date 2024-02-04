@@ -47,6 +47,7 @@ export class ItemAddPage extends BasePage {
   public isBookmark: boolean = false;
   public showLineitems: boolean = false;
   public bookmarkUrl: string = "";
+  public isIos: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -73,6 +74,8 @@ export class ItemAddPage extends BasePage {
     if (this.bookmarkUrl != undefined && this.bookmarkUrl != null && this.bookmarkUrl != "") {
       this.isBookmark = true;
     }
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
