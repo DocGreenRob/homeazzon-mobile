@@ -1,3 +1,45 @@
+//header with icon
+
+.header-title-with-icon{
+	padding: 24px 24px 24px 27px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 66px;
+	background-color: #232B42;
+	.title-with-img{
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			font-family: Plus Jakarta Sans;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 17.522px;
+			letter-spacing: 0.1px;
+			white-space: nowrap;
+		}
+	}
+	.header-icon{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			text-align: right;
+			font-family: Plus Jakarta Sans;
+			font-size: 8px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 13.478px; 
+			letter-spacing: 0.04px;
+		}
+	}
+}
+
 .formWrapper{
     min-height: calc(100% - 192px);
 }
