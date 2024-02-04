@@ -1,8 +1,20 @@
-<ion-header>
+<!--<ion-header>
 	<div class="header-items">
 			<span>Attachments</span>
 			<ion-button  (click)="close()">Cancel</ion-button>
 	</div>
+</ion-header>-->
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span>
+      <img src="/assets/icon/arrow-left-square.svg" (click)="close()" />
+    </span>
+    <span class="title-with-img">
+      <span>Attachments</span>
+    </span>
+    <div class="header-icon">
+    </div>
+  </div>
 </ion-header>
 <ion-content class="ion-padding">
 	<ng-container>

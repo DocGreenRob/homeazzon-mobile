@@ -33,6 +33,7 @@ export class UserTypesOwnerPage extends BasePage {
   public isOwner: boolean = false;
   public cities: any[] = [];
   public countries = Country.getAllCountries();
+  public isIos: boolean = false;
 
   private _isEditingProperty: boolean = false;
   private _selectedProperty: any;
@@ -57,6 +58,8 @@ export class UserTypesOwnerPage extends BasePage {
     this._constants = new Constants();
 
     this.updateTitle();
+
+    this.isIos = this.platform.is('ios');
   }
 
   private updateTitle() {

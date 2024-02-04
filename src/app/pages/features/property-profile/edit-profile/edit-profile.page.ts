@@ -48,9 +48,9 @@ export class EditProfilePage extends BasePage {
   isPrivateLabelerUser: boolean = false;
 
   public roomType: string = "";
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     private propertyProfile: PropertyProfilesService,
     private loadingProvider: UtilitiesService,
     private loadingCtrl: LoadingController,
@@ -62,10 +62,10 @@ export class EditProfilePage extends BasePage {
     private activeRoute: ActivatedRoute,
     public override menuController: MenuController,
     private alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService) {
     super(navCtrl, null, null, menuController, platform, router, toast, null, null, null, storageService);
     this.constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
@@ -80,15 +80,19 @@ export class EditProfilePage extends BasePage {
 
     if (this.profileName === "bedroom") {
       this.roomType = "Bedroom";
+      this.properProfileName = 'Bedrooms';
       this.getBedRoomAreas();
     } else if (this.profileName === "bathroom") {
       this.roomType = "Bathroom";
+      this.properProfileName = 'Bathrooms';
       this.getBathroomAreas();
     } else if (this.profileName === "commonarea") {
       this.roomType = "Common Area";
+      this.properProfileName = 'Common Areas';
       this.getCommonAreas();
     } else if (this.profileName === "exterior") {
       this.roomType = "Exterior Area";
+      this.properProfileName = 'Exterior Areas';
       this.getExteriorAreas();
     }
 
@@ -187,16 +191,21 @@ export class EditProfilePage extends BasePage {
     });
   }
 
+  public properProfileName: string = '';
   public async addRoom() {
     let areas: any = [];
 
     if (this.profileName === "bedroom") {
+      this.properProfileName = 'Bedrooms';
       areas = this.bedroomAreas;
     } else if (this.profileName === "bathroom") {
+      this.properProfileName = 'Bathrooms';
       areas = this.bathroomAreas;
     } else if (this.profileName === "commonarea") {
+      this.properProfileName = 'Common Areas';
       areas = this.commonAreas;
     } else if (this.profileName === "exterior") {
+      this.properProfileName = 'Exterior Areas';
       areas = this.exteriorAreas;
     }
 

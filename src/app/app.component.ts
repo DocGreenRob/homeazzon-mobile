@@ -29,11 +29,12 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.6.1';
+  public appVersion: string = '12.6.2';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 
   public rootPage: any;
+  public isIos: boolean = false;
 
   //new
   pages!: Array<{ image: string; title: string; url: any }>;
@@ -52,26 +53,25 @@ export class AppComponent extends BasePage {
   constants = new Constants();
 
   //new
-  constructor(
-    public override platform: Platform,
-    statusBar: StatusBar,
-    splashScreen: SplashScreen,
-    public storage: Storage,
-    private alertCtrl: AlertController,
-    public http: HttpClient,
-    public override communicator: CommunicatorService,
-    public menu: MenuController,
-    private storageCtrl: AppStorageService,
-    public loadingController: LoadingController,
-    public override router: Router,
-    private ngzone: NgZone,
-    private firebaseService: FirebaseAuthService,
-    private iab: InAppBrowser,
-    public override storageService: LocalStorageService,
-    private accountService: AccountService,
-    private utilityService: UtilitiesService,
-    private azureAuthService: AzureAuthService,
-    private ngZone: NgZone) {
+  constructor(public override platform: Platform,
+              statusBar: StatusBar,
+              splashScreen: SplashScreen,
+              public storage: Storage,
+              private alertCtrl: AlertController,
+              public http: HttpClient,
+              public override communicator: CommunicatorService,
+              public menu: MenuController,
+              private storageCtrl: AppStorageService,
+              public loadingController: LoadingController,
+              public override router: Router,
+              private ngzone: NgZone,
+              private firebaseService: FirebaseAuthService,
+              private iab: InAppBrowser,
+              public override storageService: LocalStorageService,
+              private accountService: AccountService,
+              private utilityService: UtilitiesService,
+              private azureAuthService: AzureAuthService,
+              private ngZone: NgZone) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
@@ -83,7 +83,11 @@ export class AppComponent extends BasePage {
       (window as any).handleOpenURL = (url: string) => {
         // TODO: is this needed?
       };
+
+      this.isIos = this.platform.is('ios');
     });
+
+
   }
 
   compareAppVersions(version1: string, version2: string): number {

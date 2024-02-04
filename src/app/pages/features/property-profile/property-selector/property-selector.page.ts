@@ -21,6 +21,7 @@ export class PropertySelectorPage extends BasePage {
   public properties: any;
   public isOwner: boolean = false;
   public isRealtor: boolean = false;
+  public isIos: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
     private location: Location,
@@ -42,6 +43,8 @@ export class PropertySelectorPage extends BasePage {
       storageService);
 
     this._constants = new Constants();
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
