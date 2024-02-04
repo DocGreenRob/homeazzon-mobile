@@ -80,15 +80,19 @@ export class EditProfilePage extends BasePage {
 
     if (this.profileName === "bedroom") {
       this.roomType = "Bedroom";
+      this.properProfileName = 'Bedrooms';
       this.getBedRoomAreas();
     } else if (this.profileName === "bathroom") {
       this.roomType = "Bathroom";
+      this.properProfileName = 'Bathrooms';
       this.getBathroomAreas();
     } else if (this.profileName === "commonarea") {
       this.roomType = "Common Area";
+      this.properProfileName = 'Common Areas';
       this.getCommonAreas();
     } else if (this.profileName === "exterior") {
       this.roomType = "Exterior Area";
+      this.properProfileName = 'Exterior Areas';
       this.getExteriorAreas();
     }
 

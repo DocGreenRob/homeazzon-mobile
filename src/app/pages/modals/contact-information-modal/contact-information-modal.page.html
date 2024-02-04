@@ -1,18 +1,15 @@
-<ion-header>
-  <div class="header-title-with-icon">
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span>
       <img src="/assets/icon/arrow-left-square.svg" (click)="cancel()" />
     </span>
     <span class="title-with-img">
-      <span>{{this.ActiveItem.Name}}</span>
+      <span>{{this.ActiveItem.Name | slice:0:30}}</span>
     </span>
     <div class="header-icon">
     </div>
   </div>
 </ion-header>
-
-
-
 <div class="container-wrapper">
   <ng-container *ngIf="view!='send-email'">
     <div *ngIf="!doesContactExist" class="add-contact-container">
@@ -156,13 +153,14 @@
       </ion-button>
 
       <ion-button class="continuebtn2"
-                  *ngIf="view != 'add-edit'"
+                  *ngIf="doesContactExist && view != 'add-edit'"
                   (click)="view = 'add-edit'">
         Edit
       </ion-button>
     </div>
 
   </ng-container>
+  <!-- Email Form -->
   <ng-container *ngIf="view=='send-email'">
     <div class="formWrapper send-mail-wrapper">
       <form [formGroup]="sendEmailForm">
@@ -205,5 +203,10 @@
     </div>
   </ng-container>
 </div>
-<tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()" (cameraEvent)="launchCamera()"
-          (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()" (searchEvent)="search()"></tab-menu>
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em', 'background-color': '#232B42'}"
+          (homeEvent)="goHome()"
+          (fileExplorerEvent)="launchFileExplorer()"
+          (cameraEvent)="launchCamera()"
+          (barcodeEvent)="launchBarcode()"
+          (bookmarkEvent)="bookmark()"
+          (searchEvent)="search()"></tab-menu>

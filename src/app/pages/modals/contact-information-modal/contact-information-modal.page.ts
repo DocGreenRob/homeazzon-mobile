@@ -38,8 +38,9 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     Message: new FormControl("", [Validators.required]),
   });
 
-  constructor(
-    private modalController: ModalController,
+  public isIos: boolean = false;
+
+  constructor(private modalController: ModalController,
     public override navParams: NavParams,
     private alertService: UxNotifierService,
     public override platform: Platform,
@@ -47,9 +48,9 @@ export class ContactInformationModalPage extends BasePage implements OnInit {
     private utilityService: UtilitiesService,
     private contactInformationService: ContactInformationService,
     private artifactIndexService: ArtifactIndexService,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService) {
     super(null, navParams, null, null, platform, null, null, null, null, null, storageService);
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() {

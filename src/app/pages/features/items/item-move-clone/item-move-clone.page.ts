@@ -41,10 +41,10 @@ export class ItemMoveClonePage extends BasePage {
   public actionText: string = "";
   public assetInfo: any;
   public action: any;
-  public profileItemsLog :any ;
+  public profileItemsLog: any;
+  public isIos: boolean = false;
 
-  constructor(
-    public override navController: NavController,
+  constructor(public override navController: NavController,
     private propertyService: PropertyProfilesService,
     private loadingCtrl: LoadingController,
     public override uxNotifierService: UxNotifierService,
@@ -59,13 +59,13 @@ export class ItemMoveClonePage extends BasePage {
     private formBuilder: FormBuilder,
     private modalCtrl: ModalController,
     private productService: ProductsService,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null,null,storageService);
     this._constants = new Constants();
 
     //this.assetInfo = this.navParams.get("product");
     //this.action = this.navParams.get("action");
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() {

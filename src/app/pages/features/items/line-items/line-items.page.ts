@@ -23,6 +23,7 @@ export class LineItemsPage extends BasePage {
 
   // public
   public lineitems: Array<ILineitemDto> = new Array<ILineitemDto>();
+  public isIos: boolean = false;
 
   constructor(public navCtrl: NavController,
     public featureService: FeaturesService,
@@ -36,6 +37,7 @@ export class LineItemsPage extends BasePage {
     public override storageService: LocalStorageService,
     public loadingCtrl: LoadingController) {
     super(navCtrl, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featureService, null, storageService);
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

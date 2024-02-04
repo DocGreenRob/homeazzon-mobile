@@ -31,6 +31,7 @@ export class AddLineItemPage extends BasePage {
   @ViewChild("content") private content: any;
   profileItem: IProfileItemDto = {} as IProfileItemDto;
   uiType: string;
+  public isIos: boolean = false;
 
   constructor(
     public override navController: NavController,
@@ -53,6 +54,7 @@ export class AddLineItemPage extends BasePage {
   ) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this.constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() { }
