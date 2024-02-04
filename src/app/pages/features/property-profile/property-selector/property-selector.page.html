@@ -1,9 +1,13 @@
-<ion-header style="border-bottom:2px solid whitesmoke !important;">
-  <div class="registration-header">
-    <img src="assets/icon/Arrow - Left Square.svg" (click)="close()">
-    <span class="registration-title">
-      Property Manager
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span (click)="close()">
+      <img src="assets/icon/Arrow - Left Square.svg" />
     </span>
+    <span class="title-with-img">
+      <span>Property Manager</span>
+    </span>
+    <div class="header-icon">
+    </div>
   </div>
 </ion-header>
 <div class="container-wrapper">
