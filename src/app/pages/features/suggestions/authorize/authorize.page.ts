@@ -16,6 +16,7 @@ export class AuthorizePage extends BasePage {
   private _constants: Constants;
   private _loading: any;
   public notification: any;
+  public isIos: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
     private location: Location,
@@ -24,18 +25,19 @@ export class AuthorizePage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     public override platform: Platform) {
     super(null,
-      null,
-      null,
-      null,
-      platform,
-      null,
-      uxNotifierService,
-      null,
-      null,
-      null,
-      storageService);
+          null,
+          null,
+          null,
+          platform,
+          null,
+          uxNotifierService,
+          null,
+          null,
+          null,
+          storageService);
 
-    this._constants = new Constants();  
+    this._constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() { }

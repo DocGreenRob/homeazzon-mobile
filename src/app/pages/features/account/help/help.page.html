@@ -1,28 +1,29 @@
-<ion-header>
-  <div class="header-title-with-icon">
-    <span class="header-icon">
-      <div class="cross-icon">
-        <img src="assets/icon/Arrow - Left Square.svg" (click)="close()" alt="">
-      </div>
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span (click)="close()">
+      <img src="assets/icon/arrow-left-square.svg" />
     </span>
     <span class="title-with-img">
-      <span>Help</span>
+      <span>Need Help?</span>
     </span>
-    <span class="empty"></span>
+    <div class="header-icon">
+    </div>
   </div>
 </ion-header>
-<div class="nothing-notice">
-  <br/><br/><br/>
-  <span class="desc">
-    <div class="desc-title">Need help?</div>
-    <span>
-      <br /><br />Contact us at <a href="mailto:contact@homeaZZon.com">contact@homeaZZon.com</a> and someone will reply within 24 business hours.
+<div class="container-wrapper">
+  <div class="nothing-notice">
+    <br /><br /><br />
+    <span class="desc">
+      <div class="desc-title">Need help?</div>
+      <span>
+        <br /><br />Contact us at <a href="mailto:contact@homeaZZon.com">contact@homeaZZon.com</a> and someone will reply within 24 business hours.
+      </span>
     </span>
-  </span>
-  <span>
-    <img src="assets/imgs/no-content-backup.png" alt="">
-  </span>
-  <div class="sticky-div" (click)="deleteAccount()">
-    Delete my account
+    <span>
+      <img src="assets/imgs/no-content-backup.png" alt="">
+    </span>
+    <div class="sticky-div" (click)="deleteAccount()">
+      Delete my account
+    </div>
   </div>
 </div>

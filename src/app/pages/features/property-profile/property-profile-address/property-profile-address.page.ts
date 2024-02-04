@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { NavController } from "@ionic/angular";
+import { NavController, Platform } from "@ionic/angular";
 import { BasePage } from "src/app/pages/base/base.page";
 import { IAddressDto } from "../../../../models/dto/interfaces/IAddressDto";
 import { IPropertyDto } from "../../../../models/dto/interfaces/IPropertyDto";
@@ -22,10 +22,15 @@ export class PropertyProfileAddressPage extends BasePage {
   city: string = "";
   state: any = 0;
   zip: string = "";
+  public isIos: boolean = false;
 
-  constructor(public navCtrl: NavController, private staticDataService: StaticDataProvider, private alert: UxNotifierService, public override router: Router, public override storageService: LocalStorageService
-    ) {
-    super(navCtrl, null, null, null, null, null, null, null, null, null, storageService);
+  constructor(public navCtrl: NavController,
+    private staticDataService: StaticDataProvider,
+    private alert: UxNotifierService,
+    public override router: Router,
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
+    super(navCtrl, null, null, null, platform, null, null, null, null, null, storageService);
     console.log("ionViewDidLoad PropertyProfileAddressPage");
 
     //this.AppInsights.trackPageView({ name: 'ProfileAddressPage', properties: { userId: this.User.Id } });
@@ -36,6 +41,8 @@ export class PropertyProfileAddressPage extends BasePage {
       },
       (err) => {}
     );
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

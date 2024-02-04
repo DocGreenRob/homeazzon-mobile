@@ -44,6 +44,7 @@ export class ProfileItemsPage extends BasePage {
   detEditing: boolean = false;
   _constants: Constants;
 
+  public isIos: boolean = false;
   public manageProfileItemsView: any = 'digiDoc';
   public data: IGrid;
   public _profileItemName: string;
@@ -95,6 +96,8 @@ export class ProfileItemsPage extends BasePage {
           inAppBrowser,
           storageService);
     this._constants = new Constants();
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() { }

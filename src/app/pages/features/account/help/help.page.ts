@@ -21,6 +21,8 @@ import { Storage } from '@ionic/storage';
 export class HelpPage extends BasePage {
   private _constants: Constants;
   private _loading: any;
+
+  public isIos: boolean = false;
   constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
@@ -38,6 +40,7 @@ export class HelpPage extends BasePage {
     private loadingCtrl: LoadingController) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() { }

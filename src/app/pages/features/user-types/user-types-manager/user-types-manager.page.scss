@@ -1,64 +1,91 @@
-.registration-header {
-    gap: 9px !important;
-    height: 66px;
+//header with icon
 
-    .registration-title {
-        color: var(--additional-colors-white, #FEFEFE);
-        font-family: Plus Jakarta Sans;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 17.522px;
-        letter-spacing: 0.1px;
-    }
+.header-title-with-icon{
+	padding: 24px 24px 24px 27px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 66px;
+	background-color: #232B42;
+	.title-with-img{
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			font-family: Plus Jakarta Sans;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 17.522px;
+			letter-spacing: 0.1px;
+			white-space: nowrap;
+		}
+	}
+	.header-icon{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		span{
+			color: var(--additional-colors-white, #FEFEFE);
+			text-align: right;
+			font-family: Plus Jakarta Sans;
+			font-size: 8px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 13.478px; 
+			letter-spacing: 0.04px;
+		}
+	}
 }
 
 .container-wrapper {
-    background: #F6F8FE;
+  background: #F6F8FE;
 }
 
 .formWrapper {
-    padding-top: 42px !important;
+  padding-top: 42px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  height: 100%;
+  overflow-y: auto;
+
+  .manager-content {
     display: flex;
-    flex-direction: column;
-    gap: 22px;
-    height: 100%;
-    overflow-y: auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 43px;
+    border-bottom: 1px solid #E3E7EC;
 
-    .manager-content {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        height: 43px;
-        border-bottom: 1px solid #E3E7EC;
+    .manager-content-title {
+      display: flex;
+      align-items: center;
+      gap: 17px;
 
-        .manager-content-title {
-            display: flex;
-            align-items: center;
-            gap: 17px;
-
-            ion-text {
-                color: #111;
-                font-family: Plus Jakarta Sans;
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 600;
-                line-height: 24px;
-                letter-spacing: 0.07px;
-            }
-        }
-
-        .manager-content-options {
-            ion-text, a {
-                color: #669BBC;
-                text-align: right;
-                font-family: Plus Jakarta Sans;
-                font-size: 12px;
-                font-style: normal;
-                font-weight: 700;
-                line-height: 24px;
-                letter-spacing: 0.06px;
-            }
-        }
+      ion-text {
+        color: #111;
+        font-family: Plus Jakarta Sans;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: 0.07px;
+      }
     }
+
+    .manager-content-options {
+      ion-text, a {
+        color: #669BBC;
+        text-align: right;
+        font-family: Plus Jakarta Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0.06px;
+      }
+    }
+  }
 }

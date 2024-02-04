@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { MenuController, NavController, Platform } from "@ionic/angular";
+import { LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
 import { ILineitemDto } from "src/app/models/dto/interfaces/ILineItemDto";
 import { BasePage } from "src/app/pages/base/base.page";
 import { CommunicatorService } from "src/app/services/communicator/communicator.service";
@@ -19,12 +19,13 @@ export class LineItemsPage extends BasePage {
   // const
 
   // private
+  private _loading: any;
 
   // public
   public lineitems: Array<ILineitemDto> = new Array<ILineitemDto>();
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     public featureService: FeaturesService,
     public override platform: Platform,
     public override communicator: CommunicatorService,
@@ -33,15 +34,22 @@ export class LineItemsPage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     public override menuController: MenuController,
     public override userTypesService: UserTypesService,
-    public override storageService: LocalStorageService
-  ) {
-    super(navCtrl, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featureService,null,storageService);
+    public override storageService: LocalStorageService,
+    public loadingCtrl: LoadingController) {
+    super(navCtrl, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featureService, null, storageService);
+    this.isIos = this.platform.is('ios');
   }
 
-  override ngOnInit() {
+  override async ngOnInit() {
     console.log("ngOnInit LineitemPage");
     //this.AppInsights.trackPageView({ name: 'LineitemPage' });
-    console.log(this.ProfileItem);
+
+    this._loading = await this.loadingCtrl.create({
+      message: 'getting all lineitems ...',
+      cssClass: 'my-loading-class',
+    });
+    await this._loading.present();
+
     if (
       this.ProfileItem === undefined ||
       this.ProfileItem === null ||
@@ -53,16 +61,24 @@ export class LineItemsPage extends BasePage {
         (x: Array<ILineitemDto>) => {
           this.lineitems = x;
           this.Lineitems = x;
+          // TODO: Fix this (should NOT have two lineitems arrays!)
+          this._loading.dismiss();
         },
-        (err) => {}
+        (err) => {
+          this._loading.dismiss();
+        }
       );
     } else {
       this.suite16CategoryService.getAreaLineitems(this.ProfileItem.AreaId, this.Suite16Category.Id).then(
         (x: Array<ILineitemDto>) => {
           this.lineitems = x;
           this.Lineitems = x;
+          // TODO: Fix this (should NOT have two lineitems arrays!)
+          this._loading.dismiss();
         },
-        (err) => {}
+        (err) => {
+          this._loading.dismiss();
+        }
       );
     }
   }

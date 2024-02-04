@@ -1,7 +1,7 @@
-<ion-header>
-  <div class="header-title-with-icon">
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span (click)="close()">
-      <img _ngcontent-ng-c558513586="" src="/assets/icon/Arrow - Left Square.svg" alt="">
+      <img _ngcontent-ng-c558513586="" src="/assets/icon/arrow-left-square.svg" alt="">
     </span>
     <span class="title-with-img">
       <img *ngIf="ProfileItem.ItemCount > 0" (click)="seeProfileItemItems()" width="18" height="18"
@@ -21,13 +21,14 @@
       {{ProfileItem?.Name}}
     </span>
   </div>
+
+</ion-header>
+<div class="container-wrapper">
   <div class="tab-container">
     <app-segment-selector [segments]="views" [initView]="{value: manageProfileItemsView}"
                           (selectedSegment)="handleSegmentChanged($event)">
     </app-segment-selector>
   </div>
-</ion-header>
-<div class="container-wrapper">
   <div class="bedroom-content-container">
     <!-- My Stuff -->
     <div *ngIf="manageProfileItemsView == 'digiDoc' && isViewLoaded" class="room-list">
@@ -146,6 +147,10 @@
     </div>
   </div>
 </div>
-<tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
-          (cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
+          (homeEvent)="goHome()"
+          (fileExplorerEvent)="launchFileExplorer()"
+          (cameraEvent)="launchCamera()"
+          (barcodeEvent)="launchBarcode()"
+          (bookmarkEvent)="bookmark()"
           (searchEvent)="search()"></tab-menu>

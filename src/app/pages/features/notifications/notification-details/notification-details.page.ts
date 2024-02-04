@@ -17,6 +17,7 @@ export class NotificationDetailsPage extends BasePage {
   private _loading: any;
   public notifications: any;
   public notification: any;
+  public isIos: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
     private location: Location,
@@ -37,6 +38,7 @@ export class NotificationDetailsPage extends BasePage {
       storageService);
 
     this._constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

@@ -1,5 +1,5 @@
-<ion-header *ngIf="!addNewRoom">
-  <div class="header-items">
+<ion-header *ngIf="!addNewRoom" style="background-color: #232B42;">
+  <div class="header-items" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span>Add {{areaType}}</span>
     <ion-button class="cancel-btn" (click)="cancel()">Cancel</ion-button>
   </div>
@@ -10,42 +10,34 @@
     <div class="fieldWrapper" *ngIf="uiType!='customHouse'">
       <ion-label>Room Type</ion-label>
       <div class="inputField">
-        <ion-select
-          [(ngModel)]="areaId"
-          required
-          placeholder="Please select"
-          (ngModelChange)="areaSelectionChanged()"
-        >
+        <ion-select [(ngModel)]="areaId"
+                    required
+                    placeholder="Please select"
+                    (ngModelChange)="areaSelectionChanged()">
           <ion-select-option *ngFor="let area of areas" [value]="area.Id">
             {{area.Name}}
           </ion-select-option>
         </ion-select>
-        <img
-          class="iconSelect"
-          src="assets/icon/Icon - Next.svg"
-          alt=""
-        />
+        <img class="iconSelect"
+             src="assets/icon/Icon - Next.svg"
+             alt="" />
       </div>
     </div>
     <div class="fieldWrapper">
       <ion-label>Room Name</ion-label>
       <div class="inputField">
-        <ion-input
-          [(ngModel)]="roomName"
-          type="text"
-          placeholder="Enter Name"
-        ></ion-input>
+        <ion-input [(ngModel)]="roomName"
+                   type="text"
+                   placeholder="Enter Name"></ion-input>
       </div>
     </div>
 
     <div class="fieldWrapper">
       <ion-label>Square Footage</ion-label>
       <div class="inputField">
-        <ion-input
-          [(ngModel)]="sqFt"
-          type="text"
-          placeholder="0 Sq Ft"
-        ></ion-input>
+        <ion-input [(ngModel)]="sqFt"
+                   type="text"
+                   placeholder="0 Sq Ft"></ion-input>
       </div>
     </div>
   </div>
@@ -56,24 +48,22 @@
 
 <div *ngIf="addNewRoom" class="add-new-room-wrapper">
   <div class="formWrapper">
-  <div class="modal-header">
-    <ion-text>Add Custom Room</ion-text>
-  </div>
-  <div class="fieldWrapper">
-    <ion-label>Room name</ion-label>
-    <div [class]="!roomName ? 'inputField' : 'inputField field-border'">
-      <ion-input
-        [(ngModel)]="roomName"
-        type="text"
-        placeholder="Enter Room Name"
-      ></ion-input>
+    <div class="modal-header">
+      <ion-text>Add Custom Room</ion-text>
+    </div>
+    <div class="fieldWrapper">
+      <ion-label>Room name</ion-label>
+      <div [class]="!roomName ? 'inputField' : 'inputField field-border'">
+        <ion-input [(ngModel)]="roomName"
+                   type="text"
+                   placeholder="Enter Room Name"></ion-input>
+      </div>
+    </div>
+    <div class="btnWrapper modal-btns">
+      <ion-button [class]="!roomName ? 'disabled-btn' : 'modal-add-btn'" (click)="saveRoom()" [disabled]="!roomName">Add</ion-button>
+      <ion-button class="modal-cancel-btn" (click)="cancel()">Cancel</ion-button>
     </div>
   </div>
-  <div class="btnWrapper modal-btns">
-    <ion-button [class]="!roomName ? 'disabled-btn' : 'modal-add-btn'" (click)="saveRoom()" [disabled]="!roomName">Add</ion-button>
-    <ion-button class="modal-cancel-btn" (click)="cancel()">Cancel</ion-button>
-  </div>
-</div>
 </div>
 
 

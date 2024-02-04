@@ -5,8 +5,10 @@
     <ng-template #listView>
       <!-- List view template -->
 
-      <ion-accordion class="item-main-wrapper" [value]="c.Name" toggleIcon="assets/icon/chevron-down-circle.svg"
-        toggleIconSlot="start">
+      <ion-accordion class="item-main-wrapper"
+                     [value]="c.Name"
+                     toggleIcon="assets/icon/chevron-down-circle.svg"
+                     toggleIconSlot="start">
         <ion-item slot="header">
           <ion-label class="item-wrapper-heading">{{c.Name}}<span>({{c?.Items.length}})</span></ion-label>
           <ion-button slot="end" fill="clear" (click)="toggleListAndGridView($event,c)">
@@ -20,8 +22,8 @@
         </ion-item>
         <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main-list">
           <div *ngFor="let i of c.Items; let index = index">
-            <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
-              <ion-grid>
+            <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < iconsToFit">
+              <ion-grid class="listview-grid">
                 <ion-row>
                   <ion-col size="4">
                     <ion-thumbnail style="object-fit: cover; width: 100%; height: 70%;">
@@ -53,7 +55,7 @@
         </div>
         <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main-list">
           <div *ngFor="let i of c.Items; let index = index;" >
-            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3" class="item">
+            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < iconsToFit" class="item">
               <ion-grid>
                 <ion-row>
                   <!-- <ion-col size="4">
@@ -79,7 +81,7 @@
             </div>
           </div>
         </div>
-        <ion-item slot="content" *ngIf="c?.Items.length > 3">
+        <ion-item slot="content" *ngIf="c?.Items.length > iconsToFit">
           <div class="see-section-wrapper" style="text-align: center;">
             <span class="see-section" *ngIf="!c.showAllItems" (click)="toggleSeeAllItemsInList(c)">
               See all
@@ -91,7 +93,7 @@
             </span>
           </div>
         </ion-item>
-        <ion-item slot="content" *ngIf="c?.Items.length <= 3" class="sized">
+        <ion-item slot="content" *ngIf="c?.Items.length <= iconsToFit" class="sized">
           <div class="see-section-wrapper">
           </div>
         </ion-item>
@@ -116,7 +118,7 @@
         </ion-item>
         <div *ngIf="c.Name != 'Google Web Links'" slot="content" class="items-main ">
           <div *ngFor="let i of c.Items; let index = index">
-            <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < 3">
+            <div (click)="emit(i, c.Name)" class="item" *ngIf="c.showAllItems || index < iconsToFit">
               <img *ngIf="!i.IsTag && (i.IconPath != null && i.IconPath != '')" [src]="i.IconPath" class="item-image">
               <img
                 *ngIf="!i.IsTag && (i.IconPath == null || i.IconPath == '') && (i.ImagePath != null && i.ImagePath != '')"
@@ -134,7 +136,7 @@
 
         <div *ngIf="c.Name == 'Google Web Links'" slot="content" class="items-main web-items-main">
           <div *ngFor="let i of c.Items; let index = index;" class="item">
-            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < 3">
+            <div (click)="emit(i, c.Name)" *ngIf="c.showAllItems || index < iconsToFit">
              <div class="web-image">
               <!-- <img *ngIf="i.IconPath != null && i.IconPath != ''" [src]="i.IconPath" class="item-icon">
               <img *ngIf="(i.IconPath == null || i.IconPath == '') && i.ImagePath != null && i.ImagePath != ''"
@@ -147,7 +149,7 @@
             </div>
           </div>
         </div>
-        <ion-item slot="content" *ngIf="c?.Items.length > 3" style="border-style: none;">
+        <ion-item slot="content" *ngIf="c?.Items.length > iconsToFit" style="border-style: none;">
           <div class="see-section-wrapper" style="text-align: center; border-style: none;">
             <span class="see-section" style="border-style: none;" *ngIf="!c.showAllItems"
               (click)="toggleSeeAllItemsInList(c)">
@@ -160,7 +162,7 @@
             </span>
           </div>
         </ion-item>
-        <ion-item slot="content" *ngIf="c?.Items.length <= 3" class="sized">
+        <ion-item slot="content" *ngIf="c?.Items.length <= iconsToFit" class="sized">
           <div class="see-section-wrapper">
           </div>
         </ion-item>

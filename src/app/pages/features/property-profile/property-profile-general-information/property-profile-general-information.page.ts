@@ -24,6 +24,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   public isExistingLinkWithCustomer: boolean = false;
   public customerName: string = '';
   public customerEmail: string = '';
+  public isIos: boolean = false;
 
   private _constants = new Constants();
   private _loading: any;
@@ -41,6 +42,8 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
 
     this.property = {} as IPropertyDto;
     this.property.SqFt = null;
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

@@ -36,6 +36,7 @@ import { LocalStorageService } from '@app/services/local-storage.service';
 })
 export class DashboardPage extends BasePage {
   private _constants = new Constants();
+  public isIos: boolean = false;
 
   // const
   public data: IGrid;
@@ -118,6 +119,8 @@ export class DashboardPage extends BasePage {
     this._constants = new Constants();
 
     this.IsFirstLoadCompleted = false;
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
@@ -1030,6 +1033,7 @@ export class DashboardPage extends BasePage {
     suite16Category.Id = gridList.Items[0].Id;
     suite16Category.Name = gridList.Items[0].Name;
     suite16Category.ImageUrl = gridList.Items[0].IconPath;
+
     this.Suite16Category = suite16Category;
 
     this.router.navigate(['line-items']);

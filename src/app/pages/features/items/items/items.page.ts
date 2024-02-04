@@ -38,6 +38,7 @@ import { LocalStorageService } from "@app/services/local-storage.service";
   styleUrls: ["./items.page.scss"],
 })
 export class ItemsPage extends BasePage {
+  public isIos: boolean = false;
   public data: IGrid;
   public manageView: any = this.User.IsPrivateLabelPartner ? "suggested" : "my";
   public dynamicManageView: any = "";
@@ -70,29 +71,31 @@ export class ItemsPage extends BasePage {
     },
   ];
 
-  constructor(
-    public override navController: NavController,
-    public override navParams: NavParams,
-    private searchService: SearchService,
-    public override uxNotifierService: UxNotifierService,
-    private loadingCtrl: LoadingController,
-    private itemService: ItemService,
-    public override communicator: CommunicatorService,
-    public override menuController: MenuController,
-    public override platform: Platform,
-    public override userTypesService: UserTypesService,
-    public viewsProvider: ViewsService,
-    public override router: Router,
-    public override inAppBrowser: InAppBrowser,
-    private ngzone: NgZone,
-    private modalCtrl: ModalController,
-    private location: Location,
-    public override storageService: LocalStorageService
-  ) {
+  constructor(public override navController: NavController,
+              public override navParams: NavParams,
+              private searchService: SearchService,
+              public override uxNotifierService: UxNotifierService,
+              private loadingCtrl: LoadingController,
+              private itemService: ItemService,
+              public override communicator: CommunicatorService,
+              public override menuController: MenuController,
+              public override platform: Platform,
+              public override userTypesService: UserTypesService,
+              public viewsProvider: ViewsService,
+              public override router: Router,
+              public override inAppBrowser: InAppBrowser,
+              private ngzone: NgZone,
+              private modalCtrl: ModalController,
+              private location: Location,
+              public override storageService: LocalStorageService) {
     super(navController, navParams, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser, storageService);
+
     this.storageService.delete("ActiveItem");
+
     this._tupleDictionary = new Dictionary();
     this._tupleDictionary.Entries = new Array<Entry>();
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

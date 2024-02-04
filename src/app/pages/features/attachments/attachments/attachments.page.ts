@@ -22,6 +22,7 @@ export class AttachmentsPage extends BasePage {
   private _loading: any;
   private _constants = new Constants();
   isShowSave: boolean = false;
+  public isIos: boolean = false;
 
   constructor(
     public override navController: NavController,
@@ -35,6 +36,7 @@ export class AttachmentsPage extends BasePage {
     public override storageService: LocalStorageService
   ) {
     super(navController, null, null, null, platform, router, uxNotifierService, null, null, inAppBrowser, storageService);
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() {

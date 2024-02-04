@@ -21,19 +21,18 @@ export class UserTypesManagerPage extends BasePage {
   public userTypes: Array<IUserTypeDto>;
   public userTypesAnynomousType: Array<any>;
   private _constants: Constants;
+  public isIos: boolean = false;
 
-  constructor(
-    public override navController: NavController,
-    public override communicator: CommunicatorService,
-    public override menuController: MenuController,
-    public override platform: Platform,
-    public override router: Router,
-    public override uxNotifierService: UxNotifierService,
-    public override userTypesService: UserTypesService,
-    public override featuresService: FeaturesService,
-    public override inAppBrowser: InAppBrowser,
-    public override storageService: LocalStorageService
-  ) {
+  constructor(public override navController: NavController,
+              public override communicator: CommunicatorService,
+              public override menuController: MenuController,
+              public override platform: Platform,
+              public override router: Router,
+              public override uxNotifierService: UxNotifierService,
+              public override userTypesService: UserTypesService,
+              public override featuresService: FeaturesService,
+              public override inAppBrowser: InAppBrowser,
+              public override storageService: LocalStorageService) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
 
@@ -49,6 +48,8 @@ export class UserTypesManagerPage extends BasePage {
         this.userTypesAnynomousType[i].IsSubscribed = false;
       }
     }
+
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() { }

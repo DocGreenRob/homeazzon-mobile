@@ -34,6 +34,7 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
   customText: string = 'Your Custom Rooms';
   public isPrivateLabelBuildYourOwn: boolean;
   @ViewChild("content") private content: any;
+  public isIos: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -48,6 +49,7 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
   ) {
     super(navCtrl, null, null, null, platform, router, null, null, null,null,storageService);
     this.constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
