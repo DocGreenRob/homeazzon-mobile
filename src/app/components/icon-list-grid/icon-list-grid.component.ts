@@ -36,6 +36,9 @@ export class IconListGridComponent implements OnInit {
 
   private calculateIconsToFit(): void {
     return;
+    //TODO: Implement this
+    // calulate the number of icons that can fit in the container
+
     const containerWidth = this.container.nativeElement.offsetWidth;
     const a = Math.floor(containerWidth / this.defaultIconWidth);
 
