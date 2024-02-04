@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header style="background-color: #232B42;">
   <!--<primary-menu type="titleMenu" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()" [title]="LineItem?.Name"></primary-menu>-->
-  <div class="header-title-with-icon">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span>
       <img src="/assets/icon/Arrow - Left Square.svg"
            (click)="close()" />
@@ -497,6 +497,10 @@ IsMetattachment ?
   <!-- </ion-col> -->
 </div>
 
-<tab-menu (homeEvent)="goHome()" (fileExplorerEvent)="launchFileExplorer()"
-          (cameraEvent)="launchCamera()" (barcodeEvent)="launchBarcode()" (bookmarkEvent)="bookmark()"
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
+          (homeEvent)="goHome()"
+          (fileExplorerEvent)="launchFileExplorer()"
+          (cameraEvent)="launchCamera()"
+          (barcodeEvent)="launchBarcode()"
+          (bookmarkEvent)="bookmark()"
           (searchEvent)="search()"></tab-menu>

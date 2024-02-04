@@ -52,43 +52,46 @@ export class ItemDetailsPage extends BasePage {
   public imageFileTypes = ImageFileTypes;
   public docFileTypes = DocumentFileTypes;
   public hasOtherSpecifications: boolean = false;
+  public isIos: boolean = false;
   _sanitizedUrl: any;
 
   /*For Tags Feature*/
   form: FormGroup;
   public tagContextList = []; //[{ value: 0, display: 'Angular' }, { value: 1, display: 'React' }];
   public selectedTagItems = [];
-  constructor(
-    public override navController: NavController,
-    public override navParams: NavParams,
-    private itemService: ItemService,
-    private loadingCtrl: LoadingController,
-    public override uxNotifierService: UxNotifierService,
-    private sanitizerService: DomSanitizer,
-    public override communicator: CommunicatorService,
-    public override menuController: MenuController,
-    private attachmentService: MetattachService,
-    public override inAppBrowser: InAppBrowser,
-    public override platform: Platform,
-    public override router: Router,
-    private activeRoute: ActivatedRoute,
-    public override userTypesService: UserTypesService,
-    public profileItemImageService: ProfileItemImageService,
-    public sanitizer: DomSanitizer,
-    private tagService: TagService,
-    private formBuilder: FormBuilder,
-    private artifactIndexService: ArtifactIndexService,
-    private modalCtrl: ModalController,
-    private contactInformationService: ContactInformationService,
-    private alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
+  constructor(public override navController: NavController,
+              public override navParams: NavParams,
+              private itemService: ItemService,
+              private loadingCtrl: LoadingController,
+              public override uxNotifierService: UxNotifierService,
+              private sanitizerService: DomSanitizer,
+              public override communicator: CommunicatorService,
+              public override menuController: MenuController,
+              private attachmentService: MetattachService,
+              public override inAppBrowser: InAppBrowser,
+              public override platform: Platform,
+              public override router: Router,
+              private activeRoute: ActivatedRoute,
+              public override userTypesService: UserTypesService,
+              public profileItemImageService: ProfileItemImageService,
+              public sanitizer: DomSanitizer,
+              private tagService: TagService,
+              private formBuilder: FormBuilder,
+              private artifactIndexService: ArtifactIndexService,
+              private modalCtrl: ModalController,
+              private contactInformationService: ContactInformationService,
+              private alertCtrl: AlertController,
+              public override storageService: LocalStorageService) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser, storageService);
+
     this._constants = new Constants();
+
     this.form = this.formBuilder.group({
       code: [],
       tags: [[]],
     });
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
