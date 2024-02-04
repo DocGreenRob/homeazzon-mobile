@@ -22,28 +22,30 @@ export class NotificationListPage extends BasePage {
   public notification: any;
   public isNotifications: boolean = false;
   deleteSuccess: boolean = false;
+  public isIos: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
-    private location: Location,
-    private loadingController: LoadingController,
-    private notificationService: NotificationService,
-    public override uxNotifierService: UxNotifierService,
-    public override platform: Platform,
-    private modalController: ModalController,
-    public override router: Router,) {
+              private location: Location,
+              private loadingController: LoadingController,
+              private notificationService: NotificationService,
+              public override uxNotifierService: UxNotifierService,
+              public override platform: Platform,
+              private modalController: ModalController,
+              public override router: Router) {
     super(null,
-      null,
-      null,
-      null,
-      platform,
-      router,
-      uxNotifierService,
-      null,
-      null,
-      null,
-      storageService);
+          null,
+          null,
+          null,
+          platform,
+          router,
+          uxNotifierService,
+          null,
+          null,
+          null,
+          storageService);
 
     this._constants = new Constants();
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

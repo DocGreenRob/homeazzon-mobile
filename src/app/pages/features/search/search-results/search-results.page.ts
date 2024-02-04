@@ -22,6 +22,7 @@ export class SearchResultsPage extends BasePage {
   private _loading: any = null;
   showBackButton = true;
   public view: string = "";
+  public isIos: boolean = false;
 
   private currentProductPage: number = 1;
 
@@ -36,7 +37,8 @@ export class SearchResultsPage extends BasePage {
     public override uxNotifierService: UxNotifierService,
     public override storageService: LocalStorageService
   ) {
-    super(navController, null, null, null, platform, router, uxNotifierService, null, null,null,storageService);
+    super(navController, null, null, null, platform, router, uxNotifierService, null, null, null, storageService);
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() {

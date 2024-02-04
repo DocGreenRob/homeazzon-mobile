@@ -1,9 +1,13 @@
-<ion-header>
-  <div class="header">
-    <span (click)="goBack()">
-      <img src="/assets/icon/arrow-left-square.svg" alt="" />
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span (click)="close()">
+      <img src="assets/icon/arrow-left-square.svg" />
     </span>
-    <span class="headerTitle"> Search results </span>
+    <span class="title-with-img">
+      <span>Search results</span>
+    </span>
+    <div class="header-icon">
+    </div>
   </div>
 </ion-header>
 
