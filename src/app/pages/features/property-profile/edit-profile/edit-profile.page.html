@@ -1,7 +1,20 @@
-<ion-header style="background-color: #232B42;">
+<!--<ion-header style="background-color: #232B42;">
   <div class="header-items" [ngStyle]="isIos && {'margin-top': '1.4em'}">
     <span>{{profileName}}</span>
     <ion-button class="cancel-btn" (click)="close()">Cancel</ion-button>
+  </div>
+</ion-header>-->
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+    <span (click)="close()">
+      <img src="assets/icon/arrow-left-square.svg" />
+    </span>
+    <span class="title-with-img">
+      <span>{{profileName}}</span>
+    </span>
+    <div class="header-icon">
+      <!--<ion-button class="cancel-btn" (click)="close()">Cancel</ion-button>-->
+    </div>
   </div>
 </ion-header>
 <div class="container-wrapper">
@@ -38,3 +51,4 @@
     </ion-button>
     <ion-button class="continuebtn" (click)="save()">Save</ion-button>
   </div>
+</div>

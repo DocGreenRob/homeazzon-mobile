@@ -187,16 +187,21 @@ export class EditProfilePage extends BasePage {
     });
   }
 
+  public properProfileName: string = '';
   public async addRoom() {
     let areas: any = [];
 
     if (this.profileName === "bedroom") {
+      this.properProfileName = 'Bedrooms';
       areas = this.bedroomAreas;
     } else if (this.profileName === "bathroom") {
+      this.properProfileName = 'Bathrooms';
       areas = this.bathroomAreas;
     } else if (this.profileName === "commonarea") {
+      this.properProfileName = 'Common Areas';
       areas = this.commonAreas;
     } else if (this.profileName === "exterior") {
+      this.properProfileName = 'Exterior Areas';
       areas = this.exteriorAreas;
     }
 
