@@ -12,7 +12,7 @@ import { UserTypesService } from "../../../../services/user-types/user-types.ser
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
 import { Constants } from "../../../../common/Constants";
-import { Country, State, City }  from 'country-state-city';
+import { Country, State, City } from 'country-state-city';
 
 @Component({
   selector: "app-user-types-owner",
@@ -64,14 +64,20 @@ export class UserTypesOwnerPage extends BasePage {
 
   private updateTitle() {
     const userName = this.getUserName(this.NewSelectedUserType.Name);
+    let a = this.IsNewUserTypeSelected;
+    let b:boolean = false;
+
+    if (a != undefined && a != null) {
+      b = a;
+    }
 
     switch (userName) {
       case 'Owner':
-        this.title = 'Update Property';
+        this.title = b ? 'Create Property' : 'Update Property';
         this.isOwner = true;
         break;
       case 'Realtor':
-        this.title = 'Update Property';
+        this.title = b ? 'Create Property' : 'Update Property';
         break;
     }
   }
@@ -183,11 +189,11 @@ export class UserTypesOwnerPage extends BasePage {
     throw new Error('User type not found');
   }
 
-  onCountryChange(){
+  onCountryChange() {
     this.states = State.getStatesOfCountry(this.country);
   }
 
-  onStateChange(){
+  onStateChange() {
     this.cities = City.getCitiesOfState(this.country, this.state);
   }
 }

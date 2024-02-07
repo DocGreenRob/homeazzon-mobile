@@ -6,10 +6,9 @@
               type="overlay"
               side="start"
               menuId="mainMenu">
-      <div style="font-size:.6em; text-align:center; padding-top:1em;" [ngStyle]="isIos && {'margin-top': '1.4em'}">
-        <i>v {{ appVersion }}</i>
-      </div>
-      <div class="main-wrapper" style="overflow:hidden !important;" [ngStyle]="isIos && {'margin-top': '1.4em'}">
+      <div class="main-wrapper"
+           style="overflow:hidden !important;"
+           [ngStyle]="isIos && {'margin-top': '2em'}">
         <div class="sidebar-wrapper left-sidebar">
           <div class="profile-info">
             <span class="avatar">
@@ -34,13 +33,15 @@
                [ngStyle]="isIos && {'padding-bottom': '2em'}"
                (click)="openPage({ url: 'logout' })">
             <ion-button>Log Out</ion-button>
+            <i style="font-size:.6em; text-align:center;display: block; margin: auto;">v {{ appVersion }}</i>
           </div>
         </div>
       </div>
     </ion-menu>
     <!-- Property Menu (top-right) -->
     <ion-menu contentId="main-content" type="overlay" side="end" menuId="propertyMenu">
-      <div class="main-wrapper">
+      <div class="main-wrapper"
+           [ngStyle]="isIos && {'margin-top': '2em'}">
         <div class="sidebar-wrapper">
           <div class="profile-info">
             <span class="avatar">
