@@ -132,6 +132,7 @@ export class DashboardPage extends BasePage {
     if (this.IsFirstLoadCompleted === undefined
       || this.IsFirstLoadCompleted === null
       || this.IsFirstLoadCompleted === false) {
+
       this._loading = await this.loadingCtrl.create({
         message: 'loading properties...',
         cssClass: 'my-loading-class',
@@ -171,6 +172,7 @@ export class DashboardPage extends BasePage {
 
   async resetState() {
     // TODO: Remove magic strings
+    this.storageService.delete('ActiveProperty');
     this.storageService.delete('ActiveAttachment');
     this.storageService.delete('ActiveAttachmentItem');
     this.storageService.delete('ActiveItem');
@@ -179,6 +181,9 @@ export class DashboardPage extends BasePage {
     this.storageService.delete('Metattachments');
     this.storageService.delete('Suite16Category');
     this.storageService.delete('IsMetattachment');
+    this.storageService.delete('IsWishlist');
+    this.storageService.delete('IsSuggest');
+    this.storageService.delete('IsMy');
     this.storageService.delete('Lineitems');
     this.storageService.delete('ProfileItem');
     this.storageService.delete('AssetIndex');

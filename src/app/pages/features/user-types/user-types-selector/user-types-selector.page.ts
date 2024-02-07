@@ -23,6 +23,8 @@ export class UserTypesSelectorPage extends BasePage {
   private _constants: Constants;
   public profileItemImages: Array<ProfileItemImageDto>;
 
+  private ownerUserTypeId: number = 0;
+
   constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
@@ -47,6 +49,11 @@ export class UserTypesSelectorPage extends BasePage {
     } else {
       this.getUserTypes();
     }
+
+    let a = this.UserTypes.filter((x) => x.Name.toLowerCase().indexOf(this._constants.UserTypes.Owner.toLowerCase()) >= 0);
+    this.ownerUserTypeId = a[0].Id;
+
+    this.chooseRole(this.ownerUserTypeId);
   }
 
   private async getUserTypes() {
