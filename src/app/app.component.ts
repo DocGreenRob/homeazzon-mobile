@@ -120,7 +120,7 @@ export class AppComponent extends BasePage {
         await this._loading.present();
       }
     }).catch((err: any) => {
-      debugger;
+      //debugger;
     });
 
     this.listenPropertiesLoadedEvent();

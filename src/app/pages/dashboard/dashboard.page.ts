@@ -172,7 +172,7 @@ export class DashboardPage extends BasePage {
 
   async resetState() {
     // TODO: Remove magic strings
-    this.storageService.delete('ActiveProperty');
+    //this.storageService.delete('ActiveProperty'); // Robert 2.11.24 - Keep this for better UX. If the user is in the middle of something, don't reset the property.
     this.storageService.delete('ActiveAttachment');
     this.storageService.delete('ActiveAttachmentItem');
     this.storageService.delete('ActiveItem');
