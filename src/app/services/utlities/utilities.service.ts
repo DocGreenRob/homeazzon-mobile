@@ -40,4 +40,8 @@ export class UtilitiesService extends baseService {
   async deleteAccount(): Promise<any> {
     return this.get("/utils/delete-user-account").toPromise();
   }
+
+  async getPrivateLabelRegistrationUrl(): Promise<any> {
+    return this.get("/utils/private-label-registration-url").toPromise();
+  }
 }
