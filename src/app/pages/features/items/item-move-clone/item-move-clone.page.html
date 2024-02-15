@@ -121,15 +121,19 @@
 			<div *ngIf="isShowLineItem">
 				<div *ngFor="let property of selectedProperties;let propertyIndex = index">
 					<h4>{{property.Name}}</h4>
-					<div class="roleWrapper" *ngFor="let profileItem of property.Profiles;let profileItemIndex = index">
+					<div class="roleWrapper" *ngFor="let profileItem of property.Profiles; let profileItemIndex = index">
 						<div class="toggleWrapper">
 							<ion-label>{{profileItem.Area.Name}}</ion-label>
 							<ion-toggle  name="SelectAll" [(ngModel)]="profileItem.selected" (ionChange)="onProfileItemSelectAllToggle(propertyIndex, profileItemIndex)"></ion-toggle>	
 						</div>
-						<div class="roles" *ngFor="let lineItem of profileItem.LineItems">
-							<ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Area.Id+ '_' + lineItem.Id}}" [(ngModel)]="lineItem.selected"></ion-checkbox>
+						
+						<span *ngIf="profileItem.selected">
+							<div class="roles" *ngFor="let lineItem of profileItem.LineItems">
+							<ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Area.Id+ '_' + lineItem.Id}}" [(ngModel)]="lineItem.selected" (change)="itemSelected(lineItem.selected)" ></ion-checkbox>
 							<ion-text>{{lineItem.Name}}</ion-text>
 						</div>
+					</span>
+						
 					</div>
 				</div>
 				<div class="btnWrapper">

@@ -184,7 +184,7 @@ export class ItemMoveClonePage extends BasePage {
   }
 
   public async profileItemPanelNextClick() {
-    let selectedProfileIDs = [];
+    let selectedProfiles = [];
     for (let p of this.selectedProperties) {
       //Remove non selected profiles.
       var filtered = p.Profiles.filter(function (value, index, arr) {
@@ -195,21 +195,25 @@ export class ItemMoveClonePage extends BasePage {
       //Array of selected PRofileItemIds
       for (let prof of p.Profiles) {
         if (prof.selected) {
-          selectedProfileIDs.push(prof.Id);
+          selectedProfiles.push({ Id: prof.Id, propertyName: p.Name, profileName: prof.ProfileItems[0].Name });
         }
       }
     }
 
-    this.loading = await this.loadingCtrl.create({
-      message: "",
-      cssClass: "my-loading-class",
-    });
-    this.loading.present();
     const userType = this.getUserShortName(this.User.Types[0].Name);
-    for(let profileID of selectedProfileIDs) {
-      await this.propertyService.getProfileItems(profileID, userType)
-      .then(
-        (profileItem: any) => {
+    const loaders = {};
+
+    for(let item of selectedProfiles) {    
+      loaders[item.Id] = await this.loadingCtrl.create({
+        message: `Loading Line Items of ${item.propertyName} for ${item.profileName}...`,
+        cssClass: "my-loading-class",
+      });
+
+      loaders[item.Id]?.present();
+
+      await this.propertyService.getProfileItems(item.Id, userType)
+      .then((profileItem: any) => {
+        loaders[profileItem.Id]?.dismiss();
         console.log("ProfileItems = ", profileItem);
         console.log("selectedProperties = ", this.selectedProperties);
      
@@ -341,7 +345,7 @@ export class ItemMoveClonePage extends BasePage {
         clonePropertyList.push(clonePropertyDto);
       }
 
-      this.productService.cloneProduct(clonePropertyList, this.ActiveItem.AssetInfo.Id).then(
+      this.productService.cloneProduct(clonePropertyList, this.ActiveItem?.AssetInfo?.Id).then(
         (response: Array<AssetIndexDto>) => {
           this.loading.dismiss();
           this.uxNotifierService.showToast("Product was Cloned successfully", this._constants.ToastColorGood);
@@ -395,12 +399,18 @@ export class ItemMoveClonePage extends BasePage {
         for (let [profileIndex, profileItem] of p.Profiles.entries()) {
           if (profileIndex == profileItemIndex) {
             for (let lineItem of profileItem.LineItems) {
-              lineItem.selected = profileItem.selected;
+              if(!profileItem.selected){
+                lineItem.selected = profileItem.selected;
+              }
             }
           }
         }
       }
     }
+  }
+
+  itemSelected(item){
+    console.log('selectedLineItem:', item);
   }
  
 }
