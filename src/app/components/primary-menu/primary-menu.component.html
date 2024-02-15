@@ -1,38 +1,37 @@
 <ion-row class="top-row header" *ngIf="type=='logoMenu'">
-	<ion-col class="menu">
-		<img (click)="openMainMenu()" src="assets/icon/menu.svg" class="header-img-menu" menuToggle menu="regular-menu"
-			  />
-	</ion-col>
-	<ion-col class="welcome">
-		<h2 class="welcome-title">Welcome {{userName}}, ✋</h2> 
-		<p class="welcome-detail">Let's transform your home into a smart haven 🏡💡📱</p>
+  <ion-col class="menu">
+    <img (click)="openMainMenu()" src="assets/icon/menu.svg" class="header-img-menu" menuToggle menu="regular-menu" />
+  </ion-col>
+  <ion-col class="welcome">
+    <h2 class="welcome-title">Welcome {{userName}}, ✋</h2>
+    <p class="welcome-detail">Let's transform your home into a smart haven 🏡💡📱</p>
 
-	</ion-col>
-	<ion-col class="building">
-		<div class="building-main" (click)="openMenu()">
-			<img src="assets/icon/building-fill.svg" alt="">
-			<span>{{propertyName}}</span>
-		</div>
-	</ion-col>
+  </ion-col>
+  <ion-col class="building">
+    <div class="building-main" (click)="openMenu()" style="width:3em !important; text-align: center !important;">
+      <img src="assets/icon/building-fill.svg" alt="">
+      <span>{{ActiveProperty?.Name | slice:0:30}}</span>
+    </div>
+  </ion-col>
 </ion-row>
 
 <div *ngIf="type=='doubleTitleMenu'">
-	<div color="white-background">
-		<ion-row class=" header">
-			<ion-col size="12">
-				<div class="flush-top">
-					<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" (click)="close()" />
-					<img style="max-width: 1.5em !important; position: absolute !important; top: 0 !important; left: 6.5em !important; filter: invert(63%) sepia(26%) saturate(777%) hue-rotate(72deg) brightness(93%) contrast(96%);" src="{{iconUrl}}" class="item-image">
-					<div class="caption" style="text-align: center !important; position: absolute !important; top: .3em !important; left: 7.4em !important;">
-						{{title}}
-					</div>
-					<h1 class="page-title">{{subTitle}}</h1>
-					<div style="padding-right: .5em; margin-top: -.5em;" (click)="openMenu()">
-						<img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259" class="header-img-property" (click)="openMenu()">
-						<div class="property-name-active" (click)="openMenu()">{{propertyName}}</div>
-					</div>
-				</div>
-			</ion-col>
-		</ion-row>
-	</div>
+  <div color="white-background">
+    <ion-row class=" header">
+      <ion-col size="12">
+        <div class="flush-top">
+          <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fchevron-left.svg?alt=media&token=8d023f28-4d41-46c7-806f-7b024d91baee" class="left-icon" (click)="close()" />
+          <img style="max-width: 1.5em !important; position: absolute !important; top: 0 !important; left: 6.5em !important; filter: invert(63%) sepia(26%) saturate(777%) hue-rotate(72deg) brightness(93%) contrast(96%);" src="{{iconUrl}}" class="item-image">
+          <div class="caption" style="text-align: center !important; position: absolute !important; top: .3em !important; left: 7.4em !important;">
+            {{title}}
+          </div>
+          <h1 class="page-title">{{subTitle}}</h1>
+          <div style="padding-right: .5em; margin-top: -.5em;" (click)="openMenu()">
+            <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fregular%2Fhome.svg?alt=media&token=f8feaa4d-be27-45b2-ab8e-2f176d6a5259" class="header-img-property" (click)="openMenu()">
+            <div class="property-name-active" (click)="openMenu()">{{propertyName}}</div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
 </div>
