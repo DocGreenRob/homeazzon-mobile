@@ -253,12 +253,12 @@ export class DashboardPage extends BasePage {
             this.getAllUserProperties();
             this.IsPropertiesFetched = true;
           } else {
-            alert('Setting up first property 1');
             this.setupProperty(this.ActiveProperty);
             this.communicator.sendProperties(this.Properties);
           }
         },
         (err) => {
+          // TODO: Change to use uxNotifierService
           alert(`Error getting area types: ${JSON.stringify(err)}`);
         }
       );
@@ -556,7 +556,6 @@ export class DashboardPage extends BasePage {
               } else {
                 alert('Setting up first property 7' + properties[0].Name);
                 this.setupProperty(properties[0]);
-                //this.closeLoader();
               }
             }
 
@@ -1015,8 +1014,6 @@ export class DashboardPage extends BasePage {
         ) {
           //this.getSuite16Categories();
         }
-
-        //alert(`err: getSuite16Categories() ${err}`);
       }
     );
     //}
