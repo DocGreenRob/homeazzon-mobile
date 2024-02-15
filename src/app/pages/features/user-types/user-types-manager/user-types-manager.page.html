@@ -23,7 +23,7 @@
       </div>
       <div class="manager-content-options">
         <ion-text>
-          <a *ngIf="userType.IsSubscribed == false" (click)="setup(userType.Id)">Setup</a>
+          <a *ngIf="userType.IsSubscribed == false" (click)="redirectToRegistrationPage()">Register Online</a>
           <a *ngIf="userType.IsSubscribed == true" (click)="manage(userType.Id)">Manage</a>
         </ion-text>
       </div>

@@ -11,6 +11,7 @@ import { UserTypesService } from "../../../../services/user-types/user-types.ser
 import { UxNotifierService } from "../../../../services/uxNotifier/ux-notifier.service";
 import { BasePage } from "../../../base/base.page";
 import { LocalStorageService } from "@app/services/local-storage.service";
+import { UtilitiesService } from "../../../../services/utlities/utilities.service";
 
 @Component({
   selector: "app-user-types-manager",
@@ -24,15 +25,16 @@ export class UserTypesManagerPage extends BasePage {
   public isIos: boolean = false;
 
   constructor(public override navController: NavController,
-              public override communicator: CommunicatorService,
-              public override menuController: MenuController,
-              public override platform: Platform,
-              public override router: Router,
-              public override uxNotifierService: UxNotifierService,
-              public override userTypesService: UserTypesService,
-              public override featuresService: FeaturesService,
-              public override inAppBrowser: InAppBrowser,
-              public override storageService: LocalStorageService) {
+    public override communicator: CommunicatorService,
+    public override menuController: MenuController,
+    public override platform: Platform,
+    public override router: Router,
+    public override uxNotifierService: UxNotifierService,
+    public override userTypesService: UserTypesService,
+    public override featuresService: FeaturesService,
+    public override inAppBrowser: InAppBrowser,
+    public override storageService: LocalStorageService,
+    public utilitiesService: UtilitiesService) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
 
@@ -175,5 +177,17 @@ export class UserTypesManagerPage extends BasePage {
       return this._constants.UserTypes.Vendor;
     }
     throw new Error('User type not found');
+  }
+
+  public async redirectToRegistrationPage() {
+    await this.utilitiesService.getPrivateLabelRegistrationUrl().then((x:any) => {
+      debugger;
+      let a = x.PrivateLabelRegistrationUrl;
+      // redirect the user to the registration URL page www.homeazzon.register.com
+      this.inAppBrowser.create(x, "_blank");
+    }).catch((err) => {
+
+    });
+
   }
 }

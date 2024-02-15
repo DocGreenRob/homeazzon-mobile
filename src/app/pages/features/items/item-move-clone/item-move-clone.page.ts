@@ -60,7 +60,7 @@ export class ItemMoveClonePage extends BasePage {
     private modalCtrl: ModalController,
     private productService: ProductsService,
     public override storageService: LocalStorageService) {
-    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null,null,storageService);
+    super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, null, storageService);
     this._constants = new Constants();
 
     //this.assetInfo = this.navParams.get("product");
@@ -71,13 +71,7 @@ export class ItemMoveClonePage extends BasePage {
   override ngOnInit() {
     this.activeRoute.queryParams.subscribe((params) => {
       this.action = params["action"];
-      // this.updateProfileItems();
-      
     });
-  
-  
-  
-    
 
     // this.propertyService.getProfileItems(selectedProfileID, userType)
     // .then((profileItems: any) => {
@@ -85,8 +79,6 @@ export class ItemMoveClonePage extends BasePage {
     //   // Rest of your existing code to manipulate the data
     // });
 
-     
- 
   }
 
   ionViewDidEnter() {
@@ -200,45 +192,41 @@ export class ItemMoveClonePage extends BasePage {
       }
     }
 
+    this.loading = await this.loadingCtrl.create({
+      message: "",
+      cssClass: "my-loading-class",
+    });
+    this.loading.present();
     const userType = this.getUserShortName(this.User.Types[0].Name);
-    const loaders = {};
+    for (let profileID of selectedProfileIDs) {
+      await this.propertyService.getProfileItems(profileID, userType)
+        .then(
+          (profileItem: any) => {
+            console.log("ProfileItems = ", profileItem);
+            console.log("selectedProperties = ", this.selectedProperties);
 
-    for(let item of selectedProfiles) {    
-      loaders[item.Id] = await this.loadingCtrl.create({
-        message: `Loading Line Items of ${item.propertyName} for ${item.profileName}...`,
-        cssClass: "my-loading-class",
-      });
-
-      loaders[item.Id]?.present();
-
-      await this.propertyService.getProfileItems(item.Id, userType)
-      .then((profileItem: any) => {
-        loaders[profileItem.Id]?.dismiss();
-        console.log("ProfileItems = ", profileItem);
-        console.log("selectedProperties = ", this.selectedProperties);
-     
-       for (let p of this.selectedProperties) {
-          for (let propertyProfileItem of p.Profiles) {
-            // for (let resultProfileItem of profileItem) {
-              if (profileItem.Id === propertyProfileItem.Id) {
-                propertyProfileItem.LineItems = profileItem.Area.LineItems;
-                propertyProfileItem.selected = false;
-                for (let lineItem of propertyProfileItem.LineItems) {
-                  lineItem.selected = false;
+            for (let p of this.selectedProperties) {
+              for (let propertyProfileItem of p.Profiles) {
+                // for (let resultProfileItem of profileItem) {
+                if (profileItem.Id === propertyProfileItem.Id) {
+                  propertyProfileItem.LineItems = profileItem.Area.LineItems;
+                  propertyProfileItem.selected = false;
+                  for (let lineItem of propertyProfileItem.LineItems) {
+                    lineItem.selected = false;
+                  }
                 }
+                // }
               }
-            // }
-          }
-        }
+            }
 
-        this.isShowArea = false;
-        this.isShowLineItem = true;
-        this.loading.dismiss();
-      })
-      .catch((error) => {
-        console.log(error);
-        this.loading.dismiss();
-      });
+            this.isShowArea = false;
+            this.isShowLineItem = true;
+            this.loading.dismiss();
+          })
+        .catch((error) => {
+          console.log(error);
+          this.loading.dismiss();
+        });
     }
 
   }
@@ -267,7 +255,7 @@ export class ItemMoveClonePage extends BasePage {
           this.profileItems = [];
           for (let Profiles of property.Profiles) {
             for (let profileItem of Profiles.ProfileItems) {
-                this.profileItems.push(profileItem);
+              this.profileItems.push(profileItem);
             }
           }
         }
@@ -304,16 +292,27 @@ export class ItemMoveClonePage extends BasePage {
       });
   }
 
-  async onLineItemSelect() {
+  public async onLineItemSelect() {
     this.isShowSave = true;
   }
 
-  async save() {
+  public async save() {
+
     this.loading = await this.loadingCtrl.create({
-      message: "",
+      message: `${this.action} in progress...`,
       cssClass: "my-loading-class",
     });
+
     this.loading.present();
+
+    let a = this.ActiveItem;
+    let googleLink = a.GoogleLink;
+    let isGoogleLink = false;
+
+    if (googleLink !== null && googleLink !== undefined) {
+      isGoogleLink = true;
+    }
+
     if (this.action === this._constants.Actions.clone) {
       let clonePropertyList: Array<ClonePropertyDto> = new Array();
       for (let p of this.selectedProperties) {
@@ -345,32 +344,57 @@ export class ItemMoveClonePage extends BasePage {
         clonePropertyList.push(clonePropertyDto);
       }
 
-      this.productService.cloneProduct(clonePropertyList, this.ActiveItem?.AssetInfo?.Id).then(
-        (response: Array<AssetIndexDto>) => {
-          this.loading.dismiss();
-          this.uxNotifierService.showToast("Product was Cloned successfully", this._constants.ToastColorGood);
-          this.router.navigate(["item-details"]);
-        },
-        (error) => {
-          this.loading.dismiss();
-          this.uxNotifierService.showToast("There was an error cloning this product", this._constants.ToastColorBad);
-          //this.router.navigate(['item-details']);
-        }
-      );
+
+      if (isGoogleLink) {
+        this.productService.cloneGoogleLink(clonePropertyList, this.ActiveItem.GoogleLink.Id).then((x) => this.handleCloneResponseSuccess(x, this.loading), this.handleCloneResponseError);
+      } else {
+        this.productService.cloneProduct(clonePropertyList, this.ActiveItem.AssetInfo.Id).then((x) => this.handleCloneResponseSuccess(x, this.loading), this.handleCloneResponseError);
+      }
+
     } else if (this.action === this._constants.Actions.move) {
-      this.productService.moveProduct(this.selectedPropertyID, 0, this.selectedProfileItemID, this.selectedLineItemID, this.ActiveItem.AssetInfo.Id).then(
-        (response: AssetIndexDto) => {
-          this.loading.dismiss();
-          this.uxNotifierService.showToast("Product was moved successfully", this._constants.ToastColorGood);
-          this.router.navigate(["items"]);
-        },
-        (error) => {
-          this.loading.dismiss();
-          this.uxNotifierService.showToast("There was an error moving this product", this._constants.ToastColorBad);
-          //this.router.navigate(['item-details']);
-        }
-      );
+      if (isGoogleLink) {
+        this.productService.moveGoogleLink(this.selectedPropertyID,
+          0,
+          this.selectedProfileItemID,
+          this.selectedLineItemID,
+          this.ActiveItem.GoogleLink.Id).then(this.handleMoveResponseSuccess, this.handleMoveResponseError);
+      } else {
+        this.productService.moveProduct(this.selectedPropertyID,
+          0,
+          this.selectedProfileItemID,
+          this.selectedLineItemID,
+          this.ActiveItem.AssetInfo.Id).then(this.handleMoveResponseSuccess, this.handleMoveResponseError);
+      }
+
     }
+  }
+
+  private handleCloneResponseSuccess(response: Array<AssetIndexDto>, loading:any) {
+    loading.dismiss();
+    this.uxNotifierService.showToast("Product was Cloned successfully", this._constants.ToastColorGood);
+    this.router.navigate(["item-details"]);
+  }
+
+  private handleCloneResponseError(error: any) {
+    this.loading.dismiss();
+    this.uxNotifierService.showToast("There was an error cloning this product", this._constants.ToastColorBad);
+    setTimeout(() => {
+      this.router.navigate(['item-details']);
+    }, 2000);
+  }
+
+  private handleMoveResponseSuccess(response: Array<AssetIndexDto>) {
+    this.loading.dismiss();
+    this.uxNotifierService.showToast("Product was moved successfully", this._constants.ToastColorGood);
+    this.router.navigate(["items"]);
+  }
+
+  private handleMoveResponseError(error: any) {
+    this.loading.dismiss();
+    this.uxNotifierService.showToast("There was an error moving this product", this._constants.ToastColorBad);
+    setTimeout(() => {
+      this.router.navigate(['items']);
+    }, 2000);
   }
 
   public close() {
@@ -412,5 +436,5 @@ export class ItemMoveClonePage extends BasePage {
   itemSelected(item){
     console.log('selectedLineItem:', item);
   }
- 
+
 }
