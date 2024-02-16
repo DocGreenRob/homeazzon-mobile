@@ -198,10 +198,9 @@ export class ItemMoveClonePage extends BasePage {
     });
     this.loading.present();
     const userType = this.getUserShortName(this.User.Types[0].Name);
-    for (let profileID of selectedProfileIDs) {
-      await this.propertyService.getProfileItems(profileID, userType)
-        .then(
-          (profileItem: any) => {
+    for (let profileID of selectedProfiles) {
+      await this.propertyService.getProfileItems(profileID.Id, userType)
+        .then((profileItem: any) => {
             console.log("ProfileItems = ", profileItem);
             console.log("selectedProperties = ", this.selectedProperties);
 
