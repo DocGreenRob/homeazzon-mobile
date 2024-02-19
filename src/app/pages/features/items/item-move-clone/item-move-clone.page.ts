@@ -191,16 +191,19 @@ export class ItemMoveClonePage extends BasePage {
         }
       }
     }
-
-    this.loading = await this.loadingCtrl.create({
-      message: "",
-      cssClass: "my-loading-class",
-    });
-    this.loading.present();
     const userType = this.getUserShortName(this.User.Types[0].Name);
-    for (let profileID of selectedProfiles) {
-      await this.propertyService.getProfileItems(profileID.Id, userType)
-        .then((profileItem: any) => {
+    const loaders = {};
+
+    for(let profile of selectedProfiles) {    
+      loaders[profile.Id] = await this.loadingCtrl.create({
+        message: `Loading Line Items of ${profile.propertyName} for ${profile.profileName}...`,
+        cssClass: "my-loading-class",
+      });
+
+      loaders[profile.Id]?.present();
+
+      await this.propertyService.getProfileItems(profile.Id, userType).then((profileItem: any) => {
+            loaders[profileItem.Id]?.dismiss();
             console.log("ProfileItems = ", profileItem);
             console.log("selectedProperties = ", this.selectedProperties);
 
