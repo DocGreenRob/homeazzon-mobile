@@ -960,6 +960,14 @@ export class ItemDetailsPage extends BasePage {
     );
   }
 
+  async gotoAmazon() {
+    if (this.IsMetattachment) {
+      this.inAppBrowser.create(this.ActiveAttachmentItem.Amazon.Link, "_blank");
+    } else {
+      this.inAppBrowser.create(this.ActiveItem.Amazon.Link, "_blank");
+    }
+  }
+
   createTagsModel(input: Array<ITagContextDto>) {
     let output = [];
     input.forEach((x) => {
