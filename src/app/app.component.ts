@@ -29,7 +29,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.6.3';
+  public appVersion: string = '12.7.0';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 
@@ -48,30 +48,31 @@ export class AppComponent extends BasePage {
   isOwner: boolean = false;
   isPrivateLabeler: boolean = false;
   isPrivateLabelUser: boolean = false;
+  tempUserProperties: any = [];
   userProperties: any = [];
   getPropertiesSubsription: any;
   constants = new Constants();
 
   //new
   constructor(public override platform: Platform,
-              statusBar: StatusBar,
-              splashScreen: SplashScreen,
-              public storage: Storage,
-              private alertCtrl: AlertController,
-              public http: HttpClient,
-              public override communicator: CommunicatorService,
-              public menu: MenuController,
-              private storageCtrl: AppStorageService,
-              public loadingController: LoadingController,
-              public override router: Router,
-              private ngzone: NgZone,
-              private firebaseService: FirebaseAuthService,
-              private iab: InAppBrowser,
-              public override storageService: LocalStorageService,
-              private accountService: AccountService,
-              private utilityService: UtilitiesService,
-              private azureAuthService: AzureAuthService,
-              private ngZone: NgZone) {
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    public storage: Storage,
+    private alertCtrl: AlertController,
+    public http: HttpClient,
+    public override communicator: CommunicatorService,
+    public menu: MenuController,
+    private storageCtrl: AppStorageService,
+    public loadingController: LoadingController,
+    public override router: Router,
+    private ngzone: NgZone,
+    private firebaseService: FirebaseAuthService,
+    private iab: InAppBrowser,
+    public override storageService: LocalStorageService,
+    private accountService: AccountService,
+    private utilityService: UtilitiesService,
+    private azureAuthService: AzureAuthService,
+    private ngZone: NgZone) {
     super(null, null, communicator, menu, platform, router, null, null, null, null, storageService);
 
     platform.ready().then(async () => {
@@ -108,6 +109,8 @@ export class AppComponent extends BasePage {
     console.log('ngOnInit AppComponent');
     await this.storage.create();
 
+    this.storageService.delete('ActiveProperty');
+
     await this.utilityService.getRequiredMinimumVersion().then(async (x: any) => {
       const a: number = this.compareAppVersions(this.appVersion, x.RequiredMinimumVersion);
 
@@ -120,7 +123,7 @@ export class AppComponent extends BasePage {
         await this._loading.present();
       }
     }).catch((err: any) => {
-      debugger;
+      //debugger;
     });
 
     this.listenPropertiesLoadedEvent();
@@ -155,6 +158,15 @@ export class AppComponent extends BasePage {
     ];
   }
 
+  ngAfterViewInit() {
+    let p = this.Properties;
+
+    if (p !== undefined && p !== null && p.length > 0) {
+      this.setUserProperties(p);
+    }
+
+  }
+
   // TODO: Remove
   async listenLoginEvent(): Promise<void> {
     window.addEventListener('user:loggedIn', (x: any) => {
@@ -183,20 +195,52 @@ export class AppComponent extends BasePage {
 
   async listenPropertiesLoadedEvent(): Promise<void> {
     window.addEventListener('properties:loaded', (x: any) => {
+      const that = this;
+
       this.ngzone.run(() => {
-        this.userProperties = x.detail;
-        this.displayName = this.User.UserName;
-        let userTypes = this.UserTypes;
+        if (x.detail === undefined
+          || x.detail === null
+          || x.detail.length == 0) {
+          let p = that.Properties;
+          this.tempUserProperties = p;
+        } else {
+          this.tempUserProperties = x.detail;
+        }
 
-        let _ = this.userProperties;
-        _.map((x: any) => {
-          let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
-          this.setPropertyImage(_u[0].Name, x);
-        });
+        console.log('loading properties', this.tempUserProperties);
 
-        this.userProperties = _;
+        this.setUserProperties(this.tempUserProperties);
       });
     });
+  }
+
+  private setUserProperties(userProperties: any) {
+    this.displayName = this.User.UserName;
+    let userTypes = this.UserTypes;
+
+    let _ = userProperties;
+    _.map((x: any) => {
+      let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
+
+      if (_u[0].Name === undefined || _u[0].Name === null) {
+        debugger;
+      }
+      this.setPropertyImage(_u[0].Name, x);
+    });
+
+    // Find the index of the item where IsDefault is true
+    const defaultIndex = _.findIndex(item => item.IsDefault);
+
+    // If such an item is found and it's not already the first element
+    if (defaultIndex > 0) {
+      // Remove the item from its current position
+      const [defaultItem] = _.splice(defaultIndex, 1);
+
+      // Add it to the beginning of the array
+      _.unshift(defaultItem);
+    }
+
+    this.userProperties = _;
   }
 
   private setPropertyImage(userType: string, property: any) {
@@ -303,6 +347,7 @@ export class AppComponent extends BasePage {
     this.storageService.delete('Lineitems');
     this.menu.close('propertyMenu');
   }
+
   async stopScan(): Promise<void> {
     await BarcodeScanner.stopScan();
     document.body.classList.remove("qrscanner");
