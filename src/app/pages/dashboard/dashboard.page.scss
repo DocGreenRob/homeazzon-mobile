@@ -373,3 +373,23 @@ ion-content {
     }
   }
 }
+.item-btn {
+  height: 40px;
+  border-radius: 8px;
+  background: #E8EEF4;
+  color: var(--hzn-primary, #232C41);
+  font-family: Plus Jakarta Sans;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 12.606px;
+  letter-spacing: 0.06px;
+  display: flex;
+  align-items: center;
+  padding: 14px 13px;
+  justify-content: center;
+
+  img {
+    margin-right: 4px;
+  }
+}

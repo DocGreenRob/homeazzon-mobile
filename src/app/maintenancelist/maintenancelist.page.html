@@ -1,0 +1,100 @@
+<!-- Maintenancelist showing -->
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon">
+    <span>
+      <img src="/assets/icon/arrow-left-square.svg" />
+    </span>
+    <span class="title-with-img">
+      <span>Maintenancelist</span>
+    </span>
+  </div>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list *ngFor="let item of maintenanceList">
+    <ion-item>
+      <ion-label>
+        <strong>{{ item.maintenancePerson }}</strong><br /><br />
+        <ion-note color="medium" class="notes-label">
+          {{ item.notes }}
+        </ion-note>
+      </ion-label>
+      <div slot="end">
+        <ion-note color="medium">{{ item.date }} {{ item.time }}</ion-note>
+        <ion-icon color="medium" name="chevron-forward"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-button class="btnWrapper" id="open-modal">
+    Add +
+  </ion-button>
+  <!-- Add maintenanceList model -->
+  <ion-modal trigger="open-modal">
+    <ng-template>
+      <ion-header style="background-color: #232B42;">
+        <div class="header-title-with-icon">
+          <span>
+            <img (click)="closeModal()" src="/assets/icon/arrow-left-square.svg" />
+          </span>
+          <span class="title-with-img">
+            <span>Add Maintenance</span>
+          </span>
+        </div>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="formWrapper wrapper-height">
+          <div class="fieldWrapper">
+            <ion-label>Date/Time</ion-label>
+            <div class="inputField">
+              <ion-datetime-button datetime="datetime" color="success" class="datetime">
+              </ion-datetime-button>
+            </div>
+          </div>
+          <div class="fieldWrapper">
+            <ion-label>Maintenance person</ion-label>
+            <div class="inputField">
+              <!-- Use [(ngModel)] to bind maintenancePerson -->
+              <ion-input required type="text" [(ngModel)]="maintenancePerson"></ion-input>
+            </div>
+          </div>
+          <div class="fieldWrapper">
+            <ion-label>Note:</ion-label>
+            <div class="inputField">
+              <!-- Use [(ngModel)] to bind notes -->
+              <ion-input required type="text" [(ngModel)]="notes"></ion-input>
+            </div>
+          </div>
+          <div class="fieldWrapper">
+            <ion-label>Follow-up:</ion-label>
+            <div class="inputField">
+              <ion-input type="date" (ionChange)="calculateDateDifference()" [(ngModel)]="selectedDate"></ion-input>
+            </div>
+            <div class="months-weeks" *ngIf="showMonthsWeeks">
+              <ion-label>No of Weeks away: </ion-label>
+              <div class="inputField">
+                <p class="datetime">{{ weeksAway }}</p>
+              </div>
+              <ion-label>No of Months away:</ion-label>
+              <div class="inputField">
+                <p class="datetime">{{ monthsAway }}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Use (click) to trigger the addMaintenanceList method -->
+          <ion-button class="btnWrapper" (click)="addmaintenancelist()" [disabled]="!isValidForm()">
+            Save
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime [showDefaultTitle]="true" id="datetime" display-format="MMM DD, YYYY h:mm A"
+        pickerFormat="MMM DD, YYYY h:mm A" placeholder="Select date and time" [(ngModel)]="dateTime"
+        [showDefaultButtons]="true"
+        [(ngModel)]="selectedDatetime">
+        <span slot="title">Select a Date</span>
+      </ion-datetime>
+    </ng-template>
+  </ion-modal>
+</ion-content>

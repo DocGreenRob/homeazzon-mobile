@@ -126,7 +126,9 @@ export class DashboardPage extends BasePage {
   override async ngOnInit() {
     console.log('ngOnInit DashboardPage');
   }
-
+  maintenance(){
+    this.router.navigate(["maintenancelist"]);
+  }
   async ionViewDidEnter() {
     this.resetState();
     if (this.IsFirstLoadCompleted === undefined

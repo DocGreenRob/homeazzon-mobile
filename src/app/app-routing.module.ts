@@ -308,6 +308,10 @@ const routes: Routes = [
     path: 'property-selector',
     loadChildren: () => import('./pages/features/property-profile/property-selector/property-selector.module').then( m => m.PropertySelectorPageModule)
   },
+  {
+    path: 'maintenancelist',
+    loadChildren: () => import('./maintenancelist/maintenancelist.module').then( m => m.MaintenancelistPageModule)
+  },
 
 ];
 
