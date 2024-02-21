@@ -162,11 +162,16 @@
 					Edit
 				</span>
 
-				<span class="item-btn edit"
+				<span class="item-btn1"
 					  (click)="gotoAmazon()"
-					  *ngIf="(ActiveItem?.Type === 'Amazon Products' || ActiveAttachment?.Type !== 'Amazon Products')">
+					  *ngIf="(ActiveItem?.Type === 'Amazon Products' || ActiveAttachment?.Type === 'Amazon Products')">
 					<img src="assets/icon/amazon-white.svg" alt="">
-					
+				</span>
+
+				<span class="item-btn1"
+					  (click)="gotoGoogleProduct()"
+					  *ngIf="(ActiveItem?.Type === 'Google Shopping Products' || ActiveAttachment?.Type === 'Google Shopping Products')">
+					<img src="assets/icon/google.svg" alt="">
 				</span>
 			</div>
 
