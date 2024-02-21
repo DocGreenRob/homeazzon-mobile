@@ -739,7 +739,9 @@ export class ItemDetailsPage extends BasePage {
   public attachments() {
     this.router.navigate(["attachments"]);
   }
-
+  public repair() {
+    this.router.navigate(["repair"]);
+  }
   private determineArtifactType(): string {
     let a = this.ActiveItem;
 

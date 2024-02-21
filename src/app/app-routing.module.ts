@@ -88,6 +88,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'repair',
+    loadChildren: () => import('./pages/features/repair/repair.module').then(m => m.RepairPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'property-profile-details',
     loadChildren: () => import('./pages/features/private-label/property-profile-details/property-profile-details.module').then(m => m.PropertyProfileDetailsPageModule),
     canActivate: [AuthGuardService]
@@ -292,7 +297,8 @@ const routes: Routes = [
   {
     path: 'master-bedroom-categories',
     loadChildren: () => import('./pages/features/category/master-bedroom-category/master-bedroom-category.module').then(m => m.MasterBedroomCategoryPageModule)
-  },  {
+  },
+  {
     path: 'authorize',
     loadChildren: () => import('./pages/features/suggestions/authorize/authorize.module').then( m => m.AuthorizePageModule)
   },
