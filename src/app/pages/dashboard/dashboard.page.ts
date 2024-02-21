@@ -253,7 +253,6 @@ export class DashboardPage extends BasePage {
             this.getAllUserProperties();
             this.IsPropertiesFetched = true;
           } else {
-            alert('Setting up first property 1');
             this.setupProperty(this.ActiveProperty);
             this.communicator.sendProperties(this.Properties);
           }
@@ -464,7 +463,6 @@ export class DashboardPage extends BasePage {
             }
 
             if (properties.length === 1) {
-              alert('Setting up first property 2');
               let a = this.ActiveProperty;
               if (a === undefined || a === null
                 || a.Id <= 0 || properties[0].IsDefault === true) {
@@ -485,7 +483,6 @@ export class DashboardPage extends BasePage {
                     this.ActiveProperty.Profiles.length === 0
                   ) {
                     this.userDetailsService.getProxyProperty(this.ActiveProperty.Id).then((x: any) => {
-                      alert('Setting up first property 3');
                       this.setupProperty(x);
                     },
                       (err) => { }
@@ -504,7 +501,6 @@ export class DashboardPage extends BasePage {
                       console.log(error);
                     });
                   } else {
-                    alert('Setting up first property 4');
                     this.setupProperty(this.ActiveProperty);
                   }
                 } else {
@@ -513,7 +509,6 @@ export class DashboardPage extends BasePage {
                     || this.ActiveProperty.Profiles.length == 0) {
                     this.userDetailsService.getProperty(this.ActiveProperty.Id).then(
                       (x: any) => {
-                        alert('Setting up first property 5');
                         this.setupProperty(x);
 
                         this.AppInsights.trackEvent({
@@ -549,12 +544,10 @@ export class DashboardPage extends BasePage {
                       console.log(error);
                     });
                   } else {
-                    alert('Setting up first property 6');
                     this.setupProperty(this.ActiveProperty);
                   }
                 }
               } else {
-                alert('Setting up first property 7' + properties[0].Name);
                 this.setupProperty(properties[0]);
                 //this.closeLoader();
               }
