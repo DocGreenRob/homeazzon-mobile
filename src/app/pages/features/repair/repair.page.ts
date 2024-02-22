@@ -25,6 +25,8 @@ export class RepairPage extends BasePage {
   public showImage: boolean = false;
   public TempActiveItem: ActiveItem = new ActiveItem();
   public isIos: boolean = false;
+  public date: string;
+  public note: string;
   mydata= []
   constructor( public override platform: Platform,   public override navController: NavController,
     private loadingCtrl: LoadingController,
@@ -163,6 +165,16 @@ export class RepairPage extends BasePage {
 
   public close() {
     this.location.back();
+  }
+
+  continue(){
+const repairItem = {
+  videos: this.mydata,
+  image: this.TempActiveItem?.Image,
+  date: this.date,
+  note: this.note
+}
+console.log("repairItem",repairItem);
   }
 
 }

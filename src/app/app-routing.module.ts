@@ -73,6 +73,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'repair-list',
+    loadChildren: () => import('./pages/features/repair/repair-list/repair-list.module').then(m => m.RepairListPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'search-results',
     loadChildren: () => import('./pages/features/search/search-results/search-results.module').then(m => m.SearchResultsPageModule),
     canActivate: [AuthGuardService]

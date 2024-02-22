@@ -27,7 +27,7 @@
 				  <span class="upload-text">Upload Image</span>
 				</div>
 			  </div>
-
+			  
 		</div>
 		<div class="upload-main">
 			<div class="upload-content">
@@ -53,20 +53,20 @@
 		<div class="fieldWrapper">
 			<ion-label>Date</ion-label>
 			<div class="inputField date-picker">
-				<ion-input type="date" id="birthday" name="birthday"></ion-input>
+				<ion-input type="date" [(ngModel)]="date"></ion-input>
 			</div>
 		</div>
 
 		<div class="fieldWrapper details-wrapper">
 			<ion-label>Notes</ion-label>
 			<div class="inputField text-area">
-				<ion-textarea placeholder="Notes"></ion-textarea>
+				<ion-textarea placeholder="Notes" [(ngModel)]="note"></ion-textarea>
 			</div>
 		</div>
 	
 	</div>
 	<div class="btnWrapper">
-		<ion-button class="continuebtn">
+		<ion-button class="continuebtn" (click)="continue()">
 			Continue
 		</ion-button>
 	</div>

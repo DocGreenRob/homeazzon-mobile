@@ -1,0 +1,31 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+	<div class="header-title-with-icon" >
+		<span (click)="close()">
+			<img src="assets/icon/arrow-left-square.svg" />
+		</span>
+		<span class="title-with-img">
+			<span>Repair List</span>
+		</span>
+		<span class="empty">
+		</span>
+	</div>
+</ion-header>
+<div class="container-wrapper">
+	<div class="formWrapper">
+        <div *ngFor="let item of repairItemList">
+            <div class="item" (click)="editRepairItem()">
+            <span class="item-img">
+                <img src={{item.image}} alt="">
+            </span>
+            <div class="item-details">
+                <span class="item-name">
+                   {{item.name}} 
+                </span>
+                <span>
+               {{item.date}}
+                </span>
+            </div>
+        </div>
+    </div>
+	</div>
+</div>

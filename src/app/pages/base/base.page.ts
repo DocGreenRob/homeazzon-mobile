@@ -782,6 +782,10 @@ export class BasePage implements OnInit {
     this.router.navigate(['search']);
   }
 
+  public repairList() {
+    this.router.navigate(['repair-list']);
+  }
+
   public openMenu() {
     let a: any = this.Properties;
     a.forEach((x) => {

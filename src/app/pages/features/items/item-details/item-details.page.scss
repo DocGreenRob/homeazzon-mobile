@@ -190,7 +190,9 @@ iframe {
     align-items: center;
     padding: 14px 13px;
     justify-content: center;
-
+    .repair-icon{
+      filter: invert(53%) sepia(0%) saturate(112%) hue-rotate(135deg) brightness(85%) contrast(78%);
+    }
     img {
       margin-right: 4px;
     }
