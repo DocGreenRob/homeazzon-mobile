@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { IonModal, ModalController } from '@ionic/angular';
 import { differenceInWeeks, differenceInMonths } from 'date-fns';
 // maintenance.model.ts
 export interface MaintenanceItem {
   id: number
-  date: string;
-  time: string;
+  date_time: string;
   maintenancePerson: string;
   notes: string;
   flowup: {
@@ -33,7 +33,8 @@ export class MaintenancelistPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private storageService: LocalStorageService
+    private storageService: LocalStorageService,
+    public router: Router
   ) { }
 
   loadMaintenanceList() {
@@ -42,11 +43,13 @@ export class MaintenancelistPage implements OnInit {
       this.maintenanceList = storedMaintenanceList;
     }
   }
+  public close() {
+      this.router.navigate(["dashboard"]);
+  }
   calculateDateDifference() {
     if (this.selectedDate) {
       const currentDate = new Date();
       const selectedDateObject = new Date(this.selectedDate);
-      // Calculate weeks and months
       this.weeksAway = differenceInWeeks(selectedDateObject, currentDate);
       this.monthsAway = differenceInMonths(selectedDateObject, currentDate);
       this.showMonthsWeeks = true;
@@ -54,18 +57,16 @@ export class MaintenancelistPage implements OnInit {
   }
   closeModal() {
     this.modalController.dismiss();
-    this.showMonthsWeeks = false;
+    this.resetstates();
   }
   ngOnInit() {
-    // Load maintenance list from local storage on component initialization
     this.loadMaintenanceList();
   }
   addmaintenancelist() {
     const newItemId = Math.random();
     const newItem: MaintenanceItem = {
       id: newItemId,
-      date: this.selectedDate,
-      time: this.selectedDatetime,
+      date_time: this.selectedDatetime,
       maintenancePerson: this.maintenancePerson,
       notes: this.notes,
       flowup: {
@@ -77,7 +78,7 @@ export class MaintenancelistPage implements OnInit {
     this.maintenanceList.push(newItem);
     this.storageService.set('maintenanceList', this.maintenanceList);
     this.modalController.dismiss();
-    this.showMonthsWeeks = false;
+    this.resetstates();
   }
   isValidForm(): boolean {
     // Check if all required fields are filled
@@ -87,5 +88,11 @@ export class MaintenancelistPage implements OnInit {
       !!this.notes &&
       !!this.selectedDate
     );
+  }
+  resetstates(){
+    this.maintenancePerson = '';
+    this.notes = '';
+    this.selectedDate = '';
+    this.showMonthsWeeks = false;
   }
 }

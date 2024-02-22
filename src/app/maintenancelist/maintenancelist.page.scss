@@ -2,8 +2,7 @@
     padding: 24px 184px 24px 27px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 66px;
+    height: 70px;
     background-color: #232B42;
 }
 .btnWrapper {
@@ -11,14 +10,7 @@
     margin-top: 100px !important;
 }
 /* maintenancelist.page.scss */
-ion-item {
-    background-color: #f5f5f5;
-    margin: 5px;
-    border-radius: 10px;
- .notes-label {
-   --color: #555 !important;
-  }
-  }
+
   .datetime{
     padding: 10px !important;
   }
@@ -28,6 +20,57 @@ ion-item {
 .months-weeks{
     display: inline;
 }
+   .add-contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // height: 100%;
+    padding: 25px 24px;
+  
+    .btnWrapper {
+      margin-top: 0px !important;
+    }
+  }
+  
+  .wrapper-height {
+    min-height: calc(100vh - 269px);
+    width: 100%;
+  }
+  
+  .inner-wrapper {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  
+    span {
+      color: rgba(29, 29, 47, 0.60);
+      text-align: center;
+      font-family: Plus Jakarta Sans;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+      letter-spacing: 0.07px;
+    }
+  }
+  .custom-list {
+    background-color: #f5f5f5; 
+    padding: 10px;
+  }
+  .custom-label {
+    width: 70%;
+  }
+  
+  .person-name {
+    color: #232B42;
+  }
+  
+  .notes-label {
+    font-style: italic;
+  }
   
   
 
