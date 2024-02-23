@@ -59,29 +59,31 @@ export class ItemDetailsPage extends BasePage {
   form: FormGroup;
   public tagContextList = []; //[{ value: 0, display: 'Angular' }, { value: 1, display: 'React' }];
   public selectedTagItems = [];
+  public activeItemType: string = '';
+  public activeAttachmentItemType: string = '';
   constructor(public override navController: NavController,
-              public override navParams: NavParams,
-              private itemService: ItemService,
-              private loadingCtrl: LoadingController,
-              public override uxNotifierService: UxNotifierService,
-              private sanitizerService: DomSanitizer,
-              public override communicator: CommunicatorService,
-              public override menuController: MenuController,
-              private attachmentService: MetattachService,
-              public override inAppBrowser: InAppBrowser,
-              public override platform: Platform,
-              public override router: Router,
-              private activeRoute: ActivatedRoute,
-              public override userTypesService: UserTypesService,
-              public profileItemImageService: ProfileItemImageService,
-              public sanitizer: DomSanitizer,
-              private tagService: TagService,
-              private formBuilder: FormBuilder,
-              private artifactIndexService: ArtifactIndexService,
-              private modalCtrl: ModalController,
-              private contactInformationService: ContactInformationService,
-              private alertCtrl: AlertController,
-              public override storageService: LocalStorageService) {
+    public override navParams: NavParams,
+    private itemService: ItemService,
+    private loadingCtrl: LoadingController,
+    public override uxNotifierService: UxNotifierService,
+    private sanitizerService: DomSanitizer,
+    public override communicator: CommunicatorService,
+    public override menuController: MenuController,
+    private attachmentService: MetattachService,
+    public override inAppBrowser: InAppBrowser,
+    public override platform: Platform,
+    public override router: Router,
+    private activeRoute: ActivatedRoute,
+    public override userTypesService: UserTypesService,
+    public profileItemImageService: ProfileItemImageService,
+    public sanitizer: DomSanitizer,
+    private tagService: TagService,
+    private formBuilder: FormBuilder,
+    private artifactIndexService: ArtifactIndexService,
+    private modalCtrl: ModalController,
+    private contactInformationService: ContactInformationService,
+    private alertCtrl: AlertController,
+    public override storageService: LocalStorageService) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser, storageService);
 
     this._constants = new Constants();
@@ -760,7 +762,7 @@ export class ItemDetailsPage extends BasePage {
     }
 
     if (a.YouTubeVideo !== undefined && a.YouTubeVideo !== null && a.YouTubeVideo.Id > 0) {
-      return 'youtube'; 
+      return 'youtube';
     }
 
 
@@ -958,6 +960,45 @@ export class ItemDetailsPage extends BasePage {
         }
       }
     );
+  }
+
+  async gotoAmazon() {
+    let url: any = '';
+
+    if (this.IsMetattachment) {
+      url = this.ActiveAttachmentItem.Amazon.Link;
+    } else {
+      url = this.ActiveItem.Amazon.Link;
+    }
+
+    window.location = url;
+    //this.inAppBrowser.create(url, "_blank");
+  }
+
+  async gotoGoogleProduct() {
+    let url: any = '';
+
+    if (this.IsMetattachment) {
+      url = this.ActiveAttachmentItem.GoogleProduct.Link;
+    } else {
+      url = this.ActiveItem.GoogleProduct.Link;
+    }
+
+    window.location = url;
+    //this.inAppBrowser.create(url, "_blank");
+  }
+
+  async gotoGoogleLink() {
+    let url: any = '';
+
+    if (this.IsMetattachment) {
+      url = this.ActiveAttachmentItem.GoogleLink.Link;
+    } else {
+      url = this.ActiveItem.GoogleLink.Link;
+    }
+
+    window.location = url;
+    //this.inAppBrowser.create(url, "_blank");
   }
 
   createTagsModel(input: Array<ITagContextDto>) {

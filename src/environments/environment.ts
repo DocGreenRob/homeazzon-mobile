@@ -16,9 +16,13 @@ export const environment = {
   // httpBaseUrl: "https://api.homeazzon.com/api",
   // httpBase: "https://api.homeazzon.com",
 
+
+  //httpBaseUrl: 'https://dev.api.homeazzon.com/api',
+  //httpBase: 'https://dev.api.homeazzon.com/',
+
   // azure
-  httpBaseUrl: 'https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/api',
-  httpBase: 'https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/',
+  //httpBaseUrl: 'https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/api',
+  //httpBase: 'https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/',
   //redirectUrl: 'https://homeazzon.com/redirect',
   redirectUrl: 'http://localhost:8100/redirect',
   //azureB2CUrl: 'https://cognitivegenerationenterpr.b2clogin.com/cognitivegenerationenterpr.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SignUpSignIn_Public_HomeaZZon&client_id=236c9456-da32-4c2c-81b4-842dfd0442f1&nonce=defaultNonce&redirect_uri=https%3A%2F%2FhomeaZZon%2Ecom%2Fredirect&scope=openid&response_type=id_token&prompt=login',
@@ -29,8 +33,8 @@ export const environment = {
   //httpBase: "http://localhost:60662",
 
   // LOCAL - Kastrel
-  //httpBaseUrl: "https://localhost:5001/api",
-  //httpBase: "https://localhost:5001",
+  httpBaseUrl: "https://localhost:5001/api",
+  httpBase: "https://localhost:5001",
 
   azureInstrumentaionKey: 'dd255efa-1918-4580-b352-624da7efc886',
   firebaseConfig: {

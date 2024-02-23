@@ -23,12 +23,20 @@ export class ProductsService extends baseService {
     return this.get(`/assetInfo/move/${propertyId}/${proxyPropertyId}/${profileItemId}/${lineItemId}/${assetInfoID}`).toPromise();
   }
 
-  //async cloneProduct(propertyId: number, proxyPropertyId: number, profileItemId: number, lineItemId: number, assetInfoID: number) {
+  moveGoogleLink(propertyId: number, proxyPropertyId: number, profileItemId: number, lineItemId: number, googleId: number) {
+    return this.get(`/assetInfo/move/${propertyId}/${proxyPropertyId}/${profileItemId}/${lineItemId}/${googleId}/google-link`).toPromise();
+  }
+
+  //async cloneGoogleLink(propertyId: number, proxyPropertyId: number, profileItemId: number, lineItemId: number, assetInfoID: number) {
   //	return this.post(`/assetInfo/cloneAndMove/${propertyId}/${proxyPropertyId}/${profileItemId}/${lineItemId}/${assetInfoID}`).toPromise();
   //}
 
   async cloneProduct(data: any, assetInfoID: number) {
     return this.post(`/assetInfo/cloneAndMove/${assetInfoID}`, data).toPromise();
+  }
+
+  async cloneGoogleLink(data: any, assetInfoID: number) {
+    return this.post(`/assetInfo/cloneAndMove/${assetInfoID}/google-link`, data).toPromise();
   }
 
   shortListExcludeProduct(product) {
