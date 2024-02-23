@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActiveItem } from "@app/models/ActiveItem";
 import { BasePage } from "src/app/pages/base/base.page";
-import { Camera, CameraResultType, CameraSource, PermissionStatus, Photo } from "@capacitor/camera";
+import { Camera, CameraPhoto, CameraResultType, CameraSource, PermissionStatus, Photo } from "@capacitor/camera";
 import { AlertController, LoadingController, MenuController, ModalController, NavController, Platform } from "@ionic/angular";
 import { ProductsService } from "@app/services/products/products.service";
 import { CommunicatorService } from "@app/services/communicator/communicator.service";
@@ -14,6 +14,7 @@ import { LocalStorageService } from "@app/services/local-storage.service";
 import { ProfileItemImageService } from "@app/services/profile-item-image/profile-item-image.service";
 import { ImageviewComponent } from "../items/imageview/imageview.component";
 import { Location } from "@angular/common";
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
 
 @Component({
@@ -65,60 +66,46 @@ export class RepairPage extends BasePage {
     if (this.platform.is("mobileweb")) {
       this.showImage = false;
       this.TempActiveItem.Image = "assets/icon/Insert picture icon.svg";
-      //this.TempActiveItem.Image = "https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fcamera.svg?alt=media&token=e0af850d-247e-41a0-84ff-e6faa5e815b6";
     } else {
-      // const options: CameraOptions = {
-      //   quality: 50,
-      //   destinationType: this.camera.DestinationType.DATA_URL,
-      //   encodingType: this.camera.EncodingType.JPEG,
-      //   sourceType: this.camera.PictureSourceType.CAMERA,
-      //   correctOrientation: true,
-      //   allowEdit: false,
-      // };
-
-      // this.camera.getPicture(options).then(
-      //   (imageData) => {
-      //     this.showImage = true;
-      //     this.TempActiveItem.Image = "data:image/jpeg;base64," + imageData;
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //     let sourceParams = this.QueryParams.sourceParamsCamera;
-      //     let componentName = this.QueryParams.sourceCamera;
-      //     if (componentName == "DashboardPage") {
-      //       this.router.navigate(["dashboard"]);
-      //     } else {
-      //       this.QueryParams = sourceParams;
-      //       this.router.navigate([componentName]);
-      //     }
-      //   }
-      // );
       Camera.checkPermissions().then((permissionStatus) => {
         if (permissionStatus.camera === 'granted') {
-          Camera.getPhoto({
+          const options = {
             quality: 80,
-            resultType: CameraResultType.DataUrl,
-            source: CameraSource.Camera,
+            resultType: CameraResultType.Uri, // Use Uri for gallery selection
+            source: CameraSource.Prompt, // Show prompt to select from camera or gallery
             correctOrientation: true,
-            allowEditing: true
-          })
-            .then(
-              (imageData: Photo) => {
+            allowEditing: true,
+            saveToGallery: false // Ensure images are not saved to the gallery
+          };
+  
+          this.TempActiveItem.Images = [];
+          Camera.getPhoto(options).then(async (photo: CameraPhoto) => {
+            console.log('photo: ', photo);
+            if (photo) {
+              // Save the selected image to the app's filesystem
+              const savedFile = await this.savePhoto(photo);
+              console.log('savedFile: ', savedFile);
+              if (savedFile) {
+                console.log('this.TempActiveItem: ', this.TempActiveItem);
                 this.showImage = true;
-                this.TempActiveItem.Image = imageData.dataUrl;
-              },
-              (error) => {
-                console.log(error);
-                let sourceParams = this.QueryParams.sourceParamsCamera;
-                let componentName = this.QueryParams.sourceCamera;
-                if (componentName == "ItemDetailsPage") {
-                  this.router.navigate(["item-details"]);
-                } else {
-                  this.QueryParams = sourceParams;
-                  this.router.navigate([componentName]);
-                }
+                // Add the URI of the saved image to the Images array
+                this.TempActiveItem.Images.push(savedFile.uri);
+                console.log('this.TempActiveItem.Images: ', this.TempActiveItem.Images);
+             alert(this.TempActiveItem.Images)
               }
-            );
+            }
+          }).catch((error) => {
+            console.log(error);
+            let sourceParams = this.QueryParams.sourceParamsCamera;
+            let componentName = this.QueryParams.sourceCamera;
+            if (componentName == "ItemDetailsPage") {
+              this.router.navigate(["item-details"]);
+            } else {
+              this.QueryParams = sourceParams;
+              this.router.navigate([componentName]);
+            }
+          });
+  
         } else {
           Camera.requestPermissions().then((permission) => {
             if (permission.camera === 'granted') {
@@ -129,6 +116,38 @@ export class RepairPage extends BasePage {
       })
     }
   }
+  
+  async savePhoto(photo: CameraPhoto) {
+    // Convert photo format to base64, then write the file to the data directory
+    const base64Data = await this.readAsBase64(photo);
+    const fileName = new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: fileName,
+      data: base64Data,
+      directory: Directory.Data
+    });
+    // Get the new file's path, which will be the app's data directory
+    return {
+      filepath: fileName,
+      uri: savedFile.uri
+    };
+  }
+  
+  async readAsBase64(cameraPhoto: CameraPhoto) {
+    // Fetch the photo, read as a blob, then convert to base64 format
+    const response = await fetch(cameraPhoto.webPath!);
+    const blob = await response.blob();
+    return await this.convertBlobToBase64(blob) as string;
+  }
+  
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
 
   public async openImageModal() {
     const modal = await this.modalController.create({

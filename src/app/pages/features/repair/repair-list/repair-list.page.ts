@@ -16,22 +16,22 @@ export class RepairListComponent extends BasePage {
     {
       image: 'assets/icon/bed-svgrepo-com 1.svg',
       name: 'Bathroom shower issue',
-      date: '11-2-24'
+      date: '2024-04-01'
+    },
+    {
+      image: 'assets/icon/bed-svgrepo-com 1.svg',
+      name: 'Cabin Style Area Rug Rustic Western Country Bear Elk Deer Bear Wildlife Lodge Native Design 386 ',
+      date: '2024-04-01'
     },
     {
       image: 'assets/icon/bed-svgrepo-com 1.svg',
       name: 'Bathroom shower issue',
-      date: '11-2-24'
+      date: '2024-04-01'
     },
     {
       image: 'assets/icon/bed-svgrepo-com 1.svg',
-      name: 'Bathroom shower issue',
-      date: '11-2-24'
-    },
-    {
-      image: 'assets/icon/bed-svgrepo-com 1.svg',
-      name: 'Bathroom shower issue',
-      date: '11-2-24'
+      name: 'Cabin Style Area Rug Rustic Western Country Bear Elk Deer Bear Wildlife Lodge Native Design 386 ',
+      date: '2024-04-01'
     }
    ];
     

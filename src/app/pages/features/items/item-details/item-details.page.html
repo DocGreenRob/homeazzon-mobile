@@ -154,7 +154,7 @@
 					Attachments
 					<!-- </h6> -->
 				</span>
-				<span class="item-btn" (click)="repair()">
+				<span [ngClass]="ActiveItem?.AssetInfo?.Repair ? '': 'repair-need' " class="item-btn" (click)="repair()">
                     <!-- <h6 class="mypad-green"> -->
                     <!-- <ion-icon name="attach"></ion-icon> -->
                     <img src="assets/svgs/light/reapir-light.svg" class="repair-icon">

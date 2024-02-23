@@ -104,7 +104,9 @@ export class ItemDetailsPage extends BasePage {
     console.log("ionViewDidEnter ItemDetailsPage");
     //this.AppInsights.trackPageView({ name: 'ItemDetailsPage' });
     this.start();
-    console.log("ActiveItem.Name", this.ActiveItem.Name);
+    if(this.ActiveItem && this.ActiveItem.AssetInfo && this.ActiveItem.AssetInfo.Repair ){
+      this.ActiveItem.AssetInfo.Repair = true;
+    }
   }
 
   private async start() {

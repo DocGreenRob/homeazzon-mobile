@@ -192,9 +192,18 @@ iframe {
     justify-content: center;
     .repair-icon{
       filter: invert(53%) sepia(0%) saturate(112%) hue-rotate(135deg) brightness(85%) contrast(78%);
+      height: 15px;
+      margin-top: 2px;
     }
     img {
       margin-right: 4px;
+    }
+  }
+  .repair-need{
+    background: #E57070 !important;
+    color: #fff !important;
+    .repair-icon{
+      filter: unset !important;
     }
   }
 

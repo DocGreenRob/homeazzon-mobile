@@ -21,13 +21,16 @@
 				</div>
 			</div> -->
 			<div [class]="showImage ? 'upload-main-img' : 'upload-content'">
-				<img [src]="TempActiveItem?.Image" (click)="openImageModal()" imageViewer>
 				<div class="upload-icons">
 				  <img src="assets/icon/paperclip.svg">
 				  <span class="upload-text">Upload Image</span>
 				</div>
 			  </div>
-			  
+		</div>
+		<div class="images-selected">
+			<span class="image-item" *ngFor="let image of TempActiveItem?.Images">
+				<img [src]="image" alt="" imageViewer (click)="openImageModal()">
+			</span>
 		</div>
 		<div class="upload-main">
 			<div class="upload-content">
