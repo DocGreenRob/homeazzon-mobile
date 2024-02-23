@@ -17,7 +17,7 @@
   </div>
   <!-- <ion-segment [(ngModel)]="manageView" mode="md"
          style="border: none !important;"
-         *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded"
+         *ngIf="!LineItem.IsView && !isHideSegments"
          (ionChange)="segmentChanged($event)">
     <ion-segment-button value="my" >
       <h5 class="asset-list" *ngIf="User.IsPrivateLabelPartner === false">My Stuff</h5>
@@ -30,7 +30,7 @@
     </ion-segment-button>
   </ion-segment> -->
   <!-- Breadcrumbs -->
-  <ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
+  <ng-container *ngIf="!LineItem.IsView && !isHideSegments">
     <div class="breadcrumb-main" *ngIf="ProfileItem.Id !== undefined">
       <img src="assets/icon/Home.svg" alt="">
       <span class="bread-arrow-right">></span>
@@ -43,7 +43,7 @@
     <div class="breadcrumb-main" *ngIf="ProfileItem.Id === undefined">{{LineItem?.Name}}</div>
   </ng-container>
 
-  <div *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
+  <div *ngIf="LineItem.IsView && !isHideSegments">
     <ion-segment [(ngModel)]="dynamicManageView" mode="md" style="border: none !important;" class="asset-lists">
       <ion-segment-button *ngFor="let a of LineItem.View.ViewSegments" (click)="dynamicTabClickHandler(a.Id)"
                           [ngClass]="{'active': dynamicManageView === a.Id}" value="{{a.Id}}">
@@ -66,7 +66,7 @@
   </div>
   <div class="item-wrapper">
 
-    <ng-container *ngIf="!LineItem.IsView && !isHideSegments && isViewLoaded">
+    <ng-container *ngIf="!LineItem.IsView && !isHideSegments">
       <!-- <br style="clear:both;" /> -->
       <div class="accordian-wrapper">
         <div class="filter-wrapper" *ngIf="data?.Lists?.length > 0">
@@ -100,7 +100,7 @@
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="LineItem.IsView && !isHideSegments && isViewLoaded">
+    <ng-container *ngIf="LineItem.IsView && !isHideSegments">
       <icon-grid [_grid]="data" (_itemClickEventHandler)="itemClickEventHandler($event)"
                  (_lotClickEventHandler)="lotClickEventHandler($event)"></icon-grid>
     </ng-container>

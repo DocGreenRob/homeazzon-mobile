@@ -40,10 +40,9 @@ import { LocalStorageService } from "@app/services/local-storage.service";
 export class ItemsPage extends BasePage {
   public isIos: boolean = false;
   public data: IGrid;
-  public manageView: any = this.User.IsPrivateLabelPartner ? "suggested" : "my";
+  public manageView: any = "my";
   public dynamicManageView: any = "";
   public isHideSegments: boolean = false;
-  public isViewLoaded: boolean = false;
   public title: string = "Loading...";
 
   private _loading: any;
@@ -100,27 +99,18 @@ export class ItemsPage extends BasePage {
 
   override async ngOnInit() {
     console.log("ngOnInit ItemsPage");
-    //this.AppInsights.trackPageView({ name: 'ItemsPage', properties: { userId: this.User.Id } });
-
-    this._loading = await this.loadingCtrl.create({
-      message: "getting items...",
-      cssClass: "my-loading-class",
-    });
-    this._loading.present();
   }
 
   public async ionViewDidEnter() {
     console.log("ionViewDidEnter ItemsPage");
+
     this._myGrid = { Lists: [] };
     this._wishlistGrid = { Lists: [] };
     this._suggestGrid = { Lists: [] };
     this._genericViewResultGrid = { Lists: [] };
-
+ 
     await this.start();
     this._isListView = false;
-
-    this._loading.dismiss();
-    //this.isViewLoaded = true;
   }
 
   viewProfileLineItems() {
@@ -159,7 +149,6 @@ export class ItemsPage extends BasePage {
   }
 
   private async errorHandler(error: any) {
-    this._loading.dismiss();
     if (error.status == 401) {
       this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
       //this.navController.setRoot(SigninPage);
@@ -168,7 +157,6 @@ export class ItemsPage extends BasePage {
   }
 
   private async getDynamicViewResultsAsync(id: number = 0) {
-    // this._genericViewResultGrid = { Lists: [] };
     let viewSegment = this.LineItem.View.ViewSegments.filter((x) => x.Id == id);
     this._isListView = viewSegment[0].IsListView;
 
@@ -295,7 +283,6 @@ export class ItemsPage extends BasePage {
       } else {
         if (this.LineItem.IsView) {
           await this.getDynamicViewResultsAsync(this.LineItem.View.DefaultSegmentId);
-          this.isViewLoaded = true;
           //await this.getDynamicViewResultsAsync();
         } else {
           let myCount: number = 0;
@@ -334,9 +321,25 @@ export class ItemsPage extends BasePage {
             profileItemId = this.ProfileItem.Id;
           }
 
+          const loaders = [
+            await this.loadingCtrl.create({ message: "Getting Google Products...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting Amazon Products...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting Google Web Links...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting YouTube Videos...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting Digi Docs...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting UPCs...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting QRCodes...", cssClass: "my-loading-class" }),
+            await this.loadingCtrl.create({ message: "Getting Bookmarks...", cssClass: "my-loading-class" })
+          ];
+          loaders[0]?.present();
+
           // 1. Google Shopping
           await this.searchService.getSavedGoogleProductData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedProductSearchResultDto>) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.map((result) => {
                 if (result.IsMy) {
                   googleProductGridListsMy.Items.push({ Id: result.Id, Name: result.Name, IconPath: null, ImagePath: result.Image });
@@ -360,6 +363,7 @@ export class ItemsPage extends BasePage {
 
               if (googleProductGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(googleProductGridListsMy);
+                this.segmentChanged('my');
               }
               if (googleProductGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(googleProductGridListsWishlist);
@@ -369,6 +373,10 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
@@ -376,6 +384,10 @@ export class ItemsPage extends BasePage {
           // 2. Amazon
           await this.searchService.getSavedAmazonData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedProductSearchResultDto>) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.map((result) => {
                 if (result.IsMy) {
                   amazonGridListsMy.Items.push({ Id: result.Id, Name: result.Name, IconPath: null, ImagePath: result.Image });
@@ -399,6 +411,7 @@ export class ItemsPage extends BasePage {
 
               if (amazonGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(amazonGridListsMy);
+                this.segmentChanged('my');
               }
               if (amazonGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(amazonGridListsWishlist);
@@ -408,6 +421,10 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
@@ -415,6 +432,10 @@ export class ItemsPage extends BasePage {
           // 3. Google Web
           await this.searchService.getSavedGoogleData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedSearchEngineSearchResultDto>) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.map((result: SavedSearchEngineSearchResultDto) => {
                 if (result.IsMy) {
                   googleWebGridListsMy.Items.push({ Id: result.Id, Name: result.Title, IconPath: null, ImagePath: null });
@@ -438,6 +459,7 @@ export class ItemsPage extends BasePage {
 
               if (googleWebGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(googleWebGridListsMy);
+                this.segmentChanged('my');
               }
               if (googleWebGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(googleWebGridListsWishlist);
@@ -447,6 +469,9 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
               this.errorHandler(err);
             }
           );
@@ -454,6 +479,10 @@ export class ItemsPage extends BasePage {
           // 4. YouTube
           await this.searchService.getSavedYouTubeData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedYouTubeSearchResultDto>) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.map((result: SavedYouTubeSearchResultDto) => {
                 if (result.IsMy) {
                   youTubeGridListsMy.Items.push({ Id: result.Id, Name: result.Title, IconPath: null, ImagePath: result.ThumbnailImg });
@@ -477,6 +506,7 @@ export class ItemsPage extends BasePage {
 
               if (youTubeGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(youTubeGridListsMy);
+                this.segmentChanged('my');
               }
               if (youTubeGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(youTubeGridListsWishlist);
@@ -486,14 +516,21 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
-          this.isViewLoaded = true;
 
           // 5. DigiDoc
           await this.itemService.getDigiDocs(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: ITupleResult) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               let entry: Entry = new Entry();
               entry.ArtifactType = "DigiDoc";
               entry.Tuple = x;
@@ -627,23 +664,25 @@ export class ItemsPage extends BasePage {
               if (digiDocGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(digiDocGridListsMy);
                 //this._myGrid.Lists.push(digiDocGridListsTags);
-                this.my();
+                this.segmentChanged('my');
               }
 
               if (digiDocGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(digiDocGridListsWishlist);
-                this.wishlist();
               }
 
               if (digiDocGridListsSuggest.Items.length > 0) {
                 this._suggestGrid.Lists.push(digiDocGridListsSuggest);
-                this.suggested();
               }
 
               //Set Property to use in filter UI
               this._digiDocGridListsTags = digiDocGridListsTags;
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
@@ -651,6 +690,10 @@ export class ItemsPage extends BasePage {
           // 6. Upc
           await this.itemService.getUpcProducts(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<IProductDto>) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.map((result: IProductDto) => {
                 if (result.IsMy) {
                   upcGridListsMy.Items.push({ Id: result.Id, Name: result.AssetInfo.Title, IconPath: null, ImagePath: result.Image });
@@ -674,18 +717,20 @@ export class ItemsPage extends BasePage {
 
               if (upcGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(upcGridListsMy);
-                this.my();
+                this.segmentChanged('my');
               }
               if (upcGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(upcGridListsWishlist);
-                this.wishlist();
               }
               if (upcGridListsSuggest.Items.length > 0) {
                 this._suggestGrid.Lists.push(upcGridListsSuggest);
-                this.suggested();
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
@@ -693,6 +738,10 @@ export class ItemsPage extends BasePage {
           // 7. QrCode
           await this.itemService.getQrCodes(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<IQrCodeDto>) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.map((result: IQrCodeDto) => {
                 if (result.IsMy) {
                   qrCodeGridListsMy.Items.push({
@@ -729,18 +778,20 @@ export class ItemsPage extends BasePage {
 
               if (qrCodeGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(qrCodeGridListsMy);
-                this.my();
+                this.segmentChanged('my');
               }
               if (qrCodeGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(qrCodeGridListsWishlist);
-                this.wishlist();
               }
               if (qrCodeGridListsSuggest.Items.length > 0) {
                 this._suggestGrid.Lists.push(qrCodeGridListsSuggest);
-                this.suggested();
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
@@ -748,6 +799,10 @@ export class ItemsPage extends BasePage {
           // 8. Bookmarks
           await this.itemService.getBookmarks(profileItemId, this.LineItem.Id).then(
             (x: any) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               x.Item1.map((result: IBookmarkDto) => {
                 if (result.Index.IsMy) {
                   bookmarkGridListsMy.Items.push({ Id: result.Id, Name: result.AssetInfo.Title, IconPath: null, ImagePath: null });
@@ -773,6 +828,7 @@ export class ItemsPage extends BasePage {
 
               if (bookmarkGridListsMy.Items.length > 0) {
                 this._myGrid.Lists.push(bookmarkGridListsMy);
+                this.segmentChanged('my');
               }
               if (bookmarkGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(bookmarkGridListsWishlist);
@@ -782,32 +838,13 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
+              loaders[0]?.dismiss();
+              loaders.splice(0, 1);
+              loaders[0]?.present();
+
               this.errorHandler(err);
             }
           );
-
-          if (this.User.IsPrivateLabelPartner) {
-            this.suggested();
-          } else {
-            //if (myCount > wishlistCount && myCount > suggestedCount) {
-            //	this.my();
-            //} else {
-            //	this.wishlist();
-            //}
-            //if (wishlistCount > myCount && wishlistCount > suggestedCount) {
-            //	this.wishlist();
-            //} else {
-            //	this.suggested();
-            //}
-            //if (suggestedCount > myCount && suggestedCount > wishlistCount) {
-            //	this.suggested();
-            //} else {
-            //	this.wishlist();
-            //}
-            this.my();
-          }
-
-          console.log("data", this.data);
         }
       }
     }
