@@ -49,6 +49,7 @@ export class EditProfilePage extends BasePage {
 
   public roomType: string = "";
   public isIos: boolean = false;
+  public isMyProperty: boolean = false;
 
   constructor(public navCtrl: NavController,
     private propertyProfile: PropertyProfilesService,
@@ -101,6 +102,16 @@ export class EditProfilePage extends BasePage {
     if ((this.User.IsPrivateLabelUser == true && this.ActiveProperty.IsProxy == false) || this.User.IsPrivateLabelUser == false) {
       this.isEditable = true;
     }
+  }
+
+  async ngAfterViewInit() {
+    let a = this.ActiveProperty;
+    let b = this.User;
+
+    if (a.IsProxy == false && b.Types.find((x) => x.Name.indexOf('Owner') > -1)) {
+      this.isMyProperty = true;
+    }
+
   }
 
   async getBedRoomAreas() {
