@@ -87,8 +87,6 @@ export class AppComponent extends BasePage {
 
       this.isIos = this.platform.is('ios');
     });
-
-
   }
 
   compareAppVersions(version1: string, version2: string): number {
@@ -108,7 +106,6 @@ export class AppComponent extends BasePage {
   override async ngOnInit() {
     console.log('ngOnInit AppComponent');
     await this.storage.create();
-
     this.storageService.delete('ActiveProperty');
 
     await this.utilityService.getRequiredMinimumVersion().then(async (x: any) => {
