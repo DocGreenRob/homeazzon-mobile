@@ -23,7 +23,7 @@ export class SingleDesignPlanPage implements OnInit {
 		console.log('ionViewDidLoad SingleDesignPlanPage');
 		this.activeRoute.queryParams.subscribe(params => {
 			this.title = params["title"];
-			this.pdfUrl = params["pdfUrl"];
+      this.pdfUrl = params["pdfUrl"];
 		})
 
 	}

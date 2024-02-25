@@ -17,11 +17,11 @@ export class PropertyProfilesPage extends BasePage {
   private privateLabelId: number;
   private profileId: any;
   private labelprofile: any;
-  private userName: any;
-  public privateLabelProperties: any = [];
+  public privateLabelProperties: any;;
   public showBackButton: boolean = false;
   public isOwner: boolean = false;
   public isRealtor: boolean = false;
+  public isPrivateLabelUser: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +35,7 @@ export class PropertyProfilesPage extends BasePage {
     public override storageService: LocalStorageService
   ) {
     super(navCtrl, null, null, null, platform, router, null, null, null, null, storageService);
+    this.getlabelprofile = this.getlabelprofile.bind(this);
   }
 
   override async ngOnInit() {
@@ -50,18 +51,13 @@ export class PropertyProfilesPage extends BasePage {
     console.log("ngOnInit PrivateLabelProfilePage");
     await this.getlabelprofile();
 
-    // get the userName from the local-storage
-    this.storage.get("userName").then((value) => {
-      this.userName = value;
-      console.log(this.userName, "this.userName value");
-    });
-
     let _ = this.User;
     if (this.User?.Types) {
       this.User.Types.map((x) => {
         if (x.Name.toLowerCase().indexOf('owner') > -1) {
           this.isOwner = true;
-        } else if (x.Name.toLowerCase().indexOf('realtor') > -1) {
+        }
+        if (x.Name.toLowerCase().indexOf('realtor') > -1) {
           this.isRealtor = true;
         }
       });
@@ -82,18 +78,22 @@ export class PropertyProfilesPage extends BasePage {
 
   //get label profile  by PrivateLabelId
   async getlabelprofile() {
-    if (!this.User?.IsPrivateLabelUser && !this.User?.IsPrivateLabelPartner) {
-    } else {
+    if (this.User?.IsPrivateLabelUser) {
+      this.isPrivateLabelUser = true;
+
       let loader = await this.loading.getLoader("getting label profile...");
       await loader.present();
       //check whether user has a privateLabeler
-      let privateLabelId = this.User?.PrivateLabeler?.User?.Id ? this.User.PrivateLabeler.User.Id : this.User.Id;
+      let privateLabelId = this.User.PrivateLabeler.Id;
 
-      this.privateLabelService.getPrivateLabelProperties(privateLabelId).then(
+      await this.privateLabelService.getPrivateLabelProperties(privateLabelId).then(
         (y: Array<IPropertyDto>) => {
           if (y) {
-            this.privateLabelProperties = y;
+            //this.privateLabelProperties = y;
+
             loader.dismiss();
+
+            this.setPrivateLabelProperties(y);
           }
         },
         (error) => {
@@ -102,6 +102,10 @@ export class PropertyProfilesPage extends BasePage {
         }
       );
     }
+  }
+
+  public setPrivateLabelProperties(x: any) {
+    this.privateLabelProperties = x;
   }
 
   //navigate to BuildYourOwnGeneral page
@@ -114,9 +118,17 @@ export class PropertyProfilesPage extends BasePage {
     );
   }
 
+  public selectPrivateLabelPropertyProfile(privateLabelPropertyProfileId) {
+    let a = this.privateLabelProperties.filter((x) => x.Id === privateLabelPropertyProfileId);
+    this.SelectedPrivateLabelProperty = a[0];
+
+    this.router.navigate(["property-profile-overview"]);
+  }
+
   public close() {
     this.navCtrl.pop();
   }
+
   goBack() {
     this.navController.back();
   }
