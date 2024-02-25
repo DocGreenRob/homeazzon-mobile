@@ -52,6 +52,8 @@ export class AppComponent extends BasePage {
   userProperties: any = [];
   getPropertiesSubsription: any;
   constants = new Constants();
+  privateLabeler: any; // TODO: Should be IPrivateLabelDto or IPrivateLabelerDto
+  privateLabelerModifiedName: string;
 
   //new
   constructor(public override platform: Platform,
@@ -238,6 +240,19 @@ export class AppComponent extends BasePage {
     }
 
     this.userProperties = _;
+
+    console.log('set properties');
+    var a = this.User;
+
+    if (a.IsPrivateLabelUser) {
+      this.isPrivateLabelUser = true;
+      let b: any = a.PrivateLabeler;
+      let c = this.getWordsWithinLimit(b.Name, 15);
+      this.privateLabelerModifiedName = c;
+      this.privateLabeler = b;
+      console.log('privateLabeler', this.privateLabeler);
+      console.log('b', b);
+    }
   }
 
   private setPropertyImage(userType: string, property: any) {
@@ -339,6 +354,17 @@ export class AppComponent extends BasePage {
     this.router.navigate(['property-profiles'], navExtras);
   }
 
+  public seePrivateLabelerProperties() {
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        showBackButton: true,
+      },
+    };
+
+    this.menuController.close();
+    this.router.navigate(['property-profiles'], navExtras);
+  }
+
   async viewProperty(p: IPropertyDto) {
     await this.communicator.sendSelectedProperty(p);
     this.storageService.delete('Lineitems');
@@ -351,5 +377,22 @@ export class AppComponent extends BasePage {
     // BarcodeScanner.prepare();
     this.router.navigate(['dashboard']);
     // this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this.constants.ToastColorBad);
+  }
+
+  getWordsWithinLimit(sentence: string, characterLimit: number): string {
+    const words = sentence.split(' ');
+    let result = '';
+    let currentLength = 0;
+
+    for (const word of words) {
+      if (currentLength + word.length <= characterLimit) {
+        result += word + ' ';
+        currentLength += word.length + 1;
+      } else {
+        break;
+      }
+    }
+
+    return result.trim();
   }
 }
