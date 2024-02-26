@@ -20,16 +20,16 @@
 					<span class="upload-text">Upload Image</span>
 				</div>
 			</div> -->
-			<div [class]="showImage ? 'upload-main-img' : 'upload-content'">
-				<div class="upload-icons">
+			<div class="upload-content">
+				<div class="upload-icons" (click)="launchCamera()">
 				  <img src="assets/icon/paperclip.svg">
 				  <span class="upload-text">Upload Image</span>
 				</div>
 			  </div>
 		</div>
 		<div class="images-selected">
-			<span class="image-item" *ngFor="let image of TempActiveItem?.Images">
-				<img [src]="image" alt="" imageViewer (click)="openImageModal()">
+			<span class="image-item" *ngFor="let captureImage of captureImages">
+				<img [src]="captureImage?.image" alt="" imageViewer (click)="openImageModal()">
 			</span>
 		</div>
 		<div class="upload-main">

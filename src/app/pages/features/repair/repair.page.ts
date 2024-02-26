@@ -14,8 +14,7 @@ import { LocalStorageService } from "@app/services/local-storage.service";
 import { ProfileItemImageService } from "@app/services/profile-item-image/profile-item-image.service";
 import { ImageviewComponent } from "../items/imageview/imageview.component";
 import { Location } from "@angular/common";
-import { Filesystem, Directory } from '@capacitor/filesystem';
-
+import { Capacitor } from "@capacitor/core";
 
 @Component({
   selector: "app-repair",
@@ -23,13 +22,13 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
   styleUrls: ["./repair.page.scss"],
 })
 export class RepairPage extends BasePage {
-  public showImage: boolean = false;
   public TempActiveItem: ActiveItem = new ActiveItem();
   public isIos: boolean = false;
   public date: string;
   public note: string;
-  mydata= []
-  constructor( public override platform: Platform,   public override navController: NavController,
+  mydata = []
+  captureImages: any[] = [];
+  constructor(public override platform: Platform, public override navController: NavController,
     private loadingCtrl: LoadingController,
     private itemService: ItemService,
     public override uxNotifierService: UxNotifierService,
@@ -47,14 +46,14 @@ export class RepairPage extends BasePage {
     private location: Location,
     public override router: Router,
     public override storageService: LocalStorageService,
-    private modalController: ModalController){
-    
+    private modalController: ModalController) {
+
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null, null, storageService);
 
     this.isIos = this.platform.is('ios');
   }
   override ngOnInit() {
-
+    this.captureImages = this.storageService.get('captureImages');
   }
 
 
@@ -64,37 +63,25 @@ export class RepairPage extends BasePage {
 
   public override launchCamera() {
     if (this.platform.is("mobileweb")) {
-      this.showImage = false;
       this.TempActiveItem.Image = "assets/icon/Insert picture icon.svg";
     } else {
-      Camera.checkPermissions().then((permissionStatus) => {
-        if (permissionStatus.camera === 'granted') {
-          const options = {
-            quality: 80,
-            resultType: CameraResultType.Uri, // Use Uri for gallery selection
-            source: CameraSource.Prompt, // Show prompt to select from camera or gallery
-            correctOrientation: true,
-            allowEditing: true,
-            saveToGallery: false // Ensure images are not saved to the gallery
-          };
-  
-          this.TempActiveItem.Images = [];
-          Camera.getPhoto(options).then(async (photo: CameraPhoto) => {
-            console.log('photo: ', photo);
-            if (photo) {
-              // Save the selected image to the app's filesystem
-              const savedFile = await this.savePhoto(photo);
-              console.log('savedFile: ', savedFile);
-              if (savedFile) {
-                console.log('this.TempActiveItem: ', this.TempActiveItem);
-                this.showImage = true;
-                // Add the URI of the saved image to the Images array
-                this.TempActiveItem.Images.push(savedFile.uri);
-                console.log('this.TempActiveItem.Images: ', this.TempActiveItem.Images);
-             alert(this.TempActiveItem.Images)
-              }
+      Camera.getPhoto({
+        quality: 80,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Prompt, // Prompt user to choose from gallery or camera
+        correctOrientation: true,
+        allowEditing: true
+      })
+        .then(
+          (imageData: Photo) => {
+            this.TempActiveItem.Image = Capacitor.convertFileSrc(imageData.path);
+            if (!this.captureImages) {
+              this.captureImages = [];
             }
-          }).catch((error) => {
+            this.captureImages.push({ image: this.TempActiveItem.Image });
+            this.storageService.set('captureImages', this.captureImages);
+          },
+          (error) => {
             console.log(error);
             let sourceParams = this.QueryParams.sourceParamsCamera;
             let componentName = this.QueryParams.sourceCamera;
@@ -104,50 +91,10 @@ export class RepairPage extends BasePage {
               this.QueryParams = sourceParams;
               this.router.navigate([componentName]);
             }
-          });
-  
-        } else {
-          Camera.requestPermissions().then((permission) => {
-            if (permission.camera === 'granted') {
-              this.launchCamera()
-            }
-          })
-        }
-      })
+          }
+        );
     }
   }
-  
-  async savePhoto(photo: CameraPhoto) {
-    // Convert photo format to base64, then write the file to the data directory
-    const base64Data = await this.readAsBase64(photo);
-    const fileName = new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: fileName,
-      data: base64Data,
-      directory: Directory.Data
-    });
-    // Get the new file's path, which will be the app's data directory
-    return {
-      filepath: fileName,
-      uri: savedFile.uri
-    };
-  }
-  
-  async readAsBase64(cameraPhoto: CameraPhoto) {
-    // Fetch the photo, read as a blob, then convert to base64 format
-    const response = await fetch(cameraPhoto.webPath!);
-    const blob = await response.blob();
-    return await this.convertBlobToBase64(blob) as string;
-  }
-  
-  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = reject;
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-    reader.readAsDataURL(blob);
-  });
 
   public async openImageModal() {
     const modal = await this.modalController.create({
@@ -167,12 +114,12 @@ export class RepairPage extends BasePage {
         reader.onload = (e: any) => {
           if (file.type.indexOf("image") > -1) {
             this.mydata.push({
-              url:e.target.result,
+              url: e.target.result,
               type: 'img'
             });
           } else if (file.type.indexOf("video") > -1) {
             this.mydata.push({
-              url:e.target.result,
+              url: e.target.result,
               type: 'video'
             });
           }
@@ -186,14 +133,14 @@ export class RepairPage extends BasePage {
     this.location.back();
   }
 
-  continue(){
-const repairItem = {
-  videos: this.mydata,
-  image: this.TempActiveItem?.Image,
-  date: this.date,
-  note: this.note
-}
-console.log("repairItem",repairItem);
+  continue() {
+    const repairItem = {
+      videos: this.mydata,
+      image: this.TempActiveItem?.Image,
+      date: this.date,
+      note: this.note
+    }
+    console.log("repairItem", repairItem);
   }
 
 }
