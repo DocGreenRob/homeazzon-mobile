@@ -173,6 +173,7 @@ iframe {
   align-items: flex-start;
   gap: 8px;
   margin-top: 16px;
+  flex-wrap: wrap;
 
   .item-btn {
     height: 40px;
@@ -189,9 +190,20 @@ iframe {
     align-items: center;
     padding: 14px 13px;
     justify-content: center;
-
+    .repair-icon{
+      filter: invert(53%) sepia(0%) saturate(112%) hue-rotate(135deg) brightness(85%) contrast(78%);
+      height: 15px;
+      margin-top: 2px;
+    }
     img {
       margin-right: 4px;
+    }
+  }
+  .repair-need{
+    background: #E57070 !important;
+    color: #fff !important;
+    .repair-icon{
+      filter: unset !important;
     }
   }
 

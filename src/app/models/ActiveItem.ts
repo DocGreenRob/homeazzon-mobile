@@ -16,6 +16,7 @@ export class ActiveItem {
 	ArtifactIndexId: number;
 	Type: string;
 	Image: string;
+	Images: any;
 	IsMy: boolean;
 	IsWishlist: boolean;
 	IsSuggest: boolean;

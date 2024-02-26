@@ -154,7 +154,13 @@
 					Attachments
 					<!-- </h6> -->
 				</span>
-
+				<span [ngClass]="ActiveItem?.AssetInfo?.Repair ? '': 'repair-need' " class="item-btn" (click)="repair()">
+                    <!-- <h6 class="mypad-green"> -->
+                    <!-- <ion-icon name="attach"></ion-icon> -->
+                    <img src="assets/svgs/light/reapir-light.svg" class="repair-icon">
+                    Repair
+                    <!-- </h6> -->
+                  </span>
 				<span class="item-btn edit"
 					  (click)="edit()"
 					  *ngIf="(ActiveItem?.Type !== 'Google Web Links' && ActiveItem?.Type !== 'YouTube Videos' && ActiveItem?.Type !== 'Qr Codes') && (User.IsPrivateLabelUser === false || (User.IsPrivateLabelUser === true && ActiveItem.IsSuggest === false) && (ActiveAttachment?.Type !== 'Qr Codes' && ActiveAttachment?.Type !== 'Google Search Result (link)' && ActiveAttachment?.Type !== 'Video'))">
