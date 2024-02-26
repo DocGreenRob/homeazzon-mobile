@@ -561,7 +561,7 @@ export class DashboardPage extends BasePage {
                 },
               ],
             });
-
+            
             this.communicator.sendProperties(properties);
           },
             (err) => {
@@ -714,41 +714,79 @@ export class DashboardPage extends BasePage {
       this.ActiveProperty.Profiles === null ||
       this.ActiveProperty.Profiles.length === 0 ||
       refreshProperty) {
-      await this.userDetailsService
-        .getProperty(this.ActiveProperty.Id)
-        .then(
-          (x: any) => {
-            this.ActiveProperty = x;
+      if (!this.ActiveProperty.IsProxy) {
+        await this.userDetailsService
+          .getProperty(this.ActiveProperty.Id)
+          .then(
+            (x: any) => {
+              this.ActiveProperty = x;
 
-            if (refreshProperty) {
-              if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                this._loading.dismiss();
-                this.IsSwitchingProperty = false;
+              if (refreshProperty) {
+                if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+                  this._loading.dismiss();
+                  this.IsSwitchingProperty = false;
+                }
               }
-            }
-          },
-          (err) => {
-            if (refreshProperty) {
-              this._loading.dismiss();
-            }
+            },
+            (err) => {
+              if (refreshProperty) {
+                this._loading.dismiss();
+              }
 
-            this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
-          }
-        )
-        .catch((error) => {
-          this.AppInsights.trackEvent({
-            name: 'LoadingProperties-Error',
-            properties: [
-              {
-                userID: this.User.Id,
-              },
-            ],
+              this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
+            }
+          )
+          .catch((error) => {
+            this.AppInsights.trackEvent({
+              name: 'LoadingProperties-Error',
+              properties: [
+                {
+                  userID: this.User.Id,
+                },
+              ],
+            });
+
+            this.AppInsights.trackException(error);
+
+            console.log(error);
           });
+      } else {
+        await this.userDetailsService
+          .getProxyProperty(this.ActiveProperty.Id)
+          .then(
+            (x: any) => {
+              this.ActiveProperty = x;
 
-          this.AppInsights.trackException(error);
+              if (refreshProperty) {
+                if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+                  this._loading.dismiss();
+                  this.IsSwitchingProperty = false;
+                }
+              }
+            },
+            (err) => {
+              if (refreshProperty) {
+                this._loading.dismiss();
+              }
 
-          console.log(error);
-        });
+              this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
+            }
+          )
+          .catch((error) => {
+            this.AppInsights.trackEvent({
+              name: 'LoadingProperties-Error',
+              properties: [
+                {
+                  userID: this.User.Id,
+                },
+              ],
+            });
+
+            this.AppInsights.trackException(error);
+
+            console.log(error);
+          });
+      }
     }
 
     if (this.ActiveProperty.Profiles != undefined &&
