@@ -561,7 +561,7 @@ export class DashboardPage extends BasePage {
                 },
               ],
             });
-            
+
             this.communicator.sendProperties(properties);
           },
             (err) => {
@@ -690,10 +690,7 @@ export class DashboardPage extends BasePage {
         message: 'Loading Property Areas...',
         cssClass: 'my-loading-class',
       });
-      if (
-        this.IsFirstLoadCompleted !== true ||
-        this.IsSwitchingProperty === true
-      ) {
+      if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
         await this._loading.present();
       }
     }
@@ -757,9 +754,17 @@ export class DashboardPage extends BasePage {
             (x: any) => {
               this.ActiveProperty = x;
 
+              try {
+                this._loading.dismiss();
+              } catch (e) {
+
+              }
+
               if (refreshProperty) {
                 if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                  this._loading.dismiss();
+                  if (this._loading != undefined && this._loading !== null) {
+                    this._loading.dismiss();
+                  }
                   this.IsSwitchingProperty = false;
                 }
               }
@@ -879,6 +884,12 @@ export class DashboardPage extends BasePage {
 
     if (this._loading != undefined && this._loading !== null) {
       this._loading.dismiss();
+    }
+
+    try {
+      this._loading.dismiss();
+    } catch (e) {
+
     }
   }
 
