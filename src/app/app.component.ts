@@ -221,10 +221,12 @@ export class AppComponent extends BasePage {
     _.map((x: any) => {
       let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
 
-      if (_u[0].Name === undefined || _u[0].Name === null) {
-        debugger;
+      if(_u?.length){
+        if (_u[0].Name === undefined || _u[0].Name === null) {
+          debugger;
+        }
+        this.setPropertyImage(_u[0].Name, x);  
       }
-      this.setPropertyImage(_u[0].Name, x);
     });
 
     // Find the index of the item where IsDefault is true
