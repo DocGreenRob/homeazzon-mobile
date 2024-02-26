@@ -137,7 +137,7 @@ export class DashboardPage extends BasePage {
         message: 'loading properties...',
         cssClass: 'my-loading-class',
       });
-      await this._loading.present();
+      await this._loading?.present();
 
       setTimeout(async () => {
         try {
@@ -279,7 +279,7 @@ export class DashboardPage extends BasePage {
     });
 
     if (this.IsFirstLoadCompleted !== true) {
-      await this._loading.present();
+      await this._loading?.present();
     }
 
     let userProperties: Array<INewPropertyDto> = this.Properties;
@@ -314,9 +314,7 @@ export class DashboardPage extends BasePage {
     allProps.subscribe({
       complete: () => {
         if (this.IsFirstLoadCompleted !== true) {
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+          this._loading?.dismiss();
         }
       }
     });
@@ -443,7 +441,7 @@ export class DashboardPage extends BasePage {
       message: 'getting all properties...',
       cssClass: 'my-loading-class',
     });
-    await this._loading.present();
+    await this._loading?.present();
 
     try {
       let userProperties: Array<INewPropertyDto> = new Array<INewPropertyDto>();
@@ -635,9 +633,7 @@ export class DashboardPage extends BasePage {
 
   private closeLoader() {
     console.log('closeLoader()');
-    if (this._loading != undefined) {
-      this._loading.dismiss();
-    }
+    this._loading?.dismiss();
   }
 
   // TODO: add access modifier
@@ -691,7 +687,7 @@ export class DashboardPage extends BasePage {
         cssClass: 'my-loading-class',
       });
       if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-        await this._loading.present();
+        await this._loading?.present();
       }
     }
 
@@ -720,14 +716,14 @@ export class DashboardPage extends BasePage {
 
               if (refreshProperty) {
                 if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                  this._loading.dismiss();
+                  this._loading?.dismiss();
                   this.IsSwitchingProperty = false;
                 }
               }
             },
             (err) => {
               if (refreshProperty) {
-                this._loading.dismiss();
+                this._loading?.dismiss();
               }
 
               this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
@@ -753,25 +749,18 @@ export class DashboardPage extends BasePage {
           .then(
             (x: any) => {
               this.ActiveProperty = x;
-
-              try {
-                this._loading.dismiss();
-              } catch (e) {
-
-              }
+              this._loading?.dismiss();
 
               if (refreshProperty) {
                 if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                  if (this._loading != undefined && this._loading !== null) {
-                    this._loading.dismiss();
-                  }
+                  this._loading?.dismiss();
                   this.IsSwitchingProperty = false;
                 }
               }
             },
             (err) => {
               if (refreshProperty) {
-                this._loading.dismiss();
+                this._loading?.dismiss();
               }
 
               this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
@@ -882,15 +871,7 @@ export class DashboardPage extends BasePage {
       });
     }
 
-    if (this._loading != undefined && this._loading !== null) {
-      this._loading.dismiss();
-    }
-
-    try {
-      this._loading.dismiss();
-    } catch (e) {
-
-    }
+      this._loading?.dismiss();
   }
 
   public toogleViews(type) {
