@@ -217,15 +217,15 @@ export class AppComponent extends BasePage {
     this.displayName = this.User.UserName;
     let userTypes = this.UserTypes;
 
-    let _ = userProperties;
+    let _ = userProperties.filter((x: any) => x.toLowerCase().indexOf('privatelabel') === -1);
     _.map((x: any) => {
       let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
 
-      if(_u?.length){
+      if (_u?.length) {
         if (_u[0].Name === undefined || _u[0].Name === null) {
           debugger;
         }
-        this.setPropertyImage(_u[0].Name, x);  
+        this.setPropertyImage(_u[0].Name, x);
       }
     });
 
@@ -264,26 +264,32 @@ export class AppComponent extends BasePage {
     if (userType.toLowerCase().indexOf('tradesman') > -1) {
       imageName = 'tradesman';
     }
+    if (userType.toLowerCase().indexOf('privatelabel') > -1) {
+      imageName = 'private-label';
+    }
     if (userType.toLowerCase().indexOf('owner') > -1) {
       imageName = 'owner';
     }
     if (userType.toLowerCase().indexOf('developer') > -1) {
-      imageName = 'developer';
+      imageName = 'property-developer';
     }
     if (userType.toLowerCase().indexOf('appraiser') > -1) {
-      imageName = 'architect';
+      imageName = 'appraiser';
     }
     if (userType.toLowerCase().indexOf('architect') > -1) {
       imageName = 'architect';
     }
     if (userType.toLowerCase().indexOf('bank') > -1) {
-      imageName = 'architect';
+      imageName = 'bank';
     }
     if (userType.toLowerCase().indexOf('realtor') > -1) {
       imageName = 'realtor';
     }
     if (userType.toLowerCase().indexOf('vendor') > -1) {
       imageName = 'vendor';
+    }
+    if (userType.toLowerCase().indexOf('gamer') > -1) {
+      imageName = 'gamer';
     }
 
     property.Image = `assets/icon/${imageName}.svg`;
