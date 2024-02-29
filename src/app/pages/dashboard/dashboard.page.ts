@@ -258,6 +258,7 @@ export class DashboardPage extends BasePage {
           }
         },
         (err) => {
+          // TODO: Change to use uxNotifierService
           alert(`Error getting area types: ${JSON.stringify(err)}`);
         }
       );
@@ -1024,8 +1025,6 @@ export class DashboardPage extends BasePage {
         ) {
           //this.getSuite16Categories();
         }
-
-        //alert(`err: getSuite16Categories() ${err}`);
       }
     );
     //}
