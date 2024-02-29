@@ -137,7 +137,7 @@ export class DashboardPage extends BasePage {
         message: 'loading properties...',
         cssClass: 'my-loading-class',
       });
-      await this._loading.present();
+      await this._loading?.present();
 
       setTimeout(async () => {
         try {
@@ -280,7 +280,7 @@ export class DashboardPage extends BasePage {
     });
 
     if (this.IsFirstLoadCompleted !== true) {
-      await this._loading.present();
+      await this._loading?.present();
     }
 
     let userProperties: Array<INewPropertyDto> = this.Properties;
@@ -315,9 +315,7 @@ export class DashboardPage extends BasePage {
     allProps.subscribe({
       complete: () => {
         if (this.IsFirstLoadCompleted !== true) {
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+          this._loading?.dismiss();
         }
       }
     });
@@ -444,7 +442,7 @@ export class DashboardPage extends BasePage {
       message: 'getting all properties...',
       cssClass: 'my-loading-class',
     });
-    await this._loading.present();
+    await this._loading?.present();
 
     try {
       let userProperties: Array<INewPropertyDto> = new Array<INewPropertyDto>();
@@ -463,29 +461,20 @@ export class DashboardPage extends BasePage {
               return;
             }
 
-            if (properties.length === 1) {
-              alert('Setting up first property 2');
-              let a = this.ActiveProperty;
-              if (a === undefined || a === null
-                || a.Id <= 0 || properties[0].IsDefault === true) {
-                this.setupProperty(properties[0]);
-              }
-            } else {
-              // TODO: Need to test this path!
+            if(!this.ActiveProperty || properties[0].IsDefault === true) {
+              this.setupProperty(properties[0]);
+            }
+
+            this.viewProperty(this.ActiveProperty);
+
+            // TODO: Need to test this path!
 
               // make the api call for the last ActiveProperty
-
               // tried this and doesn't work, need to make the call to the api to
               // get the property info
-              if (this.ActiveProperty !== null) {
                 if (this.ActiveProperty.IsProxy) {
-                  if (
-                    this.ActiveProperty.Profiles === undefined ||
-                    this.ActiveProperty.Profiles === null ||
-                    this.ActiveProperty.Profiles.length === 0
-                  ) {
+                  if (!this.ActiveProperty.Profiles?.length) {
                     this.userDetailsService.getProxyProperty(this.ActiveProperty.Id).then((x: any) => {
-                      alert('Setting up first property 3');
                       this.setupProperty(x);
                     },
                       (err) => { }
@@ -503,9 +492,6 @@ export class DashboardPage extends BasePage {
 
                       console.log(error);
                     });
-                  } else {
-                    alert('Setting up first property 4');
-                    this.setupProperty(this.ActiveProperty);
                   }
                 } else {
                   if (this.ActiveProperty.Profiles == undefined
@@ -513,7 +499,6 @@ export class DashboardPage extends BasePage {
                     || this.ActiveProperty.Profiles.length == 0) {
                     this.userDetailsService.getProperty(this.ActiveProperty.Id).then(
                       (x: any) => {
-                        alert('Setting up first property 5');
                         this.setupProperty(x);
 
                         this.AppInsights.trackEvent({
@@ -549,15 +534,9 @@ export class DashboardPage extends BasePage {
                       console.log(error);
                     });
                   } else {
-                    alert('Setting up first property 6');
                     this.setupProperty(this.ActiveProperty);
                   }
                 }
-              } else {
-                alert('Setting up first property 7' + properties[0].Name);
-                this.setupProperty(properties[0]);
-              }
-            }
 
             this.AppInsights.trackEvent({
               name: 'LoadingProperties-Done',
@@ -641,9 +620,7 @@ export class DashboardPage extends BasePage {
 
   private closeLoader() {
     console.log('closeLoader()');
-    if (this._loading != undefined) {
-      this._loading.dismiss();
-    }
+    this._loading?.dismiss();
   }
 
   // TODO: add access modifier
@@ -696,11 +673,8 @@ export class DashboardPage extends BasePage {
         message: 'Loading Property Areas...',
         cssClass: 'my-loading-class',
       });
-      if (
-        this.IsFirstLoadCompleted !== true ||
-        this.IsSwitchingProperty === true
-      ) {
-        await this._loading.present();
+      if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+        await this._loading?.present();
       }
     }
 
@@ -720,41 +694,80 @@ export class DashboardPage extends BasePage {
       this.ActiveProperty.Profiles === null ||
       this.ActiveProperty.Profiles.length === 0 ||
       refreshProperty) {
-      await this.userDetailsService
-        .getProperty(this.ActiveProperty.Id)
-        .then(
-          (x: any) => {
-            this.ActiveProperty = x;
+      if (!this.ActiveProperty.IsProxy) {
+        await this.userDetailsService
+          .getProperty(this.ActiveProperty.Id)
+          .then(
+            (x: any) => {
+              this.ActiveProperty = x;
 
-            if (refreshProperty) {
-              if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                this._loading.dismiss();
-                this.IsSwitchingProperty = false;
+              if (refreshProperty) {
+                if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+                  this._loading?.dismiss();
+                  this.IsSwitchingProperty = false;
+                }
               }
-            }
-          },
-          (err) => {
-            if (refreshProperty) {
-              this._loading.dismiss();
-            }
+            },
+            (err) => {
+              if (refreshProperty) {
+                this._loading?.dismiss();
+              }
 
-            this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
-          }
-        )
-        .catch((error) => {
-          this.AppInsights.trackEvent({
-            name: 'LoadingProperties-Error',
-            properties: [
-              {
-                userID: this.User.Id,
-              },
-            ],
+              this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
+            }
+          )
+          .catch((error) => {
+            this.AppInsights.trackEvent({
+              name: 'LoadingProperties-Error',
+              properties: [
+                {
+                  userID: this.User.Id,
+                },
+              ],
+            });
+
+            this.AppInsights.trackException(error);
+
+            console.log(error);
           });
+      } else {
+        await this.userDetailsService
+          .getProxyProperty(this.ActiveProperty.Id)
+          .then(
+            (x: any) => {
+              this.ActiveProperty = x;
+              this._loading?.dismiss();
 
-          this.AppInsights.trackException(error);
+              if (refreshProperty) {
+                if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+                  this._loading?.dismiss();
+                  this.IsSwitchingProperty = false;
+                }
+              }
+            },
+            (err) => {
+              if (refreshProperty) {
+                this._loading?.dismiss();
+              }
 
-          console.log(error);
-        });
+              this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
+            }
+          )
+          .catch((error) => {
+            this.AppInsights.trackEvent({
+              name: 'LoadingProperties-Error',
+              properties: [
+                {
+                  userID: this.User.Id,
+                },
+              ],
+            });
+
+            this.AppInsights.trackException(error);
+
+            console.log(error);
+          });
+      }
     }
 
     if (this.ActiveProperty.Profiles != undefined &&
@@ -845,9 +858,7 @@ export class DashboardPage extends BasePage {
       });
     }
 
-    if (this._loading != undefined && this._loading !== null) {
-      this._loading.dismiss();
-    }
+      this._loading?.dismiss();
   }
 
   public toogleViews(type) {

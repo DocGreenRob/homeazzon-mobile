@@ -58,6 +58,15 @@
 			<img src="https://firebasestorage.googleapis.com/v0/b/itt-content.appspot.com/o/Common%2Fassets%2Fsvgs%2Fsolid%2Fbookmark.svg?alt=media&token=3a73960f-af93-4b4a-8286-0730ab0f5054"
 				[ngClass]="{'active_footer_icon': _isHomeActive ,  'tab-icon': !_isHomeActive}" *ngIf="_isEnabled">
 		</div>
+
+		<div class="sub_footer_content" (click)="repair()" *ngIf="isDashboard">
+			<!-- Inactive (search) -->
+			<img src="assets/svgs/light/reapir-light.svg"
+				[ngClass]="{'active_footer_icon': _isHomeActive ,  '': !_isHomeActive}" *ngIf="!_isEnabled">
+			<!-- Active (search) -->
+			<img src="assets/svgs/light/reapir-light.svg"
+				[ngClass]="{'active_footer_icon': _isHomeActive ,  '': !_isHomeActive}" *ngIf="_isEnabled">
+		</div>
 		<!-- Share -->
 		<div class="sub_footer_content" (click)="share()" *ngIf="isShareActive">
 			<!-- Inactive (search) -->

@@ -29,7 +29,7 @@ export class DesignPlansPage extends BasePage {
     public override storageService: LocalStorageService
 
   ) {
-    super(null, null, null, null, null, router, null, null, null,null,storageService);
+    super(null, null, null, null, null, router, null, null, null, null, storageService);
   }
   override ngOnInit() {
     console.log("ngOnInit DesignPlansPage");
@@ -37,8 +37,11 @@ export class DesignPlansPage extends BasePage {
 
     this.activeRoute.queryParams.subscribe((params) => {
       console.log("ionViewDidLoad DesignPlansPage");
-      this.propertyName = params["Name"];
-      this.propertyId = params["Id"];
+
+      let a = this.SelectedPrivateLabelProperty;
+      this.propertyId = a.Id;
+      this.propertyName = a.Name;
+
       this.getDesignPlans();
     });
   }
@@ -46,6 +49,7 @@ export class DesignPlansPage extends BasePage {
   getPropertyName() {
     return this.propertyName;
   }
+
   getDesignPlans() {
     this.privateLabelService.getDesignPlans(this.propertyId).then(
       (response: Array<IDesignPanDto>) => {
