@@ -460,26 +460,19 @@ export class DashboardPage extends BasePage {
               return;
             }
 
-            if (properties.length === 1) {
-              let a = this.ActiveProperty;
-              if (a === undefined || a === null
-                || a.Id <= 0 || properties[0].IsDefault === true) {
-                this.setupProperty(properties[0]);
-              }
-            } else {
-              // TODO: Need to test this path!
+            if(!this.ActiveProperty || properties[0].IsDefault === true) {
+              this.setupProperty(properties[0]);
+            }
+
+            this.viewProperty(this.ActiveProperty);
+
+            // TODO: Need to test this path!
 
               // make the api call for the last ActiveProperty
-
               // tried this and doesn't work, need to make the call to the api to
               // get the property info
-              if (this.ActiveProperty !== null) {
                 if (this.ActiveProperty.IsProxy) {
-                  if (
-                    this.ActiveProperty.Profiles === undefined ||
-                    this.ActiveProperty.Profiles === null ||
-                    this.ActiveProperty.Profiles.length === 0
-                  ) {
+                  if (!this.ActiveProperty.Profiles?.length) {
                     this.userDetailsService.getProxyProperty(this.ActiveProperty.Id).then((x: any) => {
                       this.setupProperty(x);
                     },
@@ -498,8 +491,6 @@ export class DashboardPage extends BasePage {
 
                       console.log(error);
                     });
-                  } else {
-                    this.setupProperty(this.ActiveProperty);
                   }
                 } else {
                   if (this.ActiveProperty.Profiles == undefined
@@ -545,11 +536,6 @@ export class DashboardPage extends BasePage {
                     this.setupProperty(this.ActiveProperty);
                   }
                 }
-              } else {
-                this.setupProperty(properties[0]);
-                //this.closeLoader();
-              }
-            }
 
             this.AppInsights.trackEvent({
               name: 'LoadingProperties-Done',

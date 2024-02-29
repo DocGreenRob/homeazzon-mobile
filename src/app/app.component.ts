@@ -217,7 +217,9 @@ export class AppComponent extends BasePage {
     this.displayName = this.User.UserName;
     let userTypes = this.UserTypes;
 
-    let _ = userProperties.filter((x: any) => x.toLowerCase().indexOf('privatelabel') === -1);
+    // let _ = userProperties.filter((x: any) => x.toLowerCase().indexOf('privatelabel') === -1);
+    let _ = userProperties;
+
     _.map((x: any) => {
       let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
 
