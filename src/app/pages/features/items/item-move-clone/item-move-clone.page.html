@@ -128,7 +128,7 @@
                             [(ngModel)]="profileItem.selected"
                             (ionChange)="onProfileItemSelectAllToggle(propertyIndex, profileItemIndex)"></ion-toggle>
               </div>
-              <span *ngIf="profileItem.selected">
+              <span *ngIf="!profileItem.selected">
                 <div class="roles" *ngFor="let lineItem of profileItem.LineItems">
                   <ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Area.Id+ '_' + lineItem.Id}}"
                                 [(ngModel)]="lineItem.selected"></ion-checkbox>

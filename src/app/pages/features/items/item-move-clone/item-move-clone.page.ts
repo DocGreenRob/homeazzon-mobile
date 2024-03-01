@@ -218,7 +218,7 @@ export class ItemMoveClonePage extends BasePage {
               for (let propertyProfileItem of p.Profiles) {
                 if (profileItem.Id === propertyProfileItem.Id) {
                   propertyProfileItem.LineItems = profileItem.Area.LineItems;
-                  propertyProfileItem.selected = false;
+                  propertyProfileItem.selected = true;
                   for (let lineItem of propertyProfileItem.LineItems) {
                     lineItem.selected = false;
                   }
@@ -461,7 +461,7 @@ export class ItemMoveClonePage extends BasePage {
             });
 
             for (let lineItem of profile.LineItems) {
-              if(!profile.selected) {
+              if(profile.selected) {
                 lineItem.selected = false;
               }
             }
