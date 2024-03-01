@@ -29,7 +29,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.6.3';
+  public appVersion: string = '12.7.1';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 
@@ -52,6 +52,8 @@ export class AppComponent extends BasePage {
   userProperties: any = [];
   getPropertiesSubsription: any;
   constants = new Constants();
+  privateLabeler: any; // TODO: Should be IPrivateLabelDto or IPrivateLabelerDto
+  privateLabelerModifiedName: string;
 
   //new
   constructor(public override platform: Platform,
@@ -87,8 +89,6 @@ export class AppComponent extends BasePage {
 
       this.isIos = this.platform.is('ios');
     });
-
-
   }
 
   compareAppVersions(version1: string, version2: string): number {
@@ -108,7 +108,6 @@ export class AppComponent extends BasePage {
   override async ngOnInit() {
     console.log('ngOnInit AppComponent');
     await this.storage.create();
-
     this.storageService.delete('ActiveProperty');
 
     await this.utilityService.getRequiredMinimumVersion().then(async (x: any) => {
@@ -218,14 +217,18 @@ export class AppComponent extends BasePage {
     this.displayName = this.User.UserName;
     let userTypes = this.UserTypes;
 
+    // let _ = userProperties.filter((x: any) => x.toLowerCase().indexOf('privatelabel') === -1);
     let _ = userProperties;
+
     _.map((x: any) => {
       let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
 
-      if (_u[0].Name === undefined || _u[0].Name === null) {
-        debugger;
+      if (_u?.length) {
+        if (_u[0].Name === undefined || _u[0].Name === null) {
+          debugger;
+        }
+        this.setPropertyImage(_u[0].Name, x);
       }
-      this.setPropertyImage(_u[0].Name, x);
     });
 
     // Find the index of the item where IsDefault is true
@@ -241,6 +244,19 @@ export class AppComponent extends BasePage {
     }
 
     this.userProperties = _;
+
+    console.log('set properties');
+    var a = this.User;
+
+    if (a.IsPrivateLabelUser) {
+      this.isPrivateLabelUser = true;
+      let b: any = a.PrivateLabeler;
+      let c = this.getWordsWithinLimit(b.Name, 15);
+      this.privateLabelerModifiedName = c;
+      this.privateLabeler = b;
+      console.log('privateLabeler', this.privateLabeler);
+      console.log('b', b);
+    }
   }
 
   private setPropertyImage(userType: string, property: any) {
@@ -250,26 +266,32 @@ export class AppComponent extends BasePage {
     if (userType.toLowerCase().indexOf('tradesman') > -1) {
       imageName = 'tradesman';
     }
+    if (userType.toLowerCase().indexOf('privatelabel') > -1) {
+      imageName = 'private-label';
+    }
     if (userType.toLowerCase().indexOf('owner') > -1) {
       imageName = 'owner';
     }
     if (userType.toLowerCase().indexOf('developer') > -1) {
-      imageName = 'developer';
+      imageName = 'property-developer';
     }
     if (userType.toLowerCase().indexOf('appraiser') > -1) {
-      imageName = 'architect';
+      imageName = 'appraiser';
     }
     if (userType.toLowerCase().indexOf('architect') > -1) {
       imageName = 'architect';
     }
     if (userType.toLowerCase().indexOf('bank') > -1) {
-      imageName = 'architect';
+      imageName = 'bank';
     }
     if (userType.toLowerCase().indexOf('realtor') > -1) {
       imageName = 'realtor';
     }
     if (userType.toLowerCase().indexOf('vendor') > -1) {
       imageName = 'vendor';
+    }
+    if (userType.toLowerCase().indexOf('gamer') > -1) {
+      imageName = 'gamer';
     }
 
     property.Image = `assets/icon/${imageName}.svg`;
@@ -342,6 +364,17 @@ export class AppComponent extends BasePage {
     this.router.navigate(['property-profiles'], navExtras);
   }
 
+  public seePrivateLabelerProperties() {
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        showBackButton: true,
+      },
+    };
+
+    this.menuController.close();
+    this.router.navigate(['property-profiles'], navExtras);
+  }
+
   async viewProperty(p: IPropertyDto) {
     await this.communicator.sendSelectedProperty(p);
     this.storageService.delete('Lineitems');
@@ -354,5 +387,22 @@ export class AppComponent extends BasePage {
     // BarcodeScanner.prepare();
     this.router.navigate(['dashboard']);
     // this.uxNotifierService.showToast("There was an error scanning the barcode/qr code!", this.constants.ToastColorBad);
+  }
+
+  getWordsWithinLimit(sentence: string, characterLimit: number): string {
+    const words = sentence.split(' ');
+    let result = '';
+    let currentLength = 0;
+
+    for (const word of words) {
+      if (currentLength + word.length <= characterLimit) {
+        result += word + ' ';
+        currentLength += word.length + 1;
+      } else {
+        break;
+      }
+    }
+
+    return result.trim();
   }
 }

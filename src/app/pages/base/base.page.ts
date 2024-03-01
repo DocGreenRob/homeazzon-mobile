@@ -470,6 +470,15 @@ export class BasePage implements OnInit {
     this.storageService.set('SelectedProperty', value);
   }
 
+  get SelectedPrivateLabelProperty(): IPropertyDto {
+    const info: any = this.storageService.get('SelectedPrivateLabelProperty');
+    return info;
+  }
+
+  set SelectedPrivateLabelProperty(value: IPropertyDto) {
+    this.storageService.set('SelectedPrivateLabelProperty', value);
+  }
+
   get IsEditingProperty(): boolean {
     const info: any = this.storageService.get('IsEditingProperty');
     return info;
@@ -780,6 +789,10 @@ export class BasePage implements OnInit {
   // Search
   public search() {
     this.router.navigate(['search']);
+  }
+
+  public repairList() {
+    this.router.navigate(['repair-list']);
   }
 
   public openMenu() {

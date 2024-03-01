@@ -8,7 +8,7 @@ import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 export class TabMenuComponent implements OnInit {
 
   public isShareActive: boolean = false;
-
+  @Input() isDashboard: boolean = false;
 	@Input() _isMetattach: boolean = false;
 	@Input() _isHomeActive: boolean = true;
 	@Input() _isEnabled: boolean = false;
@@ -19,7 +19,7 @@ export class TabMenuComponent implements OnInit {
 	@Output() fileExplorerEvent: EventEmitter<any> = new EventEmitter();
 	@Output() searchEvent: EventEmitter<any> = new EventEmitter();
 	@Output() bookmarkEvent: EventEmitter<any> = new EventEmitter();
-
+	@Output() repairListEvent: EventEmitter<any> = new EventEmitter();
 	constructor() { }
 
 	goHome() {
@@ -48,6 +48,10 @@ export class TabMenuComponent implements OnInit {
 
 	bookmark() {
 		this.bookmarkEvent.emit();
+	}
+
+	repair(){
+		this.repairListEvent.emit();
 	}
 
 	share() {

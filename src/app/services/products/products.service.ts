@@ -35,8 +35,8 @@ export class ProductsService extends baseService {
     return this.post(`/assetInfo/cloneAndMove/${assetInfoID}`, data).toPromise();
   }
 
-  async cloneGoogleLink(data: any, assetInfoID: number) {
-    return this.post(`/assetInfo/cloneAndMove/${assetInfoID}/google-link`, data).toPromise();
+  async cloneGoogleLink(data: any, googleId: number) {
+    return this.post(`/assetInfo/cloneAndMove/${googleId}/google-link`, data).toPromise();
   }
 
   shortListExcludeProduct(product) {

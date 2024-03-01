@@ -23,5 +23,6 @@ export class AssetInfoDto {
 	Color: string;
 	TotalQuantityUnit: string;
 	TypeId?: number;
+	Repair?: boolean;
 }
 

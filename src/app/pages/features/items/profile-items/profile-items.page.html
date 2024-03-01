@@ -33,97 +33,48 @@
     <!-- My Stuff -->
     <div *ngIf="manageProfileItemsView == 'digiDoc' && isViewLoaded" class="room-list">
       <div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
-        <!-- <ion-row class="profile-item-row"> -->
-        <!-- <ion-col size="8"> -->
         <ion-text>
           {{lineitem.Name}}
         </ion-text>
-        <!-- </ion-col> -->
-        <!-- <ion-col size="4"> -->
         <span class="no-value" *ngIf="lineitem.DigiDocCount == 0">
           {{lineitem.DigiDocCount}}
         </span>
         <span *ngIf="lineitem.DigiDocCount > 0">
           {{lineitem.DigiDocCount}}
         </span>
-        <!-- </ion-col> -->
-        <!-- </ion-row> -->
-        <!-- <div class="hr2"> </div> -->
       </div>
-      <!-- <br> -->
-      <!-- temp removal, RAG 11.30.20 -->
-      <!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
-        <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
-        &nbsp; Optional Items
-      </button>-->
-      <!-- <br> -->
-      <!-- <br> -->
     </div>
     <!-- Wishlist -->
     <div *ngIf="manageProfileItemsView == 'wishlist' && isViewLoaded" class="room-list">
       <div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
-        <!-- <ion-row class="profile-item-row">
-          <ion-col size="8"> -->
         <ion-text>
           {{lineitem.Name}}
         </ion-text>
-        <!-- </ion-col> -->
-        <!-- <ion-col size="4"> -->
         <span class="no-value" *ngIf="lineitem.WishlistCount == 0">
           {{lineitem.WishlistCount}}
         </span>
         <span *ngIf="lineitem.WishlistCount > 0">
           {{lineitem.WishlistCount}}
         </span>
-        <!-- </ion-col> -->
-        <!-- </ion-row> -->
-        <!-- <div class="hr2"> </div> -->
       </div>
-      <!-- <br> -->
-      <!-- temp removal, RAG 11.30.20 -->
-      <!--<button clear ion-button class="edit-profile-item"
-          (click)="clickOptionalItems()">
-        <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd"
-           class="edit-profile-items-icon use_default_baby_blue">
-        &nbsp; Optional Items
-      </button>-->
-      <!-- <br> -->
-      <!-- <br> -->
     </div>
     <!-- Suggestions -->
     <div *ngIf="manageProfileItemsView == 'suggested' && isViewLoaded" class="room-list">
       <div class="stuff-items" *ngFor="let lineitem of lineitems; let i = index;" (click)="getItems(lineitem)">
-        <!-- <ion-row class="profile-item-row"> -->
-        <!-- <ion-col size="8"> -->
         <ion-text>
           {{lineitem.Name}}
           <ion-badge color="green" *ngIf="lineitem.UnopenedSuggestionCount > 0">
             {{lineitem.UnopenedSuggestionCount}}
           </ion-badge>
         </ion-text>
-        <!-- </ion-col> -->
-        <!-- <ion-col size="4"> -->
         <span class="no-value" *ngIf="lineitem.SuggestCount == 0">
           {{lineitem.SuggestCount}}
         </span>
         <span *ngIf="lineitem.SuggestCount > 0">
           {{lineitem.SuggestCount}}
         </span>
-        <!-- </ion-col> -->
-        <!-- </ion-row> -->
-        <!-- <div class="hr2"> </div> -->
       </div>
-      <!-- <br> -->
-      <!-- temp removal, RAG 11.30.20 -->
-      <!--<button clear ion-button class="edit-profile-item" (click)="clickOptionalItems()">
-        <img src="https://firebasestorage.googleapis.com/v0/b/homeazzon.appspot.com/o/common%2Ffont-awesome%2Fsolid%2Fpencil.svg?alt=media&token=96e3817d-b9d4-44e3-9102-7da165dc23fd" class="edit-profile-items-icon use_default_baby_blue">
-        &nbsp; Optional Items
-         </button>-->
-      <!-- <br>
-      <br> -->
     </div>
-    <!-- <br style="clear:both;" />
-    <br style="clear:both;" /> -->
   </div>
   <div class="no-items-container" *ngIf="!lineitems?.length">
     <div class="no-item-content">
