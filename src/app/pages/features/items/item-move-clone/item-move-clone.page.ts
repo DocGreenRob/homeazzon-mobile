@@ -13,7 +13,6 @@ import { ProductsService } from "../../../../services/products/products.service"
 import { AssetIndexDto } from "../../../../models/dto/interfaces/AssetIndexDto";
 import { CloneLineItemDto, CloneProfileItemDto, ClonePropertyDto } from "../../../../models/dto/PropertyCloneDto";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { debug } from "console";
 
 @Component({
   selector: "app-item-move-clone",
@@ -179,8 +178,7 @@ export class ItemMoveClonePage extends BasePage {
 
   public async profileItemPanelNextClick() {
     this._selectedProfileItemsFromUI = [];
-
-    let selectedProfileIDs = [];
+    const selectedProfiles = [];
 
     for (let p of this.selectedProperties) {
       //Remove non selected profiles.
@@ -192,23 +190,25 @@ export class ItemMoveClonePage extends BasePage {
       //Array of selected ProfileItemIds
       for (let prof of p.Profiles) {
         if (prof.selected) {
-          selectedProfileIDs.push(prof.ProfileItems[0].Id);
+          selectedProfiles.push({ Id: prof.Id, propertyName: p.Name, profileName: prof.ProfileItems[0].Name });
         }
       }
     }
 
-    this.loading = await this.loadingCtrl.create({
-      message: "Loading area lineitems...",
-      cssClass: "my-loading-class",
-    });
-    this.loading.present();
-
     const userType = this.getUserShortName(this.User.Types[0].Name);
+    const loaders = {};
 
-    for (let profileID of selectedProfileIDs) {
-      await this.propertyService.getProfileItems(profileID, userType)
-        .then(
-          (profileItem: any) => {
+    for(let profile of selectedProfiles) {    
+      loaders[profile.Id] = await this.loadingCtrl.create({
+        message: `Loading Line Items of ${profile.propertyName} for ${profile.profileName}...`,
+        cssClass: "my-loading-class",
+      });
+
+      loaders[profile.Id]?.present();
+
+      await this.propertyService.getProfileItems(profile.Id, userType)
+        .then((profileItem: any) => {
+            loaders[profileItem.Id]?.dismiss();
             this._selectedProfileItemsFromUI.push(profileItem);
             console.log("_selectedProfileItemsFromUI = ", this._selectedProfileItemsFromUI);
             console.log("ProfileItems = ", profileItem);
@@ -218,7 +218,7 @@ export class ItemMoveClonePage extends BasePage {
               for (let propertyProfileItem of p.Profiles) {
                 if (profileItem.Id === propertyProfileItem.Id) {
                   propertyProfileItem.LineItems = profileItem.Area.LineItems;
-                  propertyProfileItem.selected = false;
+                  propertyProfileItem.selected = true;
                   for (let lineItem of propertyProfileItem.LineItems) {
                     lineItem.selected = false;
                   }
@@ -231,11 +231,8 @@ export class ItemMoveClonePage extends BasePage {
           })
         .catch((error) => {
           console.log(error);
-          this.loading.dismiss();
         });
     }
-
-    this.loading.dismiss();
   }
 
   public async propertyPanelNextClick() {
@@ -462,6 +459,12 @@ export class ItemMoveClonePage extends BasePage {
                 console.log("selectedProperties = ", this.selectedProperties);
               }
             });
+
+            for (let lineItem of profile.LineItems) {
+              if(profile.selected) {
+                lineItem.selected = false;
+              }
+            }
           }
         }
       }
