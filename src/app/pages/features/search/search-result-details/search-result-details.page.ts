@@ -15,6 +15,8 @@ import { IYouTubeDto } from "src/app/models/dto/interfaces/IYouTubeDto";
 import { BasePage } from "src/app/pages/base/base.page";
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
+import { UtilitiesService } from "../../../../services/utlities/utilities.service";
+import { IWebhookDto } from "../../../../models/dto/interfaces/IWebhookDto";
 
 @Component({
   selector: "app-search-result-details",
@@ -42,8 +44,8 @@ export class SearchResultDetailsPage extends BasePage {
     private modalController: ModalController,
     public sanitizerService: DomSanitizer,
     public alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService,
+    private utilityService: UtilitiesService) {
     super(navController, navParams, null, null, null, router, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
   }
@@ -242,6 +244,22 @@ export class SearchResultDetailsPage extends BasePage {
         );
         break;
     }
+
+    // update the cache
+
+    let a = this.User.Types;
+    let b = a.filter((x) => x.Name.toLowerCase().indexOf('owner') !== -1);
+
+    if (b !== undefined && b !== null && b.length == 1) {
+      let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
+      let userType = 'owner';
+      updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
+
+      await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    } else {
+      alert(`need to update cache for this user type${JSON.stringify(a)}`);
+    }
+
 
     this.close();
 
