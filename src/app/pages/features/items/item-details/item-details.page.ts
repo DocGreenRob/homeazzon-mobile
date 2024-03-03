@@ -506,19 +506,21 @@ export class ItemDetailsPage extends BasePage {
 
   public async delete() {
     const alert = await this.alertCtrl.create({
-      header: "Confirm",
-      message: "Are you sure want to Delete?",
+      // header: "Confirm",
+      message: "Delete this Item?",
+      cssClass: "item-delete-modal",
       buttons: [
         {
           text: "Cancel",
           role: "cancel",
+          cssClass: "cancelButton",
           handler: () => {
             return;
           },
         },
         {
-          text: "Ok",
-          cssClass: "signout",
+          text: "Delete",
+          cssClass: "deletButton",
           handler: () => {
             this.startDelete();
           },
