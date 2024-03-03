@@ -396,18 +396,8 @@ ion-content {
   }
 }
 
-.stick-to-bottom-of-parent {
-  margin-top: auto; /* Push the div to the bottom */
-  font-weight: 600;
-  text-align: center;
-  width: 85%;
-  margin-bottom: 2em;
-}
-
 .modal-save-btn {
   --background: #232B42;
-  --border-radius: 0;
-  width: 100%;
   color: var(--additional-colors-white, #FFF);
   font-family: Plus Jakarta Sans;
   font-size: 16px;
@@ -415,9 +405,15 @@ ion-content {
   font-weight: 600;
   line-height: 24px;
   letter-spacing: 0.08px;
-  /*margin: 0;*/
   height: 56px;
   --background-activated: #232B42;
   --background-focused: #232B42;
   --background-hover: #232B42;
+  position: fixed;
+  margin-left: 10%;
+  margin-right: 10%;
+  left: 0px;
+  right: 0px;
+  bottom: 65px;
+
 }
