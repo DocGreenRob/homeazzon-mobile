@@ -278,9 +278,10 @@
           </div>-->
         </div>
       </div>
+      <ion-button *ngIf="manageView == 'rooms'" class="modal-save-btn btnstick-to-bottom-of-parent" (click)="repair()">Repairs</ion-button>
     </div>
   </div>
-</ion-content>
+</ion-content> 
 <tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
           [_isHomeActive]="false"
           (fileExplorerEvent)="launchFileExplorer()"
@@ -288,5 +289,4 @@
           (barcodeEvent)="launchBarcode()"
           (bookmarkEvent)="bookmark()"
           [isDashboard]="true"
-          (repairListEvent)="repairList()"
           (searchEvent)="search()"></tab-menu>
