@@ -76,8 +76,12 @@ export class SearchResultDetailsPage extends BasePage {
   }
 
   private async getListAsync() {
+    this.IsWishlist = false;
+    this.IsMy = false;
+    this.IsSuggest = false;
+
     (
-      await this.alertCtrl.create({
+        await this.alertCtrl.create({
         message: "Which list does this go into?",
         buttons: [
           {
