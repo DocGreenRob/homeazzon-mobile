@@ -280,7 +280,10 @@
       </div>
     </div>
   </div>
-  <ion-button *ngIf="manageView == 'rooms'" class="modal-save-btn" expand="full" (click)="repair()">Repairs</ion-button>
+  <ion-button *ngIf="manageView == 'rooms'" class="modal-save-btn" expand="full" (click)="repair()">
+    <ion-icon slot="start" name="build"></ion-icon>
+    Repairs
+  </ion-button>
 </ion-content> 
 <tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
           [_isHomeActive]="false"
