@@ -190,7 +190,7 @@ export class ItemMoveClonePage extends BasePage {
       //Array of selected ProfileItemIds
       for (let prof of p.Profiles) {
         if (prof.selected) {
-          selectedProfiles.push({ Id: prof.Id, propertyName: p.Name, profileName: prof.ProfileItems[0].Name });
+          selectedProfiles.push({ Id: prof.ProfileItems[0].Id, propertyName: p.Name, profileName: prof.ProfileItems[0].Name });
         }
       }
     }
