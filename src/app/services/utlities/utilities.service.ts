@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { LoadingController } from "@ionic/angular";
 import { environment } from "src/environments/environment";
 import { EmailDto } from "../../models/dto/EmailDto";
+import { IWebhookDto } from "../../models/dto/interfaces/IWebhookDto";
 
 @Injectable({
   providedIn: "root",
@@ -43,5 +44,9 @@ export class UtilitiesService extends baseService {
 
   async getPrivateLabelRegistrationUrl(): Promise<any> {
     return this.get("/utils/private-label-registration-url").toPromise();
+  }
+
+  async cacheManualMakeGetRequestAsync(webhookDto: IWebhookDto) {
+    return this.post('/utils/service-bus/cache-manual', webhookDto).toPromise();
   }
 }
