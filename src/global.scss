@@ -1078,3 +1078,123 @@ select::-ms-expand {
     margin: 16px;
   }
 }
+
+//Delete Modal --------------------
+.item-delete-modal {
+  .alert-wrapper.sc-ion-alert-md {
+    width: -webkit-fill-available;
+    border-radius: 10px;
+  }
+
+  .alert-button-group.sc-ion-alert-md {
+    justify-content: space-around;
+  }
+
+  .alert-button.sc-ion-alert-md.deletButton {
+    margin-bottom: 5px;
+    margin-right: unset;
+    color: white;
+    width: -webkit-fill-available;
+    background-color: #E57070;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .alert-button.sc-ion-alert-md.cancelButton {
+    border: 1px solid #5681AA;
+    margin-bottom: 5px;
+    margin-right: unset;
+    color: #5681AA;
+    width: -webkit-fill-available;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .alert-button-inner.sc-ion-alert-md {
+    justify-content: center;
+  }
+
+  .alert-title.sc-ion-alert-md {
+    display: none;
+  }
+
+  .alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md {
+    text-align: center;
+    font-size: 23px;
+    color: black;
+    font-weight: bolder;
+  }
+}
+
+
+//Wishlist Modal -----------------------------------
+.search-wishlist-modal {
+  .alert-wrapper.sc-ion-alert-md {
+    height: 170px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+  }
+
+  .alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .alert-button-group.sc-ion-alert-md {
+    justify-content: space-evenly;
+  }
+
+  .alert-button.sc-ion-alert-md {
+    border: 1px solid #5681AA;
+    margin-bottom: 5px;
+    margin-right: unset;
+    color: #5681AA;
+  }
+
+  .alert-button-inner.sc-ion-alert-md {
+    justify-content: center;
+    padding: 5px;
+  }
+}
+
+//Toast Modal --------------------
+.toastNotifier {
+  .alert-wrapper.sc-ion-alert-md {
+    text-align: center;
+    background-color: #B5FEE8;
+    width: fit-content;
+    color: green;
+    margin-bottom: 20px;
+    position: absolute;
+    bottom: 5%
+  }
+
+  .alert-button-group.sc-ion-alert-md {
+    display: none;
+  }
+
+  .alert-head.sc-ion-alert-md {
+    padding-top: 0px;
+    padding-bottom: 7px;
+  }
+
+  .alert-message.sc-ion-alert-md,
+  .alert-input-group.sc-ion-alert-md {
+    padding-bottom: 12px;
+  }
+
+  .alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md {
+    color: #00752F;
+  }
+}
+
+// Backgrounf of Modals
+.hydrated.search-wishlist-modal{
+  backdrop-filter: blur(3px);
+}
+.hydrated.item-delete-modal{
+  backdrop-filter: blur(1.5px);
+}
+.hydrated.toastNotifier{
+  backdrop-filter: blur(1.5px);
+}

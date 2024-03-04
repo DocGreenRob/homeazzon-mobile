@@ -681,6 +681,7 @@ export class ItemEditPage extends BasePage {
     (
       await this.alertCtrl.create({
         message: "Which list does this go into?",
+        cssClass: "search-wishlist-modal",
         buttons: [
           {
             text: "Wishlist",
