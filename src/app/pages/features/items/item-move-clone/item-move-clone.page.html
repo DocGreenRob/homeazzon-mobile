@@ -93,6 +93,42 @@
 				<!-- </ion-row> -->
 			</div>
 			
+			<div *ngIf="isShowArea">
+				<div class="roleWrapper" *ngFor="let property of selectedProperties;let propertyIndex = index">
+					<div class="toggleWrapper">
+						<ion-label>{{property.Name}}</ion-label>
+						<ion-toggle  name="SelectAll" [(ngModel)]="property.selected" (ionChange)="onPropertySelectAllToggle(propertyIndex)"></ion-toggle>	
+					</div>
+						<div class="roles" *ngFor="let profileItem of property.Profiles">
+							<ion-checkbox id="{{'s_'+ property.Id+'_' + profileItem.Area.Id}}" [(ngModel)]="profileItem.selected"></ion-checkbox>
+							<ion-text>{{profileItem.Area.Name}}</ion-text>
+						</div>
+					
+				</div>
+				<div class="btnWrapper">
+						<ion-button class="continuebtn" (click)="profileItemPanelNextClick()">
+							<!-- <a routerLink="/items/item-edit">Next</a> -->
+							Next
+							</ion-button>
+
+            <ion-label>Select All</ion-label>
+            <ion-toggle name="SelectAll" (ionChange)="onSelectAllToggle($event)"></ion-toggle>
+
+          </div>
+          <div class="roles" *ngFor="let property of properties">
+
+            <ion-checkbox id="{{'s_' + property.Id}}" [(ngModel)]="property.selected" (ionChange)="onPropertySelect()"></ion-checkbox>
+
+            <ion-text>{{property.Name}}</ion-text>
+       
+          </div>
+
+          <div class="btnWrapper">
+            <ion-button class="continuebtn" (click)="propertyPanelNextClick()">
+              Next
+            </ion-button>
+          </div>
+        </div>
 
         <div *ngIf="isShowArea">
           <div class="roleWrapper" *ngFor="let property of selectedProperties;let propertyIndex = index">

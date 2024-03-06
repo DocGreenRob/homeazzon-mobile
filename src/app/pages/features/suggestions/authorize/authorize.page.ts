@@ -17,6 +17,8 @@ export class AuthorizePage extends BasePage {
   private _loading: any;
   public notification: any;
   public isIos: boolean = false;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
 
   constructor(public override storageService: LocalStorageService,
     private location: Location,
@@ -52,14 +54,12 @@ export class AuthorizePage extends BasePage {
   }
 
   public async authorize(action) {
-    this._loading = await this.loadingController.create({
-      message: 'approving...',
-      cssClass: 'my-loading-class',
-    });
-    await this._loading.present();
+
+    this.presentSpinner('approving...');
 
     this.notificationService.approveAuthorization(action, this.notification.PendingAuthorization.Id).then((response) => {
-        this._loading.dismiss();
+
+        this.dismissSpinner();
         this.uxNotifierService.showToast(action + " was applied successfully", this._constants.ToastColorBad);
         
         if (action === 'limitedAccess') {
@@ -88,4 +88,14 @@ export class AuthorizePage extends BasePage {
       }
     );
   }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

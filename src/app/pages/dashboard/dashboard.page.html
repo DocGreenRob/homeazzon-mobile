@@ -1,5 +1,9 @@
 <primary-menu class="top-icon-bar" [ngStyle]="isIos && {'padding-top': '2em'}" type="logoMenu" [userData]="User" [propertyName]="ActiveProperty?.Name" (_openMenuClickHandler)="openMenu()">
 </primary-menu>
+<app-global-spinner [spinnerText]="spinnerText" *ngIf="loading1Visible"></app-global-spinner>
+<app-global-spinner [spinnerText]="spinnerText2" *ngIf="loading2Visible"></app-global-spinner>
+<app-global-spinner [spinnerText]="spinnerText3" *ngIf="loading3Visible"></app-global-spinner>
+<app-global-spinner [spinnerText]="spinnerText4" *ngIf="loading4Visible"></app-global-spinner>
 <ion-content>
   <div class="main-wrapper">
     <app-segment-selector [segments]="views" [initView]="{value: manageView}"

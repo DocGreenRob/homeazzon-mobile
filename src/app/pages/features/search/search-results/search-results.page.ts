@@ -23,6 +23,8 @@ export class SearchResultsPage extends BasePage {
   showBackButton = true;
   public view: string = "";
   public isIos: boolean = false;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
 
   private currentProductPage: number = 1;
 
@@ -67,11 +69,9 @@ export class SearchResultsPage extends BasePage {
   }
 
   public async start() {
-    this._loading = await this.loadingController.create({
-      message: "searching...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
+
+
+    this.presentSpinner('searching...');
 
     let searchRequestDto: ISearchRequestDto = {
       AreaId: this.ProfileItem.Id === undefined ? 0 : this.ProfileItem.AreaId,
@@ -131,7 +131,9 @@ export class SearchResultsPage extends BasePage {
         break;
     }
 
-    this._loading.dismiss();
+
+    this.dismissSpinner();
+
   }
 
   public handleInfinite(infiniteScroll) {
@@ -167,7 +169,8 @@ export class SearchResultsPage extends BasePage {
 
   public searchResultHandlerError = (err: any) => {
     this.initiliazeView();
-    this._loading.dismiss();
+    this.dismissSpinner();
+
 
     if (err.status == 401) {
       this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
@@ -191,4 +194,14 @@ export class SearchResultsPage extends BasePage {
   public goBack() {
     this.navController.back();
   }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

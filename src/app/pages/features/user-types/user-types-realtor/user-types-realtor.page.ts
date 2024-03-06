@@ -46,6 +46,11 @@ export class UserTypesRealtorPage extends BasePage {
   private _loading: any;
   private _selectedProperty: any;
   private _userType: any;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
+  spinnerText2: string = 'Loading...';
+  loading2Visible: boolean = false;
 
   constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
@@ -79,14 +84,10 @@ export class UserTypesRealtorPage extends BasePage {
     this._userType = this.UserTypes.filter(x => x.Name.toLowerCase().indexOf('realtor') > -1)[0];
 
     if (this._isEditingProperty) {
-      this._loading = await this.loadingController.create({
-        message: 'Getting Company Information...',
-        cssClass: 'my-loading-class',
-      });
-      await this._loading.present();
+      this.presentSpinnerCompany('Getting Company Information...');
 
       await this.companyInformationService.getCompanyInformationNyUserTypeAsync(this._userType.Id).then((x: ICompanyInformationDto) => {
-        this._loading.dismiss();
+        this.dismissSpinnerCompany();
 
         this.companyName = x.Name.trim();
         this.website = x.Website ?? '';
@@ -181,14 +182,10 @@ export class UserTypesRealtorPage extends BasePage {
   }
 
   public async save(realtor: ICompanyInformationDto) {
-    this._loading = await this.loadingController.create({
-      message: 'Updating Company Information...',
-      cssClass: 'my-loading-class',
-    });
-    await this._loading.present();
+    this.presentSpinnerUpdateComapany('Updating Company Information...');
 
     await this.companyInformationService.upsertCompanyInformationAsync(realtor).then((x) => {
-      this._loading.dismiss();
+      this.dismissSpinnerUpdateComapany();
       this.uxNotifierService.showToast("Company Information updated.", this._constants.ToastColorGood);
       this.router.navigate(["dashboard"]);
     }).catch((err) => {
@@ -211,4 +208,25 @@ export class UserTypesRealtorPage extends BasePage {
   onStateChange(){
     this.cities = City.getCitiesOfState(this.country, this.state);
   }
+
+  async presentSpinnerCompany(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinnerCompany() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
+  async presentSpinnerUpdateComapany(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinnerUpdateComapany() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

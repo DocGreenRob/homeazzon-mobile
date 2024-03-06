@@ -55,6 +55,24 @@ export class ItemsPage extends BasePage {
   private _isListView: boolean = false;
   isListView: boolean = false;
 
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+  spinnerText2: string = 'Loading...';
+  loading2Visible: boolean = false;
+  spinnerText3: string = 'Loading...';
+  loading3Visible: boolean = false;
+  spinnerText4: string = 'Loading...';
+  loading4Visible: boolean = false;
+  spinnerText5: string = 'Loading...';
+  loading5Visible: boolean = false;
+  spinnerText6: string = 'Loading...';
+  loading6Visible: boolean = false;
+  spinnerText7: string = 'Loading...';
+  loading7Visible: boolean = false;
+  spinnerText8: string = 'Loading...';
+  loading8Visible: boolean = false;
+  spinnerText9: string = 'Loading...';
+  loading9Visible: boolean = false;
   views: Array<SegmentItem> = [
     {
       name: "My Stuff",
@@ -321,24 +339,27 @@ export class ItemsPage extends BasePage {
             profileItemId = this.ProfileItem.Id;
           }
 
-          const loaders = [
-            await this.loadingCtrl.create({ message: "Getting Google Products...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting Amazon Products...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting Google Web Links...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting YouTube Videos...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting Digi Docs...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting UPCs...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting QRCodes...", cssClass: "my-loading-class" }),
-            await this.loadingCtrl.create({ message: "Getting Bookmarks...", cssClass: "my-loading-class" })
-          ];
-          loaders[0]?.present();
+          // const loaders = [
+            // await this.loadingCtrl.create({ message: "Getting Google Products...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting Amazon Products...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting Google Web Links...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting YouTube Videos...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting Digi Docs...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting UPCs...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting QRCodes...", cssClass: "my-loading-class" }),
+            // await this.loadingCtrl.create({ message: "Getting Bookmarks...", cssClass: "my-loading-class" })
+          // ];
+          // loaders[0]?.dismiss;
+          this.presentSpinnerGoogle('Getting Google Products...');
 
           // 1. Google Shopping
           await this.searchService.getSavedGoogleProductData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedProductSearchResultDto>) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+              this.dismissSpinnerGoogle();
+              this.presentSpinnerAmazon('Getting Amazon Products...');
 
               x.map((result) => {
                 if (result.IsMy) {
@@ -373,9 +394,11 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+              this.dismissSpinnerGoogle();
+              this.presentSpinnerAmazon('Getting Amazon Products...');
 
               this.errorHandler(err);
             }
@@ -384,9 +407,12 @@ export class ItemsPage extends BasePage {
           // 2. Amazon
           await this.searchService.getSavedAmazonData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedProductSearchResultDto>) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+              this.dismissSpinnerAmazon();
+              this.presentSpinnerGoogleWeb('Getting Google Web Links...');
 
               x.map((result) => {
                 if (result.IsMy) {
@@ -421,10 +447,13 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
 
+              this.dismissSpinnerAmazon();
+              this.presentSpinnerGoogleWeb('Getting Google Web Links...');
+  
               this.errorHandler(err);
             }
           );
@@ -432,9 +461,12 @@ export class ItemsPage extends BasePage {
           // 3. Google Web
           await this.searchService.getSavedGoogleData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedSearchEngineSearchResultDto>) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+              this.dismissSpinnerGoogleWeb();
+              this.presentSpinnerYoutube('Getting YouTube Videos...');
 
               x.map((result: SavedSearchEngineSearchResultDto) => {
                 if (result.IsMy) {
@@ -469,9 +501,13 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+            this.dismissSpinnerGoogleWeb();
+            this.presentSpinnerYoutube('Getting YouTube Videos...');
+
               this.errorHandler(err);
             }
           );
@@ -479,10 +515,13 @@ export class ItemsPage extends BasePage {
           // 4. YouTube
           await this.searchService.getSavedYouTubeData(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<SavedYouTubeSearchResultDto>) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
 
+              this.dismissSpinnerYoutube();
+              this.presentSpinnerDigi('Getting Digi Docs...');
+  
               x.map((result: SavedYouTubeSearchResultDto) => {
                 if (result.IsMy) {
                   youTubeGridListsMy.Items.push({ Id: result.Id, Name: result.Title, IconPath: null, ImagePath: result.ThumbnailImg });
@@ -516,10 +555,12 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
-
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+              this.dismissSpinnerYoutube();
+              this.presentSpinnerDigi('Getting Digi Docs...');
+  
               this.errorHandler(err);
             }
           );
@@ -527,10 +568,13 @@ export class ItemsPage extends BasePage {
           // 5. DigiDoc
           await this.itemService.getDigiDocs(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: ITupleResult) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
 
+              this.dismissSpinnerDigi();
+              this.presentSpinnerUCP('Getting UPCs...');
+  
               let entry: Entry = new Entry();
               entry.ArtifactType = "DigiDoc";
               entry.Tuple = x;
@@ -679,10 +723,13 @@ export class ItemsPage extends BasePage {
               this._digiDocGridListsTags = digiDocGridListsTags;
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
 
+              this.dismissSpinnerDigi();
+              this.presentSpinnerUCP('Getting UPCs...');
+  
               this.errorHandler(err);
             }
           );
@@ -690,9 +737,13 @@ export class ItemsPage extends BasePage {
           // 6. Upc
           await this.itemService.getUpcProducts(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<IProductDto>) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+              this.dismissSpinnerUCP();
+              this.presentSpinnerQR('Getting QRCodes...');
+  
 
               x.map((result: IProductDto) => {
                 if (result.IsMy) {
@@ -727,10 +778,13 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
 
+              this.dismissSpinnerUCP();
+              this.presentSpinnerQR('Getting QRCodes...');
+  
               this.errorHandler(err);
             }
           );
@@ -738,9 +792,12 @@ export class ItemsPage extends BasePage {
           // 7. QrCode
           await this.itemService.getQrCodes(this.ActiveProperty.Id, profileItemId, this.LineItem.Id, 0, this.ActiveProperty.IsProxy).then(
             (x: Array<IQrCodeDto>) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+              this.dismissSpinnerQR();
+              this.presentSpinnerBookmark('Getting Bookmarks...');
 
               x.map((result: IQrCodeDto) => {
                 if (result.IsMy) {
@@ -788,9 +845,12 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+              this.dismissSpinnerQR();
+              this.presentSpinnerBookmark('Getting Bookmarks...');
 
               this.errorHandler(err);
             }
@@ -799,9 +859,12 @@ export class ItemsPage extends BasePage {
           // 8. Bookmarks
           await this.itemService.getBookmarks(profileItemId, this.LineItem.Id).then(
             (x: any) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
+
+
+              this.dismissSpinnerBookmark();
 
               x.Item1.map((result: IBookmarkDto) => {
                 if (result.Index.IsMy) {
@@ -838,10 +901,12 @@ export class ItemsPage extends BasePage {
               }
             },
             (err) => {
-              loaders[0]?.dismiss();
-              loaders.splice(0, 1);
-              loaders[0]?.present();
+              // loaders[0]?.dismiss();
+              // loaders.splice(0, 1);
+              // loaders[0]?.present();
 
+              
+            this.dismissSpinnerBookmark();
               this.errorHandler(err);
             }
           );
@@ -898,17 +963,19 @@ export class ItemsPage extends BasePage {
   }
 
   async dynamicTabClickHandler(id: number) {
-    this._loading = this.loadingCtrl.create({
-      message: "getting results...",
-      cssClass: "my-loading-class",
-    });
-    this._loading.present();
+    // this._loading = this.loadingCtrl.create({
+    //   message: "getting results...",
+    //   cssClass: "my-loading-class",
+    // });
+    // this._loading.present();
+    this.presentSpinner('getting results...');
 
     this.data = { Lists: [] };
     this._genericViewResultGrid = { Lists: [] };
     await this.getDynamicViewResultsAsync(id).then(
       (x) => {
-        this._loading.dismiss();
+        // this._loading.dismiss();
+        this.dismissSpinner();
       },
       (err) => {}
     );
@@ -957,5 +1024,90 @@ export class ItemsPage extends BasePage {
       componentProps: { tagsList: this._digiDocGridListsTags },
     });
     await filterModal.present();
+  }
+
+  async presentSpinnerGoogle(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinnerGoogle() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
+  async presentSpinnerAmazon(text: string) {
+    this.spinnerText2 = text;
+    this.loading2Visible = true;
+  }
+
+  async dismissSpinnerAmazon() {
+    this.loading2Visible = false;
+    this.spinnerText2 = ''; 
+  }
+  async presentSpinnerGoogleWeb(text: string) {
+    this.spinnerText3 = text;
+    this.loading3Visible = true;
+  }
+
+  async dismissSpinnerGoogleWeb() {
+    this.loading3Visible = false;
+    this.spinnerText3 = ''; 
+  }
+  async presentSpinnerYoutube(text: string) {
+    this.spinnerText4 = text;
+    this.loading4Visible = true;
+  }
+
+  async dismissSpinnerYoutube() {
+    this.loading4Visible = false;
+    this.spinnerText4 = ''; 
+  }
+  async presentSpinnerDigi(text: string) {
+    this.spinnerText5 = text;
+    this.loading5Visible = true;
+  }
+
+  async dismissSpinnerDigi() {
+    this.loading5Visible = false;
+    this.spinnerText5 = ''; 
+  }
+  async presentSpinnerUCP(text: string) {
+    this.spinnerText6 = text;
+    this.loading6Visible = true;
+  }
+
+  async dismissSpinnerUCP() {
+    this.loading6Visible = false;
+    this.spinnerText6 = ''; 
+  }
+  async presentSpinnerQR(text: string) {
+    this.spinnerText7 = text;
+    this.loading7Visible = true;
+  }
+
+  async dismissSpinnerQR() {
+    this.loading7Visible = false;
+    this.spinnerText7 = ''; 
+  }
+
+  async presentSpinnerBookmark(text: string) {
+    this.spinnerText8 = text;
+    this.loading8Visible = true;
+  }
+
+  async dismissSpinnerBookmark() {
+    this.loading8Visible = false;
+    this.spinnerText8 = ''; 
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText9 = text;
+    this.loading9Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading9Visible = false;
+    this.spinnerText9 = ''; 
   }
 }
