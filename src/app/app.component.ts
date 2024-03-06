@@ -115,7 +115,7 @@ export class AppComponent extends BasePage {
 
       if (a < 0) {
         this._loading = await this.loadingController.create({
-          message: 'New Version Available! Visit the App Store to get the latest version of the app.',
+          message: 'New Version Available! Visit the App Store to download or use the web "www.mobile.web.homeazzon.com"',
           cssClass: 'my-loading-class',
         });
 
@@ -217,7 +217,8 @@ export class AppComponent extends BasePage {
     this.displayName = this.User.UserName;
     let userTypes = this.UserTypes;
 
-    let _ = userProperties.filter((x: any) => x.toLowerCase().indexOf('privatelabel') === -1);
+    //let _ = userProperties.filter((x: any) => x.toLowerCase().indexOf('privatelabel') === -1);
+    let _ = userProperties;
     _.map((x: any) => {
       let _u = userTypes.filter((y: any) => y.Id == x.UserTypeId);
 
