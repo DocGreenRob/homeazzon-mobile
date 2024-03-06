@@ -106,36 +106,28 @@
 					
 				</div>
 				<div class="btnWrapper">
-					<!-- <ion-col size="9">
-					</ion-col> -->
-					<!-- <ion-col size="3"> -->
 						<ion-button class="continuebtn" (click)="profileItemPanelNextClick()">
 							<!-- <a routerLink="/items/item-edit">Next</a> -->
 							Next
 							</ion-button>
 
-            <!-- <ion-col size="3"> -->
             <ion-label>Select All</ion-label>
             <ion-toggle name="SelectAll" (ionChange)="onSelectAllToggle($event)"></ion-toggle>
-            <!-- </ion-col> -->
+
           </div>
           <div class="roles" *ngFor="let property of properties">
-            <!-- <ion-col size="2"> -->
+
             <ion-checkbox id="{{'s_' + property.Id}}" [(ngModel)]="property.selected" (ionChange)="onPropertySelect()"></ion-checkbox>
-            <!-- </ion-col> -->
-            <!-- <ion-col size="10"> -->
+
             <ion-text>{{property.Name}}</ion-text>
-            <!-- </ion-col> -->
+       
           </div>
-          <!-- <ion-row no-padding>
-            <ion-col size="9">
-            </ion-col> -->
+
           <div class="btnWrapper">
             <ion-button class="continuebtn" (click)="propertyPanelNextClick()">
               Next
             </ion-button>
           </div>
-          <!-- </ion-row> -->
         </div>
 
         <div *ngIf="isShowArea">

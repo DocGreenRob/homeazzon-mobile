@@ -21,6 +21,8 @@ export class SearchPage extends BasePage {
   private _originalProfileItem: IProfileItemDto = this.ProfileItem;
   private _originalLineItem: ILineitemDto = this.LineItem;
   private _constants: Constants;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
 
   // Public
   public profileItems: Array<IListItem> = [];
@@ -159,11 +161,8 @@ export class SearchPage extends BasePage {
   public async getLineitems() {
     if (this.selectedProfileItem) {
       if(this.CurrentView == 'Room'){
-        this._loading = await this.loadingController.create({
-          message: "getting lineitems...",
-          cssClass: "my-loading-class",
-        });
-        await this._loading.present();
+
+        this.presentSpinner('getting lineitems...');
       };
 
       // TODO: This should be the usertype from the selected property
@@ -185,7 +184,8 @@ export class SearchPage extends BasePage {
               this.sortCategories();
               }
 
-              this._loading?.dismiss();
+
+              this.dismissSpinner();
             },
             (err) => {
               // debugger;
@@ -242,4 +242,15 @@ export class SearchPage extends BasePage {
     }
     throw new Error('User type not found');
   }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

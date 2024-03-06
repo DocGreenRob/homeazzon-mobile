@@ -23,6 +23,8 @@ export class HelpPage extends BasePage {
   private _loading: any;
 
   public isIos: boolean = false;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
   constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
@@ -70,13 +72,8 @@ export class HelpPage extends BasePage {
           cssClass: 'signout',
           handler: async () => {
 
-            this._loading = await this.loadingCtrl.create({
-              message: 'deleting account...',
-              cssClass: 'my-loading-class',
-            });
 
-            await this._loading.present();
-
+            this.presentSpinner('deleting account...');
             this.utilityService.deleteAccount().then(() => {
               this.azureAuthService.logout().then(() => {
                 this.storageService.clear();
@@ -84,7 +81,7 @@ export class HelpPage extends BasePage {
                 window.dispatchEvent(new CustomEvent('user:loggedOut'));
 
                 if (this._loading != undefined) {
-                  this._loading.dismiss();
+                  this.dismissSpinner();
                 }
 
                 this.router.navigate(['sign-in']);
@@ -100,5 +97,14 @@ export class HelpPage extends BasePage {
     await alert.present();
 
     return;
+  }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
   }
 }

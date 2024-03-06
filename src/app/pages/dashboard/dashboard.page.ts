@@ -37,7 +37,18 @@ import { LocalStorageService } from '@app/services/local-storage.service';
 export class DashboardPage extends BasePage {
   private _constants = new Constants();
   public isIos: boolean = false;
-
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+  
+  spinnerText2: string = 'Loading...';
+  loading2Visible: boolean = false;
+  
+  spinnerText3: string = 'Loading...';
+  loading3Visible: boolean = false;
+  
+  spinnerText4: string = 'Loading...';
+  loading4Visible: boolean = false;
+  
   // const
   public data: IGrid;
   public manageView: string = 'rooms';
@@ -133,16 +144,13 @@ export class DashboardPage extends BasePage {
       || this.IsFirstLoadCompleted === null
       || this.IsFirstLoadCompleted === false) {
 
-      this._loading = await this.loadingCtrl.create({
-        message: 'loading properties...',
-        cssClass: 'my-loading-class',
-      });
-      await this._loading?.present();
 
+      this.presentSpinner("loading properties...")
+      
       setTimeout(async () => {
         try {
           await this.start();
-          this.closeLoader();
+          this.dismissSpinner();
         } catch (error) {
           this.AppInsights.trackEvent({
             name: 'LoadingProperties-Error',
@@ -274,13 +282,10 @@ export class DashboardPage extends BasePage {
 
   private async refreshPropertiesAsync() {
     this.Properties = [];
-    this._loading = await this.loadingCtrl.create({
-      message: 'refreshing properties...',
-      cssClass: 'my-loading-class',
-    });
+
 
     if (this.IsFirstLoadCompleted !== true) {
-      await this._loading?.present();
+      this.presentSpinner3('refreshing properties...');
     }
 
     let userProperties: Array<INewPropertyDto> = this.Properties;
@@ -315,7 +320,7 @@ export class DashboardPage extends BasePage {
     allProps.subscribe({
       complete: () => {
         if (this.IsFirstLoadCompleted !== true) {
-          this._loading?.dismiss();
+          this.dismissSpinner3();
         }
       }
     });
@@ -438,11 +443,7 @@ export class DashboardPage extends BasePage {
   }
 
   private async getAllUserProperties() {
-    this._loading = await this.loadingCtrl.create({
-      message: 'getting all properties...',
-      cssClass: 'my-loading-class',
-    });
-    await this._loading?.present();
+    this.presentSpinner2("getting all properties...");
 
     try {
       let userProperties: Array<INewPropertyDto> = new Array<INewPropertyDto>();
@@ -589,7 +590,7 @@ export class DashboardPage extends BasePage {
       const allProps = forkJoin([userProperties]);
       allProps.subscribe({
         complete: () => {
-          this.closeLoader()
+          this.dismissSpinner2();
         }
       });
 
@@ -614,14 +615,10 @@ export class DashboardPage extends BasePage {
     } catch (e) {
       this.AppInsights.trackException(e);
       console.log(`error: ${e}`);
-      this.closeLoader();
+      this.dismissSpinner2();
     }
   }
 
-  private closeLoader() {
-    console.log('closeLoader()');
-    this._loading?.dismiss();
-  }
 
   // TODO: add access modifier
   move(arr, old_index, new_index) {
@@ -669,12 +666,9 @@ export class DashboardPage extends BasePage {
 
   public async getActivePropertyAreas(refreshProperty: boolean = false) {
     if (refreshProperty) {
-      this._loading = await this.loadingCtrl.create({
-        message: 'Loading Property Areas...',
-        cssClass: 'my-loading-class',
-      });
+
       if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-        await this._loading?.present();
+        this.presentSpinner4('Loading Property Areas...');
       }
     }
 
@@ -703,14 +697,16 @@ export class DashboardPage extends BasePage {
 
               if (refreshProperty) {
                 if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                  this._loading?.dismiss();
+
+                  this.dismissSpinner4();
                   this.IsSwitchingProperty = false;
                 }
               }
             },
             (err) => {
               if (refreshProperty) {
-                this._loading?.dismiss();
+
+                this.dismissSpinner4();
               }
 
               this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
@@ -736,18 +732,21 @@ export class DashboardPage extends BasePage {
           .then(
             (x: any) => {
               this.ActiveProperty = x;
-              this._loading?.dismiss();
+
+              this.dismissSpinner4();
 
               if (refreshProperty) {
                 if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                  this._loading?.dismiss();
+
+                  this.dismissSpinner4();
                   this.IsSwitchingProperty = false;
                 }
               }
             },
             (err) => {
               if (refreshProperty) {
-                this._loading?.dismiss();
+              
+                this.dismissSpinner4();
               }
 
               this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
@@ -858,7 +857,8 @@ export class DashboardPage extends BasePage {
       });
     }
 
-    this._loading?.dismiss();
+  
+    this.dismissSpinner4();
   }
 
   public toogleViews(type) {
@@ -1054,5 +1054,42 @@ export class DashboardPage extends BasePage {
 
   public async repair() {
     this.router.navigate(['repair-list']);
+  }
+
+  //Loader Code
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = '';
+  }
+
+  async presentSpinner2(text: string) {
+    this.spinnerText2 = text;
+    this.loading2Visible = true;
+  }
+  async dismissSpinner2() {
+    this.loading2Visible = false;
+    this.spinnerText2 = '';
+  }
+
+  async presentSpinner3(text: string) {
+    this.spinnerText3 = text;
+    this.loading3Visible = true;
+  }
+  async dismissSpinner3() {
+    this.loading3Visible = false;
+    this.spinnerText3 = '';
+  }
+
+  async presentSpinner4(text: string) {
+    this.spinnerText4 = text;
+    this.loading4Visible = true;
+  }
+  async dismissSpinner4() {
+    this.loading4Visible = false;
+    this.spinnerText4 = '';
   }
 }

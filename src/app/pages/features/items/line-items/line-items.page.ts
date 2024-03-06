@@ -24,6 +24,9 @@ export class LineItemsPage extends BasePage {
   // public
   public lineitems: Array<ILineitemDto> = new Array<ILineitemDto>();
   public isIos: boolean = false;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
 
   constructor(public navCtrl: NavController,
     public featureService: FeaturesService,
@@ -41,14 +44,11 @@ export class LineItemsPage extends BasePage {
   }
 
   override async ngOnInit() {
-    console.log("ngOnInit LineitemPage");
+    console.log("ngOnInit LineitemPage .");
     //this.AppInsights.trackPageView({ name: 'LineitemPage' });
 
-    this._loading = await this.loadingCtrl.create({
-      message: 'getting all lineitems ...',
-      cssClass: 'my-loading-class',
-    });
-    await this._loading.present();
+
+    this.presentSpinner('getting all lineitems ...');
 
     if (
       this.ProfileItem === undefined ||
@@ -62,10 +62,11 @@ export class LineItemsPage extends BasePage {
           this.lineitems = x;
           this.Lineitems = x;
           // TODO: Fix this (should NOT have two lineitems arrays!)
-          this._loading.dismiss();
+          this.dismissSpinner();
         },
         (err) => {
-          this._loading.dismiss();
+
+          this.dismissSpinner();
         }
       );
     } else {
@@ -74,10 +75,12 @@ export class LineItemsPage extends BasePage {
           this.lineitems = x;
           this.Lineitems = x;
           // TODO: Fix this (should NOT have two lineitems arrays!)
-          this._loading.dismiss();
+
+          this.dismissSpinner();
         },
         (err) => {
-          this._loading.dismiss();
+
+          this.dismissSpinner();
         }
       );
     }
@@ -90,5 +93,16 @@ export class LineItemsPage extends BasePage {
 
   public close() {
     this.router.navigate(["dashboard"]);
+  }
+
+  
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
   }
 }

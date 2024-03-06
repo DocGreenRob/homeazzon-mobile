@@ -31,6 +31,9 @@ export class ItemAddPage extends BasePage {
   private _type: string = "";
   private _loading: any = null;
   private _constants: Constants;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
 
   // public
   public pageTitle: string = "Add Item";
@@ -103,11 +106,8 @@ export class ItemAddPage extends BasePage {
   }
 
   public async selectProfileItemLineItems() {
-    this._loading = await this.loadingController.create({
-      message: "getting lineitems ...",
-      cssClass: "my-loading-class",
-    });
-    this._loading.present();
+
+    this.presentSpinner('getting lineitems ...');
 
     // 1. determine which options are selected
     this.selectedProfileItems = [];
@@ -145,11 +145,13 @@ export class ItemAddPage extends BasePage {
       await this.getProfileItemLineItems(this.selectedProfileItems[i], this.User.Types[0].Name).then(
         (x:any) => {
           if (i == this.selectedProfileItems.length - 1) {
-            this._loading.dismiss();
+            // this._loading.dismiss();
+            this.dismissSpinner();
           }
         },
         (err) => {
-          this._loading.dismiss();
+          // this._loading.dismiss();
+          this.dismissSpinner();
         }
       );
     }
@@ -157,7 +159,8 @@ export class ItemAddPage extends BasePage {
     //	await this.getProfileItemLineItems(x, this.User.Types[0].Name);
     //});
     this.view = "SelectLineItems";
-    this._loading.dismiss();
+
+    this.dismissSpinner();
   }
 
   public toggleCheck(event, obj, id) {
@@ -483,7 +486,8 @@ export class ItemAddPage extends BasePage {
           await this.searchService.saveAmazonData(searchResultDto).then(
             (x: AssetIndexDto) => {},
             (err) => {
-              this._loading.dismiss();
+
+              this.dismissSpinner();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 //this.navController.setRoot(SignInPage);
@@ -499,7 +503,8 @@ export class ItemAddPage extends BasePage {
           await this.searchService.saveGoogleProductData(searchResultDto).then(
             (x: AssetIndexDto) => {},
             (err) => {
-              this._loading.dismiss();
+
+              this.dismissSpinner();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
@@ -524,7 +529,8 @@ export class ItemAddPage extends BasePage {
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {},
           (err) => {
-            this._loading.dismiss();
+
+            this.dismissSpinner();
             if (err.status == 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
@@ -553,7 +559,8 @@ export class ItemAddPage extends BasePage {
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {},
           (err) => {
-            this._loading.dismiss();
+
+            this.dismissSpinner();
             if (err.status == 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
@@ -568,6 +575,15 @@ export class ItemAddPage extends BasePage {
     this.IsMy = false;
     this.IsWishlist = false;
     this.IsSuggest = false;
+  }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
   }
 
 }

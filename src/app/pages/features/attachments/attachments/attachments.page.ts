@@ -23,7 +23,8 @@ export class AttachmentsPage extends BasePage {
   private _constants = new Constants();
   isShowSave: boolean = false;
   public isIos: boolean = false;
-
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
   constructor(
     public override navController: NavController,
     public metattachService: MetattachService,
@@ -50,11 +51,8 @@ export class AttachmentsPage extends BasePage {
   }
 
   public async start() {
-    this._loading = await this.loadingCtrl.create({
-      message: "getting attachments...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
+
+    this.presentSpinner('getting attachments...');
 
     this.storageService.set("IsMetattachment", true);
 
@@ -153,10 +151,12 @@ export class AttachmentsPage extends BasePage {
 
         this.data = grid;
 
-        this._loading.dismiss();
+       
+        this.dismissSpinner();
       },
       (err) => {
-        this._loading.dismiss();
+       
+        this.dismissSpinner();
         this.uxNotifierService.showToast("An error occurred while getting some resources.Please try again later", this._constants.ToastColorBad);
       }
     );
@@ -187,5 +187,15 @@ export class AttachmentsPage extends BasePage {
   public close() {
     this.IsMetattachment = false;
     this.router.navigate(["item-details"]);
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
   }
 }
