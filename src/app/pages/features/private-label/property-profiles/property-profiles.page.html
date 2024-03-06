@@ -1,36 +1,51 @@
-<div class="New-home-wrapper">
-  <div class="cross-icon">
-    <img src="assets/icon/Close Square.svg" (click)="goBack()" alt="">
+<ion-header *ngIf="isPrivateLabelUser">
+  <div class="registration-header">
+    <img src="assets/icon/arrow-left-square.svg" (click)="goBack()">
+      <span class="registration-title-wrapper">
+        <span class="registration-title">Choose a Design</span>
+      </span>
+   <span class="dummy"></span>
   </div>
-  <div *ngIf="!isPrivateLabelUser" class="home-inner-main">
-    <ion-text>Design your new home</ion-text>
-    <div class="home-img">
-      <img src="assets/imgs/home-img.png" alt="">
-    </div>
-  </div>
-  <div *ngIf="!isPrivateLabelUser" class="home-btn-wrapper">
-    <ion-button class="add-property-btn"
-                *ngIf="isOwner"
-                (click)="goToBuildYourGeneral()">
-      <img src="assets/icon/building-fill-white.svg" alt="">
-      Add New property
-    </ion-button>
-    <ion-button class="new-reality-btn"
-                *ngIf="isRealtor">
-      <img src="assets/icon/person.svg" alt="">
-      New Realty Customer
-    </ion-button>
-  </div>
-  <div *ngIf="isPrivateLabelUser" class="home-inner-main">
-    <ion-text>Choose a Design</ion-text>
-    ({{ privateLabelProperties?.length }}) Property Templates
-    <ion-row *ngFor="let property of privateLabelProperties">
+</ion-header>
+<div class="container-wrapper">
+  <div  *ngIf="isPrivateLabelUser" class="formWrapper">
+    <span class="property-length">
+      ({{ privateLabelProperties?.length }}) Property Templates
+    </span>
+  
+    <div class="main-list" *ngFor="let property of privateLabelProperties">
       <div class="stuff-items" (click)="selectPrivateLabelPropertyProfile(property.Id)">
         <ion-text>
-          {{property.Name}}, <h5>{{property.SqFeet}} Sq Ft.</h5>
+          {{property.Name}}
         </ion-text>
-        <hr style="text-decoration:dotted" />
+        <span>{{property.SqFeet}} Sq Ft.</span>
+       
       </div>
-    </ion-row>
+    </div>
   </div>
+  <div *ngIf="!isPrivateLabelUser" class="New-home-wrapper">
+    <div class="cross-icon">
+      <img src="assets/icon/Close Square.svg" (click)="goBack()" alt="">
+    </div>
+    <div class="home-inner-main">
+      <ion-text>Design your new home</ion-text>
+      <div class="home-img">
+        <img src="assets/imgs/home-img.png" alt="">
+      </div>
+    </div>
+    <div *ngIf="isPrivateLabelUser" class="home-btn-wrapper">
+      <ion-button class="add-property-btn"
+                  *ngIf="isOwner"
+                  (click)="goToBuildYourGeneral()">
+        <img src="assets/icon/building-fill-white.svg" alt="">
+        Add New property
+      </ion-button>
+      <ion-button class="new-reality-btn"
+                  *ngIf="isRealtor">
+        <img src="assets/icon/person.svg" alt="">
+        New Realty Customer
+      </ion-button>
+    </div>
+  </div>
+
 </div>
