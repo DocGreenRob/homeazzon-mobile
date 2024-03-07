@@ -1,8 +1,11 @@
 .header-img {
-	height: 4rem;
-	text-align: center;
+	height: 50px !important;
+	overflow: hidden;
+	img{
+		width: 100%;
+		height: 100%;
+	}
 }
-
-.title {
-	font-size: 2rem !important;
+.dummy{
+	display: block;
 }

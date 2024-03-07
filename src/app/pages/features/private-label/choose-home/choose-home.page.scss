@@ -1,24 +1,35 @@
-.btnstyle2 {
-    text-align: center;
-    margin-top: 2rem;
-}
+.new-home-wrapper {
+    overflow-y: auto;
+    padding: 30px 29px 0px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 80px;
+    flex-direction: column;
+    background: #F6F8FE;
 
-.btnstyle1 {
-    text-align: center;
-    margin-top: 4rem;
-}
+    .cross-icon {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+    }
 
-.welcome-text {
-    margin-top: 8vh !important;
-    text-align: center;
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
+    .home-inner-main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
 
-.btn {
-    font-weight: bold;
-    font-family: 'Silka-Bold';
-    font-size: larger;
-    text-transform: uppercase;
-    height: 7rem !important;
+        ion-text {
+            color: var(--additional-colors-black, #111);
+            text-align: center;
+            font-family: Plus Jakarta Sans;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 28px;
+            letter-spacing: -0.66px;
+        }
+    }
 }

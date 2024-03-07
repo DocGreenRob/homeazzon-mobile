@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IImageDto } from 'src/app/models/dto/interfaces/IImageDto';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utlities/utilities.service';
 import { PrivateLabelService } from 'src/app/services/private-label/private-label.service';
 import { ActivatedRoute } from '@angular/router';
+import { PropertyProfileImagesDetailsPage } from '../../property-profile-images-detail/property-profile-images-detail.page';
 
 @Component({
   selector: 'app-property-profile-images',
@@ -20,7 +21,8 @@ export class PropertyProfileImagesPage implements OnInit {
 	constructor(public navCtrl: NavController,
     private loading: UtilitiesService,
     private activeRoute: ActivatedRoute,
-		private privatelabelService: PrivateLabelService) {
+		private privatelabelService: PrivateLabelService,
+		private modalController: ModalController,) {
 	}
 
 	async ngOnInit() {
@@ -54,6 +56,15 @@ export class PropertyProfileImagesPage implements OnInit {
 					loader.dismiss();
 				}
 			);
+	}
+
+	public async openDetailModal(image: any) {
+		let searchResultDetailsModal = await this.modalController.create({
+			component: PropertyProfileImagesDetailsPage,
+			componentProps: { propertyImageDetail: image },
+			cssClass: "large-modal image-modal",
+		});
+		await searchResultDetailsModal.present();
 	}
 
 	public close() {

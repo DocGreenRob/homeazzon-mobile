@@ -26,6 +26,9 @@ export class CreateMetattachPage extends BasePage {
   public notes: string = "";
   public image: string = "";
   public isDisabled: boolean = false;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
 
   constructor(
     public navCtrl: NavController,
@@ -135,11 +138,8 @@ export class CreateMetattachPage extends BasePage {
     if (this.notes == "") {
       this.notes = " - ";
     }
-    this._loading = await this.loadingCtrl.create({
-      message: "saving...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
+
+    this.presentSpinner('saving...');
 
     let metattachData: IMetattachDto = {} as IMetattachDto;
     if (this.ActiveAttachmentItem.Id !== undefined) {
@@ -179,12 +179,12 @@ export class CreateMetattachPage extends BasePage {
 
     this.metattachService.saveMetattach(metattachData).then(
       async (x) => {
-        await this._loading.dismiss();
+        this.dismissSpinner();
         this.uxNotifierService.showToast("Attachment created successfully!", this._constants.ToastColorGood);
         this.close();
       },
       async (err) => {
-        await this._loading.dismiss();
+        this.dismissSpinner();
         this.uxNotifierService.showToast("Attachment was not created!", this._constants.ToastColorBad);
       }
     );
@@ -193,4 +193,14 @@ export class CreateMetattachPage extends BasePage {
   public close() {
     this.router.navigate(["attachments"]);
   }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

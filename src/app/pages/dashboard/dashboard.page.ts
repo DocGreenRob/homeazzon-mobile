@@ -37,7 +37,18 @@ import { LocalStorageService } from '@app/services/local-storage.service';
 export class DashboardPage extends BasePage {
   private _constants = new Constants();
   public isIos: boolean = false;
-
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+  
+  spinnerText2: string = 'Loading...';
+  loading2Visible: boolean = false;
+  
+  spinnerText3: string = 'Loading...';
+  loading3Visible: boolean = false;
+  
+  spinnerText4: string = 'Loading...';
+  loading4Visible: boolean = false;
+  
   // const
   public data: IGrid;
   public manageView: string = 'rooms';
@@ -133,16 +144,13 @@ export class DashboardPage extends BasePage {
       || this.IsFirstLoadCompleted === null
       || this.IsFirstLoadCompleted === false) {
 
-      this._loading = await this.loadingCtrl.create({
-        message: 'loading properties...',
-        cssClass: 'my-loading-class',
-      });
-      await this._loading.present();
 
+      this.presentSpinner("loading properties...")
+      
       setTimeout(async () => {
         try {
           await this.start();
-          this.closeLoader();
+          this.dismissSpinner();
         } catch (error) {
           this.AppInsights.trackEvent({
             name: 'LoadingProperties-Error',
@@ -258,6 +266,7 @@ export class DashboardPage extends BasePage {
           }
         },
         (err) => {
+          // TODO: Change to use uxNotifierService
           alert(`Error getting area types: ${JSON.stringify(err)}`);
         }
       );
@@ -273,13 +282,10 @@ export class DashboardPage extends BasePage {
 
   private async refreshPropertiesAsync() {
     this.Properties = [];
-    this._loading = await this.loadingCtrl.create({
-      message: 'refreshing properties...',
-      cssClass: 'my-loading-class',
-    });
+
 
     if (this.IsFirstLoadCompleted !== true) {
-      await this._loading.present();
+      this.presentSpinner3('refreshing properties...');
     }
 
     let userProperties: Array<INewPropertyDto> = this.Properties;
@@ -314,9 +320,7 @@ export class DashboardPage extends BasePage {
     allProps.subscribe({
       complete: () => {
         if (this.IsFirstLoadCompleted !== true) {
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+          this.dismissSpinner3();
         }
       }
     });
@@ -439,11 +443,7 @@ export class DashboardPage extends BasePage {
   }
 
   private async getAllUserProperties() {
-    this._loading = await this.loadingCtrl.create({
-      message: 'getting all properties...',
-      cssClass: 'my-loading-class',
-    });
-    await this._loading.present();
+    this.presentSpinner2("getting all properties...");
 
     try {
       let userProperties: Array<INewPropertyDto> = new Array<INewPropertyDto>();
@@ -462,94 +462,80 @@ export class DashboardPage extends BasePage {
               return;
             }
 
-            if (properties.length === 1) {
-              let a = this.ActiveProperty;
-              if (a === undefined || a === null
-                || a.Id <= 0 || properties[0].IsDefault === true) {
-                this.setupProperty(properties[0]);
+            if (!this.ActiveProperty || properties[0].IsDefault === true) {
+              this.setupProperty(properties[0]);
+            }
+
+            this.viewProperty(this.ActiveProperty);
+
+            // TODO: Need to test this path!
+
+            // make the api call for the last ActiveProperty
+            // tried this and doesn't work, need to make the call to the api to
+            // get the property info
+            if (this.ActiveProperty.IsProxy) {
+              if (!this.ActiveProperty.Profiles?.length) {
+                this.userDetailsService.getProxyProperty(this.ActiveProperty.Id).then((x: any) => {
+                  this.setupProperty(x);
+                },
+                  (err) => { }
+                ).catch((error) => {
+                  this.AppInsights.trackEvent({
+                    name: 'LoadingProperties-Error',
+                    properties: [
+                      {
+                        userID: this.User.Id,
+                      },
+                    ],
+                  });
+
+                  this.AppInsights.trackException(error);
+
+                  console.log(error);
+                });
               }
             } else {
-              // TODO: Need to test this path!
+              if (this.ActiveProperty.Profiles == undefined
+                || this.ActiveProperty.Profiles == null
+                || this.ActiveProperty.Profiles.length == 0) {
+                this.userDetailsService.getProperty(this.ActiveProperty.Id).then(
+                  (x: any) => {
+                    this.setupProperty(x);
 
-              // make the api call for the last ActiveProperty
+                    this.AppInsights.trackEvent({
+                      name: 'LoadingProperties',
+                      properties: [
+                        {
+                          userID: this.User.Id,
+                        },
+                        {
+                          userType: userType.Id,
+                        },
 
-              // tried this and doesn't work, need to make the call to the api to
-              // get the property info
-              if (this.ActiveProperty !== null) {
-                if (this.ActiveProperty.IsProxy) {
-                  if (
-                    this.ActiveProperty.Profiles === undefined ||
-                    this.ActiveProperty.Profiles === null ||
-                    this.ActiveProperty.Profiles.length === 0
-                  ) {
-                    this.userDetailsService.getProxyProperty(this.ActiveProperty.Id).then((x: any) => {
-                      this.setupProperty(x);
-                    },
-                      (err) => { }
-                    ).catch((error) => {
-                      this.AppInsights.trackEvent({
-                        name: 'LoadingProperties-Error',
-                        properties: [
-                          {
-                            userID: this.User.Id,
-                          },
-                        ],
-                      });
-
-                      this.AppInsights.trackException(error);
-
-                      console.log(error);
+                        {
+                          activeProperty: this.ActiveProperty.Id,
+                        },
+                      ],
                     });
-                  } else {
-                    this.setupProperty(this.ActiveProperty);
-                  }
-                } else {
-                  if (this.ActiveProperty.Profiles == undefined
-                    || this.ActiveProperty.Profiles == null
-                    || this.ActiveProperty.Profiles.length == 0) {
-                    this.userDetailsService.getProperty(this.ActiveProperty.Id).then(
-                      (x: any) => {
-                        this.setupProperty(x);
-
-                        this.AppInsights.trackEvent({
-                          name: 'LoadingProperties',
-                          properties: [
-                            {
-                              userID: this.User.Id,
-                            },
-                            {
-                              userType: userType.Id,
-                            },
-
-                            {
-                              activeProperty: this.ActiveProperty.Id,
-                            },
-                          ],
-                        });
-                        //this.closeLoader();
+                    //this.closeLoader();
+                  },
+                  (err) => { }
+                ).catch((error) => {
+                  this.AppInsights.trackEvent({
+                    name: 'LoadingProperties-Error',
+                    properties: [
+                      {
+                        userID: this.User.Id,
                       },
-                      (err) => { }
-                    ).catch((error) => {
-                      this.AppInsights.trackEvent({
-                        name: 'LoadingProperties-Error',
-                        properties: [
-                          {
-                            userID: this.User.Id,
-                          },
-                        ],
-                      });
+                    ],
+                  });
 
-                      this.AppInsights.trackException(error);
+                  this.AppInsights.trackException(error);
 
-                      console.log(error);
-                    });
-                  } else {
-                    this.setupProperty(this.ActiveProperty);
-                  }
-                }
+                  console.log(error);
+                });
               } else {
-                this.setupProperty(properties[0]);
-                //this.closeLoader();
+                this.setupProperty(this.ActiveProperty);
               }
             }
 
@@ -604,7 +590,7 @@ export class DashboardPage extends BasePage {
       const allProps = forkJoin([userProperties]);
       allProps.subscribe({
         complete: () => {
-          this.closeLoader()
+          this.dismissSpinner2();
         }
       });
 
@@ -629,16 +615,10 @@ export class DashboardPage extends BasePage {
     } catch (e) {
       this.AppInsights.trackException(e);
       console.log(`error: ${e}`);
-      this.closeLoader();
+      this.dismissSpinner2();
     }
   }
 
-  private closeLoader() {
-    console.log('closeLoader()');
-    if (this._loading != undefined) {
-      this._loading.dismiss();
-    }
-  }
 
   // TODO: add access modifier
   move(arr, old_index, new_index) {
@@ -686,15 +666,9 @@ export class DashboardPage extends BasePage {
 
   public async getActivePropertyAreas(refreshProperty: boolean = false) {
     if (refreshProperty) {
-      this._loading = await this.loadingCtrl.create({
-        message: 'Loading Property Areas...',
-        cssClass: 'my-loading-class',
-      });
-      if (
-        this.IsFirstLoadCompleted !== true ||
-        this.IsSwitchingProperty === true
-      ) {
-        await this._loading.present();
+
+      if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+        this.presentSpinner4('Loading Property Areas...');
       }
     }
 
@@ -714,41 +688,85 @@ export class DashboardPage extends BasePage {
       this.ActiveProperty.Profiles === null ||
       this.ActiveProperty.Profiles.length === 0 ||
       refreshProperty) {
-      await this.userDetailsService
-        .getProperty(this.ActiveProperty.Id)
-        .then(
-          (x: any) => {
-            this.ActiveProperty = x;
+      if (!this.ActiveProperty.IsProxy) {
+        await this.userDetailsService
+          .getProperty(this.ActiveProperty.Id)
+          .then(
+            (x: any) => {
+              this.ActiveProperty = x;
 
-            if (refreshProperty) {
-              if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
-                this._loading.dismiss();
-                this.IsSwitchingProperty = false;
+              if (refreshProperty) {
+                if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+
+                  this.dismissSpinner4();
+                  this.IsSwitchingProperty = false;
+                }
               }
-            }
-          },
-          (err) => {
-            if (refreshProperty) {
-              this._loading.dismiss();
-            }
+            },
+            (err) => {
+              if (refreshProperty) {
 
-            this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
-          }
-        )
-        .catch((error) => {
-          this.AppInsights.trackEvent({
-            name: 'LoadingProperties-Error',
-            properties: [
-              {
-                userID: this.User.Id,
-              },
-            ],
+                this.dismissSpinner4();
+              }
+
+              this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
+            }
+          )
+          .catch((error) => {
+            this.AppInsights.trackEvent({
+              name: 'LoadingProperties-Error',
+              properties: [
+                {
+                  userID: this.User.Id,
+                },
+              ],
+            });
+
+            this.AppInsights.trackException(error);
+
+            console.log(error);
           });
+      } else {
+        await this.userDetailsService
+          .getProxyProperty(this.ActiveProperty.Id)
+          .then(
+            (x: any) => {
+              this.ActiveProperty = x;
 
-          this.AppInsights.trackException(error);
+              this.dismissSpinner4();
 
-          console.log(error);
-        });
+              if (refreshProperty) {
+                if (this.IsFirstLoadCompleted !== true || this.IsSwitchingProperty === true) {
+
+                  this.dismissSpinner4();
+                  this.IsSwitchingProperty = false;
+                }
+              }
+            },
+            (err) => {
+              if (refreshProperty) {
+              
+                this.dismissSpinner4();
+              }
+
+              this.uxNotifierService.showToast('An error occured getting some resources. Pulldown to refresh.', this._constants.ToastColorBad);
+            }
+          )
+          .catch((error) => {
+            this.AppInsights.trackEvent({
+              name: 'LoadingProperties-Error',
+              properties: [
+                {
+                  userID: this.User.Id,
+                },
+              ],
+            });
+
+            this.AppInsights.trackException(error);
+
+            console.log(error);
+          });
+      }
     }
 
     if (this.ActiveProperty.Profiles != undefined &&
@@ -839,9 +857,8 @@ export class DashboardPage extends BasePage {
       });
     }
 
-    if (this._loading != undefined && this._loading !== null) {
-      this._loading.dismiss();
-    }
+  
+    this.dismissSpinner4();
   }
 
   public toogleViews(type) {
@@ -1008,8 +1025,6 @@ export class DashboardPage extends BasePage {
         ) {
           //this.getSuite16Categories();
         }
-
-        //alert(`err: getSuite16Categories() ${err}`);
       }
     );
     //}
@@ -1035,5 +1050,46 @@ export class DashboardPage extends BasePage {
         event.complete();
       }
     );
+  }
+
+  public async repair() {
+    this.router.navigate(['repair-list']);
+  }
+
+  //Loader Code
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = '';
+  }
+
+  async presentSpinner2(text: string) {
+    this.spinnerText2 = text;
+    this.loading2Visible = true;
+  }
+  async dismissSpinner2() {
+    this.loading2Visible = false;
+    this.spinnerText2 = '';
+  }
+
+  async presentSpinner3(text: string) {
+    this.spinnerText3 = text;
+    this.loading3Visible = true;
+  }
+  async dismissSpinner3() {
+    this.loading3Visible = false;
+    this.spinnerText3 = '';
+  }
+
+  async presentSpinner4(text: string) {
+    this.spinnerText4 = text;
+    this.loading4Visible = true;
+  }
+  async dismissSpinner4() {
+    this.loading4Visible = false;
+    this.spinnerText4 = '';
   }
 }

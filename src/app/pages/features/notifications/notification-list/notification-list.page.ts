@@ -23,7 +23,9 @@ export class NotificationListPage extends BasePage {
   public isNotifications: boolean = false;
   deleteSuccess: boolean = false;
   public isIos: boolean = false;
-
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+  
   constructor(public override storageService: LocalStorageService,
               private location: Location,
               private loadingController: LoadingController,
@@ -116,14 +118,10 @@ export class NotificationListPage extends BasePage {
   private async getNotifications() {
     this.notifications = [];
 
-    this._loading = await this.loadingController.create({
-      message: 'Getting notifications...',
-      cssClass: 'my-loading-class',
-    });
-    await this._loading.present();
 
+    this.presentSpinner('Getting notifications...');
     this.notificationService.getUserNotifications().then((response) => {
-      this._loading.dismiss();
+      this.dismissSpinner();
 
       this.notifications = response;
 
@@ -182,7 +180,7 @@ export class NotificationListPage extends BasePage {
       }
     },
       error => {
-        this._loading.dismiss();
+        this.dismissSpinner();
       }
     );
   }
@@ -286,4 +284,15 @@ export class NotificationListPage extends BasePage {
       },3000);
     });
   }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
+
 }

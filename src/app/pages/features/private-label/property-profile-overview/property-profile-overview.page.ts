@@ -32,7 +32,7 @@ export class PropertyProfileOverviewPage extends BasePage {
     public alertCtrl: AlertController,
     public override storageService: LocalStorageService
   ) {
-    super(null, null, null, null, null, router, null, null, null,null,storageService);
+    super(null, null, null, null, null, router, null, null, null, null, storageService);
     this.links = new Array<ILinkDto>();
   }
 
@@ -40,11 +40,11 @@ export class PropertyProfileOverviewPage extends BasePage {
     console.log("ngOnInit PropertyProfileOverviewPage");
     //this.AppInsights.trackPageView({ name: 'PropertyProfileOverviewPage' });
 
-    this.activeRoute.queryParams.subscribe((params) => {
-      this.sqFeet = params["SqFeet"];
-      this.propertyId = params["Id"];
-      this.propertyName = params["propertyName"];
-    });
+    let a = this.SelectedPrivateLabelProperty;
+    this.sqFeet = a.SqFeet;
+    this.propertyId = a.Id;
+    this.propertyName = a.Name;
+    this.propertyId = a.Id;
   }
 
   viewPropertyImages() {
@@ -72,7 +72,7 @@ export class PropertyProfileOverviewPage extends BasePage {
         };
         this.router.navigate(["choose-home"], navExtras);
       },
-      (err) => {}
+      (err) => { }
     );
   }
 

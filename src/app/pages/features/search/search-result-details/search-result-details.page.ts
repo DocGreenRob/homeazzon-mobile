@@ -15,6 +15,8 @@ import { IYouTubeDto } from "src/app/models/dto/interfaces/IYouTubeDto";
 import { BasePage } from "src/app/pages/base/base.page";
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
+import { UtilitiesService } from "../../../../services/utlities/utilities.service";
+import { IWebhookDto } from "../../../../models/dto/interfaces/IWebhookDto";
 
 @Component({
   selector: "app-search-result-details",
@@ -25,6 +27,9 @@ export class SearchResultDetailsPage extends BasePage {
   // Private
   private _loading: any = null;
   private _constants: Constants;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
 
   // Public
   public source: string = "";
@@ -42,8 +47,8 @@ export class SearchResultDetailsPage extends BasePage {
     private modalController: ModalController,
     public sanitizerService: DomSanitizer,
     public alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService,
+    private utilityService: UtilitiesService) {
     super(navController, navParams, null, null, null, router, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
   }
@@ -74,9 +79,14 @@ export class SearchResultDetailsPage extends BasePage {
   }
 
   private async getListAsync() {
+    this.IsWishlist = false;
+    this.IsMy = false;
+    this.IsSuggest = false;
+
     (
-      await this.alertCtrl.create({
+        await this.alertCtrl.create({
         message: "Which list does this go into?",
+        cssClass: "search-wishlist-modal",
         buttons: [
           {
             text: "Wishlist",
@@ -104,11 +114,9 @@ export class SearchResultDetailsPage extends BasePage {
   }
 
   private async saveAsync() {
-    this._loading = await this.loadingController.create({
-      message: "saving...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
+
+
+    this.presentSpinner('saving...');
 
     let searchResultDto: SearchResultDto = {} as SearchResultDto;
     searchResultDto.PropertyId = this.ActiveProperty.IsProxy ? 0 : this.ActiveProperty.Id;
@@ -144,11 +152,13 @@ export class SearchResultDetailsPage extends BasePage {
           await this.searchService.saveAmazonData(searchResultDto).then(
             (x: AssetIndexDto) => {
               this.storageService.set("AssetIndex", x);
-              this._loading.dismiss();
+
+              this.dismissSpinner();              
               this.uxNotifierService.showToast("Amazon product saved successfully!", this._constants.ToastColorGood);
             },
             (err) => {
-              this._loading.dismiss();
+
+              this.dismissSpinner();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
@@ -164,10 +174,12 @@ export class SearchResultDetailsPage extends BasePage {
             (x: AssetIndexDto) => {
               this.storageService.set("AssetIndex", x);
               this.uxNotifierService.showToast("Google product saved successfully!", this._constants.ToastColorGood);
-              this._loading.dismiss();
+           
+              this.dismissSpinner();
             },
             (err) => {
-              this._loading.dismiss();
+           
+              this.dismissSpinner();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
@@ -192,11 +204,13 @@ export class SearchResultDetailsPage extends BasePage {
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {
             this.storageService.set("AssetIndex", x);
-            this._loading.dismiss();
+         
+            this.dismissSpinner();
             this.uxNotifierService.showToast("Google results were saved successfully!", this._constants.ToastColorGood);
           },
           (err) => {
-            this._loading.dismiss();
+         
+            this.dismissSpinner();
             if (err.status == 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
@@ -227,11 +241,13 @@ export class SearchResultDetailsPage extends BasePage {
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {
             this.storageService.set("AssetIndex", x);
-            this._loading.dismiss();
+         
+            this.dismissSpinner();
             this.uxNotifierService.showToast("YouTube video saved successfully!", this._constants.ToastColorGood);
           },
           (err) => {
-            this._loading.dismiss();
+         
+            this.dismissSpinner();
             if (err.status == 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
@@ -242,6 +258,22 @@ export class SearchResultDetailsPage extends BasePage {
         );
         break;
     }
+
+    // update the cache
+
+    let a = this.User.Types;
+    let b = a.filter((x) => x.Name.toLowerCase().indexOf('owner') !== -1);
+
+    if (b !== undefined && b !== null && b.length == 1) {
+      let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
+      let userType = 'owner';
+      updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
+
+      await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    } else {
+      alert(`need to update cache for this user type${JSON.stringify(a)}`);
+    }
+
 
     this.close();
 
@@ -259,4 +291,14 @@ export class SearchResultDetailsPage extends BasePage {
     this.IsWishlist = false;
     this.IsSuggest = false;
   }
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

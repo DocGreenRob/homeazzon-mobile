@@ -29,8 +29,7 @@ export class ChooseDevelopmentPage extends BasePage {
   private states: Array<IStateDto>;
   selectedDevelopment: IDevelopmentDto = {} as IDevelopmentDto;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
     public override router: Router,
     private loading: UtilitiesService,
@@ -40,7 +39,7 @@ export class ChooseDevelopmentPage extends BasePage {
     private storage: Storage,
     public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, null, router, null, null, null,null, storageService);
+    super(navCtrl, null, null, null, null, router, null, null, null, null, storageService);
     this.showDevelopments = true;
     this.showLots = false;
   }
@@ -59,7 +58,7 @@ export class ChooseDevelopmentPage extends BasePage {
         (x: Array<IStateDto>) => {
           this.states = x;
         },
-        (err) => {}
+        (err) => { }
       );
     });
 
@@ -69,11 +68,14 @@ export class ChooseDevelopmentPage extends BasePage {
   }
 
   async getDevelopments() {
-    let loader = await this.loading.getLoader("getting property developments...");
+
+    let loader = await this.loading.getLoader("getting available developments...");
+
     await loader.present();
+
     let user: IUserDto = this.storageService.get('User');
-    //await this.privatelabelService.getPrivateLabelerDevelopments(user.PrivateLabeler.Id)
-    await this.privatelabelService.getPrivateLabelerDevelopments(0).then(
+
+    await this.privatelabelService.getPrivateLabelerDevelopments(user.PrivateLabeler.Id).then(
       (x: Array<IDevelopmentDto>) => {
         // debugger;
         this.developments = x;
@@ -100,7 +102,7 @@ export class ChooseDevelopmentPage extends BasePage {
           x.Developments.push(development);
           this.storage.set("CustomProperty", x);
         },
-        (err) => {}
+        (err) => { }
       );
     }
 
@@ -123,12 +125,12 @@ export class ChooseDevelopmentPage extends BasePage {
   }
 
   async viewLotDetails(lotId: number) {
-    //	this.navCtrl.push(LotDetailsPage, { Id: lotId, isPrivateLabelBuildYourOwn: this.isPrivateLabelBuildYourOwn, imageUrl: this.selectedDevelopment.Url });
     let lotDetailsModal = await this.modalCtrl.create({
       component: LotDetailsPage,
       componentProps: { Id: lotId, isPrivateLabelBuildYourOwn: this.isPrivateLabelBuildYourOwn, imageUrl: this.selectedDevelopment.Url },
-      cssClass: "large-modal",
+      //cssClass: "small-modal",
     });
+
     await lotDetailsModal.present();
   }
 

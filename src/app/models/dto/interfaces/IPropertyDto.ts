@@ -10,7 +10,8 @@ export interface IPropertyDto {
 	Name: string;
 	Address?: IAddressDto;
 	TotalStories?: number;
-	SqFt: number;
+	SqFt: number; //TODO: need to consolidate (keep)
+  SqFeet: number; //TODO: need to consolidate (remove)
 	Bedrooms: Array<IRoomTypeDto>;
 	Bathrooms: Array<IRoomTypeDto>;
 	InteriorAreas: Array<IRoomTypeDto>;

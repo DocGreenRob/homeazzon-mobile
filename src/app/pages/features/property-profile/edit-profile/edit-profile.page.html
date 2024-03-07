@@ -39,7 +39,7 @@
   </div>
 
   <div class="btnWrapper">
-    <ion-button (click)="addRoom()" class="addRoombtn" *ngIf="(((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
+    <ion-button (click)="addRoom()" class="addRoombtn" *ngIf="isMyProperty == true || (((User.IsPrivateLabelUser == true && ActiveProperty.IsProxy == true) || User.IsPrivateLabelUser == false) && !User.IsPrivateLabelPartner) || User.IsPrivateLabelPartner">
       <img src="assets/icon/addicon.svg" alt="">
       Add a room
     </ion-button>

@@ -43,6 +43,7 @@ export class ItemMoveClonePage extends BasePage {
   public action: any;
   public profileItemsLog: any;
   public isIos: boolean = false;
+  private _selectedProfileItemsFromUI: any = [];
 
   constructor(public override navController: NavController,
     private propertyService: PropertyProfilesService,
@@ -176,7 +177,9 @@ export class ItemMoveClonePage extends BasePage {
   }
 
   public async profileItemPanelNextClick() {
-    let selectedProfileIDs = [];
+    this._selectedProfileItemsFromUI = [];
+    const selectedProfiles = [];
+
     for (let p of this.selectedProperties) {
       //Remove non selected profiles.
       var filtered = p.Profiles.filter(function (value, index, arr) {
@@ -184,51 +187,52 @@ export class ItemMoveClonePage extends BasePage {
       });
       p.Profiles = filtered;
 
-      //Array of selected PRofileItemIds
+      //Array of selected ProfileItemIds
       for (let prof of p.Profiles) {
         if (prof.selected) {
-          selectedProfileIDs.push(prof.Id);
+          selectedProfiles.push({ Id: prof.ProfileItems[0].Id, propertyName: p.Name, profileName: prof.ProfileItems[0].Name });
         }
       }
     }
 
-    this.loading = await this.loadingCtrl.create({
-      message: "",
-      cssClass: "my-loading-class",
-    });
-    this.loading.present();
     const userType = this.getUserShortName(this.User.Types[0].Name);
-    for (let profileID of selectedProfileIDs) {
-      await this.propertyService.getProfileItems(profileID, userType)
-        .then(
-          (profileItem: any) => {
+    const loaders = {};
+
+    for(let profile of selectedProfiles) {    
+      loaders[profile.Id] = await this.loadingCtrl.create({
+        message: `Loading Line Items of ${profile.propertyName} for ${profile.profileName}...`,
+        cssClass: "my-loading-class",
+      });
+
+      loaders[profile.Id]?.present();
+
+      await this.propertyService.getProfileItems(profile.Id, userType)
+        .then((profileItem: any) => {
+            loaders[profileItem.Id]?.dismiss();
+            this._selectedProfileItemsFromUI.push(profileItem);
+            console.log("_selectedProfileItemsFromUI = ", this._selectedProfileItemsFromUI);
             console.log("ProfileItems = ", profileItem);
             console.log("selectedProperties = ", this.selectedProperties);
 
             for (let p of this.selectedProperties) {
               for (let propertyProfileItem of p.Profiles) {
-                // for (let resultProfileItem of profileItem) {
                 if (profileItem.Id === propertyProfileItem.Id) {
                   propertyProfileItem.LineItems = profileItem.Area.LineItems;
-                  propertyProfileItem.selected = false;
+                  propertyProfileItem.selected = true;
                   for (let lineItem of propertyProfileItem.LineItems) {
                     lineItem.selected = false;
                   }
                 }
-                // }
               }
             }
 
             this.isShowArea = false;
             this.isShowLineItem = true;
-            this.loading.dismiss();
           })
         .catch((error) => {
           console.log(error);
-          this.loading.dismiss();
         });
     }
-
   }
 
   public async propertyPanelNextClick() {
@@ -241,24 +245,28 @@ export class ItemMoveClonePage extends BasePage {
     }
 
     this.loading = await this.loadingCtrl.create({
-      message: "",
+      message: "Getting property profiles...",
       cssClass: "my-loading-class",
     });
     this.loading.present();
+
     ///Should set this data inside selected properties array
     await this.propertyService
       .getPropertiesById(selectedPropertyIDs)
       .then((properties: any) => {
         console.log("SeletedProperties = ", properties);
+
         for (let property of properties) {
           this.selectedPropertyUserTypeID = property.UserTypeId;
           this.profileItems = [];
+
           for (let Profiles of property.Profiles) {
             for (let profileItem of Profiles.ProfileItems) {
               this.profileItems.push(profileItem);
             }
           }
         }
+
         this.selectedProperties = [];
         this.selectedProperties = properties;
 
@@ -321,22 +329,28 @@ export class ItemMoveClonePage extends BasePage {
           IsProxy: false,
           ProfileItems: new Array(),
         };
-        for (let profileItem of p.Profiles) {
+        for (let profile of p.Profiles) {
+          const profileItemId = profile.ProfileItems[0].Id;
+
           let cloneProfileItemDto: CloneProfileItemDto = {
-            ProfileItemId: profileItem.Id,
+            ProfileItemId: profileItemId,
             LineItems: new Array(),
           };
 
-          cloneProfileItemDto.ProfileItemId = profileItem.Id;
+          cloneProfileItemDto.ProfileItemId = profileItemId;
 
-          for (let lineItem of profileItem.LineItems) {
-            if (lineItem.selected) {
-              let cloneLineItemDto: CloneLineItemDto = new CloneLineItemDto();
-              cloneLineItemDto.LineItemId = lineItem.Id;
+          this._selectedProfileItemsFromUI.forEach((profileItem) => {
+            if (profileItem.Id === profileItemId) {
+              for (let lineItem of profileItem.Area.LineItems) {
+                if (lineItem.selected) {
+                  let cloneLineItemDto: CloneLineItemDto = new CloneLineItemDto();
+                  cloneLineItemDto.LineItemId = lineItem.Id;
 
-              cloneProfileItemDto.LineItems.push(cloneLineItemDto);
+                  cloneProfileItemDto.LineItems.push(cloneLineItemDto);
+                }
+              }
             }
-          }
+          });
 
           clonePropertyDto.ProfileItems.push(cloneProfileItemDto);
         }
@@ -344,11 +358,10 @@ export class ItemMoveClonePage extends BasePage {
         clonePropertyList.push(clonePropertyDto);
       }
 
-
       if (isGoogleLink) {
-        this.productService.cloneGoogleLink(clonePropertyList, this.ActiveItem.GoogleLink.Id).then((x) => this.handleCloneResponseSuccess(x, this.loading), this.handleCloneResponseError);
+        this.productService.cloneGoogleLink(clonePropertyList, this.ActiveItem.GoogleLink.Id).then((x) => this.handleCloneResponseSuccess(x, this.loading), (x) => this.handleCloneResponseError(x, this.loading));
       } else {
-        this.productService.cloneProduct(clonePropertyList, this.ActiveItem.AssetInfo.Id).then((x) => this.handleCloneResponseSuccess(x, this.loading), this.handleCloneResponseError);
+        this.productService.cloneProduct(clonePropertyList, this.ActiveItem.AssetInfo.Id).then((x) => this.handleCloneResponseSuccess(x, this.loading), (x) => this.handleCloneResponseError(x, this.loading));
       }
 
     } else if (this.action === this._constants.Actions.move) {
@@ -357,25 +370,25 @@ export class ItemMoveClonePage extends BasePage {
           0,
           this.selectedProfileItemID,
           this.selectedLineItemID,
-          this.ActiveItem.GoogleLink.Id).then(this.handleMoveResponseSuccess, this.handleMoveResponseError);
+          this.ActiveItem.GoogleLink.Id).then((x) => this.handleMoveResponseSuccess(x, this.loading), (x) => this.handleMoveResponseError(x, this.loading));
       } else {
         this.productService.moveProduct(this.selectedPropertyID,
           0,
           this.selectedProfileItemID,
           this.selectedLineItemID,
-          this.ActiveItem.AssetInfo.Id).then(this.handleMoveResponseSuccess, this.handleMoveResponseError);
+          this.ActiveItem.AssetInfo.Id).then((x) => this.handleMoveResponseSuccess(x, this.loading), (x) => this.handleMoveResponseError(x, this.loading));
       }
 
     }
   }
 
-  private handleCloneResponseSuccess(response: Array<AssetIndexDto>, loading:any) {
+  private handleCloneResponseSuccess(response: Array<AssetIndexDto>, loading: any) {
     loading.dismiss();
     this.uxNotifierService.showToast("Product was Cloned successfully", this._constants.ToastColorGood);
     this.router.navigate(["item-details"]);
   }
 
-  private handleCloneResponseError(error: any) {
+  private handleCloneResponseError(error: any, loading: any) {
     this.loading.dismiss();
     this.uxNotifierService.showToast("There was an error cloning this product", this._constants.ToastColorBad);
     setTimeout(() => {
@@ -383,13 +396,13 @@ export class ItemMoveClonePage extends BasePage {
     }, 2000);
   }
 
-  private handleMoveResponseSuccess(response: Array<AssetIndexDto>) {
+  private handleMoveResponseSuccess(response: Array<AssetIndexDto>, loading: any) {
     this.loading.dismiss();
     this.uxNotifierService.showToast("Product was moved successfully", this._constants.ToastColorGood);
     this.router.navigate(["items"]);
   }
 
-  private handleMoveResponseError(error: any) {
+  private handleMoveResponseError(error: any, loading: any) {
     this.loading.dismiss();
     this.uxNotifierService.showToast("There was an error moving this product", this._constants.ToastColorBad);
     setTimeout(() => {
@@ -416,19 +429,54 @@ export class ItemMoveClonePage extends BasePage {
       }
     }
   }
+  public selectedProfileItemLineitems: any = [];
 
   public onProfileItemSelectAllToggle(propertyIndex, profileItemIndex) {
+    this.selectedProfileItemLineitems = [];
     for (let [propIndex, p] of this.selectedProperties.entries()) {
       if (propIndex == propertyIndex) {
-        for (let [profileIndex, profileItem] of p.Profiles.entries()) {
+        for (let [profileIndex, profile] of p.Profiles.entries()) {
           if (profileIndex == profileItemIndex) {
-            for (let lineItem of profileItem.LineItems) {
-              lineItem.selected = profileItem.selected;
+            this._selectedProfileItemsFromUI.forEach((profileItem) => {
+              if (profileItem.Id === profile.ProfileItems[0].Id) {
+                let a = this.selectedProperties;
+                let b: any = [];
+
+                for (let x of a) {
+                  if (x.Id === p.Id) {
+                    let z: any = x.Profiles[profileIndex];
+                    // add a new property to the object
+                    z.LineItems = [];
+                    z.LineItems = profileItem.Area.LineItems;
+                    x.Profiles[profileIndex] = z;
+                    b.push(x);
+                  } else {
+                    b.push(x);
+                  }
+                }
+
+                this.selectedProperties = b;
+                console.log("selectedProperties = ", this.selectedProperties);
+              }
+            });
+
+            for (let lineItem of profile.LineItems) {
+              if(profile.selected) {
+                lineItem.selected = false;
+              }
             }
           }
         }
       }
     }
+  }
+
+  private getProfileItemLineitems(profileItemID: number): any {
+    this._selectedProfileItemsFromUI.forEach((profileItem) => {
+      if (profileItem.Id === profileItemID) {
+        return profileItem.Area.LineItems;
+      }
+    });
   }
 
 }
