@@ -1079,6 +1079,11 @@ select::-ms-expand {
   }
 }
 
+.image-modal{
+  --max-height: 600px !important;
+  --overflow: auto;
+}
+
 //Delete Modal --------------------
 .item-delete-modal {
   .alert-wrapper.sc-ion-alert-md {
