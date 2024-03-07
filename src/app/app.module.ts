@@ -35,6 +35,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+import { PropertyProfileImagesDetailPageModule } from './pages/features/property-profile-images-detail/property-profile-images-detail.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +52,7 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
     LotDetailsPageModule,
     InteractiveModelModalPageModule,
     SearchResultDetailsPageModule,
+    PropertyProfileImagesDetailPageModule,
     PdfViewerModule,
     FormsModule,
     ReactiveFormsModule

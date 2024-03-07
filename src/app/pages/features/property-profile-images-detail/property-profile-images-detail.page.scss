@@ -1,0 +1,44 @@
+.modal-main-wrapper{
+	display: flex;
+	padding: 17px 33px 17px 34px;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	.close-modal{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		width: 100%;
+	}
+	.modal-content{
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		flex-direction: column;
+		width: 100%;
+		gap: 5px;
+		.title{
+			font-family: Plus Jakarta Sans;
+			font-size: 16px;
+			font-weight: 800;
+			line-height: 16px;
+			letter-spacing: 0.005em;
+			text-align: left;
+			color: #232C41;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 1;
+			overflow: hidden;
+		}
+		.description{
+			font-family: Plus Jakarta Sans;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 16px;
+			letter-spacing: 0.01em;
+			text-align: left;
+			min-height: 40px;
+		}
+	}
+
+}
