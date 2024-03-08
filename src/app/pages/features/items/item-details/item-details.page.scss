@@ -175,7 +175,7 @@ iframe {
 .item-btns-wrapper {
   display: inline-flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 15px;
   margin-top: 16px;
   flex-wrap: wrap;
 
@@ -200,7 +200,7 @@ iframe {
       margin-top: 2px;
     }
     img {
-      margin-right: 4px;
+      height: 20px !important;
     }
   }
   .repair-need{
