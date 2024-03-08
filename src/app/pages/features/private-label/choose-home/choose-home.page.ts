@@ -44,6 +44,6 @@ export class ChooseHomePage implements OnInit {
 	}
 
 	public close() {
-		this.navCtrl.pop();
+		this.navCtrl.back();
 	}
 }

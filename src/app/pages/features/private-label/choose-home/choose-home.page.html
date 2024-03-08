@@ -1,24 +1,29 @@
-<ion-header>
-	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+	<div class="header-title-with-icon" >
+		<span (click)="close()">
+			<img src="assets/icon/arrow-left-square.svg" />
+		</span>
+		<span class="title-with-img">
+			<span>Choose Home</span>
+		</span>
+		<span class="empty">
+		</span>
+	</div>
 </ion-header>
 <ion-content>
-	<h1 class="welcome-text" style="font-family:'Silka-Semi-Bold' !important;">Great Choice! Now let's get your home on a lot</h1>
+	<p class="welcome-text" style="font-family:'Silka-Semi-Bold' !important;">Great Choice<i>!</i> Now let's get your home on a lot</p>
 	<ion-row>
-		<ion-col size="2"></ion-col>
-		<ion-col size="8">
-			<div class="btnstyle1 CHOOSE-DEVELOPER-LOT" (click)="goToDevelopmentsPage()">
-				<ion-button class="btn default" color="dark" shape="round" expand="block">Choose a Lot</ion-button>
+		<ion-col size="12">
+			<div class="btnstyle1" (click)="goToDevelopmentsPage()">
+				<ion-button class="continuebtn" expand="block">Choose a Lot</ion-button>
 			</div>
 		</ion-col>
-		<ion-col size="2"> </ion-col>
 	</ion-row>
 	<ion-row>
-		<ion-col size="2"></ion-col>
-		<ion-col size="8">
-			<div class="btnstyle2 HAVE-OWN-LOT" (click)="gotomyownlot()">
-				<ion-button class="btn default" color="dark" shape="round" expand="block">I Have My Own Lot</ion-button>
+		<ion-col size="12">
+			<div class="btnstyle2" (click)="gotomyownlot()">
+				<ion-button class="continuebtn" expand="block">I Have My Own Lot</ion-button>
 			</div>
 		</ion-col>
-		<ion-col size="2"></ion-col>
 	</ion-row>
 </ion-content>
