@@ -1,24 +1,36 @@
 <ion-header>
-	<navigation-sub-menu [showBackButton]="true" type="titleMenu" [title]="title" *ngIf="title"></navigation-sub-menu>
-</ion-header>
-<ion-content>
-	<div #zoom class="zoom">
-		<pdf-viewer [src]="pdfUrl" [render-text]="true" style="display: block;" [show-all]="true" [original-size]="false" [autoresize]="true" [fit-to-page]="false" [zoom]="zoomCount"></pdf-viewer>
+	<navigation-sub-menu [showBackButton]="true" type="titleMenu" [title]="title"></navigation-sub-menu>
+  </ion-header>
+  
+  <ion-content>
+	<div  class="pdf-content">
+	  <pdf-viewer 
+			[src]="pdfUrl" 
+			[render-text]="true" 
+			[show-all]="true" 
+			[original-size]="false" 
+			[autoresize]="true" 
+			[fit-to-page]="true" 
+			[zoom]="zoomCount"
+			[show-borders]="true"
+			[stick-to-page]="true"
+			[rotation]="20"
+		></pdf-viewer>
 	</div>
-</ion-content>
-<ion-footer>
-	<ion-row style="margin-right: 1em !important;">
-		<ion-col size="3">
-			<h3 class="zoom-text">Zoom {{zoomCount}}</h3>
-		</ion-col>
-		<ion-col size="3">
-			<ion-icon name="remove" (click)="zoomReduce()"></ion-icon>
-		</ion-col>
-		<ion-col size="3">
-			<ion-icon name="add" (click)="zoomIncrease()"></ion-icon>
-		</ion-col>
-		<ion-col size="3">
-			<ion-icon name="refresh" (click)="zoomReset()"></ion-icon>
-		</ion-col>
-	</ion-row>
-</ion-footer>
+	<ion-fab slot="fixed" vertical="bottom" horizontal="end" >
+		<ion-fab-button>
+		  <ion-icon name="chevron-up-circle"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-list side="top">
+		  <ion-fab-button (click)="zoomIncrease()">
+			<ion-icon name="add"></ion-icon>
+		  </ion-fab-button>
+		  <ion-fab-button (click)="zoomReduce()">
+			<ion-icon name="remove"></ion-icon>
+		  </ion-fab-button>
+		  <ion-fab-button  (click)="zoomReset()">
+			<ion-icon name="sync"></ion-icon>
+		  </ion-fab-button>
+		</ion-fab-list>
+	  </ion-fab>
+  </ion-content>
