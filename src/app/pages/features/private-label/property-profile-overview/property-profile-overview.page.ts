@@ -19,6 +19,8 @@ export class PropertyProfileOverviewPage extends BasePage {
   private propertyId: any;
   propertyName: string;
   private links: Array<ILinkDto>;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -100,8 +102,7 @@ export class PropertyProfileOverviewPage extends BasePage {
   }
 
   public async viewInteractiveModels() {
-    let loader = await this.loading.getLoader("getting property plans...");
-    await loader.present();
+    this.presentSpinner("getting property plans...");
 
     await this.privatelabelService.getPrivateLabelProfilePlans(this.propertyId).then(
       (response: any) => {
@@ -109,12 +110,12 @@ export class PropertyProfileOverviewPage extends BasePage {
           console.log("property plans", response);
           this.links = response;
 
-          loader.dismiss();
+          this.dismissSpinner();
           this.showPlansInBrowser();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -133,4 +134,15 @@ export class PropertyProfileOverviewPage extends BasePage {
     };
     this.router.navigate(["design-plans"], navExtras);
   }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = ''; 
+  }
+  
 }

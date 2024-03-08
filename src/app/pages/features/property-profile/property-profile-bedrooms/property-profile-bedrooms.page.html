@@ -1,3 +1,7 @@
+
+
+<app-global-spinner [spinnerText]="spinnerText" *ngIf="loadingVisible"></app-global-spinner>
+
 <ion-header style="background-color: #232B42;">
   <div class="header" [ngStyle]="isIos && {'margin-top': '2em'}">
     <span (click)="goBack()">

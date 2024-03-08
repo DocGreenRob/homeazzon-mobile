@@ -16,6 +16,8 @@ export class CongratulationsPage implements OnInit {
 	profileId: any;
 	userId: any;
 	userName: any;
+	spinnerText: string;
+	loadingVisible: boolean;
 
 	constructor(
 		private loading: UtilitiesService,
@@ -50,23 +52,32 @@ export class CongratulationsPage implements OnInit {
 
 	//get label PrivateLabelProfilegreen  by profileId
 	async getPrivateLabelProfilegreen() {
-		let loader = await this.loading.getLoader('getting label profilegreen...');
-		await loader.present();
+		
+		this.presentSpinner('getting label profilegreen...');
 
 		await this.privatelabelService.getPrivateLabelProfile(this.profileId).subscribe(
 			(response: any) => {
 				if (response) {
 					console.log('getPrivateLabelProfilegreenlist', response);
 					this.getPrivateLabelProfilegreenlist = response;
-					loader.dismiss();
+					this.dismissSpinner();
 				}
 			},
 			(error) => {
-				loader.dismiss();
+				this.dismissSpinner();
 				console.log(error);
 			}
 		);
 	}
 
+	async presentSpinner(text: string) {
+		this.spinnerText = text;
+		this.loadingVisible = true;
+	  }
+	
+	  async dismissSpinner() {
+		this.loadingVisible = false;
+		this.spinnerText = ''; 
+	  }
 
 }

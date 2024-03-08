@@ -15,16 +15,6 @@ export class UtilitiesService extends baseService {
     super(http);
   }
 
-  //get loader promise
-  getLoader(message) {
-    this.loader = null;
-    this.loader = this.loadingController.create({
-      message: message,
-      cssClass: "my-loading-class",
-    });
-    return this.loader;
-  }
-
   //get states
   async getStates() {
     return this.get("/state").toPromise();

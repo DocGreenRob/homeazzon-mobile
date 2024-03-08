@@ -28,6 +28,8 @@ export class ChooseDevelopmentPage extends BasePage {
   public showLots: boolean;
   private states: Array<IStateDto>;
   selectedDevelopment: IDevelopmentDto = {} as IDevelopmentDto;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
@@ -69,9 +71,7 @@ export class ChooseDevelopmentPage extends BasePage {
 
   async getDevelopments() {
 
-    let loader = await this.loading.getLoader("getting available developments...");
-
-    await loader.present();
+    this.presentSpinner("getting available developments...");
 
     let user: IUserDto = this.storageService.get('User');
 
@@ -79,10 +79,10 @@ export class ChooseDevelopmentPage extends BasePage {
       (x: Array<IDevelopmentDto>) => {
         // debugger;
         this.developments = x;
-        loader.dismiss();
+        this.dismissSpinner();
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -92,8 +92,7 @@ export class ChooseDevelopmentPage extends BasePage {
     this.showDevelopments = false;
     this.showLots = true;
     this.selectedDevelopment = development;
-    let loader = await this.loading.getLoader("getting development lots ...");
-    await loader.present();
+    this.presentSpinner("getting development lots ...");
 
     if (this.isPrivateLabelBuildYourOwn) {
       this.storage.get("CustomProperty").then(
@@ -115,10 +114,10 @@ export class ChooseDevelopmentPage extends BasePage {
 
         this.lots = x;
 
-        loader.dismiss();
+        this.dismissSpinner();
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -136,5 +135,15 @@ export class ChooseDevelopmentPage extends BasePage {
 
   public close() {
     this.navCtrl.pop();
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = ''; 
   }
 }

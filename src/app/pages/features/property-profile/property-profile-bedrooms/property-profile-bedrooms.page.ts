@@ -31,6 +31,8 @@ export class PropertyProfileBedroomsPage extends BasePage {
   constants: Constants;
   public isPrivateLabelBuildYourOwn: boolean = false;
   public isIos: boolean = false;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(public navCtrl: NavController,
               private toast: UxNotifierService,
@@ -53,8 +55,8 @@ export class PropertyProfileBedroomsPage extends BasePage {
 
   //get list of bedrooms
   async getBedrooms() {
-    let loader = await this.loading.getLoader("getting bedrooms...");
-    await loader.present();
+
+    this.presentSpinner("getting bedrooms...");
 
     await this.prePreConstruction.getAreaTypes("bedroom").then(
       (response: any) => {
@@ -63,11 +65,11 @@ export class PropertyProfileBedroomsPage extends BasePage {
           this.bedRooms.map((item) => {
             item.Quantity = 1;
           });
-          loader.dismiss();
+          this.dismissSpinner();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         this.toast.showToast("Server Error!", this.constants.ToastColorBad);
         console.log(error);
       }
@@ -118,4 +120,16 @@ export class PropertyProfileBedroomsPage extends BasePage {
   goBack() {
     this.navController.back();
   }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = ''; 
+  }
+  
+
 }

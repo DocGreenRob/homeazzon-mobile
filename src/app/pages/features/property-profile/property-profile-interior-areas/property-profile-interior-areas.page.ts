@@ -35,6 +35,8 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
   public isPrivateLabelBuildYourOwn: boolean;
   @ViewChild("content") private content: any;
   public isIos: boolean = false;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -60,8 +62,7 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
 
   //get list of interior areas
   async getInteriors() {
-    let loader = await this.loading.getLoader("getting interior...");
-    await loader.present();
+    this.presentSpinner("getting interior...");
 
     await this.prePreConstruction.getAreaTypes("interior").then(
       (response: any) => {
@@ -71,11 +72,11 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
           this.interiors.map((item) => {
             item.Quantity = 0;
           });
-          loader.dismiss();
+          this.dismissSpinner();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         this.toast.showToast("Error getting interior areas!", this.constants.ToastColorBad);
         console.log(error);
       }
@@ -163,4 +164,15 @@ export class PropertyProfileInteriorAreasPage extends BasePage {
       value.Quantity = 0;
     };
   }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = ''; 
+  }
+
 }

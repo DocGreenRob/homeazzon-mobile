@@ -17,6 +17,8 @@ export class PropertyProfileImagesPage implements OnInit {
 	public images: Array<IImageDto>;
 	private propertyId: number;
 	public propertyName: string;
+	spinnerText: string;
+	loadingVisible: boolean;
 
 	constructor(public navCtrl: NavController,
     private loading: UtilitiesService,
@@ -40,20 +42,18 @@ export class PropertyProfileImagesPage implements OnInit {
 
 	// get the PrivateLabel profile images with profileId
 	async getPrivateLabelProfileImages() {
-		let loader = await this.loading.getLoader('getting property images...');
-		await loader.present();
-	
+		this.presentSpinner('getting property images...');
 
 		await this.privatelabelService.getPrivateLabelProfileImages(this.propertyId)
 			.then(
 				(x: any) => {
 					if (x) {
 						this.images = x.Images;
-						loader.dismiss();
+						this.dismissSpinner();
 					}
 				},
 				(err) => {
-					loader.dismiss();
+					this.dismissSpinner();
 				}
 			);
 	}
@@ -70,4 +70,14 @@ export class PropertyProfileImagesPage implements OnInit {
 	public close() {
 		this.navCtrl.pop();
 	}
+
+	async presentSpinner(text: string) {
+		this.spinnerText = text;
+		this.loadingVisible = true;
+	  }
+	
+	  async dismissSpinner() {
+		this.loadingVisible = false;
+		this.spinnerText = ''; 
+	  }
 }
