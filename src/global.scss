@@ -1204,3 +1204,8 @@ select::-ms-expand {
 .hydrated.toastNotifier{
   backdrop-filter: blur(1.5px);
 }
+
+.icon-round {
+  border-radius: 50% !important;
+  --border-radius: 50% !important;
+}
