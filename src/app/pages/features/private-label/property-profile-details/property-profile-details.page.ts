@@ -25,6 +25,9 @@ export class PropertyProfileDetailsPage extends BasePage {
   exteriorAreaToogle: boolean = false;
   totalSqlFeet: any = 0;
   propertyName: string;
+  spinnerText: string;
+  loadingVisible: boolean;
+
   constructor(public navCtrl: NavController,
     public activeRoute: ActivatedRoute,
     private loading: UtilitiesService,
@@ -77,8 +80,7 @@ export class PropertyProfileDetailsPage extends BasePage {
 
   // get  the privatelabel profile list 
   async getPrivateLabelProfilelist() {
-    let loader = await this.loading.getLoader('getting label profile list...');
-    await loader.present();
+    this.presentSpinner('getting label profile list...');
 
 
     await this.privatelabelService.getPropertyOverview(this.propertyId)
@@ -87,10 +89,10 @@ export class PropertyProfileDetailsPage extends BasePage {
           console.log('labelprofilelist', x);
           this.privatelabelprofileset = x.Data;
           this.getTotalSqFt();
-          loader.dismiss();
+          this.dismissSpinner();
         },
         (error) => {
-          loader.dismiss();
+          this.dismissSpinner();
           console.log(error);
         }
       );
@@ -122,4 +124,12 @@ export class PropertyProfileDetailsPage extends BasePage {
     this.navCtrl.pop();
   }
 
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
+  }
 }

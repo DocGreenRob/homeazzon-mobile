@@ -30,6 +30,8 @@ export class LotDetailsPage extends BasePage {
   totalPages: number = 0;
   zoom: number = 0;
   activePage = 1;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -103,8 +105,7 @@ export class LotDetailsPage extends BasePage {
   }
 
   async saveProperty() {
-    let loader = await this.loading.getLoader("saving property ...");
-    await loader.present();
+    this.presentSpinner("saving property ...");
 
     if (this.isPrivateLabelBuildYourOwn) {
       this.storage.get("CustomProperty").then(
@@ -128,7 +129,7 @@ export class LotDetailsPage extends BasePage {
               this.storage.get("HasPrivateLabelUserMadeSelection").then(
                 async (x) => {
                   if (x && x === true) {
-                    loader.dismiss();
+                    this.dismissSpinner();
                     this.modalController.dismiss();
                     this.router.navigate(["congratulations"]);
                   } else {
@@ -139,12 +140,12 @@ export class LotDetailsPage extends BasePage {
 
                     await this.userService.setUserHasSelectedPrivateLabelerPropertyFlag(o).then(
                       (x) => {
-                        loader.dismiss();
+                        this.dismissSpinner();
                         this.modalController.dismiss();
                         this.router.navigate(["congratulations"]);
                       },
                       (err) => {
-                        loader.dismiss();
+                        this.dismissSpinner();
                       }
                     );
                   }
@@ -153,12 +154,12 @@ export class LotDetailsPage extends BasePage {
               );
             },
             (err) => {
-              loader.dismiss();
+              this.dismissSpinner();
             }
           );
         },
         (err) => {
-          loader.dismiss();
+          this.dismissSpinner();
         }
       );
     } else {
@@ -175,7 +176,7 @@ export class LotDetailsPage extends BasePage {
                 this.storage.get("HasPrivateLabelUserMadeSelection").then(
                   async (x) => {
                     if (x && x === true) {
-                      loader.dismiss();
+                      this.dismissSpinner();
                       this.modalController.dismiss();
                       this.router.navigate(["congratulations"]);
                     } else {
@@ -186,7 +187,7 @@ export class LotDetailsPage extends BasePage {
 
                       await this.userService.setUserHasSelectedPrivateLabelerPropertyFlag(u).then(
                         (x) => {
-                          loader.dismiss();
+                          this.dismissSpinner();
                           this.modalController.dismiss();
                           this.router.navigate(["congratulations"]);
                         },
@@ -206,5 +207,14 @@ export class LotDetailsPage extends BasePage {
     }
 
     // go to "GoShopping"
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
   }
 }

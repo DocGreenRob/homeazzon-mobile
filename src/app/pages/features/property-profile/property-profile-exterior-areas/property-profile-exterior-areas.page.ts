@@ -49,6 +49,8 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   public isPrivateLabelBuildYourOwn: boolean;
   public isSkipExteriorAreas: boolean = false;
   public isIos: boolean = false;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -81,8 +83,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
 
   //get list of exterior areas
   async getExteriors() {
-    let loader = await this.loading.getLoader("getting exterior areas ...");
-    await loader.present();
+    this.presentSpinner("getting exterior areas ...");
 
     await this.prePreConstruction.getAreaTypes("exterior").then(
       (response: any) => {
@@ -90,11 +91,11 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
           console.log("exteriors", response);
           this.exteriors = response;
 
-          loader.dismiss();
+          this.dismissSpinner();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         this.toast.showToast("Error getting exterior areas!", this.constants.ToastColorBad);
         console.log(error);
       }
@@ -149,19 +150,18 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   }
 
   async getPrivateLabelLotsProfile() {
-    let loader = await this.loading.getLoader("getting label profile list...");
-    await loader.present();
+    this.presentSpinner("getting label profile list...");
 
     await this.privatelabelService.getPrivateLabellotsprofile(this.profileId).subscribe(
       (response: any) => {
         if (response) {
           console.log("labellotsprofile", response);
           this.labellotsprofiles = response;
-          loader.dismiss();
+          this.dismissSpinner();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -188,8 +188,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   }
 
   async saveProperty() {
-    let loader = await this.loading.getLoader("saving property ...");
-    await loader.present();
+    this.presentSpinner("saving property ...");
     await this.setExteriorAreas();
 
     let customProperty: IPropertyDto = this.CustomProperty;
@@ -242,7 +241,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
               this.IsNewUserTypeSelected = false;
               this.NewSelectedUserTypeId = 0;
 
-              await this.save(loader, customProperty);
+              await this.save(customProperty);
             })
             .catch((e) => { });
         })
@@ -250,15 +249,15 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     } else {
       // TODO: Need to prompt user for UserType for new property
       customProperty.UserTypeId = this.User.Types[0].Id;
-      await this.save(loader, customProperty);
+      await this.save(customProperty);
     }
   }
 
-  private async save(loader: any, customProperty: IPropertyDto) {
+  private async save(customProperty: IPropertyDto) {
 
     this.privatelabelService.saveCustomPropertyAsync(customProperty).then(
       async (savedProperty: any) => {
-        loader.dismiss();
+        this.dismissSpinner();
         this.closeAfterSave();
 
         //this.UserTypes.forEach(async (x) => {
@@ -268,7 +267,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
         // does "await" actually wait until getting response before sending next call?
       },
       (err) => {
-        loader.dismiss();
+        this.dismissSpinner();
       }
     );
   }
@@ -285,11 +284,20 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     };
     this.router.navigate(["dashboard"], navExtras);
   }
-  
+
   goBack() {
 		this.navController.back();
 	}
   showExterior(){
     this.isSkipExteriorAreas=!this.isSkipExteriorAreas;
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
   }
 }

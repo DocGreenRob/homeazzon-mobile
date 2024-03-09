@@ -31,6 +31,8 @@ export class PropertyProfileBathroomsPage extends BasePage {
   public isPrivateLabelBuildYourOwn: boolean;
   constants: Constants;
   public isIos: boolean = false;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -55,8 +57,7 @@ export class PropertyProfileBathroomsPage extends BasePage {
 
   //get list of bathrooms
   async getBathrooms() {
-    let loader = await this.loading.getLoader("getting bathrooms...");
-    await loader.present();
+    this.presentSpinner("getting bathrooms...");
 
     this.prePreConstruction.getAreaTypes("bathroom").then(
       (response: any) => {
@@ -65,11 +66,11 @@ export class PropertyProfileBathroomsPage extends BasePage {
           this.bathRooms.map((item) => {
             item.Quantity = 1;
           });
-          loader.dismiss();
+          this.dismissSpinner();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         this.toast.showToast("Error getting bathrooms!", this.constants.ToastColorBad);
       }
     );
@@ -137,6 +138,15 @@ export class PropertyProfileBathroomsPage extends BasePage {
 
   goBack() {
     this.navController.back();
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = ''; 
   }
 
 }
