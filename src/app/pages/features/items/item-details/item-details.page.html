@@ -143,33 +143,33 @@
 
 			<!-- Maintenance / Attachments -->
 			<div class="item-btns-wrapper" *ngIf="!IsMetattachment">
-				<span class="item-btn" (click)="maintenance()">
+				<span class="item-btn icon-round" (click)="maintenance()">
 					<!-- <h6 class="mypad-green"> -->
 					<!-- <ion-icon name="hammer"></ion-icon> -->
 					<img src="assets/icon/screwdriver.svg" alt="">
-					Maintenance
+					
 					<!-- </h6> -->
 				</span>
 				<!-- <span> -->
-				<span class="item-btn" (click)="attachments()">
+				<span class="item-btn icon-round" (click)="attachments()">
 					<!-- <h6 class="mypad-green"> -->
 					<!-- <ion-icon name="attach"></ion-icon> -->
 					<img src="assets/icon/paperclip.svg" alt="">
-					Attachments
+					
 					<!-- </h6> -->
 				</span>
-				<span [ngClass]="ActiveItem?.AssetInfo?.Repair ? '': 'repair-need' " class="item-btn" (click)="repair()">
+				<span [ngClass]="ActiveItem?.AssetInfo?.Repair ? '': 'repair-need' " class="item-btn icon-round" (click)="repair()">
                     <!-- <h6 class="mypad-green"> -->
                     <!-- <ion-icon name="attach"></ion-icon> -->
                     <img src="assets/svgs/light/reapir-light.svg" class="repair-icon">
-                    Repair
+                   
                     <!-- </h6> -->
                   </span>
-				<span class="item-btn edit"
+				<span class="item-btn edit icon-round"
 					  (click)="edit()"
 					  *ngIf="(ActiveItem?.Type !== 'Google Web Links' && ActiveItem?.Type !== 'YouTube Videos' && ActiveItem?.Type !== 'Qr Codes') && (User.IsPrivateLabelUser === false || (User.IsPrivateLabelUser === true && ActiveItem.IsSuggest === false) && (ActiveAttachment?.Type !== 'Qr Codes' && ActiveAttachment?.Type !== 'Google Search Result (link)' && ActiveAttachment?.Type !== 'Video'))">
 					<img src="assets/icon/Icon-Edit-white.svg" alt="">
-					Edit
+					
 				</span>
 
 				<span class="item-btn1"

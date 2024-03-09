@@ -46,9 +46,8 @@
             <div *ngIf="bedroomToggle" class="room-list">
               <div *ngFor="let profileItem of activePropertyBedrooms; let bedroomIndex = index;"
                    class="DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}">
-                <div class="profile-items-list">
-                  <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                            (click)="showLineItems(profileItem)">
+                <div class="profile-items-list" (click)="showLineItems(profileItem)">
+                  <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-BEDROOMS-{{bedroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
                     {{profileItem.Name}}
                   </ion-text>
                   <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
@@ -100,9 +99,8 @@
             <div *ngIf="bathroomToggle" class="room-list">
               <div *ngFor="let profileItem of activePropertyBathrooms; let bathroomIndex = index;">
 
-                <div class="profile-items-list">
-                  <ion-text class="DASHBOARD-PROFILE-ITEM-BATHROOMS-{{bathroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                            (click)="showLineItems(profileItem)">
+                <div class="profile-items-list" (click)="showLineItems(profileItem)">
+                  <ion-text class="DASHBOARD-PROFILE-ITEM-BATHROOMS-{{bathroomIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
                     {{profileItem.Name}}
                   </ion-text>
                   <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
@@ -157,9 +155,8 @@
             <div *ngIf="commonAreaToggle" class="room-list">
               <div *ngFor="let profileItem of activePropertyInteriorAreas; let commonIndex = index;">
 
-                <div class="profile-items-list">
-                  <ion-text class="DASHBOARD-PROFILE-ITEM-INTERIOR-AREAS-{{commonIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                            (click)="showLineItems(profileItem)">
+                <div class="profile-items-list" (click)="showLineItems(profileItem)">
+                  <ion-text class="DASHBOARD-PROFILE-ITEM-INTERIOR-AREAS-{{commonIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
                     {{profileItem.Name}}
                   </ion-text>
                   <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
@@ -228,10 +225,8 @@
             <!--Exterior List -->
             <div *ngIf="exteriorAreaToogle" class="room-list" style="margin-bottom: 3rem;">
               <div *ngFor="let profileItem of activePropertyExteriorAreas; let exteriorIndex = index;">
-
-                <div class="profile-items-list">
-                  <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{exteriorIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }"
-                            (click)="showLineItems(profileItem)">
+                <div class="profile-items-list" (click)="showLineItems(profileItem)">
+                  <ion-text class="profile-items-list-title DASHBOARD-PROFILE-ITEM-EXTERIOR-AREAS-{{exteriorIndex}}" [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
                     {{profileItem.Name}}
                   </ion-text>
                   <span [ngClass]="{'listSet': profileItem.SqFt > 0, 'listUnset':  profileItem.SqFt == 0 || profileItem.SqFt == null }">
@@ -282,10 +277,10 @@
           </div>-->
         </div>
       </div>
-      <ion-button *ngIf="manageView == 'rooms'" class="modal-save-btn btnstick-to-bottom-of-parent" (click)="repair()"><img  src="assets/svgs/light/reapir-light.svg"> Repairs</ion-button>
+      <ion-button *ngIf="manageView == 'rooms'" class="property-name-div btnstick-to-bottom-of-parent icon-round" (click)="repair()"><img src="assets/svgs/light/reapir-light.svg"></ion-button>
     </div>
   </div>
-</ion-content> 
+</ion-content>
 <tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
           [_isHomeActive]="false"
           (fileExplorerEvent)="launchFileExplorer()"

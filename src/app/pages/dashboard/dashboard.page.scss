@@ -403,27 +403,3 @@ ion-content {
   width: 85%;
   margin-bottom: 2em;
 }
-
-.modal-save-btn {
-  --background: #232B42;
-  --border-radius: 0;
-  width: 100%;
-  color: var(--additional-colors-white, #FFF);
-  font-family: Plus Jakarta Sans;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 24px;
-  letter-spacing: 0.08px;
-  /*margin: 0;*/
-  height: 56px;
-  --background-activated: #232B42;
-  --background-focused: #232B42;
-  --background-hover: #232B42;
-  margin-top: 140px;
-  padding-bottom: 5px;
-
-  img {
-    margin-right: 5px;
-  }
-}

@@ -1080,8 +1080,9 @@ select::-ms-expand {
 }
 
 .image-modal{
-  --max-height: 600px !important;
+  --max-height: 850px !important;
   --overflow: auto;
+  --max-width: 765px;
 }
 
 //Delete Modal --------------------
@@ -1202,4 +1203,9 @@ select::-ms-expand {
 }
 .hydrated.toastNotifier{
   backdrop-filter: blur(1.5px);
+}
+
+.icon-round {
+  border-radius: 50% !important;
+  --border-radius: 50% !important;
 }
