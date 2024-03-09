@@ -21,15 +21,19 @@ export class UxNotifierService extends baseService {
   }
 
   async showToast(message, color) {
-    const toast = await this.toastController.create({
+    const toast = await this.alertController.create({
       message: message,
-      duration: 5000,
+      cssClass: "toastNotifier",
+      // duration: 5000,
       //showCloseButton: true,
       //closeButtonText: 'x',
-      color: color,
+      // color: color,
       animated: true,
     });
 
     await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+  }, 5000);
   }
 }

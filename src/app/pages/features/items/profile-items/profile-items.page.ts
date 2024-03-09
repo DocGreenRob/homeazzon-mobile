@@ -44,6 +44,9 @@ export class ProfileItemsPage extends BasePage {
   detEditing: boolean = false;
   _constants: Constants;
 
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
   public isIos: boolean = false;
   public manageProfileItemsView: any = 'digiDoc';
   public data: IGrid;
@@ -155,11 +158,9 @@ export class ProfileItemsPage extends BasePage {
   async getProfileItemLineItems(userType: string) {
     this.lineitems = new Array<ILineitemDto>();
 
-    this.loading = await this.loadingCtrl.create({
-      message: 'Getting lineitems...',
-      cssClass: 'my-loading-class',
-    });
-    this.loading.present();
+
+
+    this.presentSpinner('Getting lineitems...');
 
     //let a: Array<LineitemDto> = this.ProfileItemLineItems;
     // 12.19.19...rag...this will change to get => /api/profileItem/{profileItemId}/lineitems?userType={userTypeId}
@@ -442,7 +443,7 @@ export class ProfileItemsPage extends BasePage {
               });
           }
 
-          this.loading.dismiss();
+          this.dismissSpinner();
         },
         (err) => {
           if (err.status == 401) {
@@ -582,4 +583,15 @@ export class ProfileItemsPage extends BasePage {
     }
     throw new Error('User type not found');
   }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
 }

@@ -12,6 +12,7 @@ import { DocumentViewerComponent } from './document-viewer/document-viewer.compo
 import { NumberInputComponent } from './number-input/number-input.component';
 import { FormsModule } from '@angular/forms';
 import { IconListGridComponent } from './icon-list-grid/icon-list-grid.component';
+import { GlobalSpinnerComponent } from '@app/common/global-spinner/global-spinner.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { IconListGridComponent } from './icon-list-grid/icon-list-grid.component
 		DocumentViewerComponent,
 		NumberInputComponent,
 		TagsFilterComponent,
-		IconListGridComponent
+		IconListGridComponent,
+		GlobalSpinnerComponent,
 	],
 	imports: [CommonModule, IonicModule, FormsModule],
 	exports: [
@@ -39,6 +41,7 @@ import { IconListGridComponent } from './icon-list-grid/icon-list-grid.component
 		TagsFilterComponent,
 		DocumentViewerComponent,
 		SegmentSelectorComponent,
+		GlobalSpinnerComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

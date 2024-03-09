@@ -17,6 +17,9 @@ import { LocalStorageService } from "@app/services/local-storage.service";
   styleUrls: ["./sign-up.page.scss"],
 })
 export class SignUpPage extends BasePage {
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
   signUpForm = new FormGroup({
     email: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
@@ -50,16 +53,14 @@ export class SignUpPage extends BasePage {
       user.firstName = this.signUpForm.value.firstName;
       user.lastName = this.signUpForm.value.lastName;
 
-      this._loading = await this.loadingCtrl.create({
-        message: "Registering...",
-        cssClass: "my-loading-class",
-      });
-      await this._loading.present();
+
+      this.presentSpinner('Registering...');
 
       await this.auth.signUpWithEmail(user).then(async (x) => {
         if (x) {
           await this.getUser();
-          this._loading.dismiss();
+
+          this.dismissSpinner();
           this.router.navigate(["dashboard"]);
         } else {
           this.uxNotifier.showToast("Error creating your account", "danger");
@@ -80,7 +81,7 @@ export class SignUpPage extends BasePage {
         });
         if (a) {
           await this.getUser();
-          this._loading.dismiss();
+          this.dismissSpinner();
           this.router.navigate(["dashboard"]);
         } else {
           this.uxNotifier.showToast("Error occured while signing with apple.", "danger");
@@ -123,5 +124,15 @@ export class SignUpPage extends BasePage {
         this.User = x;
       }
     });
+  }
+  
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
   }
 }

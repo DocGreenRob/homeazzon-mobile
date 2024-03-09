@@ -133,13 +133,13 @@ export class UserTypesManagerPage extends BasePage {
       imageName = 'developer';
     }
     if (userType.toLowerCase().indexOf('appraiser') > -1) {
-      imageName = 'architect';
+      imageName = 'appraiser';
     }
     if (userType.toLowerCase().indexOf('architect') > -1) {
       imageName = 'architect';
     }
     if (userType.toLowerCase().indexOf('bank') > -1) {
-      imageName = 'architect';
+      imageName = 'bank';
     }
     if (userType.toLowerCase().indexOf('realtor') > -1) {
       imageName = 'realtor';
@@ -147,6 +147,13 @@ export class UserTypesManagerPage extends BasePage {
     if (userType.toLowerCase().indexOf('vendor') > -1) {
       imageName = 'vendor';
     }
+    if (userType.toLowerCase().indexOf('gamer') > -1) {
+      imageName = 'gamer';
+    }
+    if (userType.toLowerCase().indexOf('privatelabeluser') > -1) {
+      imageName = 'private-label';
+    }
+
 
     return `assets/icon/${imageName}.svg`;
   }

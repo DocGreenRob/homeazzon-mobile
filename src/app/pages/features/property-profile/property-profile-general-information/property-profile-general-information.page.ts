@@ -29,6 +29,10 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   private _constants = new Constants();
   private _loading: any;
   private _selectedProperty: any;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+  spinnerText2: string = 'Loading...';
+  loading2Visible: boolean = false;
 
   constructor(public navCtrl: NavController,
     public override platform: Platform,
@@ -159,24 +163,18 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       p.Address.Zip = customProperty.Address.Zip;
       p.Address.Country = customProperty.Address.country;
 
-      this._loading = await this.loadingController.create({
-        message: 'Updating Address...',
-        cssClass: 'my-loading-class',
-      });
-      await this._loading.present();
 
+      this.presentSpinnerAddress('Updating Address...');
       await this.propertyService.updateAddress(p).then(async (x) => {
 
         // if (1 === 1) {
         if (this.isLinkWithCustomer && !this.isExistingLinkWithCustomer) {
           this.uxNotifierService.showToast('Customer address updated', this._constants.ToastColorGood);
 
-          this._loading.dismiss();
-          this._loading = await this.loadingController.create({
-            message: 'Linking with Customer...',
-            cssClass: 'my-loading-class',
-          });
-          await this._loading.present();
+
+          this.dismissSpinnerAddress();
+
+          this.presentSpinnerLinking('Linking with Customer...');
 
           p.Customer = {
             Name: this.customerName,
@@ -184,13 +182,15 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
           };
 
           await this.propertyService.updatePropertyCustomerInformationToMakeSuggestions(p).then((x) => {
-            this._loading.dismiss();
+
+            this.dismissSpinnerLinking();
             this.finish("Customer link succeeded! (Request pending)");
           }).catch((err) => {
             this.uxNotifierService.showToast("Customer link failed!", this._constants.ToastColorBad);
           });
         } else {
-          this._loading.dismiss();
+
+          this.dismissSpinnerAddress();
           this.finish("Address updated.");
         }
 
@@ -235,4 +235,27 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
   goBack() {
     this.navController.back();
   }
+
+  
+  async presentSpinnerAddress(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinnerAddress() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
+  
+  async presentSpinnerLinking(text: string) {
+    this.spinnerText2 = text;
+    this.loading2Visible = true;
+  }
+
+  async dismissSpinnerLinking() {
+    this.loading2Visible = false;
+    this.spinnerText2 = ''; 
+  }
+
 }

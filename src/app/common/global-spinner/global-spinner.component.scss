@@ -1,0 +1,65 @@
+.spinner-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: .6;
+    flex-direction: column;
+
+    .spinner-text {
+        color: rgba(255, 255, 255, 1);
+        letter-spacing: 1px;
+        margin-bottom: 180px;
+    }
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #6CA1D3;
+    width: 80px;
+    height: 80px;
+    animation: fill ease-in-out 3s;
+    transform: rotate(360deg);
+    -webkit-animation: fill 2s infinite linear;
+    border-left-color: #6CA1D3;
+    border-top-color: #6CA1D3;
+}
+
+.wrapper {
+    // D:\hameZoneApp\homezzon-mobile\src\assets
+    background: url('../../../assets/icon/loader-icon.svg') center no-repeat;
+    background-size: 40%;
+}
+
+@keyframes fill {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes fill {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}

@@ -16,9 +16,8 @@ export const environment = {
   // httpBaseUrl: "https://api.homeazzon.com/api",
   // httpBase: "https://api.homeazzon.com",
 
-
-  //httpBaseUrl: 'https://dev.api.homeazzon.com/api',
-  //httpBase: 'https://dev.api.homeazzon.com/',
+  httpBaseUrl: 'https://dev.api.homeazzon.com/api',
+  httpBase: 'https://dev.api.homeazzon.com/',
 
   // azure
   //httpBaseUrl: 'https://homeazzon-webapi-dev-eastus2-001.azurewebsites.net/api',
@@ -33,8 +32,8 @@ export const environment = {
   //httpBase: "http://localhost:60662",
 
   // LOCAL - Kastrel
-  httpBaseUrl: "https://localhost:5001/api",
-  httpBase: "https://localhost:5001",
+  //httpBaseUrl: "https://localhost:5001/api",
+  //httpBase: "https://localhost:5001",
 
   azureInstrumentaionKey: 'dd255efa-1918-4580-b352-624da7efc886',
   firebaseConfig: {

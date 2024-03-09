@@ -61,6 +61,14 @@ export class ItemDetailsPage extends BasePage {
   public selectedTagItems = [];
   public activeItemType: string = '';
   public activeAttachmentItemType: string = '';
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+  spinnerText2: string = 'Loading...';
+  loading2Visible: boolean = false;
+  spinnerText3: string = 'Loading...';
+  loading3Visible: boolean = false;
+  spinnerText4: string = 'Loading...';
+  loading4Visible: boolean = false;
   constructor(public override navController: NavController,
     public override navParams: NavParams,
     private itemService: ItemService,
@@ -106,17 +114,15 @@ export class ItemDetailsPage extends BasePage {
     console.log("ionViewDidEnter ItemDetailsPage");
     //this.AppInsights.trackPageView({ name: 'ItemDetailsPage' });
     this.start();
-    console.log("ActiveItem.Name", this.ActiveItem.Name);
+    if(this.ActiveItem && this.ActiveItem.AssetInfo && this.ActiveItem.AssetInfo.Repair ){
+      this.ActiveItem.AssetInfo.Repair = true;
+    }
   }
 
   private async start() {
     //https://docs.google.com/viewer?url=&embedded=true
-    this._loading = await this.loadingCtrl.create({
-      message: "getting details...",
-      cssClass: "my-loading-class",
-    });
 
-    await this._loading.present();
+    this.presentSpinner('getting details...');
 
     if (this.QueryParams?.SelectedAttachment !== undefined && this.QueryParams?.SelectedAttachment !== null) {
       console.log("SelectedAttachment", this.QueryParams.SelectedAttachment);
@@ -191,11 +197,13 @@ export class ItemDetailsPage extends BasePage {
               this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -221,11 +229,13 @@ export class ItemDetailsPage extends BasePage {
               this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -257,11 +267,13 @@ export class ItemDetailsPage extends BasePage {
               this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -289,11 +301,13 @@ export class ItemDetailsPage extends BasePage {
               this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -316,11 +330,13 @@ export class ItemDetailsPage extends BasePage {
               activeItem.ArtifactIndexId = x.ArtifactIndexId;
               this.ActiveItem = activeItem;
 
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
             },
             (err) => {
               if (err.status == 401) {
-                this._loading.dismiss();
+                
+                this.dismissSpinner();
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               }
@@ -349,11 +365,13 @@ export class ItemDetailsPage extends BasePage {
                 this.ActiveAttachmentItem = activeAttachmentItem;
               }
               console.log(this.ActiveItem);
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
             },
             (err) => {
               if (err.status == 401) {
-                this._loading.dismiss();
+                
+                this.dismissSpinner();
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               }
@@ -384,11 +402,13 @@ export class ItemDetailsPage extends BasePage {
               this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -416,11 +436,13 @@ export class ItemDetailsPage extends BasePage {
               this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -448,11 +470,13 @@ export class ItemDetailsPage extends BasePage {
               //this.ActiveAttachmentItem = activeAttachmentItem;
             }
 
-            this._loading.dismiss();
+            
+            this.dismissSpinner();
           },
           (err) => {
             if (err.status == 401) {
-              this._loading.dismiss();
+              
+              this.dismissSpinner();
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
               this.router.navigate(["sign-in"]);
             }
@@ -504,19 +528,21 @@ export class ItemDetailsPage extends BasePage {
 
   public async delete() {
     const alert = await this.alertCtrl.create({
-      header: "Confirm",
-      message: "Are you sure want to Delete?",
+      // header: "Confirm",
+      message: "Delete this Item?",
+      cssClass: "item-delete-modal",
       buttons: [
         {
           text: "Cancel",
           role: "cancel",
+          cssClass: "cancelButton",
           handler: () => {
             return;
           },
         },
         {
-          text: "Ok",
-          cssClass: "signout",
+          text: "Delete",
+          cssClass: "deletButton",
           handler: () => {
             this.startDelete();
           },
@@ -528,12 +554,9 @@ export class ItemDetailsPage extends BasePage {
   }
 
   private async startDelete() {
-    this._loading = await this.loadingCtrl.create({
-      message: "deleting...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
 
+    debugger
+    this.presentSpinnerDelete("deleting...");
     let entityType: string = "";
     let entityId: number = 0;
 
@@ -559,12 +582,14 @@ export class ItemDetailsPage extends BasePage {
           this.deleteSuccessHandler();
         },
         (err) => {
-          this._loading.dismiss();
+          
+          this.dismissSpinnerDelete();
           if (err.status == 401) {
             this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
             this.router.navigate(["sign-in"]);
           } else {
-            this._loading.dismiss();
+            
+            this.dismissSpinnerDelete();
             this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
           }
         }
@@ -577,12 +602,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -594,12 +621,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -611,12 +640,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -628,12 +659,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -653,13 +686,15 @@ export class ItemDetailsPage extends BasePage {
                 this.deleteSuccessHandler();
               })
               .catch((err) => {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
 
                 if (err.status == 401) {
                   this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                   this.router.navigate(["sign-in"]);
                 } else {
-                  this._loading.dismiss();
+                  
+                  this.dismissSpinnerDelete();
                   this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
                 }
               });
@@ -669,13 +704,15 @@ export class ItemDetailsPage extends BasePage {
                 this.deleteSuccessHandler();
               },
               (err) => {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
 
                 if (err.status == 401) {
                   this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                   this.router.navigate(["sign-in"]);
                 } else {
-                  this._loading.dismiss();
+                  
+                  this.dismissSpinnerDelete();
                   this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
                 }
               }
@@ -689,12 +726,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -706,12 +745,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -723,12 +764,14 @@ export class ItemDetailsPage extends BasePage {
               this.deleteSuccessHandler();
             },
             (err) => {
-              this._loading.dismiss();
+              
+              this.dismissSpinnerDelete();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
                 this.router.navigate(["sign-in"]);
               } else {
-                this._loading.dismiss();
+                
+                this.dismissSpinnerDelete();
                 this.uxNotifierService.showToast("Item was not deleted!", this._constants.ToastColorBad);
               }
             }
@@ -741,7 +784,9 @@ export class ItemDetailsPage extends BasePage {
   public attachments() {
     this.router.navigate(["attachments"]);
   }
-
+  public repair() {
+    this.router.navigate(["repair"]);
+  }
   private determineArtifactType(): string {
     let a = this.ActiveItem;
 
@@ -848,11 +893,12 @@ export class ItemDetailsPage extends BasePage {
     if (this._isDeleteItemFromCategories) {
       let that: any = this;
       setTimeout(function () {
-        that._loading.dismiss();
+        this.dismissSpinnerDelete();
         that.close();
       }, 3000);
     } else {
-      this._loading.dismiss();
+      
+      this.dismissSpinnerDelete();
       this.close();
     }
   }
@@ -892,11 +938,9 @@ export class ItemDetailsPage extends BasePage {
     console.log("onTagItemAdded");
     console.log("item = ", data);
 
-    this._loading = await this.loadingCtrl.create({
-      message: "Saving tags details...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
+
+    this.presentSpinnerItemAdded('Saving tags details...');
+
     let artifactIndexTagDto: ArtifactIndexTagDto = new ArtifactIndexTagDto();
     artifactIndexTagDto.ArtifactIndexId = this.ActiveItem.Id;
 
@@ -917,10 +961,12 @@ export class ItemDetailsPage extends BasePage {
 
     this.artifactIndexService.insertArtifactIndexTag(artifactIndexTagDto).then(
       (x: any) => {
-        this._loading.dismiss();
+        
+        this.dismissSpinnerItemAdded();
       },
       (err) => {
-        this._loading.dismiss();
+        
+        this.dismissSpinnerItemAdded();
         if (err.status == 401) {
           this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
           //this.navController.setRoot(SignInPage);
@@ -936,21 +982,19 @@ export class ItemDetailsPage extends BasePage {
     console.log("onTagItemRemoved");
     console.log("item = ", data);
 
-    this._loading = await this.loadingCtrl.create({
-      message: "Deleting Tag...",
-      cssClass: "my-loading-class",
-    });
-    await this._loading.present();
+    this.presentSpinnerItemRemove('Deleting Tag...');
     let artifactIndexTagDto: ArtifactIndexTagDto = new ArtifactIndexTagDto();
     artifactIndexTagDto.ArtifactIndexId = this.ActiveItem.Id;
     artifactIndexTagDto.TagContextId = data.value;
 
     this.artifactIndexService.deleteArtifactIndexTag(artifactIndexTagDto).then(
       (x: any) => {
-        this._loading.dismiss();
+        
+        this.dismissSpinnerItemRemove();
       },
       (err) => {
-        this._loading.dismiss();
+        
+        this.dismissSpinnerItemRemove();
         if (err.status == 401) {
           this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
           //this.navController.setRoot(SignInPage);
@@ -1017,4 +1061,45 @@ export class ItemDetailsPage extends BasePage {
 
     return output;
   }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = ''; 
+  }
+
+  async presentSpinnerDelete(text: string) {
+    this.spinnerText2 = text;
+    this.loading2Visible = true;
+  }
+
+  async dismissSpinnerDelete() {
+    this.loading2Visible = false;
+    this.spinnerText2 = ''; 
+  }
+  async presentSpinnerItemAdded(text: string) {
+    this.spinnerText3 = text;
+    this.loading3Visible = true;
+  }
+
+  async dismissSpinnerItemAdded() {
+    this.loading3Visible = false;
+    this.spinnerText3 = ''; 
+  }
+
+  async presentSpinnerItemRemove(text: string) {
+    this.spinnerText4 = text;
+    this.loading4Visible = true;
+  }
+
+  async dismissSpinnerItemRemove() {
+    this.loading4Visible = false;
+    this.spinnerText4 = ''; 
+  }
+  
+  
 }

@@ -1,0 +1,15 @@
+<div class="modal">
+  <div class="modal-main-wrapper">
+    <div class="close-modal">
+      <img src="assets/icon/Close Square.svg" (click)="close()" alt="" />
+    </div>
+  
+    <div class="modal-content">
+      <span> 
+        <img src="{{propertyImageDetail?.Url}}" alt="">
+      </span>
+      <span class="title"> {{propertyImageDetail?.Title}} </span>
+      <span class="description" > {{propertyImageDetail?.Description}} </span>
+    </div>
+  </div>
+</div>

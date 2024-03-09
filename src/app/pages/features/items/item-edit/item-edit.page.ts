@@ -56,6 +56,9 @@ export class ItemEditPage extends BasePage {
   public _bookmark: string = "";
   public showImage: boolean = false;
   public isIos: boolean = false;
+  spinnerText: string = 'Loading...';
+  loading1Visible: boolean = false;
+
 
   constructor(
     public override navController: NavController,
@@ -423,10 +426,8 @@ export class ItemEditPage extends BasePage {
           uploadTaskSnapshot = x;
         },
         (err) => {
-          // add telemetry logging
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+
+          this.dismissSpinner();
 
           this.uxNotifierService.showToast("An Error occured while uploading the file. Please try again Later", this._constants.ToastColorBad);
         }
@@ -438,9 +439,8 @@ export class ItemEditPage extends BasePage {
         },
         (err) => {
           // add telemetry logging
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+
+          this.dismissSpinner();
 
           this.AppInsights.trackEvent({
             name: "Camera.saveDigiDocToFirebase()saveToFirebase().firebaseService.uploadImage().catch()",
@@ -595,9 +595,7 @@ export class ItemEditPage extends BasePage {
         await this.barcodeService.postQrCode(this.TempActiveItem.QrCode).then(
           (x: AssetIndexDto) => {
             this.storageService.set("AssetIndex", x);
-            if (this._loading != undefined) {
-              this._loading.dismiss();
-            }
+            this.dismissSpinner();
             if (!this._isFromItemAddPage) {
               this.uxNotifierService.showToast("Qr Code was saved successfully!", this._constants.ToastColorGood);
             }
@@ -611,9 +609,7 @@ export class ItemEditPage extends BasePage {
             }
           },
           (err) => {
-            if (this._loading != undefined) {
-              this._loading.dismiss();
-            }
+            this.dismissSpinner();
             this.uxNotifierService.showToast("Qr Code was not saved!", this._constants.ToastColorBad);
           }
         );
@@ -636,9 +632,7 @@ export class ItemEditPage extends BasePage {
         await this.barcodeService.postBarcodeProduct(this.TempActiveItem.Product).then(
           (x: AssetIndexDto) => {
             this.storageService.set("AssetIndex", x);
-            if (this._loading != undefined) {
-              this._loading.dismiss();
-            }
+            this.dismissSpinner();
 
             if (!this._isFromItemAddPage) {
               this.uxNotifierService.showToast("Upc product was saved successfully!", this._constants.ToastColorGood);
@@ -653,9 +647,7 @@ export class ItemEditPage extends BasePage {
             }
           },
           (err) => {
-            if (this._loading != undefined) {
-              this._loading.dismiss();
-            }
+            this.dismissSpinner();
             this.uxNotifierService.showToast("Upc product was not saved!", this._constants.ToastColorBad);
           }
         );
@@ -681,6 +673,7 @@ export class ItemEditPage extends BasePage {
     (
       await this.alertCtrl.create({
         message: "Which list does this go into?",
+        cssClass: "search-wishlist-modal",
         buttons: [
           {
             text: "Wishlist",
@@ -723,10 +716,6 @@ export class ItemEditPage extends BasePage {
         await this.showSave();
       }
     } else {
-      this._loading = await this.loadingCtrl.create({
-        message: "saving...",
-        cssClass: "my-loading-class",
-      });
       if (this.LineItem == undefined || this.LineItem.Id == undefined) {
         // show screens
         console.log("LineItem", this.LineItem);
@@ -735,7 +724,7 @@ export class ItemEditPage extends BasePage {
         ///Since we are not able to persist the selected file, we will save it to firebase and persist the url.
         ///Can be changed in future.
         if (this._type === "file" && this._selectedFile != undefined) {
-          this._loading.present();
+          this.presentSpinner('saving...');
           await this.saveToFirebase(this._selectedFile).then(
             (x: UploadTaskSnapshot) => {
               // debugger;
@@ -743,17 +732,14 @@ export class ItemEditPage extends BasePage {
                 .getDownloadURL()
                 .then(async (url) => {
                   // debugger;
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+
+                  this.dismissSpinner();
                   this.storageService.set("SelectedFileContentType", this._selectedFile.mediaType);
                   this.storageService.set("SelectedFileURL", url);
                 })
                 .catch((x) => {
                   // add telemetry logging
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("An Error occured while uploading the file.Please try again Later", this._constants.ToastColorBad);
                 });
             },
@@ -779,7 +765,7 @@ export class ItemEditPage extends BasePage {
         //	content: 'saving...',
         //	cssClass: 'my-loading-class'
         //});
-        this._loading.present();
+        this.presentSpinner('saving...');
 
         if (this._type != "Amazon" && this._type != "YouTube" && this._type != "Google Shopping" && this._type != "Google Web") {
           await this.addCameraBarcodeFile(this.ProfileItem, this.LineItem, false);
@@ -799,16 +785,12 @@ export class ItemEditPage extends BasePage {
 
               this.itemService.updateGoogleProduct(googleProductDto, this.UserTypes).then(
                 () => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item updated successfully!", this._constants.ToastColorGood);
                   this.close();
                 },
                 (err) => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item was not updated!", this._constants.ToastColorBad);
                 }
               );
@@ -825,16 +807,12 @@ export class ItemEditPage extends BasePage {
 
               this.itemService.updateAmazon(amazonDto, this.ProfileItem.Id, this.UserTypes).then(
                 () => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item updated successfully!", this._constants.ToastColorGood);
                   this.close();
                 },
                 (err) => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item was not updated!", this._constants.ToastColorBad);
                 }
               );
@@ -846,16 +824,12 @@ export class ItemEditPage extends BasePage {
               digiDocDto.AssetInfo = this.TempActiveItem.AssetInfo;
               this.itemService.upsertDigiDoc(digiDocDto, this.UserTypes).then(
                 () => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item updated successfully!", this._constants.ToastColorGood);
                   this.close();
                 },
                 (err) => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item was not updated!", this._constants.ToastColorBad);
                 }
               );
@@ -870,16 +844,12 @@ export class ItemEditPage extends BasePage {
 
               this.barcodeService.postBarcodeProduct(productDto).then(
                 () => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item updated successfully!", this._constants.ToastColorGood);
                   this.close();
                 },
                 (err) => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item was not updated!", this._constants.ToastColorBad);
                 }
               );
@@ -892,9 +862,7 @@ export class ItemEditPage extends BasePage {
 
               this.itemService.upsertBookmark(bookmark, this.ProfileItem.Id, this.UserTypes).then(
                 () => {
-                  if (this._loading != undefined) {
-                    this._loading.dismiss();
-                  }
+                  this.dismissSpinner();
                   this.uxNotifierService.showToast("Item updated successfully!", this._constants.ToastColorGood);
                   this.close();
                 },
@@ -903,15 +871,11 @@ export class ItemEditPage extends BasePage {
                     // not sure why it is erroring even when the server is returning a 200
                     // also, same endpoint is working fine when creating bookmark...only issue with
                     // handler during update
-                    if (this._loading != undefined) {
-                      this._loading.dismiss();
-                    }
+                    this.dismissSpinner();
                     this.uxNotifierService.showToast("Item updated successfully!", this._constants.ToastColorGood);
                     this.close();
                   } else {
-                    if (this._loading != undefined) {
-                      this._loading.dismiss();
-                    }
+                    this.dismissSpinner();
                     this.uxNotifierService.showToast("Item was not updated!", this._constants.ToastColorBad);
                   }
                 }
@@ -960,10 +924,8 @@ export class ItemEditPage extends BasePage {
       });
 
       if (fileURL) {
-        if (this._loading != undefined) {
-          this._loading.dismiss();
-        }
 
+        this.dismissSpinner();
         this.storageService.delete("SelectedFileURL");
         this.storageService.delete("SelectedFileContentType");
 
@@ -991,9 +953,7 @@ export class ItemEditPage extends BasePage {
                   id: "Camera.saveDigiDocToFirebase()saveToFirebase().catch()",
                 });
 
-                if (this._loading != undefined) {
-                  this._loading.dismiss();
-                }
+                this.dismissSpinner();
 
                 this.uxNotifierService.showToast("An Error occured while uploading the file.Please try again Later", this._constants.ToastColorBad);
               });
@@ -1027,9 +987,7 @@ export class ItemEditPage extends BasePage {
     if (isSaveToRoom) {
       await this.profileItemImageService.upsertProfileItemImageAsync(digiDocDto, this.UserTypes).then(
         () => {
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+          this.dismissSpinner();
         },
         (err) => {
           console.log("error saving profileitem image", err);
@@ -1039,9 +997,7 @@ export class ItemEditPage extends BasePage {
       this.itemService.upsertDigiDoc(digiDocDto, this.UserTypes).then(
         (x: AssetIndexDto) => {
           this.storageService.set("AssetIndex", x);
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+          this.dismissSpinner();
 
           if (!this._isFromItemAddPage) {
             this.uxNotifierService.showToast("DigiDoc was saved successfully!", this._constants.ToastColorGood);
@@ -1056,9 +1012,7 @@ export class ItemEditPage extends BasePage {
           }
         },
         (err) => {
-          if (this._loading != undefined) {
-            this._loading.dismiss();
-          }
+          this.dismissSpinner();
           this.uxNotifierService.showToast("DigiDoc was not saved!", this._constants.ToastColorBad);
         }
       );
@@ -1074,6 +1028,16 @@ export class ItemEditPage extends BasePage {
 
   override selectInput(event) {
     event.target.select();
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loading1Visible = true;
+  }
+
+  async dismissSpinner() {
+    this.loading1Visible = false;
+    this.spinnerText = '';
   }
 
 }

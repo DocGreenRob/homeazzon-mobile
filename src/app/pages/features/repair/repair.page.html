@@ -1,0 +1,76 @@
+<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+	<div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
+		<span (click)="close()">
+			<img src="assets/icon/arrow-left-square.svg" />
+		</span>
+		<span class="title-with-img">
+			<span>Repair</span>
+		</span>
+		<span class="empty">
+		</span>
+	</div>
+</ion-header>
+<div class="container-wrapper">
+	<div class="formWrapper">
+		<div class="upload-main">
+			<!-- <div class="upload-content">
+				<img src="assets/icon/Insert picture icon.svg" imageViewer>
+				<div class="upload-icons">
+					<img src="assets/icon/paperclip.svg">
+					<span class="upload-text">Upload Image</span>
+				</div>
+			</div> -->
+			<div class="upload-content">
+				<div class="upload-icons" (click)="launchCamera()">
+				  <img src="assets/icon/paperclip.svg">
+				  <span class="upload-text">Upload Image</span>
+				</div>
+			  </div>
+		</div>
+		<div class="images-selected">
+			<span class="image-item" *ngFor="let captureImage of captureImages">
+				<img [src]="captureImage?.image" alt="" imageViewer (click)="openImageModal()">
+			</span>
+		</div>
+		<div class="upload-main">
+			<div class="upload-content">
+				<img *ngIf="!mydata.length" src="assets/svgs/light/video.svg" class="video-icon" imageViewer>
+		
+				<label for="video-upload" class="upload-icons">
+					<img src="assets/icon/paperclip.svg" >
+					<span class="upload-text">Upload Video</span>
+					<input type='file' id="video-upload" accept="video/*" (change)="onSelectFile($event)" multiple/>
+				</label>
+			</div>
+		</div>
+
+		<div *ngIf="mydata" class="multiple-videos">
+			<div  class="item"   *ngFor="let list of mydata;let i = index">
+				<div class="img-video-div">
+				  <img *ngIf="list.type == 'img'" [src]="list.url" />
+				  <video *ngIf="list.type == 'video'" [src]="list.url" controls></video>
+				</div>
+			  </div> 
+			</div> 
+
+		<div class="fieldWrapper">
+			<ion-label>Date</ion-label>
+			<div class="inputField date-picker">
+				<ion-input type="date" [(ngModel)]="date"></ion-input>
+			</div>
+		</div>
+
+		<div class="fieldWrapper details-wrapper">
+			<ion-label>Notes</ion-label>
+			<div class="inputField text-area">
+				<ion-textarea placeholder="Notes" [(ngModel)]="note"></ion-textarea>
+			</div>
+		</div>
+	
+	</div>
+	<div class="btnWrapper">
+		<ion-button class="continuebtn" (click)="continue()">
+			Continue
+		</ion-button>
+	</div>
+</div>

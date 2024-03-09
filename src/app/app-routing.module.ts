@@ -73,6 +73,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'repair-list',
+    loadChildren: () => import('./pages/features/repair/repair-list/repair-list.module').then(m => m.RepairListPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'search-results',
     loadChildren: () => import('./pages/features/search/search-results/search-results.module').then(m => m.SearchResultsPageModule),
     canActivate: [AuthGuardService]
@@ -85,6 +90,11 @@ const routes: Routes = [
   {
     path: 'property-profiles',
     loadChildren: () => import('./pages/features/private-label/property-profiles/property-profiles.module').then(m => m.PropertyProfilesPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'repair',
+    loadChildren: () => import('./pages/features/repair/repair.module').then(m => m.RepairPageModule),
     canActivate: [AuthGuardService]
   },
   {
@@ -292,7 +302,8 @@ const routes: Routes = [
   {
     path: 'master-bedroom-categories',
     loadChildren: () => import('./pages/features/category/master-bedroom-category/master-bedroom-category.module').then(m => m.MasterBedroomCategoryPageModule)
-  },  {
+  },
+  {
     path: 'authorize',
     loadChildren: () => import('./pages/features/suggestions/authorize/authorize.module').then( m => m.AuthorizePageModule)
   },
