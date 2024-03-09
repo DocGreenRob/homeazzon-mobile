@@ -109,8 +109,8 @@ export class ChooseDevelopmentPage extends BasePage {
     await this.privatelabelService.peekDevelopmentLots(development.Id).then(
       (x: Array<ILotDto>) => {
         x.forEach((a) => {
-          let stateId: number = parseInt(a.State);
-          a.State = this.states.filter((b) => b.Id == stateId)[0].Abbv;
+          //let stateId: number = parseInt(a.State);
+          //a.State = this.states.filter((b) => b.Id == stateId)[0].Abbv;
         });
 
         this.lots = x;
