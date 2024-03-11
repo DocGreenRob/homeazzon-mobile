@@ -75,7 +75,7 @@
       <div class="fieldWrapper">
         <ion-label>State</ion-label>
         <div class="inputField">
-          <ion-select [(ngModel)]="state" (ionChange)="onStateChange()" placeholder="Select State">
+          <ion-select [(ngModel)]="state" (ionChange)="onStateChange()" placeholder="Select State" [disabled]="!this.country?.length">
             <ion-select-option [value]="0" disabled>Select State</ion-select-option>
             <ion-select-option [value]="state.isoCode" *ngFor="let state of states; let i = index">
               {{state.name}}
@@ -91,7 +91,7 @@
     <div class="fieldWrapper">
       <ion-label>City</ion-label>
       <div class="inputField">
-        <ion-select [(ngModel)]="city" placeholder="Select City">
+        <ion-select [(ngModel)]="city" placeholder="Select City" [disabled]="!this.state?.length">
           <ion-select-option [value]="0" disabled>Select City</ion-select-option>
           <ion-select-option [value]="city.name"
                              *ngFor="let city of cities; let i = index">
