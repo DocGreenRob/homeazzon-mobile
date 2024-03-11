@@ -1,17 +1,19 @@
 <app-global-spinner [spinnerText]="spinnerText" *ngIf="loadingVisible"></app-global-spinner>
-<ion-content class="ion-padding">
-  <div class="body-div">
-    <div class="header-div">
-      <ion-row>
-        <ion-col col-2>
-          <ion-icon name="close" class="close" (click)="close()"></ion-icon>
-        </ion-col>
-        <ion-col col-10>
-          <h1 style="text-align: center; float: left;">{{lot.StreetAddress1}}</h1>
-        </ion-col>
-      </ion-row>
-      <hr>
+<ion-header>
+  <div class="header-title-with-icon">
+    <span (click)="close()">
+      <img src="assets/icon/arrow-left-square.svg" >
+    </span>
+    <span class="title-with-img">
+      <span>{{lot.StreetAddress1}}</span>
+    </span>
+    <span class="dummy"></span>
+  </div>
+</ion-header>
 
+<div class="container-wrapper">
+  <div class="formWrapper">
+    <div class="header-div">
       <pdf-viewer [src]="lot.LotPlanUrl"
                   (after-load-complete)="afterLoadComplete($event)"
                   [render-text]="true"
@@ -22,135 +24,149 @@
                   [autoresize]="true"
                   [fit-to-page]="false"
                   [zoom]="zoom"></pdf-viewer>
-      <ion-row>
-        <ion-col col-6>
-          <ion-row>
-            <ion-col>
-              Page {{activePage}}
-            </ion-col>
-            <ion-col>
-              <ion-icon name="remove" (click)="previousPage()"></ion-icon>
-            </ion-col>
-            <ion-col>
-              <ion-icon name="add" (click)="nextPage()"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-        <ion-col col-6>
-          <ion-row>
-            <ion-col>
-              Zoom {{zoom}}
-            </ion-col>
-            <ion-col>
-              <ion-icon name="remove" (click)="zoomReduce()"></ion-icon>
-            </ion-col>
-            <ion-col>
-              <ion-icon name="add" (click)="zoomIncrease()"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+      <div class="counter">
+        <div class="counter-inner">
+          <span> Page</span>
+            <span>
+              <img src="assets/icon/minus-square.svg" (click)="previousPage()">
+            </span>
+            <span class="value">
+              {{activePage}}
+            </span>
+            <span>
+              <img src="assets/icon/Plus-square.svg" (click)="nextPage()">
+            </span>
+        </div>
+        <div class="counter-inner">
+          <span> Zoom</span>
+            <span>
+              <img src="assets/icon/minus-square.svg" (click)="zoomReduce()">
+            </span>
+            <span class="value">
+               {{zoom}}
+            </span>
+            <span>
+              <img src="assets/icon/Plus-square.svg" (click)="zoomIncrease()">
+            </span>
+        </div>
+      </div>
 
     </div>
     <div class="content-div">
-      <ion-row>
-        <ion-col size="12">
-          <div class="text-input-regular">
-            <b class="mypad-grey">Description:</b>&nbsp;{{lot.LegalDescriptionNumber}}
+          <div class="list-main">
+            <span>Description:</span>
+            <ion-text>{{lot.LegalDescriptionNumber}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Price:</b>&nbsp;${{lot.Price | number}}
+          <div class="list-main">
+            <span >Price:</span>
+            <ion-text>${{lot.Price | number}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Lot #:</b>&nbsp; {{lot.LotNumber}}
+          <div class="list-main">
+            <span>Lot #:</span>
+            <ion-text>{{lot.LotNumber}}</ion-text> 
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Address:</b>&nbsp; {{lot.StreetAddress1}},{{lot.City}}, {{lot.State}},{{lot.Zip}}
+          <div class="list-main">
+            <span>Address:</span>
+            <ion-text>{{lot.StreetAddress1}},{{lot.City}}, {{lot.State}},{{lot.Zip}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Parcel:</b>&nbsp;{{lot.ParcelNumber}}
+          <div class="list-main">
+            <span>Parcel:</span>
+            <ion-text>{{lot.ParcelNumber}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Lot Size(acres):</b>&nbsp;{{lot.LotSize}}
+          <div class="list-main">
+            <span>Lot Size(acres):</span>
+            <ion-text>{{lot.LotSize}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Water Source:</b>&nbsp;{{lot.WaterSource}}
+          <div class="list-main">
+            <span>Water Source:</span>
+            <ion-text>
+              {{lot.WaterSource}}
+            </ion-text>
           </div>
-          <div class="text-input-regular mypad-green" (click)="viewLotPlan()" style="text-decoration: underline;">
+          <span class="lot-link" (click)="viewLotPlan()">
             View Lot Plan
-          </div>
-        </ion-col>
-      </ion-row>
+          </span>
       <div *ngIf="lot.WaterSource == 'Well'">
-        <div class="text-input-regular">
-          <b class="mypad-grey">Approximate Depth(ft):</b>&nbsp; {{lot.WellApproximateDepth}}
+        <div class="list-main">
+          <span>Approximate Depth(ft):</span>
+          <ion-text>{{lot.WellApproximateDepth}}</ion-text> 
         </div>
-        <div class="text-input-regular">
-          <b class="mypad-grey">Approximate Cost: </b>&nbsp; ${{lot.WellApproximateCost | number}}
+        <div class="list-main">
+          <span>Approximate Cost: </span>
+          <ion-text>${{lot.WellApproximateCost | number}}</ion-text> 
         </div>
       </div>
       <div *ngIf="lot.WaterSource == 'WaterTap'">
-        <div class="text-input-regular">
-          <b class="mypad-grey">Hook-Up Cost:</b>&nbsp; ${{lot.WaterTapHookupFee | number}}
+        <div class="list-main">
+          <span>Hook-Up Cost:</span>
+          <ion-text>${{lot.WaterTapHookupFee | number}}</ion-text> 
         </div>
       </div>
-      <div class="text-input-regular">
-        <b class="mypad-grey">Waste Water:</b>&nbsp;
-        <span *ngIf="lot.IsWasteWaterSewerAndTap == true">Sewer/Tap</span>
-        <span *ngIf="lot.IsWasteWaterSewerAndTap != true">Septic System</span>
+      <div class="list-main">
+        <span>Waste Water:</span>
+        <ion-text *ngIf="lot.IsWasteWaterSewerAndTap == true">Sewer/Tap</ion-text>
+        <ion-text *ngIf="lot.IsWasteWaterSewerAndTap != true">Septic System</ion-text>
       </div>
       <div *ngIf="lot.IsWasteWaterSewerAndTap == true">
-        <div class="text-input-regular">
-          <b class="mypad-grey">Hook-Up Fee Estimated Cost:</b>&nbsp;${{lot.WasteWaterSewerAndTapEstimateCost | number}}
+        <div class="list-main">
+          <span>Hook-Up Fee Estimated Cost:</span>
+          <ion-text>${{lot.WasteWaterSewerAndTapEstimateCost | number}}</ion-text>
         </div>
       </div>
       <div *ngIf="lot.IsWasteWaterSewerAndTap != true">
-        <div class="text-input-regular">
-          <b class="mypad-grey">Drain Field estimated cost:</b>&nbsp;${{lot.WasteWaterSepticSystemDrainFieldEstimatedCost | number}}
+        <div class="list-main">
+          <span>Drain Field estimated cost:</span>
+          <ion-text>${{lot.WasteWaterSepticSystemDrainFieldEstimatedCost | number}}</ion-text>
         </div>
-        <div class="text-input-regular">
-          <b class="mypad-grey">Dose Tanks estimated cost:</b>&nbsp;${{lot.WasteWaterSepticSystemDoseTanksEstimatedCost | number}}
+        <div class="list-main">
+          <span>Dose Tanks estimated cost:</span>
+          <ion-text>${{lot.WasteWaterSepticSystemDoseTanksEstimatedCost | number}}</ion-text>
         </div>
       </div>
       <div>
-        <div class="text-input-regular">
-          <b class="mypad-grey"> Power Supply:</b>&nbsp; <span *ngIf="lot.IsPowerElectricalHookup == true">Electrical</span>
-          <span *ngIf="lot.IsPowerOffGrid == true">Off-Grid</span>
+        <div class="list-main">
+          <span> Power Supply:</span>
+          <ion-text *ngIf="lot.IsPowerElectricalHookup == true">Electrical</ion-text>
+          <ion-text *ngIf="lot.IsPowerOffGrid == true">Off-Grid</ion-text>
         </div>
       </div>
       <div *ngIf="lot.IsPowerElectricalHookup == true">
-        <div class="text-input-regular">
-          <b class="mypad-grey">Electrical hookup power lines brought to lot? :</b>&nbsp;
-          <span *ngIf="lot.IsPowerElectricalPowerlinesSupplied == true">Yes</span>
-          <span *ngIf="lot.IsPowerElectricalPowerlinesSupplied != true">No</span>
+        <div class="list-main">
+          <span>Electrical hookup power lines brought to lot? :</span>
+          <ion-text *ngIf="lot.IsPowerElectricalPowerlinesSupplied == true">Yes</ion-text>
+          <ion-text *ngIf="lot.IsPowerElectricalPowerlinesSupplied != true">No</ion-text>
         </div>
         <div *ngIf="lot.IsPowerElectricalPowerlinesSupplied != true">
-          <div class="text-input-regular">
-            <b class="mypad-grey">Electrical Trenching Estimated Cost:</b>&nbsp;${{lot.PowerElectricalTrenchingEstimateCost | number}}
+          <div class="list-main">
+            <span>Electrical Trenching Estimated Cost:</span>
+            <ion-text>${{lot.PowerElectricalTrenchingEstimateCost | number}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Electrical Permit Estimated Cost:</b>&nbsp;${{lot.PowerElectricalPermitEstimatedCost | number}}
+          <div class="list-main">
+            <span>Electrical Permit Estimated Cost:</span>
+            <ion-text>${{lot.PowerElectricalPermitEstimatedCost | number}}</ion-text>
           </div>
-          <div class="text-input-regular">
-            <b class="mypad-grey">Electrical Utilities Estimated Cost:</b>&nbsp;${{lot.PowerElectricalTemporaryUtilitiesEstimatedCost | number}}
+          <div class="list-main">
+            <span>Electrical Utilities Estimated Cost:</span>
+            <ion-text>${{lot.PowerElectricalTemporaryUtilitiesEstimatedCost | number}}</ion-text>
           </div>
         </div>
       </div>
       <div *ngIf="lot.IsPowerOffGrid == true">
-        <div class="text-input-regular">
-          <b class="mypad-grey">Off-Grid Estimated Cost:</b>&nbsp;${{lot.PowerOffGridEstimatedCost | number}}
+        <div class="list-main">
+          <span>Off-Grid Estimated Cost:</span>
+          <ion-text>${{lot.PowerOffGridEstimatedCost | number}}</ion-text>
         </div>
       </div>
       <div>
-        <div class="text-input-regular">
-          <b class="mypad-grey"> Cable:</b>&nbsp;
-          <span *ngIf="lot.IsCable == true">Yes</span>
-          <span *ngIf="lot.IsCable != true">No</span>
+        <div class="list-main">
+          <span> Cable:</span>
+          <ion-text *ngIf="lot.IsCable == true">Yes</ion-text>
+          <ion-text *ngIf="lot.IsCable != true">No</ion-text>
         </div>
       </div>
     </div>
   </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-button ion-fab color="primary" class="button-text CHOOSE-LOT" shape="round" (click)="saveProperty()">Choose This Lot</ion-button>
-  </ion-fab>
-</ion-content>
+  <div class="btnWrapper">
+    <ion-button class="continuebtn" (click)="saveProperty()">Choose This Lot</ion-button>
+  </div>
+</div>
