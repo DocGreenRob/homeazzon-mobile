@@ -1,12 +1,37 @@
-.header-text {
-    margin-top: 10vh !important;
-    text-align: center;
+.formWrapper{
+    min-height: calc(100% - 95px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .inner-main{
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        padding: 0 24px;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .header-text {
+        font-family: Plus Jakarta Sans ;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+        letter-spacing: -0.03em;
+        text-align: center;
+        color: #111111;
+    
+    }
+    .info-text {
+        font-family: Plus Jakarta Sans !important;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.005em;
+        text-align: center;
+        color: #111111;
+        margin: 0;
+    }
 }
-
-.info-text {
-    font-size: 2rem !important;
-}
-
-ion-header {
-    border-bottom: 1.5px lightgrey solid !important;
+.btnWrapper{
+    margin-top: 50px !important;
 }

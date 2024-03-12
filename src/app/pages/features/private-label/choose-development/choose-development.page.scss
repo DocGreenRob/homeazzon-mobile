@@ -21,4 +21,37 @@
             padding-bottom: 5px;
         }
     }
+    .main-list{
+        display: flex;
+        align-items: flex-start;
+        min-height: 43px;
+        border-bottom: 1px solid #E3E7EC;
+        gap: 17px;
+        margin-bottom: 15px;
+        .list-image{
+            width: 24px;
+            height: 24px;
+            overflow: hidden;
+            img{
+                height: 100%;
+                width: 100%;
+                object-fit: fill;
+            }
+        }
+        ion-text{
+            color: #111;
+            font-family: Plus Jakarta Sans;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px;
+            letter-spacing: 0.07px;
+        }
+    }
+}
+.location-list{
+    padding-top: 25px !important;
+    .title{
+        font-size: 20px !important;
+    }
 }
