@@ -113,6 +113,16 @@ export class ItemsPage extends BasePage {
     this._tupleDictionary.Entries = new Array<Entry>();
 
     this.isIos = this.platform.is('ios');
+   
+    if (this.User.IsPrivateLabelPartner) {
+      this.segmentChanged('suggested');
+      this.views = [
+        {
+          name: "Suggestions",
+          value: "suggested"
+        }
+      ];
+    }
   }
 
   override async ngOnInit() {
@@ -129,6 +139,8 @@ export class ItemsPage extends BasePage {
  
     await this.start();
     this._isListView = false;
+
+    this.User.IsPrivateLabelPartner ? this.segmentChanged('suggested'): this.segmentChanged('my');
   }
 
   viewProfileLineItems() {

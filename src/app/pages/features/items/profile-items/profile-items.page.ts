@@ -125,14 +125,14 @@ export class ProfileItemsPage extends BasePage {
     if (this.User.IsPrivateLabelPartner) {
       this.manageProfileItemsView = 'suggested';
       this.views = [
-        {
-          name: '',
-          value: 'dummy_a',
-        },
-        {
-          name: '',
-          value: 'dummy_b',
-        },
+        // {
+        //   name: '',
+        //   value: 'dummy_a',
+        // },
+        // {
+        //   name: '',
+        //   value: 'dummy_b',
+        // },
         {
           name: 'Suggestions',
           value: 'suggested',
