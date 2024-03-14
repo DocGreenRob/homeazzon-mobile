@@ -89,22 +89,22 @@ export class ItemsPage extends BasePage {
   ];
 
   constructor(public override navController: NavController,
-              public override navParams: NavParams,
-              private searchService: SearchService,
-              public override uxNotifierService: UxNotifierService,
-              private loadingCtrl: LoadingController,
-              private itemService: ItemService,
-              public override communicator: CommunicatorService,
-              public override menuController: MenuController,
-              public override platform: Platform,
-              public override userTypesService: UserTypesService,
-              public viewsProvider: ViewsService,
-              public override router: Router,
-              public override inAppBrowser: InAppBrowser,
-              private ngzone: NgZone,
-              private modalCtrl: ModalController,
-              private location: Location,
-              public override storageService: LocalStorageService) {
+    public override navParams: NavParams,
+    private searchService: SearchService,
+    public override uxNotifierService: UxNotifierService,
+    private loadingCtrl: LoadingController,
+    private itemService: ItemService,
+    public override communicator: CommunicatorService,
+    public override menuController: MenuController,
+    public override platform: Platform,
+    public override userTypesService: UserTypesService,
+    public viewsProvider: ViewsService,
+    public override router: Router,
+    public override inAppBrowser: InAppBrowser,
+    private ngzone: NgZone,
+    private modalCtrl: ModalController,
+    private location: Location,
+    public override storageService: LocalStorageService) {
     super(navController, navParams, communicator, menuController, platform, router, uxNotifierService, userTypesService, null, inAppBrowser, storageService);
 
     this.storageService.delete("ActiveItem");
@@ -113,7 +113,7 @@ export class ItemsPage extends BasePage {
     this._tupleDictionary.Entries = new Array<Entry>();
 
     this.isIos = this.platform.is('ios');
-   
+
     if (this.User.IsPrivateLabelPartner) {
       this.segmentChanged('suggested');
       this.views = [
@@ -136,11 +136,11 @@ export class ItemsPage extends BasePage {
     this._wishlistGrid = { Lists: [] };
     this._suggestGrid = { Lists: [] };
     this._genericViewResultGrid = { Lists: [] };
- 
+
     await this.start();
     this._isListView = false;
 
-    this.User.IsPrivateLabelPartner ? this.segmentChanged('suggested'): this.segmentChanged('my');
+    this.User.IsPrivateLabelPartner ? this.segmentChanged('suggested') : this.segmentChanged('my');
   }
 
   viewProfileLineItems() {
@@ -278,14 +278,14 @@ export class ItemsPage extends BasePage {
           this.dynamicManageView = id;
           console.log(this.data);
         },
-        (err) => {}
+        (err) => { }
       );
   }
 
   public async start() {
     // Default to "My List" segment
-		this.IsMy = true;
-		this.IsWishlist = false;
+    this.IsMy = true;
+    this.IsWishlist = false;
     this.IsSuggest = false;
 
     // show profile item images
@@ -352,14 +352,14 @@ export class ItemsPage extends BasePage {
           }
 
           // const loaders = [
-            // await this.loadingCtrl.create({ message: "Getting Google Products...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting Amazon Products...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting Google Web Links...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting YouTube Videos...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting Digi Docs...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting UPCs...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting QRCodes...", cssClass: "my-loading-class" }),
-            // await this.loadingCtrl.create({ message: "Getting Bookmarks...", cssClass: "my-loading-class" })
+          // await this.loadingCtrl.create({ message: "Getting Google Products...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting Amazon Products...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting Google Web Links...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting YouTube Videos...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting Digi Docs...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting UPCs...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting QRCodes...", cssClass: "my-loading-class" }),
+          // await this.loadingCtrl.create({ message: "Getting Bookmarks...", cssClass: "my-loading-class" })
           // ];
           // loaders[0]?.dismiss;
           this.presentSpinnerGoogle('Getting Google Products...');
@@ -400,9 +400,11 @@ export class ItemsPage extends BasePage {
               }
               if (googleProductGridListsWishlist.Items.length > 0) {
                 this._wishlistGrid.Lists.push(googleProductGridListsWishlist);
+                this.segmentChanged('wishlist');
               }
               if (googleProductGridListsSuggest.Items.length > 0) {
                 this._suggestGrid.Lists.push(googleProductGridListsSuggest);
+                this.segmentChanged('suggested');
               }
             },
             (err) => {
@@ -465,7 +467,7 @@ export class ItemsPage extends BasePage {
 
               this.dismissSpinnerAmazon();
               this.presentSpinnerGoogleWeb('Getting Google Web Links...');
-  
+
               this.errorHandler(err);
             }
           );
@@ -517,8 +519,8 @@ export class ItemsPage extends BasePage {
               // loaders.splice(0, 1);
               // loaders[0]?.present();
 
-            this.dismissSpinnerGoogleWeb();
-            this.presentSpinnerYoutube('Getting YouTube Videos...');
+              this.dismissSpinnerGoogleWeb();
+              this.presentSpinnerYoutube('Getting YouTube Videos...');
 
               this.errorHandler(err);
             }
@@ -533,7 +535,7 @@ export class ItemsPage extends BasePage {
 
               this.dismissSpinnerYoutube();
               this.presentSpinnerDigi('Getting Digi Docs...');
-  
+
               x.map((result: SavedYouTubeSearchResultDto) => {
                 if (result.IsMy) {
                   youTubeGridListsMy.Items.push({ Id: result.Id, Name: result.Title, IconPath: null, ImagePath: result.ThumbnailImg });
@@ -572,7 +574,7 @@ export class ItemsPage extends BasePage {
               // loaders[0]?.present();
               this.dismissSpinnerYoutube();
               this.presentSpinnerDigi('Getting Digi Docs...');
-  
+
               this.errorHandler(err);
             }
           );
@@ -586,7 +588,7 @@ export class ItemsPage extends BasePage {
 
               this.dismissSpinnerDigi();
               this.presentSpinnerUCP('Getting UPCs...');
-  
+
               let entry: Entry = new Entry();
               entry.ArtifactType = "DigiDoc";
               entry.Tuple = x;
@@ -595,7 +597,7 @@ export class ItemsPage extends BasePage {
               let taggedArtifacts: Array<number> = new Array<number>();
               const tagContexts: Array<ITagContextDto> = x.Item2;
 
-              tagContexts.forEach((x) => {
+              tagContexts?.forEach((x) => {
                 // if Tags > 0 -->
                 if (x.Tags?.length > 0) {
                   // show parent > child tag (possibly making both clickable?)
@@ -607,7 +609,7 @@ export class ItemsPage extends BasePage {
                 }
               });
 
-              taggedArtifacts.forEach((x) => {
+              taggedArtifacts?.forEach((x) => {
                 tagContexts.forEach((y) => {
                   if (y.Tags?.length > 0) {
                     const parentTag: string = y.Tag.Name;
@@ -633,7 +635,7 @@ export class ItemsPage extends BasePage {
               });
 
               // get the artifacts
-              x.Item1.map((result: IDigiDocDto) => {
+              x?.Item1?.map((result: IDigiDocDto) => {
                 let iconUrl: string = null;
                 if (result.ContentType === "application/pdf") {
                   iconUrl =
@@ -741,7 +743,7 @@ export class ItemsPage extends BasePage {
 
               this.dismissSpinnerDigi();
               this.presentSpinnerUCP('Getting UPCs...');
-  
+
               this.errorHandler(err);
             }
           );
@@ -755,7 +757,7 @@ export class ItemsPage extends BasePage {
 
               this.dismissSpinnerUCP();
               this.presentSpinnerQR('Getting QRCodes...');
-  
+
 
               x.map((result: IProductDto) => {
                 if (result.IsMy) {
@@ -796,7 +798,7 @@ export class ItemsPage extends BasePage {
 
               this.dismissSpinnerUCP();
               this.presentSpinnerQR('Getting QRCodes...');
-  
+
               this.errorHandler(err);
             }
           );
@@ -917,8 +919,8 @@ export class ItemsPage extends BasePage {
               // loaders.splice(0, 1);
               // loaders[0]?.present();
 
-              
-            this.dismissSpinnerBookmark();
+
+              this.dismissSpinnerBookmark();
               this.errorHandler(err);
             }
           );
@@ -929,23 +931,23 @@ export class ItemsPage extends BasePage {
 
   public segmentChanged(event: any) {
     this.IsMy = false;
-		this.IsWishlist = false;
+    this.IsWishlist = false;
     this.IsSuggest = false;
 
     this.ngzone.run(() => {
       switch (event.toLowerCase()) {
         case 'my':
-					this.my();
-					this.IsMy = true;
-					break;
-				case 'wishlist':
-					this.wishlist();
-					this.IsWishlist = true;
-					break;
-				case 'suggested':
-					this.suggested();
-					this.IsSuggest = true;
-					break;
+          this.my();
+          this.IsMy = true;
+          break;
+        case 'wishlist':
+          this.wishlist();
+          this.IsWishlist = true;
+          break;
+        case 'suggested':
+          this.suggested();
+          this.IsSuggest = true;
+          break;
       }
     });
   }
@@ -989,7 +991,7 @@ export class ItemsPage extends BasePage {
         // this._loading.dismiss();
         this.dismissSpinner();
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -1045,7 +1047,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerGoogle() {
     this.loading1Visible = false;
-    this.spinnerText = ''; 
+    this.spinnerText = '';
   }
 
   async presentSpinnerAmazon(text: string) {
@@ -1055,7 +1057,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerAmazon() {
     this.loading2Visible = false;
-    this.spinnerText2 = ''; 
+    this.spinnerText2 = '';
   }
   async presentSpinnerGoogleWeb(text: string) {
     this.spinnerText3 = text;
@@ -1064,7 +1066,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerGoogleWeb() {
     this.loading3Visible = false;
-    this.spinnerText3 = ''; 
+    this.spinnerText3 = '';
   }
   async presentSpinnerYoutube(text: string) {
     this.spinnerText4 = text;
@@ -1073,7 +1075,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerYoutube() {
     this.loading4Visible = false;
-    this.spinnerText4 = ''; 
+    this.spinnerText4 = '';
   }
   async presentSpinnerDigi(text: string) {
     this.spinnerText5 = text;
@@ -1082,7 +1084,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerDigi() {
     this.loading5Visible = false;
-    this.spinnerText5 = ''; 
+    this.spinnerText5 = '';
   }
   async presentSpinnerUCP(text: string) {
     this.spinnerText6 = text;
@@ -1091,7 +1093,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerUCP() {
     this.loading6Visible = false;
-    this.spinnerText6 = ''; 
+    this.spinnerText6 = '';
   }
   async presentSpinnerQR(text: string) {
     this.spinnerText7 = text;
@@ -1100,7 +1102,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerQR() {
     this.loading7Visible = false;
-    this.spinnerText7 = ''; 
+    this.spinnerText7 = '';
   }
 
   async presentSpinnerBookmark(text: string) {
@@ -1110,7 +1112,7 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinnerBookmark() {
     this.loading8Visible = false;
-    this.spinnerText8 = ''; 
+    this.spinnerText8 = '';
   }
 
   async presentSpinner(text: string) {
@@ -1120,6 +1122,6 @@ export class ItemsPage extends BasePage {
 
   async dismissSpinner() {
     this.loading9Visible = false;
-    this.spinnerText9 = ''; 
+    this.spinnerText9 = '';
   }
 }

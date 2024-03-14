@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { ModalController, NavController, NavParams } from "@ionic/angular";
+import { ModalController, NavController, NavParams, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { Constants } from "src/app/common/Constants";
 import { ILotDto } from "src/app/models/dto/interfaces/ILotDto";
@@ -32,9 +32,9 @@ export class LotDetailsPage extends BasePage {
   activePage = 1;
   spinnerText: string;
   loadingVisible: boolean;
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     public override navParams: NavParams,
     public override uxNotifierService: UxNotifierService,
     private modalController: ModalController,
@@ -43,12 +43,14 @@ export class LotDetailsPage extends BasePage {
     private loading: UtilitiesService,
     public override router: Router,
     private userService: UserDetailsService,
-    public override storageService: LocalStorageService
-  ) {
-    super(navCtrl, navParams, null, null, null, router, uxNotifierService, null, null,null,storageService);
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
+    super(navCtrl, navParams, null, null, null, router, uxNotifierService, null, null, null, storageService);
     this.lotId = this.navParams.get("Id");
     this.lot = {} as ILotDto;
     this.constants = new Constants();
+
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() {
@@ -61,7 +63,7 @@ export class LotDetailsPage extends BasePage {
       (x: ILotDto) => {
         this.lot = x;
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -150,7 +152,7 @@ export class LotDetailsPage extends BasePage {
                     );
                   }
                 },
-                (err) => {}
+                (err) => { }
               );
             },
             (err) => {
@@ -191,18 +193,18 @@ export class LotDetailsPage extends BasePage {
                           this.modalController.dismiss();
                           this.router.navigate(["congratulations"]);
                         },
-                        (err) => {}
+                        (err) => { }
                       );
                     }
                   },
-                  (err) => {}
+                  (err) => { }
                 );
               },
-              (err) => {}
+              (err) => { }
             );
           }
         },
-        (err) => {}
+        (err) => { }
       );
     }
 

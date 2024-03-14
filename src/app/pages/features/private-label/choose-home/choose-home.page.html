@@ -1,5 +1,11 @@
-<ion-header>
-	<navigation-sub-menu [showBackButton]="true" type="logoMenu"></navigation-sub-menu>
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
+    <img src="assets/icon/arrow-left-square.svg" (click)="close()">
+    <span class="title-with-img">
+      <span>Choose Home</span>
+    </span>
+    <span class="dummy"></span>
+  </div>
 </ion-header>
 <div class="container-wrapper">
 	<div class="new-home-wrapper">
