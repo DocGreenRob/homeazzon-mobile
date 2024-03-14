@@ -154,6 +154,12 @@ export class AppComponent extends BasePage {
       //   title: 'Settings',
       //   url: 'settings',
       // },
+      {
+        image:
+          '../assets/svgs/light/list.svg',
+        title: 'Menu',
+        url: 'interstatial',
+      },
     ];
   }
 

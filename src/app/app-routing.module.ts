@@ -134,6 +134,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'interstatial',
+    loadChildren: () => import('./pages/interstatial/interstatial.module').then(m => m.InterstatialPageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'help',
     loadChildren: () => import('./pages/features/account/help/help.module').then(m => m.HelpPageModule),
 
