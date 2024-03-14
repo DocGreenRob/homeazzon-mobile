@@ -22,6 +22,7 @@ export class PropertyProfilesPage extends BasePage {
   public isOwner: boolean = false;
   public isRealtor: boolean = false;
   public isPrivateLabelUser: boolean = false;
+  public isIos: boolean = false;
   spinnerText: string;
   loadingVisible: boolean;
 
@@ -37,6 +38,8 @@ export class PropertyProfilesPage extends BasePage {
     public override storageService: LocalStorageService
   ) {
     super(navCtrl, null, null, null, platform, router, null, null, null, null, storageService);
+
+    this.isIos = this.platform.is('ios');
     this.getlabelprofile = this.getlabelprofile.bind(this);
   }
 

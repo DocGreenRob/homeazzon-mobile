@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { AlertController, LoadingController, ModalController, NavController } from "@ionic/angular";
+import { AlertController, LoadingController, ModalController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { ILinkDto } from "src/app/models/dto/interfaces/ILinkDto";
 import { BasePage } from "src/app/pages/base/base.page";
@@ -21,9 +21,9 @@ export class PropertyProfileOverviewPage extends BasePage {
   private links: Array<ILinkDto>;
   spinnerText: string;
   loadingVisible: boolean;
+  public isIos: boolean = false;
 
-  constructor(
-    private navCtrl: NavController,
+  constructor(private navCtrl: NavController,
     private loading: UtilitiesService,
     private privatelabelService: PrivateLabelService,
     private modalCtrl: ModalController,
@@ -32,9 +32,11 @@ export class PropertyProfileOverviewPage extends BasePage {
     public override router: Router,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
-    super(null, null, null, null, null, router, null, null, null, null, storageService);
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
+    super(null, null, null, null, platform, router, null, null, null, null, storageService);
+
+    this.isIos = this.platform.is('ios');
     this.links = new Array<ILinkDto>();
   }
 
@@ -139,6 +141,7 @@ export class PropertyProfileOverviewPage extends BasePage {
     this.spinnerText = text;
     this.loadingVisible = true;
   }
+
   async dismissSpinner() {
     this.loadingVisible = false;
     this.spinnerText = '';

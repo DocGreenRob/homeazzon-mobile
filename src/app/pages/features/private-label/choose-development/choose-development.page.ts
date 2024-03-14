@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ModalController, NavController } from "@ionic/angular";
+import { ModalController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { IDevelopmentDto } from "src/app/models/dto/interfaces/IDevelopmentDto";
 import { ILotDto } from "src/app/models/dto/interfaces/ILotDto";
@@ -30,6 +30,7 @@ export class ChooseDevelopmentPage extends BasePage {
   selectedDevelopment: IDevelopmentDto = {} as IDevelopmentDto;
   spinnerText: string;
   loadingVisible: boolean;
+  public isIos: boolean = false;
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
@@ -39,11 +40,13 @@ export class ChooseDevelopmentPage extends BasePage {
     private staticDataService: UtilitiesService,
     private activeRoute: ActivatedRoute,
     private storage: Storage,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
     super(navCtrl, null, null, null, null, router, null, null, null, null, storageService);
     this.showDevelopments = true;
     this.showLots = false;
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {

@@ -1,11 +1,11 @@
-<!--
-  Generated template for the DesignPlansPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-	<navigation-sub-menu [showBackButton]="true" type="titleMenu" [title]="propertyName+ ' Plans'" *ngIf="propertyName"></navigation-sub-menu>
+<ion-header style="background-color: #232B42;">
+  <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
+    <img src="assets/icon/arrow-left-square.svg" (click)="close()">
+    <span class="title-with-img">
+      <span>{{propertyName}} Plans</span>
+    </span>
+    <span class="dummy"></span>
+  </div>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -41,7 +41,7 @@
 				</ion-row>
 			</ion-col>
 		</ion-row>
-		<h1 (click)="viewFullDesign(plan)">{{plan.Title}}</h1>
+		<span (click)="viewFullDesign(plan)" class="plan-title">{{plan.Title}}</span>
 		<hr>
 	</div>
 
