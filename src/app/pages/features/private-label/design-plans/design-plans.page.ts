@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { NavController } from "@ionic/angular";
+import { NavController, Platform } from "@ionic/angular";
 import { Constants } from "src/app/common/Constants";
 import { IDesignPanDto } from "src/app/models/dto/interfaces/IDesignPlanDto";
 import { BasePage } from "src/app/pages/base/base.page";
@@ -19,17 +19,18 @@ export class DesignPlansPage extends BasePage {
   designPlans: Array<any> = new Array();
   activePage: number;
   constants: Constants = new Constants();
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     private notificationProvider: UxNotifierService,
     public override router: Router,
     private activeRoute: ActivatedRoute,
     private privateLabelService: PrivateLabelService,
-    public override storageService: LocalStorageService
-
-  ) {
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
     super(null, null, null, null, null, router, null, null, null, null, storageService);
+
+    this.isIos = this.platform.is('ios');
   }
   override ngOnInit() {
     console.log("ngOnInit DesignPlansPage");

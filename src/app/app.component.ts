@@ -29,7 +29,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent extends BasePage {
-  public appVersion: string = '12.9.0';
+  public appVersion: string = '13.0.0';
   private readonly _destroying$ = new Subject<void>();
   private _loading: any;
 

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { AlertController, LoadingController, ModalController, NavController } from "@ionic/angular";
+import { AlertController, LoadingController, ModalController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { ILinkDto } from "src/app/models/dto/interfaces/ILinkDto";
 import { BasePage } from "src/app/pages/base/base.page";
@@ -19,9 +19,11 @@ export class PropertyProfileOverviewPage extends BasePage {
   private propertyId: any;
   propertyName: string;
   private links: Array<ILinkDto>;
+  spinnerText: string;
+  loadingVisible: boolean;
+  public isIos: boolean = false;
 
-  constructor(
-    private navCtrl: NavController,
+  constructor(private navCtrl: NavController,
     private loading: UtilitiesService,
     private privatelabelService: PrivateLabelService,
     private modalCtrl: ModalController,
@@ -30,9 +32,11 @@ export class PropertyProfileOverviewPage extends BasePage {
     public override router: Router,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public override storageService: LocalStorageService
-  ) {
-    super(null, null, null, null, null, router, null, null, null, null, storageService);
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
+    super(null, null, null, null, platform, router, null, null, null, null, storageService);
+
+    this.isIos = this.platform.is('ios');
     this.links = new Array<ILinkDto>();
   }
 
@@ -100,8 +104,7 @@ export class PropertyProfileOverviewPage extends BasePage {
   }
 
   public async viewInteractiveModels() {
-    let loader = await this.loading.getLoader("getting property plans...");
-    await loader.present();
+    this.presentSpinner("getting property plans...");
 
     await this.privatelabelService.getPrivateLabelProfilePlans(this.propertyId).then(
       (response: any) => {
@@ -109,12 +112,12 @@ export class PropertyProfileOverviewPage extends BasePage {
           console.log("property plans", response);
           this.links = response;
 
-          loader.dismiss();
+          this.dismissSpinner();
           this.showPlansInBrowser();
         }
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -132,5 +135,15 @@ export class PropertyProfileOverviewPage extends BasePage {
       },
     };
     this.router.navigate(["design-plans"], navExtras);
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
   }
 }

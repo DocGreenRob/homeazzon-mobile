@@ -395,11 +395,11 @@ ion-content {
     }
   }
 }
-
-.stick-to-bottom-of-parent {
-  margin-top: auto; /* Push the div to the bottom */
-  font-weight: 600;
-  text-align: center;
-  width: 85%;
-  margin-bottom: 2em;
+.repair-btn-side{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ion-button{
+    margin-top: 57px;
+  }
 }

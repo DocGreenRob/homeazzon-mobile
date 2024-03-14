@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { LocalStorageService } from "@app/services/local-storage.service";
-import { ModalController, NavController, NavParams } from "@ionic/angular";
+import { ModalController, NavController, NavParams, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { Constants } from "src/app/common/Constants";
 import { ILotDto } from "src/app/models/dto/interfaces/ILotDto";
@@ -30,9 +30,11 @@ export class LotDetailsPage extends BasePage {
   totalPages: number = 0;
   zoom: number = 0;
   activePage = 1;
+  spinnerText: string;
+  loadingVisible: boolean;
+  public isIos: boolean = false;
 
-  constructor(
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     public override navParams: NavParams,
     public override uxNotifierService: UxNotifierService,
     private modalController: ModalController,
@@ -41,12 +43,14 @@ export class LotDetailsPage extends BasePage {
     private loading: UtilitiesService,
     public override router: Router,
     private userService: UserDetailsService,
-    public override storageService: LocalStorageService
-  ) {
-    super(navCtrl, navParams, null, null, null, router, uxNotifierService, null, null,null,storageService);
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
+    super(navCtrl, navParams, null, null, null, router, uxNotifierService, null, null, null, storageService);
     this.lotId = this.navParams.get("Id");
     this.lot = {} as ILotDto;
     this.constants = new Constants();
+
+    this.isIos = this.platform.is('ios');
   }
 
   override ngOnInit() {
@@ -59,7 +63,7 @@ export class LotDetailsPage extends BasePage {
       (x: ILotDto) => {
         this.lot = x;
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -103,8 +107,7 @@ export class LotDetailsPage extends BasePage {
   }
 
   async saveProperty() {
-    let loader = await this.loading.getLoader("saving property ...");
-    await loader.present();
+    this.presentSpinner("saving property ...");
 
     if (this.isPrivateLabelBuildYourOwn) {
       this.storage.get("CustomProperty").then(
@@ -128,7 +131,7 @@ export class LotDetailsPage extends BasePage {
               this.storage.get("HasPrivateLabelUserMadeSelection").then(
                 async (x) => {
                   if (x && x === true) {
-                    loader.dismiss();
+                    this.dismissSpinner();
                     this.modalController.dismiss();
                     this.router.navigate(["congratulations"]);
                   } else {
@@ -139,26 +142,26 @@ export class LotDetailsPage extends BasePage {
 
                     await this.userService.setUserHasSelectedPrivateLabelerPropertyFlag(o).then(
                       (x) => {
-                        loader.dismiss();
+                        this.dismissSpinner();
                         this.modalController.dismiss();
                         this.router.navigate(["congratulations"]);
                       },
                       (err) => {
-                        loader.dismiss();
+                        this.dismissSpinner();
                       }
                     );
                   }
                 },
-                (err) => {}
+                (err) => { }
               );
             },
             (err) => {
-              loader.dismiss();
+              this.dismissSpinner();
             }
           );
         },
         (err) => {
-          loader.dismiss();
+          this.dismissSpinner();
         }
       );
     } else {
@@ -175,7 +178,7 @@ export class LotDetailsPage extends BasePage {
                 this.storage.get("HasPrivateLabelUserMadeSelection").then(
                   async (x) => {
                     if (x && x === true) {
-                      loader.dismiss();
+                      this.dismissSpinner();
                       this.modalController.dismiss();
                       this.router.navigate(["congratulations"]);
                     } else {
@@ -186,25 +189,34 @@ export class LotDetailsPage extends BasePage {
 
                       await this.userService.setUserHasSelectedPrivateLabelerPropertyFlag(u).then(
                         (x) => {
-                          loader.dismiss();
+                          this.dismissSpinner();
                           this.modalController.dismiss();
                           this.router.navigate(["congratulations"]);
                         },
-                        (err) => {}
+                        (err) => { }
                       );
                     }
                   },
-                  (err) => {}
+                  (err) => { }
                 );
               },
-              (err) => {}
+              (err) => { }
             );
           }
         },
-        (err) => {}
+        (err) => { }
       );
     }
 
     // go to "GoShopping"
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
   }
 }

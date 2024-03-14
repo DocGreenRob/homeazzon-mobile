@@ -84,7 +84,7 @@ export class SearchResultDetailsPage extends BasePage {
     this.IsSuggest = false;
 
     (
-        await this.alertCtrl.create({
+      await this.alertCtrl.create({
         message: "Which list does this go into?",
         cssClass: "search-wishlist-modal",
         buttons: [
@@ -110,7 +110,13 @@ export class SearchResultDetailsPage extends BasePage {
   }
 
   public async saveItem() {
-    await this.getListAsync();
+    let u = this.User;
+
+    if (!u.IsPrivateLabelPartner) {
+      await this.getListAsync();
+    } else {
+      await this.saveAsync();
+    }
   }
 
   private async saveAsync() {
@@ -153,7 +159,7 @@ export class SearchResultDetailsPage extends BasePage {
             (x: AssetIndexDto) => {
               this.storageService.set("AssetIndex", x);
 
-              this.dismissSpinner();              
+              this.dismissSpinner();
               this.uxNotifierService.showToast("Amazon product saved successfully!", this._constants.ToastColorGood);
             },
             (err) => {
@@ -174,11 +180,11 @@ export class SearchResultDetailsPage extends BasePage {
             (x: AssetIndexDto) => {
               this.storageService.set("AssetIndex", x);
               this.uxNotifierService.showToast("Google product saved successfully!", this._constants.ToastColorGood);
-           
+
               this.dismissSpinner();
             },
             (err) => {
-           
+
               this.dismissSpinner();
               if (err.status == 401) {
                 this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
@@ -204,12 +210,12 @@ export class SearchResultDetailsPage extends BasePage {
         await this.searchService.saveGoogleData(searchResultDto).then(
           (x: AssetIndexDto) => {
             this.storageService.set("AssetIndex", x);
-         
+
             this.dismissSpinner();
             this.uxNotifierService.showToast("Google results were saved successfully!", this._constants.ToastColorGood);
           },
           (err) => {
-         
+
             this.dismissSpinner();
             if (err.status == 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
@@ -241,12 +247,12 @@ export class SearchResultDetailsPage extends BasePage {
         await this.searchService.saveYouTubeData(searchResultDto).then(
           (x: AssetIndexDto) => {
             this.storageService.set("AssetIndex", x);
-         
+
             this.dismissSpinner();
             this.uxNotifierService.showToast("YouTube video saved successfully!", this._constants.ToastColorGood);
           },
           (err) => {
-         
+
             this.dismissSpinner();
             if (err.status == 401) {
               this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
@@ -260,20 +266,11 @@ export class SearchResultDetailsPage extends BasePage {
     }
 
     // update the cache
-
-    let a = this.User.Types;
-    let b = a.filter((x) => x.Name.toLowerCase().indexOf('owner') !== -1);
-
-    if (b !== undefined && b !== null && b.length == 1) {
-      let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
-      let userType = 'owner';
-      updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
-
-      await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
-    } else {
-      alert(`need to update cache for this user type${JSON.stringify(a)}`);
-    }
-
+    // (if PrivateLabelPartner) update the cache for the owner(s) who have this profile item 
+    let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
+    let userType = 'owner';
+    updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
 
     this.close();
 
@@ -298,7 +295,7 @@ export class SearchResultDetailsPage extends BasePage {
 
   async dismissSpinner() {
     this.loading1Visible = false;
-    this.spinnerText = ''; 
+    this.spinnerText = '';
   }
 
 }
