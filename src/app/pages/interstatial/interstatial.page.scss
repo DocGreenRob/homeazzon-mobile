@@ -1,0 +1,111 @@
+.header-interstatial{
+    padding: 24px 24px 24px 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+    .left{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .avatar{
+            width: 32px;
+            height: 32px;
+            overflow: hidden;
+            border-radius: 50%;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: fill;
+            }
+        }
+        .user-info{
+            display: flex;
+            flex-direction: column;
+            .name{
+                font-family: Plus Jakarta Sans;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 18px;
+                letter-spacing: 0.005em;
+                text-align: left;
+                color: #232B42;
+            }
+            .address{
+                font-family: Plus Jakarta Sans;
+                font-size: 8px;
+                font-weight: 600;
+                line-height: 8px;
+                letter-spacing: 0.005em;
+                text-align: left;
+                color: #7A8697;
+            }
+        }
+    }
+    .right{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+}
+.container-wrapper{
+    background:#fff !important;
+    .formWrapper{
+        background:#fff !important;
+        padding-top: 24px !important;
+        .card-main{
+            height: 137.56px;
+            width: 100%;
+            border: 1px solid #DEE8F4;
+            background: #F7E9DB;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            overflow: hidden;
+            .card-left{
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                padding: 15px;
+                width: 50%;
+                .title{
+                    font-family: Poppins;
+                    font-size: 20px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    letter-spacing: -0.02em;
+                    text-align: left;
+                    color: #232C41;
+                }
+                .browse{
+                    font-family: Poppins;
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 16px;
+                    letter-spacing: 0.005em;
+                    text-align: left;
+                    color: #5681AA;
+                    display: flex;
+                    align-items: center;
+                    gap: 7px;
+                    white-space: nowrap;
+                }
+            }
+            .card-right{
+               padding-top: 12px
+            }
+            &:nth-child(2){
+                background: #D2EDFF;
+            }
+            &:nth-child(3){
+                background: #E3FFF5;
+            }
+            &:nth-child(4){
+                background: #FFF5DD;
+            }
+        }
+    }
+}

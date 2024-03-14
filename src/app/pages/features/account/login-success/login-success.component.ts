@@ -12,7 +12,7 @@ export class LoginSuccessComponent  implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['interstatial']);
     }, 3000)
   }
 

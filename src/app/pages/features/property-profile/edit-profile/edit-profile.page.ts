@@ -329,7 +329,7 @@ export class EditProfilePage extends BasePage {
         this.toast.showToast("Area was removed successfully", this.constants.ToastColorGood);
         let navExtras: NavigationExtras = {
           queryParams: {
-            restart: true,
+            refreshActiveProperty: true
           },
         };
         this.router.navigate(["dashboard"], navExtras);
