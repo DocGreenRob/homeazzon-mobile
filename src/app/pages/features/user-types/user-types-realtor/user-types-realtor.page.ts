@@ -24,7 +24,6 @@ import { Country, State, City }  from 'country-state-city';
   styleUrls: ["./user-types-realtor.page.scss"],
 })
 export class UserTypesRealtorPage extends BasePage {
-  public states: Array<any>;
   selected: boolean = true;
   companyName: string = "";
   website: string = "";
@@ -37,6 +36,7 @@ export class UserTypesRealtorPage extends BasePage {
   zip: string = "";
   public country: string = "";
   public cities: any[] = [];
+  public states: any[] = [];
   public countries = Country.getAllCountries();
   public isEditingProperty: boolean = false;
   public isIos: boolean = false;
@@ -111,19 +111,20 @@ export class UserTypesRealtorPage extends BasePage {
   ionViewWillLoad() { }
 
   public async continue() {
-    this.companyName = this.companyName.trim();
+    this.companyName = this.companyName?.trim() || "";
     //this.website = this.website.trim();
     //this.email = this.email.trim();
     //this.businessPhone = this.businessPhone.trim();
-    this.streetAddress1 = this.streetAddress1.trim();
-    this.streetAddress2 = this.streetAddress2.trim();
-    this.city = this.city.trim();
+    this.streetAddress1 = this.streetAddress1?.trim() || "";
+    this.streetAddress2 = this.streetAddress2?.trim() || "";
+    this.city = this.city?.trim() || "";
     this.zip = this.zip?.toString()?.trim() || "";
+    
 
     if (this.companyName === ""
       || this.streetAddress1 === ""
-      || this.city === ""
-      || this.state === ""
+      || (this.cities.length && this.city === "")
+      || (this.states.length && this.state === "")
       || this.zip === "") {
       let errors: Array<string> = new Array<string>();
 
@@ -139,10 +140,10 @@ export class UserTypesRealtorPage extends BasePage {
       if (this.streetAddress1 === "") {
         errors.push("StreetAddress1");
       }
-      if (this.city === "") {
+      if (this.cities.length && this.city === "") {
         errors.push("City");
       }
-      if (this.state === "") {
+      if (this.states.length && this.state === "") {
         errors.push("State");
       }
       if (this.zip === "") {

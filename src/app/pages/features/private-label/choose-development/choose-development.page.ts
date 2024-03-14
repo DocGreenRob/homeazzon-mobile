@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ModalController, NavController } from "@ionic/angular";
+import { ModalController, NavController, Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { IDevelopmentDto } from "src/app/models/dto/interfaces/IDevelopmentDto";
 import { ILotDto } from "src/app/models/dto/interfaces/ILotDto";
@@ -28,6 +28,9 @@ export class ChooseDevelopmentPage extends BasePage {
   public showLots: boolean;
   private states: Array<IStateDto>;
   selectedDevelopment: IDevelopmentDto = {} as IDevelopmentDto;
+  spinnerText: string;
+  loadingVisible: boolean;
+  public isIos: boolean = false;
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
@@ -37,11 +40,13 @@ export class ChooseDevelopmentPage extends BasePage {
     private staticDataService: UtilitiesService,
     private activeRoute: ActivatedRoute,
     private storage: Storage,
-    public override storageService: LocalStorageService
-  ) {
+    public override storageService: LocalStorageService,
+    public override platform: Platform) {
     super(navCtrl, null, null, null, null, router, null, null, null, null, storageService);
     this.showDevelopments = true;
     this.showLots = false;
+
+    this.isIos = this.platform.is('ios');
   }
 
   override async ngOnInit() {
@@ -69,9 +74,7 @@ export class ChooseDevelopmentPage extends BasePage {
 
   async getDevelopments() {
 
-    let loader = await this.loading.getLoader("getting available developments...");
-
-    await loader.present();
+    this.presentSpinner("getting available developments...");
 
     let user: IUserDto = this.storageService.get('User');
 
@@ -79,10 +82,10 @@ export class ChooseDevelopmentPage extends BasePage {
       (x: Array<IDevelopmentDto>) => {
         // debugger;
         this.developments = x;
-        loader.dismiss();
+        this.dismissSpinner();
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -92,8 +95,7 @@ export class ChooseDevelopmentPage extends BasePage {
     this.showDevelopments = false;
     this.showLots = true;
     this.selectedDevelopment = development;
-    let loader = await this.loading.getLoader("getting development lots ...");
-    await loader.present();
+    this.presentSpinner("getting development lots ...");
 
     if (this.isPrivateLabelBuildYourOwn) {
       this.storage.get("CustomProperty").then(
@@ -115,10 +117,10 @@ export class ChooseDevelopmentPage extends BasePage {
 
         this.lots = x;
 
-        loader.dismiss();
+        this.dismissSpinner();
       },
       (error) => {
-        loader.dismiss();
+        this.dismissSpinner();
         console.log(error);
       }
     );
@@ -136,5 +138,14 @@ export class ChooseDevelopmentPage extends BasePage {
 
   public close() {
     this.navCtrl.pop();
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
   }
 }

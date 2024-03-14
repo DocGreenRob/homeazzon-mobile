@@ -22,6 +22,9 @@ export class PropertyProfilesPage extends BasePage {
   public isOwner: boolean = false;
   public isRealtor: boolean = false;
   public isPrivateLabelUser: boolean = false;
+  public isIos: boolean = false;
+  spinnerText: string;
+  loadingVisible: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +38,8 @@ export class PropertyProfilesPage extends BasePage {
     public override storageService: LocalStorageService
   ) {
     super(navCtrl, null, null, null, platform, router, null, null, null, null, storageService);
+
+    this.isIos = this.platform.is('ios');
     this.getlabelprofile = this.getlabelprofile.bind(this);
   }
 
@@ -81,8 +86,7 @@ export class PropertyProfilesPage extends BasePage {
     if (this.User?.IsPrivateLabelUser) {
       this.isPrivateLabelUser = true;
 
-      let loader = await this.loading.getLoader("getting label profile...");
-      await loader.present();
+      this.presentSpinner('getting label profile...');
       //check whether user has a privateLabeler
       let privateLabelId = this.User.PrivateLabeler.Id;
 
@@ -91,13 +95,13 @@ export class PropertyProfilesPage extends BasePage {
           if (y) {
             //this.privateLabelProperties = y;
 
-            loader.dismiss();
+            this.dismissSpinner();
 
             this.setPrivateLabelProperties(y);
           }
         },
         (error) => {
-          loader.dismiss();
+          this.dismissSpinner();
           console.log(error);
         }
       );
@@ -131,5 +135,14 @@ export class PropertyProfilesPage extends BasePage {
 
   goBack() {
     this.navController.back();
+  }
+
+  async presentSpinner(text: string) {
+    this.spinnerText = text;
+    this.loadingVisible = true;
+  }
+  async dismissSpinner() {
+    this.loadingVisible = false;
+    this.spinnerText = '';
   }
 }

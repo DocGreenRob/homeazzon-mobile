@@ -20,7 +20,6 @@ import { Country, State, City } from 'country-state-city';
   styleUrls: ["./user-types-owner.page.scss"],
 })
 export class UserTypesOwnerPage extends BasePage {
-  public states: Array<any>;
   public selected: boolean = true;
   public country: string = "";
   public streetAddress1: string = "";
@@ -32,6 +31,7 @@ export class UserTypesOwnerPage extends BasePage {
   public title: string = 'Owner Registration';
   public isOwner: boolean = false;
   public cities: any[] = [];
+  public states: any[] = [];
   public countries = Country.getAllCountries();
   public isIos: boolean = false;
 
@@ -124,9 +124,9 @@ export class UserTypesOwnerPage extends BasePage {
   }
 
   async continue() {
-    this.streetAddress1 = this.streetAddress1.trim();
-    this.streetAddress2 = this.streetAddress2.trim();
-    this.city = this.city.trim();
+    this.streetAddress1 = this.streetAddress1?.trim() || '';
+    this.streetAddress2 = this.streetAddress2?.trim() || '';
+    this.city = this.city?.trim() || '';
     this.zip = this.zip?.toString()?.trim() || "";
 
     // TODO: Need to refactor, temp solution, blah blah
@@ -136,7 +136,9 @@ export class UserTypesOwnerPage extends BasePage {
     }
     this.SelectedProperty = a;
 
-    if (this.streetAddress1 == "" || this.city == "" || this.state == "" || this.zip == "") {
+    if (this.streetAddress1 == "" || (this.cities.length && this.city == "") || (this.states.length && this.state == "") || this.zip == "") {
+
+    // if (this.streetAddress1 == "" || this.city == "" || this.state == "" || this.zip == "") {
       this.uxNotifierService.presentSimpleAlert("All fields are required!", "");
     } else {
       //let customProperty: IPropertyDto = {} as IPropertyDto;
