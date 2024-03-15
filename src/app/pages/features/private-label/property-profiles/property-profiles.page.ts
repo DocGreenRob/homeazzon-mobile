@@ -130,7 +130,7 @@ export class PropertyProfilesPage extends BasePage {
   }
 
   public close() {
-    this.navCtrl.pop();
+    this.router.navigate(["dashboard"]);
   }
 
   goBack() {
@@ -141,6 +141,7 @@ export class PropertyProfilesPage extends BasePage {
     this.spinnerText = text;
     this.loadingVisible = true;
   }
+
   async dismissSpinner() {
     this.loadingVisible = false;
     this.spinnerText = '';

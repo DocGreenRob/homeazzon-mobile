@@ -1,4 +1,4 @@
-<ion-header style="border-bottom:2px solid whitesmoke !important; background-color: #232B42;">
+<ion-header style="border-bottom: 2px solid whitesmoke !important; background-color: #232B42;">
   <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
     <span (click)="close()">
       <img src="assets/icon/arrow-left-square.svg" />
@@ -10,80 +10,129 @@
     </div>
   </div>
 </ion-header>
+
 <div class="container-wrapper">
   <div class="formWrapper">
     <div class="fieldWrapper">
       <ion-label>Street Address 1</ion-label>
       <div class="inputField">
-        <ion-input type="text"
-                   [(ngModel)]="streetAddress1"
-                   placeholder="Enter Street Address 1"></ion-input>
+        <ion-input type="text" [(ngModel)]="streetAddress1" placeholder="Enter Street Address 1"></ion-input>
       </div>
     </div>
     <div class="fieldWrapper">
       <ion-label>Street Address 2</ion-label>
       <div class="inputField">
-        <ion-input type="text"
-                   [(ngModel)]="streetAddress2"
-                   placeholder="Enter Street Address 2"></ion-input>
+        <ion-input type="text" [(ngModel)]="streetAddress2" placeholder="Enter Street Address 2"></ion-input>
       </div>
     </div>
     <div class="fieldWrapper">
       <ion-label>Country</ion-label>
       <div class="inputField">
-        <ion-select [(ngModel)]="country" placeholder="Select Country" (ionChange)="onCountryChange()">
-          <ion-select-option [value]="0" disabled>Select Country</ion-select-option>
-          <ion-select-option [value]="country.isoCode" *ngFor="let country of countries; let i = index">
-            {{country.name}}
-          </ion-select-option>
-        </ion-select>
-        <img class="iconSelect"
-             src="assets/icon/Icon - Next.svg"
-             alt="" />
-      </div>
-      <div class="fieldWrapper">
-        <ion-label>State</ion-label>
-        <div class="inputField">
-          <ion-select [(ngModel)]="state" (ionChange)="onStateChange()" placeholder="Select State" [disabled]="!this.country?.length">
-            <ion-select-option [value]="0" disabled>Select State</ion-select-option>
-            <ion-select-option [value]="state.isoCode" *ngFor="let state of states; let i = index">
-              {{state.name}}
-            </ion-select-option>
-          </ion-select>
-          <img class="iconSelect"
-               src="assets/icon/Icon - Next.svg"
-               alt="" />
-        </div>
-      </div>
-      <div class="fieldWrapper">
-        <ion-label>City</ion-label>
-        <div class="inputField">
-          <ion-select [(ngModel)]="city" placeholder="Select City" [disabled]="!this.state?.length">
-            <ion-select-option [value]="0" disabled>Select City</ion-select-option>
-            <ion-select-option [value]="city.name"
-                               *ngFor="let city of cities; let i = index">
-              {{city.name}}
-            </ion-select-option>
-          </ion-select>
-          <img class="iconSelect"
-               src="assets/icon/Icon - Next.svg"
-               alt="" />
-        </div>
-      </div>
-  
-      <div class="fieldWrapper">
-        <ion-label>Zip</ion-label>
-        <div class="inputField">
-          <ion-input inputmode="numeric"
-            type="number"
-            maxlength="5"
-            (keyup.enter)="continue()"
-            [(ngModel)]="zip"
-            placeholder="Enter Zip"></ion-input>
-        </div>
+        <ion-input id="open-modal" type="text" [(ngModel)]="country" placeholder="Select Country" (click)="CountryModel.present()"></ion-input>
+        <ion-modal #CountryModel>
+          <ng-template>
+            <ion-toolbar>
+              <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
+                <span (click)="CountryModel.dismiss()">
+                  <img src="assets/icon/Close-Square-white.svg" />
+                </span>
+                <span class="title-with-img">
+                  <span>{{'Select Country'}}</span>
+                </span>
+                <div class="header-icon">
+                </div>
+              </div>
+            </ion-toolbar>
+            <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterCountry($event)" placeholder="Search Countries"></ion-searchbar>
+            <ion-content>
+              <ion-list *ngIf="filteredCountries.length > 0">
+                <ion-radio-group [(ngModel)]="country">
+                  <ion-item *ngFor="let country of filteredCountries  let i = index" (click)="selectCountry(country , country.isoCode)">
+                    <ion-label>{{ country.name }}</ion-label>
+                    <ion-radio [value]="country.name" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+              <ion-label *ngIf="filteredCountries.length === 0 && searchTerm" class="no-result">No country found</ion-label>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
       </div>
     </div>
-    
+    <div class="fieldWrapper" *ngIf="!country || states?.length">
+      <ion-label>State</ion-label>
+      <div class="inputField">
+        <ion-input id="open-modal2" type="text" [(ngModel)]="state" placeholder="Select State" [disabled]="!this.country?.length" (click)="Statemodel.present()"></ion-input>
+        <ion-modal #Statemodel>
+          <ng-template>
+            <ion-toolbar>
+              <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
+                <span (click)="Statemodel.dismiss()">
+                  <img src="assets/icon/Close-Square-white.svg" />
+                </span>
+                <span class="title-with-img">
+                  <span>{{'Select State'}}</span>
+                </span>
+                <div class="header-icon">
+                </div>
+              </div>
+            </ion-toolbar>
+            <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterState($event)" placeholder="Search State"></ion-searchbar>
+            <ion-content>
+              <ion-list *ngIf="filteredstates.length > 0">
+                <ion-radio-group [(ngModel)]="state">
+                  <ion-item *ngFor="let state of filteredstates  let i = index" (click)="selectstate(state , state.isoCode)">
+                    <ion-label>{{ state.name }}</ion-label>
+                    <ion-radio [value]="state.name" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+              <ion-label *ngIf="filteredstates.length === 0 && searchTerm" class="no-result">No state found</ion-label>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </div>
+    <div class="fieldWrapper" *ngIf="state?.length">
+      <ion-label>City</ion-label>
+      <div class="inputField">
+        <ion-input id="open-modal3" type="text" [(ngModel)]="city" placeholder="Select city" (click)="Citymodel.present()"></ion-input>
+        <ion-modal #Citymodel>
+          <ng-template>
+            <ion-toolbar>
+              <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
+                <span (click)="Citymodel.dismiss()">
+                  <img src="assets/icon/Close-Square-white.svg" />
+                </span>
+                <span class="title-with-img">
+                  <span>{{'Select City'}}</span>
+                </span>
+                <div class="header-icon">
+                </div>
+              </div>
+            </ion-toolbar>
+            <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterCity($event)" placeholder="Search City"></ion-searchbar>
+            <ion-content>
+              <ion-list *ngIf="filteredcities.length > 0">
+                <ion-radio-group [(ngModel)]="city">
+                  <ion-item *ngFor="let city of filteredcities  let i = index" (click)="selectcity(city)">
+                    <ion-label>{{ city.name }}</ion-label>
+                    <ion-radio [value]="city.name" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+              <ion-label *ngIf="filteredcities.length === 0 && searchTerm" class="no-result">No city found</ion-label>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </div>
+    <div class="fieldWrapper">
+      <ion-label>Zip</ion-label>
+      <div class="inputField">
+        <ion-input inputmode="numeric" type="number" maxlength="5" (keyup.enter)="continue()" [(ngModel)]="zip" placeholder="Enter Zip"></ion-input>
+      </div>
+    </div>
     <div class="fieldWrapper" *ngIf="isOwner">
       <ion-label>
         <i>(enable to receive <u>Suggestions</u> from Friends/Businesses)</i>
@@ -96,10 +145,9 @@
       </div>
     </div>
   </div>
+
   <div class="btnWrapper">
-    <ion-button class="continuebtn" (click)="continue()">
-      Continue
-    </ion-button>
+    <ion-button class="continuebtn" (click)="continue()">Continue</ion-button>
     <ion-button class="cancelbtn" (click)="close()">Cancel</ion-button>
   </div>
 </div>

@@ -1,21 +1,26 @@
-import { Injectable } from "@angular/core";
-import { baseService } from "../base.service";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-import { IGoogleProductDto } from "src/app/models/dto/interfaces/IGoogleProductDto";
+import { Injectable } from "@angular/core";
 import { IAmazonDto } from "src/app/models/dto/interfaces/IAmazonDto";
 import { IDigiDocDto } from "src/app/models/dto/interfaces/IDigiDocDto";
+import { IGoogleProductDto } from "src/app/models/dto/interfaces/IGoogleProductDto";
 import { IItemDto } from "src/app/models/dto/interfaces/IItemDto";
+import { environment } from "src/environments/environment";
 import { IBookmarkDto } from "../../models/dto/interfaces/IBookmarkDto";
-import { CacheService } from "../cache/cache.service";
 import { IUserTypeDto } from "../../models/dto/interfaces/IUserTypeDto";
+import { IWebhookDto } from "../../models/dto/interfaces/IWebhookDto";
+import { baseService } from "../base.service";
+import { UtilitiesService } from "../utlities/utilities.service";
+import { Constants } from "../../common/Constants";
 
 @Injectable({
   providedIn: "root",
 })
 export class ItemService extends baseService {
-  constructor(public override http: HttpClient, public cacheService: CacheService) {
+  private _constants: Constants;
+
+  constructor(public override http: HttpClient, private utilityService: UtilitiesService) {
     super(http);
+    this._constants = new Constants();
   }
 
   // Google Product
@@ -26,9 +31,7 @@ export class ItemService extends baseService {
   async updateGoogleProduct(googleProductDto: IGoogleProductDto, userTypes: Array<IUserTypeDto>) {
     var result = this.patch(`/google-product`, googleProductDto).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, googleProductDto.ProfileItemId);
-    });
+    this.updateProfileItemCache(googleProductDto.ProfileItemId);
 
     return result;
   }
@@ -36,9 +39,7 @@ export class ItemService extends baseService {
   async deleteGoogleProduct(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/google-product/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -51,9 +52,7 @@ export class ItemService extends baseService {
   async deleteGoogleLink(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/google/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -66,9 +65,7 @@ export class ItemService extends baseService {
   async deleteYouTube(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/youtube/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -81,9 +78,7 @@ export class ItemService extends baseService {
   async updateAmazon(amazonDto: IAmazonDto, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.patch(`/amazon`, amazonDto).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -91,9 +86,7 @@ export class ItemService extends baseService {
   async deleteAmazon(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/amazon/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -111,9 +104,7 @@ export class ItemService extends baseService {
   async upsertDigiDoc(digiDocDto: IDigiDocDto, userTypes: Array<IUserTypeDto>) {
     var result = this.post("/digidoc", digiDocDto).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, digiDocDto.ProfileItemId);
-    });
+    this.updateProfileItemCache(digiDocDto.ProfileItemId);
 
     return result;
   }
@@ -121,9 +112,7 @@ export class ItemService extends baseService {
   async deleteDigiDoc(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/digidoc/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -141,9 +130,7 @@ export class ItemService extends baseService {
   async deleteUpcProduct(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/product/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -161,9 +148,7 @@ export class ItemService extends baseService {
   async deleteQrCode(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.delete(`/qrCode/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -180,9 +165,7 @@ export class ItemService extends baseService {
   async deleteBookmark(id: number, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.http.delete(`${environment.httpBaseUrl}/bookmark/${id}`).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -190,9 +173,7 @@ export class ItemService extends baseService {
   async upsertBookmark(bookmark: IBookmarkDto, profileItemId: number, userTypes: Array<IUserTypeDto>) {
     var result = this.http.post(`${environment.httpBaseUrl}/bookmark`, bookmark).toPromise();
 
-    userTypes.forEach(async (x) => {
-      this.cacheService.updateProfileItem(x.Name, profileItemId);
-    });
+    this.updateProfileItemCache(profileItemId);
 
     return result;
   }
@@ -204,5 +185,36 @@ export class ItemService extends baseService {
 
   async setSuggestionIsOpened(artifactId: number, artifactType: string, proxyPropertyId: number) {
     return this.http.get(`${environment.httpBaseUrl}/item/suggestion/opened/${artifactId}/${artifactType}/${proxyPropertyId}`).toPromise();
+  }
+
+  private async updateProfileItemCache(profileItemId) {
+    let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
+
+    let c = this._constants;
+    let b = c.UserTypes;
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Developer}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Owner}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Realtor}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Tradesman}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Vendor}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Appraiser}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Architect}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Bank}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
   }
 }

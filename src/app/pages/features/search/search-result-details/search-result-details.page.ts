@@ -267,10 +267,7 @@ export class SearchResultDetailsPage extends BasePage {
 
     // update the cache
     // (if PrivateLabelPartner) update the cache for the owner(s) who have this profile item 
-    let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
-    let userType = 'owner';
-    updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
-    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    await this.updateProfileItemCache(searchResultDto.ProfileItemId);
 
     this.close();
 
@@ -280,6 +277,53 @@ export class SearchResultDetailsPage extends BasePage {
       this.storageService.set("ActiveItem", this.ActiveItem);
       this.router.navigate(["create-metattach"]);
     }
+  }
+
+  private async updateProfileItemCache(profileItemId: number) {
+    let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
+    //let userType = 'owner';
+    //updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
+    //await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    let c = this._constants;
+    let b = c.UserTypes;
+
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Developer}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Owner}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Realtor}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Tradesman}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Vendor}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Appraiser}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Architect}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Bank}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
   }
 
   public close() {
