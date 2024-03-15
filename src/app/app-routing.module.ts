@@ -139,6 +139,16 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'marketplace',
+    loadChildren: () => import('./pages/marketplace/marketplace.module').then(m => m.MarketplacePageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'vendor-marketplace',
+    loadChildren: () => import('./pages/vendor-marketplace/vendor-marketplace.module').then(m => m.VendoerMarketplacePageModule),
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'help',
     loadChildren: () => import('./pages/features/account/help/help.module').then(m => m.HelpPageModule),
 
