@@ -1,0 +1,34 @@
+<ion-header>
+  <div class="header-interstatial">
+    <div class="left">
+      <span class="avatar">
+        <img src="assets/imgs/user-profile.png" >
+      </span>
+      <div class="user-info">
+        <span class="name">{{User?.UserName}}</span>
+        <span class="address">{{ User?.PrivateLabeler?.Name || '' }}</span>
+      </div>
+    </div>
+    <div class="right">
+      <img src="assets/imgs/Notification.svg" >
+      <img src="assets/imgs/market.svg" >
+    </div>
+  </div>
+</ion-header>
+
+<div class="container-wrapper">
+  <div class="formWrapper">
+    <div class="card-main" *ngFor="let menu of menus">
+      <div class="card-left" (click)="navigate(menu)">
+        <span class="title">{{menu.title}}</span>
+          <span class="browse">
+            {{menu.browse}}
+            <img src="assets/imgs/greater.svg">
+          </span>
+      </div>
+      <div class="card-right">
+        <img src={{menu.image}} >
+      </div>
+    </div>
+  </div>
+</div>
