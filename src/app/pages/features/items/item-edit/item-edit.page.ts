@@ -104,7 +104,7 @@ export class ItemEditPage extends BasePage {
     } else {
       this.TempActiveItem = this.ActiveAttachmentItem;
     }
-    
+
     if (this._isFromItemAddPage) {
       console.log(this._isFromItemAddPage, "abid")
       console.log("abid you hit it with atahir")
@@ -895,7 +895,13 @@ export class ItemEditPage extends BasePage {
 
   public async save() {
     if (!this.IsMetattachment) {
-      await this.showMyOrWishlistModalAsync();
+      let u = this.User;
+
+      if (!u.IsPrivateLabelPartner) {
+        await this.showMyOrWishlistModalAsync();
+      } else {
+        await this.saveAsync();
+      }
     } else {
       await this.saveAsync();
     }

@@ -177,13 +177,13 @@
             </div>
             <div class="hr" *ngIf="commonAreaToggle"> </div>
             <div class="repair-btn-side">
-            <div class="total-sq">
-              <h2>
-                Total: {{ totalBedroomsSqFt + totalBathroomsSqFt + totalCommonAreasSqFt }} sq ft
-              </h2>
+              <div class="total-sq">
+                <h2>
+                  Total: {{ totalBedroomsSqFt + totalBathroomsSqFt + totalCommonAreasSqFt }} sq ft
+                </h2>
+              </div>
+              <ion-button *ngIf="manageView == 'rooms' && !isPrivateLabeler && !isProxyProperty" class="property-name-div icon-round" (click)="repair()"><img src="assets/svgs/light/reapir-light.svg"></ion-button>
             </div>
-            <ion-button *ngIf="manageView == 'rooms'" class="property-name-div icon-round" (click)="repair()"><img src="assets/svgs/light/reapir-light.svg"></ion-button>
-          </div>
           </div>
           <ng-container *ngIf="roomView == 'suite16Categories'">
             <div class="caption" (click)="roomView = 'default'"
@@ -290,4 +290,5 @@
           (barcodeEvent)="launchBarcode()"
           (bookmarkEvent)="bookmark()"
           [isDashboard]="true"
-          (searchEvent)="search()"></tab-menu>
+          (searchEvent)="search()"
+          style="background-color:#fff !important;"></tab-menu>
