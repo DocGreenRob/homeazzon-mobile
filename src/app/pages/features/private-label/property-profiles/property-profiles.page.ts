@@ -130,7 +130,7 @@ export class PropertyProfilesPage extends BasePage {
   }
 
   public close() {
-    this.navCtrl.pop();
+    this.router.navigate(["dashboard"]);
   }
 
   goBack() {
