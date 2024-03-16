@@ -204,11 +204,18 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
         customProperty = {} as IPropertyDto;
       }
 
-      customProperty = { TotalStories, SqFt, Name, ...customProperty };
+      customProperty.Name = Name;
+      customProperty.SqFt = SqFt;
+      customProperty.TotalStories = TotalStories;
       this.CustomProperty = customProperty;
+      this.viewProperty(customProperty);
 
       this.router.navigate(["property-profile-bedrooms"]);
     }
+  }
+
+  async viewProperty(p: IPropertyDto) {
+    this.storageService.set('ActiveProperty', p);
   }
 
   public selectInput2(event) {
