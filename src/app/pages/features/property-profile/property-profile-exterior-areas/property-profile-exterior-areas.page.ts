@@ -69,7 +69,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     private companyInformationService: CompanyInformationService,
     public override storageService: LocalStorageService
   ) {
-    super(navCtrl, null, null, null, platform, router, toast, null, null,null,storageService);
+    super(navCtrl, null, null, null, platform, router, toast, null, null, null, storageService);
     this.constants = new Constants();
 
     this.isIos = this.platform.is('ios');
@@ -136,7 +136,9 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
           text: "Yes",
           handler: () => {
             console.log("Yes clicked");
-            this.router.navigate(["property-profile-address"]);
+            // property-profile-general-information
+            this.router.navigate(["property-profile-general-information"]);
+            //this.router.navigate(["property-profile-address"]);
           },
         },
       ],
@@ -202,7 +204,7 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
     //debugger;
     // determine if need to save Company Information
     let _ = this.UserTypes.filter(x => x.Name.toLowerCase().indexOf(this.constants.UserTypes.Unassigned.toLowerCase()) < 0
-                                    && x.Name.toLowerCase().indexOf(this.constants.UserTypes.Owner.toLowerCase()) < 0);
+      && x.Name.toLowerCase().indexOf(this.constants.UserTypes.Owner.toLowerCase()) < 0);
 
     if (_.some(x => x.Id === this.NewSelectedUserTypeId)) {
       // figure out which type to do custom stuff???
@@ -286,10 +288,10 @@ export class PropertyProfileExteriorAreasPage extends BasePage {
   }
 
   goBack() {
-		this.navController.back();
-	}
-  showExterior(){
-    this.isSkipExteriorAreas=!this.isSkipExteriorAreas;
+    this.navController.back();
+  }
+  showExterior() {
+    this.isSkipExteriorAreas = !this.isSkipExteriorAreas;
   }
 
   async presentSpinner(text: string) {

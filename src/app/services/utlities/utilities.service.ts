@@ -47,6 +47,6 @@ export class UtilitiesService extends baseService {
   }
 
   async cacheManualMakeGetRequestAsync(webhookDto: IWebhookDto) {
-    return this.post('/utils/service-bus/cache-manual', webhookDto).toPromise();
+    return this.post('/utils/service-bus/cache-manual', webhookDto).subscribe(x => { }, e => { });
   }
 }

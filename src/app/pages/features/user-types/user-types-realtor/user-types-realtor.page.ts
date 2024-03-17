@@ -2,7 +2,7 @@ import { Location } from "@angular/common";
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { InAppBrowser } from "@awesome-cordova-plugins/in-app-browser/ngx";
-import { LoadingController, MenuController, NavController, Platform } from "@ionic/angular";
+import { LoadingController, MenuController, ModalController, NavController, Platform } from "@ionic/angular";
 import { ICompanyInformationDto } from "../../../../models/dto/interfaces/ICompanyInformationDto";
 import { IPropertyDto } from "../../../../models/dto/interfaces/IPropertyDto";
 import { IStateDto } from "../../../../models/dto/interfaces/IStateDto";
@@ -52,6 +52,12 @@ export class UserTypesRealtorPage extends BasePage {
   spinnerText2: string = 'Loading...';
   loading2Visible: boolean = false;
 
+  filteredCountries = this.countries;
+  filteredstates = this.states;
+  filteredcities = this.cities;
+  searchTerm: string = '';
+  countrycode = "";
+
   constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
     public override menuController: MenuController,
@@ -65,7 +71,8 @@ export class UserTypesRealtorPage extends BasePage {
     private location: Location,
     public override storageService: LocalStorageService,
     public companyInformationService: CompanyInformationService,
-    public loadingController: LoadingController) {
+    public loadingController: LoadingController,
+    public modal: ModalController) {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     console.log("ionViewDidLoad UserTypesRealtorPage");
     this._constants = new Constants();
@@ -99,9 +106,6 @@ export class UserTypesRealtorPage extends BasePage {
         this.state = x.State;
         this.country = x.country;
         this.zip = x.Zip?.toString()?.trim() || "";
-
-        this.onCountryChange();
-        this.onStateChange();
       }).catch((err) => {
 
       });
@@ -202,14 +206,6 @@ export class UserTypesRealtorPage extends BasePage {
     this.location.back();
   }
 
-  onCountryChange(){
-    this.states = State.getStatesOfCountry(this.country);
-  }
-
-  onStateChange(){
-    this.cities = City.getCitiesOfState(this.country, this.state);
-  }
-
   async presentSpinnerCompany(text: string) {
     this.spinnerText = text;
     this.loading1Visible = true;
@@ -228,6 +224,65 @@ export class UserTypesRealtorPage extends BasePage {
   async dismissSpinnerUpdateComapany() {
     this.loading1Visible = false;
     this.spinnerText = ''; 
+  }
+
+  filterCountry(event: CustomEvent) {
+    this.searchTerm = event.detail.value;
+    this.filteredCountries = this.countries.filter(country =>
+      country.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  filterState(event: CustomEvent) {
+    this.searchTerm = event.detail.value;
+    this.filteredstates = this.states.filter(state =>
+      state.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  filterCity(event: CustomEvent) {
+    this.searchTerm = event.detail.value;
+    this.filteredcities = this.cities.filter(city =>
+      city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  selectCountry(country, councode) {
+    this.searchTerm = '';
+    this.filteredCountries = this.countries;
+    this.country = country.name;
+    this.countrycode = councode;
+    this.modal.dismiss();
+    this.onCountryChange(councode);
+  }
+
+  selectstate(state, statecode) {
+    this.searchTerm = '';
+    this.filteredstates = this.states;
+    this.state = state.name;
+    this.modal.dismiss();
+    this.onStateChange(statecode);
+  }
+
+  selectcity(city) {
+    this.searchTerm = '';
+    this.filteredcities = this.cities;
+    this.city = city.name;
+    this.city = '';
+    this.modal.dismiss();
+  }
+
+  onCountryChange(code) {
+    this.states = State.getStatesOfCountry(code);
+    this.filteredstates = this.states;
+    this.state= '';
+    this.city = '';
+    this.modal.dismiss();
+  }
+
+  onStateChange(code) {
+    this.cities = City.getCitiesOfState(this.countrycode, code);
+    this.filteredcities = this.cities;
   }
 
 }
