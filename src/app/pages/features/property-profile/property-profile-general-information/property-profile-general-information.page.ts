@@ -160,12 +160,31 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
       p.Address.StreetAddress2 = customProperty.Address.StreetAddress2;
       p.Address.City = customProperty.Address.City;
       p.Address.State = customProperty.Address.State;
+      p.Address.StateCode = customProperty.Address.StateCode === '' ? customProperty.Address.State : customProperty.Address.StateCode;
       p.Address.Zip = customProperty.Address.Zip;
-      p.Address.Country = customProperty.Address.country;
-
+      p.Address.Country = customProperty.Address.Country;
+      p.Address.CountryCode = customProperty.Address.CountryCode === '' ? customProperty.Address.Country : customProperty.Address.CountryCode;
 
       this.presentSpinnerAddress('Updating Address...');
       await this.propertyService.updateAddress(p).then(async (x) => {
+
+        // update the property with the new address
+        let a = this.Properties;
+        let modifiedProperty = a.filter((x) => x.Id == p.Id)[0];
+
+        // remove the old property
+        let newPropertiesList = a.filter((x) => x.Id != p.Id);
+
+        modifiedProperty.StreetAddress1 = customProperty.Address.StreetAddress1;
+        modifiedProperty.State = p.Address.State;
+        modifiedProperty.City = p.Address.City;
+        modifiedProperty.SqFt = p.SqFt;
+        modifiedProperty.TotalStories = p.TotalStories;
+        modifiedProperty.Name = p.Name;
+
+        newPropertiesList.push(modifiedProperty);
+
+        this.Properties = newPropertiesList;
 
         // if (1 === 1) {
         if (this.isLinkWithCustomer && !this.isExistingLinkWithCustomer) {
@@ -204,11 +223,18 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
         customProperty = {} as IPropertyDto;
       }
 
-      customProperty = { TotalStories, SqFt, Name, ...customProperty };
+      customProperty.Name = Name;
+      customProperty.SqFt = SqFt;
+      customProperty.TotalStories = TotalStories;
       this.CustomProperty = customProperty;
+      this.viewProperty(customProperty);
 
       this.router.navigate(["property-profile-bedrooms"]);
     }
+  }
+
+  async viewProperty(p: IPropertyDto) {
+    this.storageService.set('ActiveProperty', p);
   }
 
   public selectInput2(event) {
@@ -236,7 +262,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
     this.navController.back();
   }
 
-  
+
   async presentSpinnerAddress(text: string) {
     this.spinnerText = text;
     this.loading1Visible = true;
@@ -244,10 +270,10 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
 
   async dismissSpinnerAddress() {
     this.loading1Visible = false;
-    this.spinnerText = ''; 
+    this.spinnerText = '';
   }
 
-  
+
   async presentSpinnerLinking(text: string) {
     this.spinnerText2 = text;
     this.loading2Visible = true;
@@ -255,7 +281,7 @@ export class PropertyProfileGeneralInformationPage extends BasePage {
 
   async dismissSpinnerLinking() {
     this.loading2Visible = false;
-    this.spinnerText2 = ''; 
+    this.spinnerText2 = '';
   }
 
 }
