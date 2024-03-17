@@ -115,7 +115,7 @@ export class AppComponent extends BasePage {
 
       if (a < 0) {
         this._loading = await this.loadingController.create({
-          message: 'New Version Available! Visit the App Store to download or use the web "www.mobile.web.homeazzon.com"',
+          message: 'New Version Available! Visit the App Store to download.',
           cssClass: 'my-loading-class',
         });
 
@@ -366,6 +366,7 @@ export class AppComponent extends BasePage {
     };
 
     this.menuController.close();
+    this.IsAddingNewProperty = true;
     this.router.navigate(['property-profiles'], navExtras);
   }
 

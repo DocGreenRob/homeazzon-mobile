@@ -182,6 +182,14 @@ export class DashboardPage extends BasePage {
     //if (this.CurrentView === 'Category') {
     //	this.showCategories();
     //}
+
+    this.storageService.delete('IsAddingNewProperty');
+    this.storageService.delete('SelectedProperty');
+    this.storageService.delete('IsEditingProperty');
+    this.storageService.delete('IsSwitchingProperty');
+    this.storageService.delete('CustomProperty');
+    this.storageService.delete('NewSelectedUserType');
+
   }
 
   async resetState() {
