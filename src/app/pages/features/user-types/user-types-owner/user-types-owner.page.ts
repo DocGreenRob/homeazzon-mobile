@@ -42,6 +42,7 @@ export class UserTypesOwnerPage extends BasePage implements OnInit {
   private _selectedProperty: any;
   private _constants: Constants;
   countrycode = "";
+  statecode = "";
 
   constructor(public override navController: NavController,
     public override communicator: CommunicatorService,
@@ -113,10 +114,13 @@ export class UserTypesOwnerPage extends BasePage implements OnInit {
       let address: IAddressDto = {} as IAddressDto;
       address.StreetAddress1 = this.streetAddress1;
       address.StreetAddress2 = this.streetAddress2;
+      address.Country = this.country;
+      address.CountryCode = this.countrycode;
       address.City = this.city;
       address.State = this.state;
+      address.StateCode = this.statecode;
       address.Zip = this.zip;
-      address.country = this.country;
+
       customProperty.IsPublicProperty = this.isPublicProperty;
 
       customProperty.Address = address;
@@ -212,6 +216,7 @@ export class UserTypesOwnerPage extends BasePage implements OnInit {
     this.searchTerm = '';
     this.filteredstates = this.states;
     this.state = state.name;
+    this.statecode = statecode;
     this.modal.dismiss();
     this.onStateChange(statecode);
   }
@@ -227,7 +232,7 @@ export class UserTypesOwnerPage extends BasePage implements OnInit {
   onCountryChange(code) {
     this.states = State.getStatesOfCountry(code);
     this.filteredstates = this.states;
-    this.state= '';
+    this.state = '';
     this.city = '';
     this.modal.dismiss();
   }
