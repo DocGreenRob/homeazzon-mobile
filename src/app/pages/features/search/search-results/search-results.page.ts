@@ -115,7 +115,7 @@ export class SearchResultsPage extends BasePage {
             Description: a.product_title,
             Image: a.product_photo,
             Link: a.product_url,
-            Price: a.product_price.value,
+            Price: a.product_price,
           });
         });
         // debugger;
@@ -163,7 +163,7 @@ export class SearchResultsPage extends BasePage {
           Description: a.product_title,
           Image: a.product_photo,
           Link: a.product_url,
-          Price: a.product_price.value,
+          Price: a.product_price,
         });
       });
       infiniteScroll.complete();
