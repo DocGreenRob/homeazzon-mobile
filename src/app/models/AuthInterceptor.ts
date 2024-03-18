@@ -36,7 +36,7 @@ export class AuthInterceptor extends BasePage implements HttpInterceptor {
 			authReq = req.clone({
 				headers: new HttpHeaders({
 					'X-RapidAPI-Key': '5a9afa6809mshef0e809ac690986p12c3f9jsnd49b37072944',
-					'X-RapidAPI-Host': 'axesso-axesso-amazon-data-service-v1.p.rapidapi.com'
+					'X-RapidAPI-Host': 'real-time-amazon-data.p.rapidapi.com'
 				})
 			});
 		}
