@@ -11,13 +11,18 @@
             justify-content: space-between;
             height: 76px;
             border-bottom: 1px solid #DEE8F4;
+            width: 100%;
+            overflow: hidden;
 
             .left {
-                display: flex;
-                align-items: center;
-                gap: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    width: calc(100% - 68px);
+                    overflow: hidden;
 
                 .avatar {
+                    min-width: 32px;
                     width: 32px;
                     height: 32px;
                     overflow: hidden;
@@ -33,6 +38,7 @@
                 .user-info {
                     display: flex;
                     flex-direction: column;
+                    overflow-wrap: anywhere;
 
                     .name {
                         font-family: Plus Jakarta Sans;
@@ -41,7 +47,9 @@
                         line-height: 18px;
                         letter-spacing: 0.005em;
                         text-align: left;
-                        color: #232B42;
+                        color: #232B42; 
+                        max-height: 36px;    
+                        overflow: hidden;                  
                     }
 
                     .address {
@@ -52,6 +60,7 @@
                         letter-spacing: 0.005em;
                         text-align: left;
                         color: #7A8697;
+                        overflow-wrap: anywhere;
                     }
                 }
             }
@@ -60,6 +69,30 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
+                min-width: 68px;
+            }
+            .buy-badge{
+                width: 65px;
+                min-width: 65px;
+                height: 27px;
+                border-radius: 206px;
+                background: #5681AA;
+                font-family: Plus Jakarta Sans;
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 19px;
+                letter-spacing: -0.1650000066px;
+                text-align: left;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                margin-inline: 5px;
+
+                img{
+                    transform: rotate(90deg);
+                }
             }
         }
 
@@ -94,6 +127,13 @@
             ion-input {
                 --padding-start: 10px;
                 --padding-end: 10px;
+                font-family: Plus Jakarta Sans;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 14px;
+                letter-spacing: 0.005em;
+                text-align: left;
+                color: #B0B0B0; 
             }
         }
 
@@ -114,9 +154,10 @@
 
             swiper-container {
                 margin-right: -24px;
+                
 
-                swiper-slide {
-                    width: 86px !important;
+                .item {
+                    max-width: 86px !important;
                     height: 49px;
                     border: 1px solid #DEE8F4;
                     display: flex;
@@ -124,7 +165,7 @@
                     justify-content: center;
                     background: #FFFFFF;
                     border-radius: 4.89px;
-                    margin-right: 15px;
+                    overflow: hidden;
 
                     .item {
                         overflow: hidden;
@@ -135,15 +176,15 @@
         }
 
         .offers-swiper {
-            padding: 24px 0 24px 24px;
+            padding: 24px 0 20px 24px;
             background: #E9ECF5;
             margin: 0 -24px;
+            overflow: hidden;
 
             swiper-container {
                 margin-right: -24px;
                 
                 swiper-slide {
-                    width: 195px !important;
                     height: 90px;
                     border-radius: 8px;
                     border: 1px solid #DEE8F4;
@@ -151,7 +192,6 @@
                     flex-direction: column;
                     padding: 15px;
                     background-image: url("../../../assets/imgs/image 10.png");
-                    margin-right: 15px;
 
                     .card-content {
                         display: flex;
@@ -199,21 +239,37 @@
                     &:nth-child(2){
                         background-image: url("../../../assets/imgs/image 11.png") !important;
                     }
+                    &:nth-child(1){
+                        margin-left: -100px;
+                    }
+
                 }
+                &::part(container){
+                    padding-bottom: 20px !important;
+                }
+                &::part(pagination){
+                    bottom: -3px !important;
+                }
+
             }
         }
         .category-main{
-            padding: 24px 0 24px 24px;
+            padding: 44px 0 24px 24px;
             margin: 0 -24px;
-            .catefories{
+            .scroll{
+                overflow: hidden;
+            }
+            .categories{
                 display: flex;
                 align-items: center;
                 gap: 15px;
+                margin-bottom: 20px;
+                overflow-y: auto ;
                 span{
                     height: 25px;
                     border: 1px solid #DEE8F4;
                     padding: 4px 10px;
-                    border-radius: 10px;
+                    border-radius: 205px;
                     font-family: Plus Jakarta Sans;
                     font-size: 12px;
                     font-weight: 600;
@@ -221,6 +277,70 @@
                     letter-spacing: -0.16500000655651093px;
                     text-align: left;
                     color: #53677A;
+                    white-space: nowrap;
+                    &:last-child{
+                        margin-right: 15px;
+                     }
+                }
+                .active{
+                        background: #5681AA !important;
+                         color: #fff !important;
+                }
+                 &::-webkit-scrollbar {
+                 display: none;
+                 }
+                 
+            }
+        }
+        .category-swiper{
+            swiper-slide{
+                height: 150px;
+                width: 140px !important;
+                border-radius: 8px;
+                border: 1px solid #DEE8F4;
+                overflow: hidden;
+                margin-right: 15px;
+                .card{
+                    width: 100%;
+                    height: 100%;
+                }
+                .image{
+                    height: 70%;
+                    display: block;
+                    width: 100%;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: fill;
+                    }
+                }
+                .content{
+                    display: flex;
+                    flex-direction: column;
+                    padding: 5px;
+                    gap: 3px;
+                    .name{
+                        font-family: Plus Jakarta Sans;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: 14px;
+                        letter-spacing: 0.005em;
+                        text-align: left;
+                        color: #232C41;
+                        white-space: nowrap;
+                        width: 100%;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                    .price{
+                        font-family: Plus Jakarta Sans;
+                        font-size: 12px;
+                        font-weight: 600;
+                        line-height: 14px;
+                        letter-spacing: 0.005em;
+                        text-align: left;
+                        color: #00C566;
+                    }
                 }
             }
         }
