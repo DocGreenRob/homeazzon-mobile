@@ -33,6 +33,8 @@ import { Capacitor } from "@capacitor/core";
 import { LocalStorageService } from "@app/services/local-storage.service";
 // import { NavController } from "@ionic/angular";
 import { ImageviewComponent } from "../imageview/imageview.component";
+import { UtilitiesService } from "../../../../services/utlities/utilities.service";
+import { IWebhookDto } from "../../../../models/dto/interfaces/IWebhookDto";
 
 
 
@@ -60,8 +62,7 @@ export class ItemEditPage extends BasePage {
   loading1Visible: boolean = false;
 
 
-  constructor(
-    public override navController: NavController,
+  constructor(public override navController: NavController,
     private loadingCtrl: LoadingController,
     private itemService: ItemService,
     public override uxNotifierService: UxNotifierService,
@@ -80,8 +81,8 @@ export class ItemEditPage extends BasePage {
     private location: Location,
     public override router: Router,
     public override storageService: LocalStorageService,
-    private modalController: ModalController
-  ) {
+    private modalController: ModalController,
+    private utilityService: UtilitiesService) {
     super(navController, null, communicator, menuController, platform, null, uxNotifierService, null, null, null, storageService);
     this._constants = new Constants();
     this.isIos = this.platform.is('ios');
@@ -104,7 +105,7 @@ export class ItemEditPage extends BasePage {
     } else {
       this.TempActiveItem = this.ActiveAttachmentItem;
     }
-    
+
     if (this._isFromItemAddPage) {
       console.log(this._isFromItemAddPage, "abid")
       console.log("abid you hit it with atahir")
@@ -519,6 +520,8 @@ export class ItemEditPage extends BasePage {
     if (ctr === this._selections.length) {
       this.showSave();
     }
+
+    this.updateProfileItemCache(this.ProfileItem.Id);
   }
 
   private async addBookmark(
@@ -553,6 +556,8 @@ export class ItemEditPage extends BasePage {
   private async showSave() {
     this.uxNotifierService.showToast("Saved successfully!", this._constants.ToastColorGood);
     let source = this.QueryParams.source;
+
+    this.updateProfileItemCache(this.ProfileItem.Id);
 
     if (source !== null) {
       if (source === "DashboardPage") {
@@ -895,7 +900,13 @@ export class ItemEditPage extends BasePage {
 
   public async save() {
     if (!this.IsMetattachment) {
-      await this.showMyOrWishlistModalAsync();
+      let u = this.User;
+
+      if (!u.IsPrivateLabelPartner) {
+        await this.showMyOrWishlistModalAsync();
+      } else {
+        await this.saveAsync();
+      }
     } else {
       await this.saveAsync();
     }
@@ -1040,4 +1051,50 @@ export class ItemEditPage extends BasePage {
     this.spinnerText = '';
   }
 
+  private async updateProfileItemCache(profileItemId: number) {
+    let updateCacheUrl: IWebhookDto = {} as IWebhookDto;
+    //let userType = 'owner';
+    //updateCacheUrl.Route = `profileItem/${searchResultDto.ProfileItemId}/${userType}/no-cache`;
+    //await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    let c = this._constants;
+    let b = c.UserTypes;
+
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Developer}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Owner}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Realtor}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Tradesman}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Vendor}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Appraiser}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Architect}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+    // wait .5 second
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    updateCacheUrl.Route = `profileItem/${profileItemId}/${b.Bank}/no-cache`;
+    await this.utilityService.cacheManualMakeGetRequestAsync(updateCacheUrl);
+  }
 }

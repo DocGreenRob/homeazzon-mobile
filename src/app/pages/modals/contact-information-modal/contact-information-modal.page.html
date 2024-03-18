@@ -203,10 +203,11 @@
     </div>
   </ng-container>
 </div>
-<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em', 'background-color': '#232B42'}"
+<tab-menu [ngStyle]="isIos && {'padding-bottom': '1em'}"
           (homeEvent)="goHome()"
           (fileExplorerEvent)="launchFileExplorer()"
           (cameraEvent)="launchCamera()"
           (barcodeEvent)="launchBarcode()"
           (bookmarkEvent)="bookmark()"
-          (searchEvent)="search()"></tab-menu>
+          (searchEvent)="search()"
+          style="background-color:#fff !important;"></tab-menu>

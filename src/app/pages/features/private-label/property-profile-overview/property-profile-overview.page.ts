@@ -124,7 +124,8 @@ export class PropertyProfileOverviewPage extends BasePage {
   }
 
   public async close() {
-    this.navCtrl.pop();
+    //this.navCtrl.pop();
+    this.router.navigate(["property-profiles"]);
   }
 
   viewDesignPlans() {

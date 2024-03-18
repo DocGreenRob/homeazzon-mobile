@@ -35,20 +35,23 @@ import { LocalStorageService } from '@app/services/local-storage.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage extends BasePage {
+  public isPrivateLabeler: boolean = false;
+  public isProxyProperty: boolean = false;
+
   private _constants = new Constants();
   public isIos: boolean = false;
   spinnerText: string = 'Loading...';
   loading1Visible: boolean = false;
-  
+
   spinnerText2: string = 'Loading...';
   loading2Visible: boolean = false;
-  
+
   spinnerText3: string = 'Loading...';
   loading3Visible: boolean = false;
-  
+
   spinnerText4: string = 'Loading...';
   loading4Visible: boolean = false;
-  
+
   // const
   public data: IGrid;
   public manageView: string = 'rooms';
@@ -139,6 +142,9 @@ export class DashboardPage extends BasePage {
   }
 
   async ionViewDidEnter() {
+    const u = this.User;
+    this.isPrivateLabeler = u.IsPrivateLabelPartner;
+
     this.resetState();
     if (this.IsFirstLoadCompleted === undefined
       || this.IsFirstLoadCompleted === null
@@ -146,7 +152,7 @@ export class DashboardPage extends BasePage {
 
 
       this.presentSpinner("loading properties...")
-      
+
       setTimeout(async () => {
         try {
           await this.start();
@@ -176,6 +182,14 @@ export class DashboardPage extends BasePage {
     //if (this.CurrentView === 'Category') {
     //	this.showCategories();
     //}
+
+    this.storageService.delete('IsAddingNewProperty');
+    this.storageService.delete('SelectedProperty');
+    this.storageService.delete('IsEditingProperty');
+    this.storageService.delete('IsSwitchingProperty');
+    this.storageService.delete('CustomProperty');
+    this.storageService.delete('NewSelectedUserType');
+
   }
 
   async resetState() {
@@ -474,6 +488,7 @@ export class DashboardPage extends BasePage {
             // tried this and doesn't work, need to make the call to the api to
             // get the property info
             if (this.ActiveProperty.IsProxy) {
+              this.isProxyProperty = true;
               if (!this.ActiveProperty.Profiles?.length) {
                 this.userDetailsService.getProxyProperty(this.ActiveProperty.Id).then((x: any) => {
                   this.setupProperty(x);
@@ -727,6 +742,8 @@ export class DashboardPage extends BasePage {
             console.log(error);
           });
       } else {
+        this.isProxyProperty = true;
+
         await this.userDetailsService
           .getProxyProperty(this.ActiveProperty.Id)
           .then(
@@ -745,7 +762,7 @@ export class DashboardPage extends BasePage {
             },
             (err) => {
               if (refreshProperty) {
-              
+
                 this.dismissSpinner4();
               }
 
@@ -857,7 +874,7 @@ export class DashboardPage extends BasePage {
       });
     }
 
-  
+
     this.dismissSpinner4();
   }
 

@@ -38,7 +38,8 @@ export class UserTypesManagerPage extends BasePage {
     super(navController, null, communicator, menuController, platform, router, uxNotifierService, userTypesService, featuresService, inAppBrowser, storageService);
     this._constants = new Constants();
 
-    this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned);
+    this.userTypes = this.UserTypes.filter((x) => x.IsActive).filter((x) => x.Name !== this._constants.UserTypes.Unassigned
+                                                                          && x.Name !== this._constants.UserTypes.PrivateLabelUser);
     this.userTypesAnynomousType = this.userTypes;
 
     let currentUserUserTypes: any = this.User.Types;
@@ -188,10 +189,9 @@ export class UserTypesManagerPage extends BasePage {
 
   public async redirectToRegistrationPage() {
     await this.utilitiesService.getPrivateLabelRegistrationUrl().then((x:any) => {
-      debugger;
       let a = x.PrivateLabelRegistrationUrl;
       // redirect the user to the registration URL page www.homeazzon.register.com
-      this.inAppBrowser.create(x, "_blank");
+      this.inAppBrowser.create(a, "_blank");
     }).catch((err) => {
 
     });

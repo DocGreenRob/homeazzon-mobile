@@ -3,7 +3,9 @@
              type="number"
              [placeholder]="placeholder"
              [(ngModel)]="value"
-             (change)="changeValue()"></ion-input>
+             (change)="changeValue()"
+             (click)="handleInputClick()"
+             (focusout)="handleInputOut()"></ion-input>
   <span class="spinArrows">
     <img class="arrowUp" src="/assets/icon/arrow.svg" (click)="changeValue('increment')">
     <img class="arrowDown" src="/assets/icon/arrow.svg" (click)="changeValue('decrement')">

@@ -1,5 +1,5 @@
 <app-global-spinner [spinnerText]="spinnerText" *ngIf="loadingVisible"></app-global-spinner>
-<ion-header *ngIf="isPrivateLabelUser" style="background-color: #232B42;">
+<ion-header *ngIf="isPrivateLabelUser && !isAddingNewProperty" style="background-color: #232B42;">
   <div class="header-title-with-icon" [ngStyle]="isIos && {'margin-top': '2em'}">
     <img src="assets/icon/arrow-left-square.svg" (click)="goBack()">
       <span class="title-with-img">
@@ -9,7 +9,7 @@
   </div>
 </ion-header>
 <div class="container-wrapper">
-  <div  *ngIf="isPrivateLabelUser" class="formWrapper">
+  <div  *ngIf="isPrivateLabelUser && !isAddingNewProperty" class="formWrapper">
     <span class="property-length">
       ({{ privateLabelProperties?.length }}) Property Templates
     </span>
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!isPrivateLabelUser" class="New-home-wrapper">
+  <div *ngIf="!isPrivateLabelUser || isAddingNewProperty" class="New-home-wrapper">
     <div class="cross-icon">
       <img src="assets/icon/Close Square.svg" (click)="goBack()" alt="">
     </div>
@@ -34,7 +34,7 @@
         <img src="assets/imgs/home-img.png" alt="">
       </div>
     </div>
-    <div *ngIf="isPrivateLabelUser" class="home-btn-wrapper">
+    <div class="home-btn-wrapper">
       <ion-button class="add-property-btn"
                   *ngIf="isOwner"
                   (click)="goToBuildYourGeneral()">

@@ -54,7 +54,7 @@ export class ItemsPage extends BasePage {
   private _digiDocGridListsTags: IGridList;
   private _isListView: boolean = false;
   isListView: boolean = false;
-
+  private hasLoadedData: boolean = false;
   spinnerText: string = 'Loading...';
   loading1Visible: boolean = false;
   spinnerText2: string = 'Loading...';
@@ -131,7 +131,7 @@ export class ItemsPage extends BasePage {
 
   public async ionViewDidEnter() {
     console.log("ionViewDidEnter ItemsPage");
-
+    if (!this.hasLoadedData) {
     this._myGrid = { Lists: [] };
     this._wishlistGrid = { Lists: [] };
     this._suggestGrid = { Lists: [] };
@@ -141,6 +141,8 @@ export class ItemsPage extends BasePage {
     this._isListView = false;
 
     this.User.IsPrivateLabelPartner ? this.segmentChanged('suggested') : this.segmentChanged('my');
+    this.hasLoadedData = true;
+    }
   }
 
   viewProfileLineItems() {

@@ -487,6 +487,14 @@ export class BasePage implements OnInit {
     this.storageService.set('IsEditingProperty', value);
   }
 
+  get IsAddingNewProperty(): boolean {
+    const info: any = this.storageService.get('IsAddingNewProperty');
+    return info;
+  }
+  set IsAddingNewProperty(value: boolean) {
+    this.storageService.set('IsAddingNewProperty', value);
+  }
+
   // ----------------------------------------------------------->
   // ----------------------------------------------------------->
   // ----------------------------------------------------------->

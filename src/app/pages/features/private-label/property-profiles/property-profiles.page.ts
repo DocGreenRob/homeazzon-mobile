@@ -23,6 +23,7 @@ export class PropertyProfilesPage extends BasePage {
   public isRealtor: boolean = false;
   public isPrivateLabelUser: boolean = false;
   public isIos: boolean = false;
+  public isAddingNewProperty: boolean = false;
   spinnerText: string;
   loadingVisible: boolean;
 
@@ -67,6 +68,8 @@ export class PropertyProfilesPage extends BasePage {
         }
       });
     }
+
+    this.isAddingNewProperty = this.IsAddingNewProperty;
   }
 
   // open Modal for get profile details
@@ -130,7 +133,7 @@ export class PropertyProfilesPage extends BasePage {
   }
 
   public close() {
-    this.navCtrl.pop();
+    this.router.navigate(["dashboard"]);
   }
 
   goBack() {
@@ -141,6 +144,7 @@ export class PropertyProfilesPage extends BasePage {
     this.spinnerText = text;
     this.loadingVisible = true;
   }
+
   async dismissSpinner() {
     this.loadingVisible = false;
     this.spinnerText = '';
