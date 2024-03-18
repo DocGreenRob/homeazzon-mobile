@@ -17,22 +17,30 @@ export class AuthInterceptor extends BasePage implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler) {
 		// Get the auth token from the service.
 		let authToken: IAuthTokenDto = this.storageService.get('AuthToken');
-		let authReq = req;
-
+		let authReq = req
+		let isAmmazone = this.storageService.get('isAmazzone');
 		if (authToken != undefined && authToken != null) {
-
 			if (req.url.toLowerCase().indexOf('/token') === -1) {
 				// Clone the request and replace the original headers with
 				// cloned headers, updated with the authorization.
 				authReq = req.clone({
 					headers: new HttpHeaders({
 						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${authToken.Access_token}`
+						'Authorization': `Bearer ${authToken.Access_token}`,
 					})
 				});
 			}
 		}
-
+		if (isAmmazone) {
+			this.storageService.set('isAmazzone',false)
+			authReq = req.clone({
+				headers: new HttpHeaders({
+					'X-RapidAPI-Key': '5a9afa6809mshef0e809ac690986p12c3f9jsnd49b37072944',
+					'X-RapidAPI-Host': 'axesso-axesso-amazon-data-service-v1.p.rapidapi.com'
+				})
+			});
+		}
+		console.log("req", req);
 		//alert(`authReq ${JSON.stringify(authReq)}`);
 		//alert(`authReq.headers.Name ${JSON.stringify(authReq.headers.get('Name'))}`);
 		//alert(`authReq.headers.Authorization ${JSON.stringify(authReq.headers.get('Authorization'))}`);

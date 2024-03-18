@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { baseService } from "../base.service";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { map, tap, retryWhen, delay, take } from "rxjs/operators";
+import { validateEventsArray } from "@angular/fire/compat/firestore";
 @Injectable({
   providedIn: "root",
 })
@@ -49,6 +50,18 @@ export class SearchService extends baseService {
     //    `https://www.searchapi.io/api/v1/search?api_key=RFuRhp1yiMywsBcdwFrwVaJw&engine=amazon_search&q=${keyword}`
     //  )
     //  .toPromise();
+  }
+  /*
+  This method to get product from amazon
+  */
+  async searchAmazonProduct(keyword: string) {
+    return this.http.get(`https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-search-by-keyword-asin?domainCode=com&keyword=${keyword}&page=1&excludeSponsored=false&sortBy=relevanceblender&withCache=true`).toPromise();
+  }
+  /*
+  This method to get product from amazon
+  */
+  async searchAmazonProduct2(keyword: string) {
+    return this.http.get(`https://real-time-amazon-data.p.rapidapi.com/search?query=${keyword}&page=1&country=US&category_id=aps`).toPromise();
   }
 
   /*
