@@ -403,3 +403,10 @@ ion-content {
     margin-top: 57px;
   }
 }
+
+.icon-round{
+  width: 40px;
+  img{
+    max-width: unset !important;
+  }
+}
