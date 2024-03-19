@@ -1,6 +1,6 @@
 {
   "name": "homeaZZon",
-  "version": "13.2.0",
+  "version": "13.2.1",
   "author": "HomeaZZon, LLC.",
   "homepage": "https://homeaZZon.com/",
   "scripts": {
@@ -55,6 +55,7 @@
     "ng2-pdf-viewer": "^10.0.0",
     "ngx-chips": "^3.0.0",
     "rxjs": "~7.8.0",
+    "swiper": "^11.0.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
