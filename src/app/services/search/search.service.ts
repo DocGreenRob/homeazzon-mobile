@@ -63,7 +63,6 @@ export class SearchService extends baseService {
   async searchAmazonProduct(keyword: string,page:number) {
     return this.http.get(`https://real-time-amazon-data.p.rapidapi.com/search?query=${keyword}&page=${page}&country=US&category_id=aps`).toPromise();
   }
-
   /*
   This method to get videos from you tube by given keyword
   */
