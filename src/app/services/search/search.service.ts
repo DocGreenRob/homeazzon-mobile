@@ -65,7 +65,7 @@ export class SearchService extends baseService {
     // return this.post("/search/google-product", searchPayloadDto).toPromise();
     return this.http
     .get(
-      `https://serpapi.com/search.json?engine=google_shopping&q=${searchPayloadDto}&location=United+States&google_domain=google.com&gl=us&hl=en&start=0&num=25&device=mobile&api_key=a21392149805619936085f1705cf3ec016e885d9aedc96131d4fa6e427b6e48d`
+      `https://serpapi.com/search.json?engine=google_shopping&q=${searchPayloadDto}&location=United+States&google_domain=google.com&gl=us&hl=en&start=0&num=50&device=mobile&api_key=a21392149805619936085f1705cf3ec016e885d9aedc96131d4fa6e427b6e48d`
       ).toPromise();
   }
 

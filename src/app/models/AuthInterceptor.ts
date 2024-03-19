@@ -19,19 +19,18 @@ export class AuthInterceptor extends BasePage implements HttpInterceptor {
 		let authToken: IAuthTokenDto = this.storageService.get('AuthToken');
 		let authReq = req;
 
-		// if (authToken != undefined && authToken != null) {
-
-		// 	if (req.url.toLowerCase().indexOf('/token') === -1) {
-		// 		// Clone the request and replace the original headers with
-		// 		// cloned headers, updated with the authorization.
-		// 		authReq = req.clone({
-		// 			headers: new HttpHeaders({
-		// 				'Content-Type': 'application/json',
-		// 				'Authorization': `Bearer ${authToken.Access_token}`
-		// 			})
-		// 		});
-		// 	}
-		// }
+		if (authToken != undefined && authToken != null) {
+			if (req.url.toLowerCase().indexOf('/token') === -1) {
+				// Clone the request and replace the original headers with
+				// cloned headers, updated with the authorization.
+				authReq = req.clone({
+					headers: new HttpHeaders({
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${authToken.Access_token}`
+					})
+				});
+			}
+		}
 
 		//alert(`authReq ${JSON.stringify(authReq)}`);
 		//alert(`authReq.headers.Name ${JSON.stringify(authReq.headers.get('Name'))}`);

@@ -121,7 +121,8 @@ export class SearchResultsPage extends BasePage {
         break;
       case "Google Shopping":
         // this.searchProductResults = response;
-        searchResults.inline_shopping_results.forEach((a) => {
+        this.searchProductResults = new Array<ISearchProductRequestDto>();
+        response.shopping_results.forEach((a) => {
           this.searchProductResults.push({
             Name: a.title,
             Description: a.title,
