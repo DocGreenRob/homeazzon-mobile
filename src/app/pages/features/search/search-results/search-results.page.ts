@@ -86,7 +86,7 @@ export class SearchResultsPage extends BasePage {
         this.searchService.searchAmazon(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Shopping":
-        this.searchService.searchGoogleProducts(searchRequestDto).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
+        this.searchService.searchGoogleProducts(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Web":
         this.searchService.searchGoogle(searchRequestDto).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
@@ -108,7 +108,6 @@ export class SearchResultsPage extends BasePage {
       case "Amazon":
         this.searchProductResults = new Array<ISearchProductRequestDto>();
         const searchResults: any = response;
-
         searchResults.search_results.forEach((a) => {
           this.searchProductResults.push({
             Name: a.title,
@@ -121,7 +120,16 @@ export class SearchResultsPage extends BasePage {
         // debugger;
         break;
       case "Google Shopping":
-        this.searchProductResults = response;
+        // this.searchProductResults = response;
+        searchResults.inline_shopping_results.forEach((a) => {
+          this.searchProductResults.push({
+            Name: a.title,
+            Description: a.title,
+            Image: a.thumbnail,
+            Link: a.link,
+            Price: a.price,
+          });
+        });
         break;
       case "Google Web":
         this.searchEngineResults = response;
@@ -161,7 +169,7 @@ export class SearchResultsPage extends BasePage {
           this.searchService.searchAmazon(searchRequestDto.Keyword).then(handleInfiniteSuccess, this.searchResultHandlerError);
           break;
         case "Google Shopping":
-          this.searchService.searchGoogleProducts(searchRequestDto).then(handleInfiniteSuccess, this.searchResultHandlerError);
+          this.searchService.searchGoogleProducts(searchRequestDto.Keyword).then(handleInfiniteSuccess, this.searchResultHandlerError);
           break;
       }
     }, 500);
