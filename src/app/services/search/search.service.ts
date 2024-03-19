@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { baseService } from "../base.service";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpBackend } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { map, tap, retryWhen, delay, take } from "rxjs/operators";
 import { validateEventsArray } from "@angular/fire/compat/firestore";
@@ -8,8 +8,10 @@ import { validateEventsArray } from "@angular/fire/compat/firestore";
   providedIn: "root",
 })
 export class SearchService extends baseService {
-  constructor(public override http: HttpClient) {
+  private httpClient: HttpClient;
+  constructor(public override http: HttpClient, private handler: HttpBackend) {
     super(http);
+    this.httpClient = new HttpClient(handler);
   }
 
   /*
@@ -38,7 +40,7 @@ export class SearchService extends baseService {
   */
   async searchAmazon(keyword: string) {
     // Rainforest Api
-    return this.http
+    return this.httpClient
       .get(
         `https://api.rainforestapi.com/request?api_key=477D5A48F3604F179D3E2C8D68B36559&type=search&amazon_domain=amazon.com&search_term=${keyword}&page=1&sort_by=average_review`
       )
@@ -55,13 +57,19 @@ export class SearchService extends baseService {
   This method to get product from amazon
   */
   async searchAmazonProduct2(keyword: string) {
-    return this.http.get(`https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-search-by-keyword-asin?domainCode=com&keyword=${keyword}&page=1&excludeSponsored=false&sortBy=relevanceblender&withCache=true`).toPromise();
+    return this.httpClient.get(`https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-search-by-keyword-asin?domainCode=com&keyword=${keyword}&page=1&excludeSponsored=false&sortBy=relevanceblender&withCache=true`, { headers: {
+      'X-RapidAPI-Key': '5a9afa6809mshef0e809ac690986p12c3f9jsnd49b37072944',
+			'X-RapidAPI-Host': 'axesso-axesso-amazon-data-service-v1.p.rapidapi.com'
+    } }).toPromise();
   }
   /*
   This method to get product from amazon
   */
   async searchAmazonProduct(keyword: string,page:number) {
-    return this.http.get(`https://real-time-amazon-data.p.rapidapi.com/search?query=${keyword}&page=${page}&country=US&category_id=aps`).toPromise();
+    return this.httpClient.get(`https://real-time-amazon-data.p.rapidapi.com/search?query=${keyword}&page=${page}&country=US&category_id=aps`, { headers: {
+      'X-RapidAPI-Key': '5a9afa6809mshef0e809ac690986p12c3f9jsnd49b37072944',
+			'X-RapidAPI-Host': 'real-time-amazon-data.p.rapidapi.com'
+    }}).toPromise();
   }
   /*
   This method to get videos from you tube by given keyword

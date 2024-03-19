@@ -83,7 +83,6 @@ export class SearchResultsPage extends BasePage {
 
     switch (this._source) {
       case "Amazon":
-        this.storageService.set('isAmazzone',true)
         this.searchService.searchAmazonProduct(searchRequestDto.Keyword,this.currentProductPage).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Shopping":
@@ -142,7 +141,6 @@ export class SearchResultsPage extends BasePage {
     };
     switch (this._source) {
       case "Amazon":
-        this.storageService.set('isAmazzone', true)
         this.currentProductPage++;
         this.searchService.searchAmazonProduct(searchRequestDto.Keyword, this.currentProductPage)
           .then((response: any) => {

@@ -18,7 +18,6 @@ export class AuthInterceptor extends BasePage implements HttpInterceptor {
 		// Get the auth token from the service.
 		let authToken: IAuthTokenDto = this.storageService.get('AuthToken');
 		let authReq = req
-		let isAmmazone = this.storageService.get('isAmazzone');
 		if (authToken != undefined && authToken != null) {
 			if (req.url.toLowerCase().indexOf('/token') === -1) {
 				// Clone the request and replace the original headers with
@@ -30,15 +29,6 @@ export class AuthInterceptor extends BasePage implements HttpInterceptor {
 					})
 				});
 			}
-		}
-		if (isAmmazone) {
-			this.storageService.set('isAmazzone',false)
-			authReq = req.clone({
-				headers: new HttpHeaders({
-					'X-RapidAPI-Key': '5a9afa6809mshef0e809ac690986p12c3f9jsnd49b37072944',
-					'X-RapidAPI-Host': 'real-time-amazon-data.p.rapidapi.com'
-				})
-			});
 		}
 		console.log("req", req);
 		//alert(`authReq ${JSON.stringify(authReq)}`);
