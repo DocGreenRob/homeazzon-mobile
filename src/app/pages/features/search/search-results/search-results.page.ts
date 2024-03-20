@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BasePage } from "src/app/pages/base/base.page";
-import { NavController, LoadingController, ModalController, Platform } from "@ionic/angular";
+import { NavController, LoadingController, ModalController, Platform, InfiniteScrollCustomEvent } from "@ionic/angular";
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -25,8 +25,11 @@ export class SearchResultsPage extends BasePage {
   public isIos: boolean = false;
   spinnerText: string = 'Loading...';
   loading1Visible: boolean = false;
+  private startpage = 1;
+  private endpage = 30
 
   private currentProductPage: number = 1;
+  
 
   constructor(
     public override navController: NavController,
@@ -86,7 +89,7 @@ export class SearchResultsPage extends BasePage {
         this.searchService.searchAmazon(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Shopping":
-        this.searchService.searchGoogleProducts(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
+        this.searchService.searchGoogleProducts(searchRequestDto.Keyword,1,30).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Web":
         this.searchService.searchGoogle(searchRequestDto).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
@@ -165,14 +168,30 @@ export class SearchResultsPage extends BasePage {
     };
 
     setTimeout(() => {
+      this.startpage+=30
+      this.endpage+=this.startpage
       switch (this._source) {
         case "Amazon":
           this.searchService.searchAmazon(searchRequestDto.Keyword).then(handleInfiniteSuccess, this.searchResultHandlerError);
           break;
         case "Google Shopping":
-          this.searchService.searchGoogleProducts(searchRequestDto.Keyword).then(handleInfiniteSuccess, this.searchResultHandlerError);
-          break;
+          this.searchService.searchGoogleProducts(searchRequestDto.Keyword ,this.startpage, this.endpage)
+          .then((response: any) => {
+            this.view = "SearchProductResult";
+            response.shopping_results.forEach((a) => {
+              this.searchProductResults.push({
+                Name: a.title,
+                Description: a.title,
+                Image: a.thumbnail,
+                Link: a.link,
+                Price: a.price,
+              });
+            });
+            this.searchResultHandlerError
+          })
+        break;
       }
+      (infiniteScroll as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
 
