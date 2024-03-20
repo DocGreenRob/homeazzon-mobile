@@ -14,7 +14,7 @@
 
 <ion-content>
   <!-- Amazon Container -->
-  <div class="results-wrapper" *ngIf="view == 'SearchProductResult'">
+  <div class="results-wrapper" *ngIf="view == 'SearchProductResult' || view == 'SearchHomeResult' ">
     <div
       class="result-content-wrapper"
       *ngFor="let result of searchProductResults"
@@ -52,7 +52,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-infinite-scroll (ionInfinite)="handleInfinite($event)">
+    <ion-infinite-scroll (ionInfinite)="handleInfinite($event)" *ngIf="view == 'SearchProductResult'">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Loading more data..."

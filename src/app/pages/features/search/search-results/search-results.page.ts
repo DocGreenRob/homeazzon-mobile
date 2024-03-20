@@ -66,7 +66,7 @@ export class SearchResultsPage extends BasePage {
         this.view = "SearchYouTubeResult";
         break;
       case "Home Depot":
-        this.view = "SearchProductResult";
+        this.view = "SearchHomeResult";
         break;
     }
   }
