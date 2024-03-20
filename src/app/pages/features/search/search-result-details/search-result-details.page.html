@@ -1,7 +1,7 @@
 <app-global-spinner [spinnerText]="spinnerText" *ngIf="loading1Visible"></app-global-spinner>
 <div class="modal">
   <div class="modal-main-wrapper"
-       *ngIf="source == 'Amazon' || source == 'Google Shopping'">
+       *ngIf="source == 'Amazon' || source == 'Google Shopping' || source == 'Home Depot'">
     <div class="close-modal">
       <img src="assets/icon/Close Square.svg" (click)="close()" alt="" />
     </div>

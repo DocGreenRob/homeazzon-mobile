@@ -75,6 +75,7 @@ export class SearchResultDetailsPage extends BasePage {
         this.result = this.result as ISearchYouTubeRequestDto;
         this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.result.VideoID}`);
         break;
+      case "Home Depot":
     }
   }
 

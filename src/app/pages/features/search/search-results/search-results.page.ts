@@ -65,6 +65,9 @@ export class SearchResultsPage extends BasePage {
       case "YouTube":
         this.view = "SearchYouTubeResult";
         break;
+      case "Home Depot":
+        this.view = "SearchProductResult";
+        break;
     }
   }
 
@@ -93,6 +96,9 @@ export class SearchResultsPage extends BasePage {
         break;
       case "YouTube":
         this.searchService.searchYouTube(searchRequestDto).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
+        break;
+      case "Home Depot":
+        this.searchService.searchHomeDepot(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
     }
   }
@@ -128,6 +134,19 @@ export class SearchResultsPage extends BasePage {
         break;
       case "YouTube":
         this.searchYouTubeResults = response;
+        break;
+      case "Home Depot":
+        this.searchProductResults = new Array<ISearchProductRequestDto>();
+        const products: any = response;
+        products.products.forEach((a) => {
+          this.searchProductResults.push({
+            Name: a.title,
+            Description: a.title,
+            Image: a.thumbnails[0][4],
+            Link: a.link,
+            Price: a.price,
+          });
+        });
         break;
     }
 
@@ -170,8 +189,6 @@ export class SearchResultsPage extends BasePage {
   public searchResultHandlerError = (err: any) => {
     this.initiliazeView();
     this.dismissSpinner();
-
-
     if (err.status == 401) {
       this.uxNotifierService.presentSimpleAlert("Your credentials expired, please login again.", "Error");
       this.router.navigate(["sign-in"]);
@@ -201,7 +218,7 @@ export class SearchResultsPage extends BasePage {
 
   async dismissSpinner() {
     this.loading1Visible = false;
-    this.spinnerText = ''; 
+    this.spinnerText = '';
   }
 
 }
