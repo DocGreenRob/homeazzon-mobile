@@ -77,10 +77,7 @@ export class SearchResultDetailsPage extends BasePage {
         break;
       case "Google Vedios":
         this.result = this.result as ISearchYouTubeRequestDto;
-        console.log('vedio url',this.result)
-        this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl(this.result.VideoUrl);
         break;
-
     }
   }
 

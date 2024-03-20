@@ -22,11 +22,16 @@
     <div class="close-modal">
       <img src="assets/icon/Close Square.svg" (click)="close()" alt="" />
     </div>
-    <div class="modal-result-img">
+    <div class="modal-result-img" *ngIf="source == 'YouTube'">
       <iframe frameborder="0"
               [src]="videoUrl"
               allowfullscreen
               style="width: 100%"></iframe>
+    </div>
+    <div class="modal-result-img" *ngIf="source == 'Google Vedios'">
+      <span class="img-container">
+        <img src="{{result?.ThumbnailImg}}" />
+      </span>
     </div>
     <div class="modal-content">
       <span class="description"> {{result?.VideoDescription}} </span>
