@@ -29,7 +29,6 @@ export class SearchResultsPage extends BasePage {
   private endpage = 30
 
   private currentProductPage: number = 1;
-  
 
   constructor(
     public override navController: NavController,
@@ -86,7 +85,7 @@ export class SearchResultsPage extends BasePage {
 
     switch (this._source) {
       case "Amazon":
-        this.searchService.searchAmazon(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
+        this.searchService.searchAmazonProduct(searchRequestDto.Keyword,this.currentProductPage).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Shopping":
         this.searchService.searchGoogleProducts(searchRequestDto.Keyword,1,30).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
@@ -113,11 +112,11 @@ export class SearchResultsPage extends BasePage {
         const searchResults: any = response;
         searchResults.search_results.forEach((a) => {
           this.searchProductResults.push({
-            Name: a.title,
-            Description: a.title,
-            Image: a.image,
-            Link: a.link,
-            Price: a.price?.value,
+            Name: a.product_title,
+            Description: a.product_title,
+            Image: a.product_photo,
+            Link: a.product_url,
+            Price: a.product_price,
           });
         });
         // debugger;
@@ -142,23 +141,56 @@ export class SearchResultsPage extends BasePage {
         this.searchYouTubeResults = response;
         break;
     }
-
-
-    this.dismissSpinner();
-
+ this.dismissSpinner();
   }
 
-  public handleInfinite(infiniteScroll) {
+  generateinfinitedata() {
     console.log("Begin async operation");
-    let that: any = this;
-
     let searchRequestDto: ISearchRequestDto = {
       AreaId: this.ProfileItem.AreaId,
       LineItemId: this.LineItem.Id,
       Keyword: this._keyword,
     };
+    switch (this._source) {
+      case "Amazon":
+        this.currentProductPage++;
+        this.searchService.searchAmazonProduct(searchRequestDto.Keyword, this.currentProductPage)
+          .then((response: any) => {
+            this.view = "SearchProductResult";
+            response.data.products.forEach((a) => {
+              this.searchProductResults.push({
+                Name: a.product_title,
+                Description: a.product_title,
+                Image: a.product_photo,
+                Link: a.product_url,
+                Price: a.product_price,
+              });
+            }),
+            this.searchResultHandlerError
+          })
+        break;
+      case "Google Shopping":
+        this.searchService.searchGoogleProducts(searchRequestDto.Keyword,1,30)
+        .then((response: any) => {
+          this.currentProductPage++;
+          this.view = "SearchProductResult";
+          this.searchProductResults = [...this.searchProductResults, ...response];
+          console.log("searchProductRequestDto", this.searchProductResults);
+          console.log("Async operation has ended");
+        }, this.searchResultHandlerError);
+        break;
+    }
+  }
 
-    const handleInfiniteSuccess = (response: any) => {
+  onIonInfinite(infiniteScroll) {
+    let searchRequestDto: ISearchRequestDto = {
+      AreaId: this.ProfileItem.Id === undefined ? 0 : this.ProfileItem.AreaId,
+      LineItemId: this.LineItem.Id,
+      Keyword: this._keyword,
+    };
+    this.generateinfinitedata();
+
+     const handleInfiniteSuccess = (response: any) => {
       this.currentProductPage++;
       this.view = "SearchProductResult";
       this.searchProductResults = [...this.searchProductResults, ...response];
@@ -229,7 +261,7 @@ export class SearchResultsPage extends BasePage {
 
   async dismissSpinner() {
     this.loading1Visible = false;
-    this.spinnerText = ''; 
+    this.spinnerText = '';
   }
 
 }
