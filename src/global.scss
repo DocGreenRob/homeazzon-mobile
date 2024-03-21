@@ -99,16 +99,30 @@
 }
 
 
-.scanner-ui { display: none; }
-.scanner-hide { visibility: visible; }
+.scanner-ui {
+  display: none;
+}
 
-.qrscanner { background-color: transparent; }
-.qrscanner .scanner-ui { display: block; }
-.qrscanner .scanner-hide { visibility: hidden; }
+.scanner-hide {
+  visibility: visible;
+}
 
-body{
+.qrscanner {
+  background-color: transparent;
+}
+
+.qrscanner .scanner-ui {
+  display: block;
+}
+
+.qrscanner .scanner-hide {
+  visibility: hidden;
+}
+
+body {
   background: #F6F8FE;
 }
+
 body,
 ion-title,
 ion-card-title,
@@ -621,9 +635,9 @@ ion-loading.my-loading-class {
 
 // Remove drop shadows on Android
 .header-md::after,
-.tabs-md[tabsPlacement='top'] > .tabbar::after,
+.tabs-md[tabsPlacement='top']>.tabbar::after,
 .footer-md::before,
-.tabs-md[tabsPlacement='bottom'] > .tabbar::before {
+.tabs-md[tabsPlacement='bottom']>.tabbar::before {
   background-image: none;
 }
 
@@ -999,6 +1013,7 @@ select::-ms-expand {
     }
   }
 }
+
 //buttons wrapper
 .btnWrapper {
   width: 100%;
@@ -1066,7 +1081,9 @@ select::-ms-expand {
   background: #F6F8FE;
 }
 
-.large-modal, .add-new-folder-modal, .add-common-area-modal {
+.large-modal,
+.add-new-folder-modal,
+.add-common-area-modal {
   --max-width: 327px;
   --width: 100%;
   --max-height: 512px !important;
@@ -1079,7 +1096,7 @@ select::-ms-expand {
   }
 }
 
-.image-modal{
+.image-modal {
   --max-height: 850px !important;
   --overflow: auto;
   --max-width: 765px;
@@ -1196,13 +1213,15 @@ select::-ms-expand {
 }
 
 // Backgrounf of Modals
-.hydrated.search-wishlist-modal{
+.hydrated.search-wishlist-modal {
   backdrop-filter: blur(3px);
 }
-.hydrated.item-delete-modal{
+
+.hydrated.item-delete-modal {
   backdrop-filter: blur(1.5px);
 }
-.hydrated.toastNotifier{
+
+.hydrated.toastNotifier {
   backdrop-filter: blur(1.5px);
 }
 

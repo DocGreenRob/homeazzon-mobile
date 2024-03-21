@@ -81,8 +81,12 @@ export class SearchService extends baseService {
   /*
   This method to get product from google by given keyword
   */
-  async searchGoogleProducts(searchPayloadDto) {
-    return this.post("/search/google-product", searchPayloadDto).toPromise();
+  async searchGoogleProducts(searchPayloadDto,startpage,endpage) {
+    // return this.post("/search/google-product", searchPayloadDto).toPromise();
+    return this.httpClient
+    .get(
+      `https://serpapi.com/search.json?engine=google_shopping&q=${searchPayloadDto}&location=United+States&google_domain=google.com&gl=us&hl=en&start=${startpage}&num=${endpage}&device=mobile&api_key=a21392149805619936085f1705cf3ec016e885d9aedc96131d4fa6e427b6e48d`
+      ).toPromise();
   }
 
   /*
