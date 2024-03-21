@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BasePage } from "src/app/pages/base/base.page";
-import { NavController, LoadingController, ModalController, Platform } from "@ionic/angular";
+import { NavController, LoadingController, ModalController, Platform, InfiniteScrollCustomEvent } from "@ionic/angular";
 import { SearchService } from "src/app/services/search/search.service";
 import { UxNotifierService } from "src/app/services/uxNotifier/ux-notifier.service";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -86,7 +86,7 @@ export class SearchResultsPage extends BasePage {
 
     switch (this._source) {
       case "Amazon":
-        this.searchService.searchAmazon(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
+        this.searchService.searchAmazonProduct(searchRequestDto.Keyword,this.currentProductPage).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
       case "Google Shopping":
         this.searchService.searchGoogleProducts(searchRequestDto).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
@@ -114,14 +114,13 @@ export class SearchResultsPage extends BasePage {
       case "Amazon":
         this.searchProductResults = new Array<ISearchProductRequestDto>();
         const searchResults: any = response;
-
-        searchResults.search_results.forEach((a) => {
+        searchResults.data.products.forEach((a) => {
           this.searchProductResults.push({
-            Name: a.title,
-            Description: a.title,
-            Image: a.image,
-            Link: a.link,
-            Price: a.price?.value,
+            Name: a.product_title,
+            Description: a.product_title,
+            Image: a.product_photo,
+            Link: a.product_url,
+            Price: a.product_price,
           });
         });
         // debugger;
@@ -149,40 +148,51 @@ export class SearchResultsPage extends BasePage {
         });
         break;
     }
-
-
-    this.dismissSpinner();
-
+ this.dismissSpinner();
   }
 
-  public handleInfinite(infiniteScroll) {
+  generateinfinitedata() {
     console.log("Begin async operation");
-    let that: any = this;
-
     let searchRequestDto: ISearchRequestDto = {
       AreaId: this.ProfileItem.AreaId,
       LineItemId: this.LineItem.Id,
       Keyword: this._keyword,
     };
+    switch (this._source) {
+      case "Amazon":
+        this.currentProductPage++;
+        this.searchService.searchAmazonProduct(searchRequestDto.Keyword, this.currentProductPage)
+          .then((response: any) => {
+            this.view = "SearchProductResult";
+            response.data.products.forEach((a) => {
+              this.searchProductResults.push({
+                Name: a.product_title,
+                Description: a.product_title,
+                Image: a.product_photo,
+                Link: a.product_url,
+                Price: a.product_price,
+              });
+            }),
+            this.searchResultHandlerError
+          })
+        break;
+      case "Google Shopping":
+        this.searchService.searchGoogleProducts(searchRequestDto)
+        .then((response: any) => {
+          this.currentProductPage++;
+          this.view = "SearchProductResult";
+          this.searchProductResults = [...this.searchProductResults, ...response];
+          console.log("searchProductRequestDto", this.searchProductResults);
+          console.log("Async operation has ended");
+        }, this.searchResultHandlerError);
+        break;
+    }
+  }
 
-    const handleInfiniteSuccess = (response: any) => {
-      this.currentProductPage++;
-      this.view = "SearchProductResult";
-      this.searchProductResults = [...this.searchProductResults, ...response];
-      console.log("searchProductRequestDto", this.searchProductResults);
-      console.log("Async operation has ended");
-      infiniteScroll.complete();
-    };
-
+  onIonInfinite(ev) {
+    this.generateinfinitedata();
     setTimeout(() => {
-      switch (this._source) {
-        case "Amazon":
-          this.searchService.searchAmazon(searchRequestDto.Keyword).then(handleInfiniteSuccess, this.searchResultHandlerError);
-          break;
-        case "Google Shopping":
-          this.searchService.searchGoogleProducts(searchRequestDto).then(handleInfiniteSuccess, this.searchResultHandlerError);
-          break;
-      }
+      (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
 
