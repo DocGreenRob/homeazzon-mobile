@@ -73,7 +73,8 @@ export class SearchResultDetailsPage extends BasePage {
         break;
       case "YouTube":
         this.result = this.result as ISearchYouTubeRequestDto;
-        this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.result.VideoID}`);
+        let vedioid =  this.result.VideoUrl.split('v=')[1];
+        this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${vedioid}`);
         break;
     }
   }

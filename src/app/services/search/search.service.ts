@@ -74,8 +74,11 @@ export class SearchService extends baseService {
   /*
   This method to get videos from you tube by given keyword
   */
+  // async searchYouTube(searchPayloadDto) {
+  //   return this.post("/search/youtube", searchPayloadDto).toPromise();
+  // }
   async searchYouTube(searchPayloadDto) {
-    return this.post("/search/youtube", searchPayloadDto).toPromise();
+    return this.httpClient.get(`https://serpapi.com/search.json?engine=youtube&search_query=${searchPayloadDto}&api_key=a21392149805619936085f1705cf3ec016e885d9aedc96131d4fa6e427b6e48d`).toPromise();
   }
 
   /*

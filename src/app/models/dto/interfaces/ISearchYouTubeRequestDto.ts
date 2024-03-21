@@ -1,9 +1,9 @@
 ﻿export interface ISearchYouTubeRequestDto {
     Title: string;
-    VideoID: string;
+    VideoID?: string;
     ThumbnailImg: string;
     VideoUrl: string;
     VideoDescription: string;
-    VideoDuration: string;
-    TotalViews: string;
+    VideoDuration?: string;
+    TotalViews?: string;
 }
