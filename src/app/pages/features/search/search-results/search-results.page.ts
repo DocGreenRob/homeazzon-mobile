@@ -67,6 +67,9 @@ export class SearchResultsPage extends BasePage {
       case "YouTube":
         this.view = "SearchYouTubeResult";
         break;
+      case "Google Vedios":
+        this.view = "SearchGoogleResult";
+        break;
     }
   }
 
@@ -96,6 +99,9 @@ export class SearchResultsPage extends BasePage {
       case "YouTube":
         this.searchService.searchYouTube(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
         break;
+      case "Google Vedios":
+          this.searchService.searchGoogleVedios(searchRequestDto.Keyword).then((x) => this.searchResultHandlerSuccess(x, that), this.searchResultHandlerError);
+          break;
     }
   }
 
@@ -146,6 +152,19 @@ export class SearchResultsPage extends BasePage {
             Title: a.title,
             VideoDescription: a.description,
             ThumbnailImg: a.thumbnail.static,
+            VideoUrl: a.link,
+          });
+        });
+        break;
+        case "Google Vedios":
+        // this.searchYouTubeResults = response;
+        this.searchYouTubeResults = new Array<ISearchYouTubeRequestDto>();
+        const searchResult: any = response;
+        searchResult.video_results.forEach((a) => {
+          this.searchYouTubeResults.push({
+            Title: a.title,
+            VideoDescription: a.title,
+            ThumbnailImg: a.thumbnail,
             VideoUrl: a.link,
           });
         });

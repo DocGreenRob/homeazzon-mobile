@@ -76,6 +76,9 @@ export class SearchResultDetailsPage extends BasePage {
         let vedioid =  this.result.VideoUrl.split('v=')[1];
         this.videoUrl = this.sanitizerService.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${vedioid}`);
         break;
+      case "Google Vedios":
+        this.result = this.result as ISearchYouTubeRequestDto;
+        break;
     }
   }
 

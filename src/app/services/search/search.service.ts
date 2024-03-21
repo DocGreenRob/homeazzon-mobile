@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { baseService } from "../base.service";
-import { HttpClient, HttpBackend } from "@angular/common/http";
+import { HttpBackend, HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { map, tap, retryWhen, delay, take } from "rxjs/operators";
 import { validateEventsArray } from "@angular/fire/compat/firestore";
@@ -79,6 +79,9 @@ export class SearchService extends baseService {
   // }
   async searchYouTube(searchPayloadDto) {
     return this.httpClient.get(`https://serpapi.com/search.json?engine=youtube&search_query=${searchPayloadDto}&api_key=a21392149805619936085f1705cf3ec016e885d9aedc96131d4fa6e427b6e48d`).toPromise();
+  }
+  async searchGoogleVedios(searchkey) {
+    return this.httpClient.get(`https://serpapi.com/search.json?engine=google_videos&q=${searchkey}&google_domain=google.com&start=0&num=25&device=mobile&api_key=a21392149805619936085f1705cf3ec016e885d9aedc96131d4fa6e427b6e48d`).toPromise();
   }
 
   /*

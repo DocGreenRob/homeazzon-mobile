@@ -62,7 +62,7 @@
   </div>
 
   <!-- Youtube Container -->
-  <div class="results-wrapper" *ngIf="view=='SearchYouTubeResult'">
+  <div class="results-wrapper" *ngIf="view=='SearchYouTubeResult'  || view == 'SearchGoogleResult'">
     <div
       class="result-content-wrapper"
       *ngFor="let result of searchYouTubeResults"

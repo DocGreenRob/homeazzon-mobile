@@ -27,7 +27,7 @@ export class SearchPage extends BasePage {
   // Public
   public profileItems: Array<IListItem> = [];
   public lineitems: Array<IListItem> = [];
-  public searchSources: Array<string> = ["Amazon", "Google Web", "Google Shopping", "YouTube"];
+  public searchSources: Array<string> = ["Amazon", "Google Web", "Google Shopping", "YouTube","Google Vedios"];
   public keywords: string = "";
   public selectedProfileItem: any = this.ProfileItem;
   public selectedLineitem: any = this.LineItem;
