@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class InterstatialPage implements OnInit {
 
 	constructor() {
-		alert(window.location.search);
+		//alert(window.location.search);
 	}
 
 	ngOnInit() {

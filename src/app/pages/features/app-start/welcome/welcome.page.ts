@@ -20,7 +20,7 @@ import { UserDetailsService } from "src/app/services/user-details/user-details.s
 export class WelcomePage extends BasePage {
   pendingPrivateLabelUserId: any;
   imageURL;
-  public privateLabelName: string = "Evolved Dwellings";
+  public privateLabelName: string = "Azure Vista Developments";
 
   private constants: Constants;
 
@@ -92,7 +92,7 @@ export class WelcomePage extends BasePage {
             determinePathObj.IsPrivateLabelUserDownload = true;
             determinePathObj.PendingAppShareDownloadId = 0;
             determinePathObj.PendingPrivateLabelUserId = this.User.Id;
-            determinePathObj.PrivateLabelId = this.User.PrivateLabeler.Id;
+            determinePathObj.PrivateLabelId = this.User.PrivateLabelers[0]?.Id;
 
             await this.storage.set("determinePathObj", determinePathObj);
           }

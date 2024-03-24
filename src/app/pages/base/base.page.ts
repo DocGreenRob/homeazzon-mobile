@@ -452,6 +452,15 @@ export class BasePage implements OnInit {
     this.storageService.set('CompanyInformation', value);
   }
 
+	// SelectedPrivateLabeler
+  get SelectedPrivateLabeler(): any {
+    const s: any = this.storageService.get('SelectedPrivateLabeler');
+		return s;
+	}
+  set SelectedPrivateLabeler(value: any) {
+    this.storageService.set('SelectedPrivateLabeler', value);
+  }
+
   // Notification
   // TODO: Use Dto
   get Notification(): any {

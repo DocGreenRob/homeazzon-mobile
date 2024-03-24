@@ -78,7 +78,8 @@ export class ChooseDevelopmentPage extends BasePage {
 
     let user: IUserDto = this.storageService.get('User');
 
-    await this.privatelabelService.getPrivateLabelerDevelopments(user.PrivateLabeler.Id).then(
+    // TODO: Need to determine which PrivateLabeler to use. (should NOT default to the first one.)
+    await this.privatelabelService.getPrivateLabelerDevelopments(user.PrivateLabelers[0]?.Id).then(
       (x: Array<IDevelopmentDto>) => {
         // debugger;
         this.developments = x;

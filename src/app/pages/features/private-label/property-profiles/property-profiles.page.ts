@@ -52,6 +52,7 @@ export class PropertyProfilesPage extends BasePage {
       if (params["showBackButton"]) {
         this.showBackButton = true;
       }
+
     });
 
     console.log("ngOnInit PrivateLabelProfilePage");
@@ -89,25 +90,31 @@ export class PropertyProfilesPage extends BasePage {
     if (this.User?.IsPrivateLabelUser) {
       this.isPrivateLabelUser = true;
 
-      this.presentSpinner('getting label profile...');
-      //check whether user has a privateLabeler
-      let privateLabelId = this.User.PrivateLabeler.Id;
+      for (var i = 0; i < this.User.PrivateLabelers.length; i++) {
 
-      await this.privateLabelService.getPrivateLabelProperties(privateLabelId).then(
-        (y: Array<IPropertyDto>) => {
-          if (y) {
-            //this.privateLabelProperties = y;
+        //check whether user has a privateLabeler
+        ///let privateLabelId = this.User.PrivateLabelers[i].Id;
+        let privateLabelId = this.SelectedPrivateLabeler.Id;
+        let a = this.User.PrivateLabelers[i].Name;
+        this.presentSpinner(`${a}'s design templates...`);
 
+        await this.privateLabelService.getPrivateLabelProperties(privateLabelId).then(
+          (y: Array<IPropertyDto>) => {
+            if (y) {
+              //this.privateLabelProperties = y;
+
+              this.dismissSpinner();
+
+              this.setPrivateLabelProperties(y);
+            }
+          },
+          (error) => {
             this.dismissSpinner();
-
-            this.setPrivateLabelProperties(y);
+            console.log(error);
           }
-        },
-        (error) => {
-          this.dismissSpinner();
-          console.log(error);
-        }
-      );
+        );
+      }
+
     }
   }
 
@@ -137,7 +144,7 @@ export class PropertyProfilesPage extends BasePage {
   }
 
   goBack() {
-    this.navController.back();
+    this.router.navigate(["dashboard"]);
   }
 
   async presentSpinner(text: string) {

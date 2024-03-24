@@ -307,7 +307,7 @@ export class ItemsPage extends BasePage {
       if (this.LineItem.Name == "01.03 Architectural") {
         this.QueryParams = {
           IsArchitectural: true,
-          PrivateLabelerId: this.User.PrivateLabeler.User.Id,
+          PrivateLabelerId: this.User.PrivateLabelers[0]?.User.Id,
           SqFeet: this.ActiveProperty.SqFt,
           propertyName: this.ActiveProperty.Name, // DO NOT "Fix". TODO: Need to fix casing globally
         };

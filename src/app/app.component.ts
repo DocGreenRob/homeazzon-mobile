@@ -35,6 +35,7 @@ export class AppComponent extends BasePage {
 
   public rootPage: any;
   public isIos: boolean = false;
+  public userPrivateLabelers: any = [];
 
   //new
   pages!: Array<{ image: string; title: string; url: any }>;
@@ -253,14 +254,28 @@ export class AppComponent extends BasePage {
     console.log('set properties');
     var a = this.User;
 
-    if (a.IsPrivateLabelUser) {
-      this.isPrivateLabelUser = true;
-      let b: any = a.PrivateLabeler;
-      let c = this.getWordsWithinLimit(b.Name, 15);
-      this.privateLabelerModifiedName = c;
-      this.privateLabeler = b;
-      console.log('privateLabeler', this.privateLabeler);
-      console.log('b', b);
+    if (this.userPrivateLabelers.length === 0) {
+      if (a.IsPrivateLabelUser) {
+        this.isPrivateLabelUser = true;
+
+        for (var i = 0; i < a.PrivateLabelers.length; i++) {
+          let b: any = a.PrivateLabelers[i];
+
+          let c = this.getWordsWithinLimit(b.Name, 15);
+
+          this.privateLabelerModifiedName = c;
+          this.privateLabeler = b;
+          let aa = {
+            ModifiedName: c,
+            Id: b.Id,
+            Entity: b
+          };
+
+          this.userPrivateLabelers.push(aa);
+        }
+
+        console.log('privateLabeler', this.userPrivateLabelers);
+      }
     }
   }
 
@@ -370,13 +385,14 @@ export class AppComponent extends BasePage {
     this.router.navigate(['property-profiles'], navExtras);
   }
 
-  public seePrivateLabelerProperties() {
+  public seePrivateLabelerProperties(privateLabelerId: number) {
     let navExtras: NavigationExtras = {
       queryParams: {
-        showBackButton: true,
+        showBackButton: true
       },
     };
 
+    this.SelectedPrivateLabeler = this.userPrivateLabelers.filter(x => x.Id == privateLabelerId)[0];
     this.menuController.close();
     this.router.navigate(['property-profiles'], navExtras);
   }
